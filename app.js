@@ -6,7 +6,6 @@ const $ = (id) => document.getElementById(id);
 
 const els = {
   nick: $('nick'), fetchBtn: $('fetch-btn'), f2pOnly: $('f2p-only'),
-  settingsToggle: $('settings-toggle'), settingsBox: $('settings-box'), webhook: $('webhook'),
   fetchStatus: $('fetch-status'), skillsPanel: $('skills-panel'), skillsTitle: $('skills-title'),
   skillsGrid: $('skills-grid'), eligibleCount: $('eligible-count'),
   wheelSection: $('wheel-section'), wheel: $('wheel'), spinBtn: $('spin-btn'),
@@ -509,55 +508,28 @@ function checkExistingDaily() {
 // ---------- Discord ----------
 
 async function sendToDiscord() {
-  const url = els.webhook.value.trim();
-  if (!url) {
-    els.settingsBox.classList.remove('hidden');
-    setStatus(els.discordStatus, 'Enter your Discord webhook URL in the settings (⚙️) first.', 'error');
-    return;
-  }
   if (!currentTask) return;
-  localStorage.setItem('afk_webhook', url);
-
-  const meta = SKILL_META[currentTask.skill];
+  // The channel webhook lives on the server — the API builds the embed and posts it.
   const reqStr = Object.entries(currentTask.reqs).map(([s, l]) => `${SKILL_META[s].name} ${l}`).join(', ');
-  const stats = serverStats
-    ? { current: serverStats.current, doneCount: serverStats.done, skips: serverStats.skips }
-    : computeStats(playerName);
-  const wikiLink = taskUrl(currentTask);
-  const payload = {
-    username: 'AFK Roulette',
-    embeds: [{
-      title: `🎡 Today's AFK task: ${currentTask.name}`,
-      ...(wikiLink ? { url: wikiLink } : {}),
-      color: 0xf5c542,
-      thumbnail: { url: iconUrl(currentTask.skill) },
-      fields: [
-        { name: 'Player', value: playerName, inline: true },
-        { name: 'Skill', value: meta.name, inline: true },
-        { name: 'AFK time', value: `~${currentTask.afk}`, inline: true },
-        { name: 'Requirements', value: reqStr, inline: false },
-        ...(currentTask.notes ? [{ name: 'Note', value: currentTask.notes, inline: false }] : []),
-        { name: '🔥 Streak', value: `${stats.current} days`, inline: true },
-        { name: '✅ Done', value: `${stats.doneCount}`, inline: true },
-        { name: '⏭️ Skips', value: `${stats.skips}`, inline: true },
-      ],
-      footer: { text: 'OSRS AFK Roulette' },
-      timestamp: new Date().toISOString(),
-    }],
-  };
-
   els.discordBtn.disabled = true;
   try {
-    const res = await fetch(url, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(payload),
+    await apiPost('/api/announce', {
+      nick: playerName,
+      task: {
+        name: currentTask.name,
+        skill: currentTask.skill,
+        afk: currentTask.afk,
+        reqs: reqStr,
+        notes: currentTask.notes || '',
+        url: taskUrl(currentTask) || '',
+      },
     });
-    if (!res.ok) throw new Error(`Discord ${res.status}`);
     setStatus(els.discordStatus, '✅ Sent to the Discord channel!', 'success');
   } catch (e) {
     console.error(e);
-    setStatus(els.discordStatus, 'Sending failed — check the webhook URL.', 'error');
+    setStatus(els.discordStatus, String(e).includes('429')
+      ? 'Slow down — you can post again in half a minute.'
+      : 'Sending failed — try again in a moment.', 'error');
   }
   els.discordBtn.disabled = false;
 }
@@ -571,11 +543,9 @@ els.rerollBtn.addEventListener('click', skipAndReroll);
 els.doneBtn.addEventListener('click', markDone);
 els.discordBtn.addEventListener('click', sendToDiscord);
 els.f2pOnly.addEventListener('change', updateEligible);
-els.settingsToggle.addEventListener('click', () => els.settingsBox.classList.toggle('hidden'));
 
 const savedNick = localStorage.getItem('afk_nick');
 if (savedNick) els.nick.value = savedNick;
-const savedHook = localStorage.getItem('afk_webhook');
-if (savedHook) els.webhook.value = savedHook;
+localStorage.removeItem('afk_webhook'); // webhook moved to the server
 
 renderLeaderboard(); // the shared board is visible even before fetching levels

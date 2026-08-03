@@ -6,3 +6,5 @@ services:
       - "127.0.0.1:8020:8000"
     volumes:
       - ./data:/data
+    environment:
+      - DISCORD_WEBHOOK_URL=${DISCORD_WEBHOOK_URL:-}

@@ -4,14 +4,22 @@ Tiny Flask + SQLite backend. The static frontend on GitHub Pages posts
 done/skip events here and reads the shared leaderboard.
 """
 import datetime
+import json
 import os
 import re
 import sqlite3
+import time
+import urllib.request
 from zoneinfo import ZoneInfo
 
 from flask import Flask, g, jsonify, request
 
 DB_PATH = os.environ.get("DB_PATH", "/data/afk.db")
+# Channel webhook lives only on the server (.env) so the whole group can post
+# without configuring anything in their browser.
+DISCORD_WEBHOOK_URL = os.environ.get("DISCORD_WEBHOOK_URL", "")
+SITE_BASE = "https://afk.rosu.fi"
+ANNOUNCE_COOLDOWN_S = 30
 ALLOWED_ORIGINS = {
     "https://afk.rosu.fi",
     "https://jarmenkoski.github.io",
@@ -61,6 +69,10 @@ def init_db():
         CREATE UNIQUE INDEX IF NOT EXISTS uniq_done_per_day
           ON events(nick_key, d) WHERE status = 'done';
         CREATE INDEX IF NOT EXISTS idx_nick ON events(nick_key);
+        CREATE TABLE IF NOT EXISTS announce_times (
+          nick_key TEXT PRIMARY KEY,
+          ts REAL NOT NULL
+        );
         """
     )
     con.commit()
@@ -237,6 +249,94 @@ def leaderboard():
         )
     players.sort(key=lambda p: (-p["current"], -p["done"], p["skips"]))
     return jsonify({"players": players})
+
+
+@app.post("/api/announce")
+def announce():
+    """Build the daily-task embed server-side and post it to the channel webhook."""
+    if not DISCORD_WEBHOOK_URL:
+        return jsonify({"ok": False, "error": "webhook not configured"}), 503
+    body = request.get_json(silent=True) or {}
+    nick = (body.get("nick") or "").strip()
+    t = body.get("task") if isinstance(body.get("task"), dict) else {}
+    name = (t.get("name") or "").strip()
+    skill = (t.get("skill") or "").strip().lower()
+    afk = (t.get("afk") or "").strip()[:20]
+    reqs = (t.get("reqs") or "").strip()[:200]
+    notes = (t.get("notes") or "").strip()[:200]
+    wiki = (t.get("url") or "").strip()
+    if not NICK_RE.match(nick) or not name or len(name) > 80 or skill not in SKILLS:
+        return jsonify({"ok": False, "error": "invalid payload"}), 400
+    if not wiki.startswith("https://oldschool.runescape.wiki/"):
+        wiki = ""
+
+    # Cooldown lives in SQLite so it is shared across gunicorn workers.
+    key = nick.lower().replace("_", " ").replace("-", " ")
+    now = time.time()
+    con = db()
+    row = con.execute("SELECT ts FROM announce_times WHERE nick_key = ?", (key,)).fetchone()
+    if row is not None and now - row["ts"] < ANNOUNCE_COOLDOWN_S:
+        return jsonify({"ok": False, "error": "cooldown"}), 429
+    con.execute(
+        "INSERT INTO announce_times (nick_key, ts) VALUES (?, ?) "
+        "ON CONFLICT(nick_key) DO UPDATE SET ts = excluded.ts",
+        (key, now),
+    )
+    con.commit()
+
+    row = db().execute(
+        """SELECT SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
+           FROM events WHERE nick_key = ?""",
+        (key,),
+    ).fetchone()
+    days = [
+        x["d"]
+        for x in db().execute(
+            "SELECT DISTINCT d FROM events WHERE nick_key = ? AND status = 'done' ORDER BY d",
+            (key,),
+        )
+    ]
+    current, _best = streaks(days)
+
+    fields = [
+        {"name": "Player", "value": nick, "inline": True},
+        {"name": "Skill", "value": skill.capitalize(), "inline": True},
+    ]
+    if afk:
+        fields.append({"name": "AFK time", "value": f"~{afk}", "inline": True})
+    if reqs:
+        fields.append({"name": "Requirements", "value": reqs, "inline": False})
+    if notes:
+        fields.append({"name": "Note", "value": notes, "inline": False})
+    fields += [
+        {"name": "🔥 Streak", "value": f"{current} days", "inline": True},
+        {"name": "✅ Done", "value": str(row["done"] or 0), "inline": True},
+        {"name": "⏭️ Skips", "value": str(row["skips"] or 0), "inline": True},
+    ]
+    payload = {
+        "username": "AFK Roulette",
+        "embeds": [{
+            "title": f"🎡 Today's AFK task: {name}",
+            **({"url": wiki} if wiki else {}),
+            "color": 0xF5C542,
+            "thumbnail": {"url": f"{SITE_BASE}/icons/{skill}.png"},
+            "fields": fields,
+            "footer": {"text": "OSRS AFK Roulette"},
+            "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+        }],
+    }
+    req = urllib.request.Request(
+        DISCORD_WEBHOOK_URL,
+        data=json.dumps(payload).encode(),
+        headers={"Content-Type": "application/json", "User-Agent": "osrs-afk-roulette"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+    except Exception:
+        return jsonify({"ok": False, "error": "discord post failed"}), 502
+    return jsonify({"ok": True})
 
 
 @app.get("/api/history")

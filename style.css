@@ -60,9 +60,6 @@ input[type="text"], input[type="password"] {
   font-family: inherit;
 }
 input:focus { outline: none; border-color: var(--gold-dim); }
-/* Mask the webhook URL like a password without using type="password"
-   (a password field makes browsers offer saved logins for the nick field) */
-input.masked:not(:focus) { -webkit-text-security: disc; }
 
 .options-row {
   display: flex; justify-content: space-between; align-items: center;
@@ -92,7 +89,6 @@ input.masked:not(:focus) { -webkit-text-security: disc; }
 .btn-link { background: none; border: none; color: var(--text-dim); cursor: pointer; font-family: inherit; font-size: 0.9rem; text-decoration: underline; }
 .btn-link:hover { color: var(--gold); }
 
-.settings-box { margin-top: 12px; padding: 12px; background: #221a13; border-radius: 6px; border: 1px dashed var(--panel-border); }
 .hint { color: var(--text-dim); font-size: 0.8rem; margin-top: 6px; }
 
 .status { margin-top: 12px; padding: 10px 12px; border-radius: 6px; font-size: 0.95rem; }
