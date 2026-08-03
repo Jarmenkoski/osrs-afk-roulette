@@ -55,6 +55,30 @@
       <div id="discord-status" class="status hidden"></div>
     </section>
 
+    <section class="panel" id="suggestions-panel">
+      <h2 id="suggestions">💡 Task Suggestions</h2>
+      <p class="hint">Suggest new AFK tasks for the pool. Two 👍 votes approve a suggestion straight into the task list, two 👎 votes reject it.</p>
+      <div id="suggestions-list" class="suggestions-list"></div>
+      <button id="suggest-toggle" class="btn btn-secondary">➕ Suggest a new task</button>
+      <form id="suggest-form" class="suggest-form hidden">
+        <div class="input-row">
+          <div class="field"><label for="sug-name">Task name *</label><input id="sug-name" maxlength="80" placeholder="e.g. Motherlode Mine"></div>
+          <div class="field"><label for="sug-skill">Main skill (icon) *</label><select id="sug-skill"></select></div>
+        </div>
+        <div class="input-row">
+          <div class="field"><label for="sug-afk">AFK time per click</label><input id="sug-afk" maxlength="20" placeholder="e.g. 5:00"></div>
+          <div class="field"><label for="sug-url">Wiki link (optional)</label><input id="sug-url" maxlength="200" placeholder="https://oldschool.runescape.wiki/w/..."></div>
+        </div>
+        <div class="field"><label for="sug-notes">Notes (quests, items...)</label><input id="sug-notes" maxlength="200" placeholder="optional"></div>
+        <label class="checkbox-label"><input type="checkbox" id="sug-f2p"> Doable on F2P</label>
+        <h3 class="stats-subtitle">Skill requirements — fill in levels, leave the rest empty</h3>
+        <div id="sug-reqs" class="sug-reqs-grid"></div>
+        <button type="submit" class="btn btn-primary" id="sug-submit">📨 Submit suggestion</button>
+        <div id="suggest-status" class="status hidden"></div>
+      </form>
+      <div id="vote-status" class="status hidden"></div>
+    </section>
+
     <section class="panel hidden" id="leaderboard-panel">
       <h2>🌍 Shared Leaderboard</h2>
       <div id="leaderboard"></div>

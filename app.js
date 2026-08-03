@@ -13,7 +13,14 @@ const els = {
   doneBtn: $('done-btn'), discordBtn: $('discord-btn'), rerollBtn: $('reroll-btn'), discordStatus: $('discord-status'),
   statsPanel: $('stats-panel'), statsGrid: $('stats-grid'), skillStats: $('skill-stats'), historyList: $('history-list'),
   leaderboardPanel: $('leaderboard-panel'), leaderboard: $('leaderboard'),
+  suggestionsList: $('suggestions-list'), suggestToggle: $('suggest-toggle'), suggestForm: $('suggest-form'),
+  sugName: $('sug-name'), sugSkill: $('sug-skill'), sugAfk: $('sug-afk'), sugUrl: $('sug-url'),
+  sugNotes: $('sug-notes'), sugF2p: $('sug-f2p'), sugReqs: $('sug-reqs'), sugSubmit: $('sug-submit'),
+  suggestStatus: $('suggest-status'), voteStatus: $('vote-status'),
 };
+
+let approvedTasks = []; // community-approved suggestions, merged into the pool
+function allTasks() { return TASKS.concat(approvedTasks); }
 
 // Shared leaderboard API (Flask + SQLite on afk.rosu.fi). If it's unreachable,
 // everything falls back to this browser's localStorage.
@@ -56,7 +63,10 @@ function todayKey() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-function taskUrl(task) { return task.url ? WIKI_BASE + task.url : null; }
+function taskUrl(task) {
+  if (!task.url) return null;
+  return task.url.startsWith('http') ? task.url : WIKI_BASE + task.url;
+}
 function iconUrl(skill) { return new URL(SKILL_META[skill].icon, location.href).href; }
 function iconImg(skill) { return `<img class="skill-icon" src="${SKILL_META[skill].icon}" alt="${SKILL_META[skill].name}">`; }
 
@@ -276,6 +286,7 @@ async function fetchLevels() {
   await syncLocalHistory();
   renderStats();
   renderLeaderboard();
+  loadSuggestions(); // re-render with own votes highlighted
 }
 
 // ---------- UI ----------
@@ -297,7 +308,7 @@ function renderSkills() {
 function eligibleTasks() {
   if (!playerLevels) return [];
   const f2p = els.f2pOnly.checked;
-  return TASKS.filter((t) => {
+  return allTasks().filter((t) => {
     if (f2p && !t.f2p) return false;
     return Object.entries(t.reqs).every(([skill, lvl]) => (playerLevels[skill] || 1) >= lvl);
   });
@@ -305,7 +316,7 @@ function eligibleTasks() {
 
 function updateEligible() {
   const n = eligibleTasks().length;
-  els.eligibleCount.textContent = `${TASKS.length} tasks in the pool — available to you: ${n}`;
+  els.eligibleCount.textContent = `${allTasks().length} tasks in the pool — available to you: ${n}`;
   els.spinBtn.disabled = n === 0;
   if (playerLevels) drawIdleWheel();
 }
@@ -534,6 +545,120 @@ async function sendToDiscord() {
   els.discordBtn.disabled = false;
 }
 
+// ---------- Task suggestions & voting ----------
+
+async function loadApprovedTasks() {
+  try {
+    const r = await apiGet('/api/tasks/approved');
+    approvedTasks = r.tasks;
+    if (playerLevels) updateEligible();
+  } catch (_) { /* pool just stays at the built-in tasks */ }
+}
+
+async function loadSuggestions() {
+  try {
+    const r = await apiGet(`/api/suggestions${playerName ? `?nick=${encodeURIComponent(playerName)}` : ''}`);
+    if (!r.suggestions.length) {
+      els.suggestionsList.innerHTML = '<span class="hint">No open suggestions — be the first to suggest one!</span>';
+      return;
+    }
+    els.suggestionsList.innerHTML = r.suggestions.map((s) => {
+      const reqStr = Object.entries(s.reqs).map(([k, v]) => `${SKILL_META[k].name} ${v}`).join(', ');
+      const nameHtml = s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>` : s.name;
+      return `
+        <div class="suggestion-card" data-id="${s.id}">
+          <div class="sug-title">${iconImg(s.skill)} ${nameHtml}</div>
+          <div class="sug-meta">
+            <div>Suggested by <b>${s.by}</b>${s.f2p ? ' · F2P' : ''}${s.afk ? ` · ~${s.afk} AFK` : ''}</div>
+            <div>📋 ${reqStr}</div>
+            ${s.notes ? `<div>💡 ${s.notes}</div>` : ''}
+          </div>
+          <div class="sug-votes">
+            <button class="vote-btn ${s.myVote === 1 ? 'my-vote' : ''}" data-vote="1">👍 ${s.up}/2</button>
+            <button class="vote-btn ${s.myVote === -1 ? 'my-vote' : ''}" data-vote="-1">👎 ${s.down}/2</button>
+          </div>
+        </div>`;
+    }).join('');
+  } catch (_) {
+    els.suggestionsList.innerHTML = '<span class="hint">Could not load suggestions right now.</span>';
+  }
+}
+
+async function castVote(sid, vote) {
+  if (!playerName) {
+    setStatus(els.voteStatus, 'Fetch your levels first — votes are cast with your username.', 'error');
+    return;
+  }
+  clearStatus(els.voteStatus);
+  try {
+    const r = await apiPost(`/api/suggestions/${sid}/vote`, { nick: playerName, vote });
+    if (r.status === 'approved') {
+      setStatus(els.voteStatus, `✅ "${r.name}" was approved and added to the task pool!`, 'success');
+      loadApprovedTasks();
+    } else if (r.status === 'rejected') {
+      setStatus(els.voteStatus, `❌ "${r.name}" was rejected by vote.`, 'info');
+    }
+    loadSuggestions();
+  } catch (e) {
+    setStatus(els.voteStatus, String(e).includes('409') ? 'Voting on this one is already closed.' : 'Vote failed — try again.', 'error');
+    loadSuggestions();
+  }
+}
+
+function initSuggestForm() {
+  els.sugSkill.innerHTML = Object.entries(SKILL_META)
+    .map(([k, m]) => `<option value="${k}">${m.name}</option>`).join('');
+  els.sugReqs.innerHTML = Object.entries(SKILL_META).map(([k, m]) => `
+    <label class="sug-req-cell">${iconImg(k)}<span>${m.name}</span>
+      <input type="number" min="1" max="99" data-skill="${k}" placeholder="–">
+    </label>`).join('');
+}
+
+async function submitSuggestion(ev) {
+  ev.preventDefault();
+  if (!playerName) {
+    setStatus(els.suggestStatus, 'Fetch your levels first — suggestions are made with your username.', 'error');
+    return;
+  }
+  const reqs = {};
+  for (const inp of els.sugReqs.querySelectorAll('input[data-skill]')) {
+    const v = parseInt(inp.value, 10);
+    if (v >= 1 && v <= 99) reqs[inp.dataset.skill] = v;
+  }
+  if (!els.sugName.value.trim()) {
+    setStatus(els.suggestStatus, 'Give the task a name.', 'error');
+    return;
+  }
+  if (!Object.keys(reqs).length) {
+    setStatus(els.suggestStatus, 'Fill in at least one skill requirement.', 'error');
+    return;
+  }
+  els.sugSubmit.disabled = true;
+  try {
+    await apiPost('/api/suggestions', {
+      nick: playerName,
+      name: els.sugName.value.trim(),
+      skill: els.sugSkill.value,
+      afk: els.sugAfk.value.trim(),
+      notes: els.sugNotes.value.trim(),
+      url: els.sugUrl.value.trim(),
+      f2p: els.sugF2p.checked,
+      reqs,
+    });
+    els.suggestForm.reset();
+    els.suggestForm.classList.add('hidden');
+    clearStatus(els.suggestStatus);
+    setStatus(els.voteStatus, '🗳️ Suggestion submitted — it was announced on Discord and is now open for voting!', 'success');
+    loadSuggestions();
+  } catch (e) {
+    const msg = String(e).includes('409') ? 'A suggestion with this name already exists.'
+      : String(e).includes('429') ? 'Slow down — wait a minute between suggestions.'
+      : 'Submitting failed — check the fields (wiki link must point to oldschool.runescape.wiki).';
+    setStatus(els.suggestStatus, msg, 'error');
+  }
+  els.sugSubmit.disabled = false;
+}
+
 // ---------- Init ----------
 
 els.fetchBtn.addEventListener('click', fetchLevels);
@@ -543,9 +668,19 @@ els.rerollBtn.addEventListener('click', skipAndReroll);
 els.doneBtn.addEventListener('click', markDone);
 els.discordBtn.addEventListener('click', sendToDiscord);
 els.f2pOnly.addEventListener('change', updateEligible);
+els.suggestToggle.addEventListener('click', () => els.suggestForm.classList.toggle('hidden'));
+els.suggestForm.addEventListener('submit', submitSuggestion);
+els.suggestionsList.addEventListener('click', (e) => {
+  const btn = e.target.closest('.vote-btn');
+  if (!btn) return;
+  castVote(parseInt(btn.closest('.suggestion-card').dataset.id, 10), parseInt(btn.dataset.vote, 10));
+});
 
 const savedNick = localStorage.getItem('afk_nick');
 if (savedNick) els.nick.value = savedNick;
 localStorage.removeItem('afk_webhook'); // webhook moved to the server
 
-renderLeaderboard(); // the shared board is visible even before fetching levels
+initSuggestForm();
+renderLeaderboard(); // shared board + suggestions are visible even before fetching levels
+loadSuggestions();
+loadApprovedTasks();

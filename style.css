@@ -160,6 +160,57 @@ input:focus { outline: none; border-color: var(--gold-dim); }
 }
 .skill-stat-chip b { color: var(--gold); }
 
+select {
+  width: 100%;
+  background: #1f1812;
+  border: 1px solid var(--panel-border);
+  border-radius: 5px;
+  color: var(--text);
+  font-size: 1rem;
+  padding: 10px 12px;
+  font-family: inherit;
+}
+select:focus { outline: none; border-color: var(--gold-dim); }
+
+.suggestions-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
+.suggestion-card {
+  background: #221a13; border: 1px solid #3a2d1e; border-radius: 6px;
+  padding: 12px 14px;
+}
+.suggestion-card .sug-title { font-size: 1.05rem; font-weight: bold; color: var(--gold); }
+.suggestion-card .sug-title a { color: var(--gold); }
+.suggestion-card .sug-meta { color: var(--text-dim); font-size: 0.85rem; margin: 6px 0; }
+.suggestion-card .sug-meta div { margin-top: 2px; }
+.sug-votes { display: flex; align-items: center; gap: 8px; margin-top: 8px; }
+.vote-btn {
+  background: #2e241a; border: 1px solid #4d3b28; border-radius: 6px;
+  color: var(--text); cursor: pointer; font-family: inherit; font-size: 0.95rem;
+  padding: 6px 14px; transition: filter 0.15s;
+}
+.vote-btn:hover:not(:disabled) { filter: brightness(1.25); }
+.vote-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+.vote-btn.my-vote { border-color: var(--gold); background: #3a2d1e; }
+
+.suggest-form { margin-top: 14px; padding: 14px; background: #221a13; border-radius: 6px; border: 1px dashed var(--panel-border); }
+.suggest-form .input-row { margin-bottom: 10px; }
+.suggest-form .field { margin-bottom: 10px; }
+.suggest-form .btn { margin-top: 12px; }
+.sug-reqs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 6px;
+}
+.sug-req-cell {
+  display: flex; align-items: center; gap: 6px;
+  background: #1f1812; border: 1px solid #3a2d1e; border-radius: 5px;
+  padding: 4px 8px; font-size: 0.82rem;
+}
+.sug-req-cell span { flex: 1; }
+.sug-req-cell input {
+  width: 52px; padding: 4px 6px; font-size: 0.9rem; text-align: center;
+  background: #171209; border: 1px solid var(--panel-border); border-radius: 4px; color: var(--text);
+}
+
 .lb-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
 .lb-table th {
   text-align: left; color: var(--gold-dim); font-size: 0.8rem;
