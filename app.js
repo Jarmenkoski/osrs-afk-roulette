@@ -1,5 +1,6 @@
-// OSRS AFK-ruletti — staattinen sivu, ei backendiä.
-// Levelit: Wise Old Man API (CORS ok), fallback virallinen hiscores CORS-proxyn läpi.
+// OSRS AFK Roulette — static page, no backend.
+// Levels: Wise Old Man API (CORS ok), fallback official hiscores via CORS proxy.
+// History/streak/skip tracking lives in this browser's localStorage, keyed per username.
 
 const $ = (id) => document.getElementById(id);
 
@@ -10,16 +11,17 @@ const els = {
   skillsGrid: $('skills-grid'), eligibleCount: $('eligible-count'),
   wheelSection: $('wheel-section'), wheel: $('wheel'), spinBtn: $('spin-btn'),
   resultPanel: $('result-panel'), resultCard: $('result-card'),
-  discordBtn: $('discord-btn'), rerollBtn: $('reroll-btn'), discordStatus: $('discord-status'),
+  doneBtn: $('done-btn'), discordBtn: $('discord-btn'), rerollBtn: $('reroll-btn'), discordStatus: $('discord-status'),
+  statsPanel: $('stats-panel'), statsGrid: $('stats-grid'), skillStats: $('skill-stats'), historyList: $('history-list'),
 };
 
 let playerLevels = null;   // { attack: 60, ... }
 let playerName = '';
-let wheelTasks = [];       // pyörässä olevat tehtävät
+let wheelTasks = [];       // tasks currently on the wheel
 let currentTask = null;
 let spinning = false;
 
-// ---------- Apufunktiot ----------
+// ---------- Helpers ----------
 
 function setStatus(el, msg, kind) {
   el.textContent = msg;
@@ -33,21 +35,107 @@ function todayKey() {
   return `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
 }
 
-// ---------- Levelien haku ----------
+function taskUrl(task) { return task.url ? WIKI_BASE + task.url : null; }
+function iconUrl(skill) { return `https://jarmenkoski.github.io/osrs-afk-roulette/${SKILL_META[skill].icon}`; }
+function iconImg(skill) { return `<img class="skill-icon" src="${SKILL_META[skill].icon}" alt="${SKILL_META[skill].name}">`; }
 
-const WOM_SKILL_MAP = { runecrafting: 'runecraft' }; // WOM käyttää eri nimeä
+// ---------- History / highscores (localStorage) ----------
+
+function getHistory() {
+  try { return JSON.parse(localStorage.getItem('afk_history') || '[]'); }
+  catch (_) { return []; }
+}
+function saveHistory(h) { localStorage.setItem('afk_history', JSON.stringify(h)); }
+
+function logEntry(status, task) {
+  const h = getHistory();
+  h.push({ d: todayKey(), nick: playerName, task: task.name, skill: task.skill, status });
+  saveHistory(h);
+}
+
+function doneToday() {
+  return getHistory().some((e) => e.d === todayKey() && e.nick === playerName && e.status === 'done');
+}
+
+function computeStats(nick) {
+  const entries = getHistory().filter((e) => e.nick === nick);
+  const done = entries.filter((e) => e.status === 'done');
+  const skips = entries.filter((e) => e.status === 'skipped').length;
+
+  // Streaks over unique days with a completed task
+  const days = [...new Set(done.map((e) => e.d))].sort();
+  let best = 0, run = 0, prev = null;
+  const dayMs = 86400000;
+  for (const d of days) {
+    const t = new Date(d + 'T00:00:00').getTime();
+    run = (prev !== null && t - prev === dayMs) ? run + 1 : 1;
+    best = Math.max(best, run);
+    prev = t;
+  }
+  // Current streak: consecutive days ending today (or yesterday if today isn't done yet)
+  let current = 0;
+  if (days.length) {
+    const today = new Date(todayKey() + 'T00:00:00').getTime();
+    const last = new Date(days[days.length - 1] + 'T00:00:00').getTime();
+    if (today - last <= dayMs) {
+      current = 1;
+      for (let i = days.length - 1; i > 0; i--) {
+        const a = new Date(days[i] + 'T00:00:00').getTime();
+        const b = new Date(days[i - 1] + 'T00:00:00').getTime();
+        if (a - b === dayMs) current++; else break;
+      }
+    }
+  }
+
+  const bySkill = {};
+  for (const e of done) bySkill[e.skill] = (bySkill[e.skill] || 0) + 1;
+
+  return { doneCount: done.length, skips, current, best, bySkill, entries };
+}
+
+function renderStats() {
+  if (!playerName) return;
+  const s = computeStats(playerName);
+  els.statsGrid.innerHTML = `
+    <div class="stat-card"><div class="stat-value">🔥 ${s.current}</div><div class="stat-label">Current streak (days)</div></div>
+    <div class="stat-card"><div class="stat-value">🏅 ${s.best}</div><div class="stat-label">Best streak</div></div>
+    <div class="stat-card"><div class="stat-value">✅ ${s.doneCount}</div><div class="stat-label">Tasks done</div></div>
+    <div class="stat-card"><div class="stat-value">⏭️ ${s.skips}</div><div class="stat-label">Skips used</div></div>`;
+
+  const skills = Object.entries(s.bySkill).sort((a, b) => b[1] - a[1]);
+  els.skillStats.innerHTML = skills.length
+    ? skills.map(([sk, n]) => `<span class="skill-stat-chip">${iconImg(sk)} ${SKILL_META[sk].name} <b>${n}</b></span>`).join('')
+    : '<span class="hint">Nothing completed yet — get AFKing!</span>';
+
+  const recent = s.entries.slice(-15).reverse();
+  els.historyList.innerHTML = recent.length
+    ? recent.map((e) => `
+        <div class="history-row ${e.status}">
+          <span class="h-date">${e.d}</span>
+          ${iconImg(e.skill)}
+          <span class="h-task">${e.task}</span>
+          <span class="h-status">${e.status === 'done' ? '✅ done' : '⏭️ skipped'}</span>
+        </div>`).join('')
+    : '<span class="hint">No history yet.</span>';
+
+  els.statsPanel.classList.remove('hidden');
+}
+
+// ---------- Level fetching ----------
+
+const WOM_SKILL_MAP = { runecrafting: 'runecraft' }; // WOM uses a different key
 
 async function fetchFromWOM(nick) {
   const enc = encodeURIComponent(nick);
   let res = await fetch(`https://api.wiseoldman.net/v2/players/${enc}`);
   if (res.status === 404) {
-    // Ei vielä seurannassa — pyydä WOMia hakemaan pelaaja hiscoreista
+    // Not tracked yet — ask WOM to look the player up on the hiscores
     res = await fetch(`https://api.wiseoldman.net/v2/players/${enc}`, { method: 'POST' });
   }
   if (!res.ok) throw new Error(`WOM ${res.status}`);
   const data = await res.json();
   const skills = data.latestSnapshot && data.latestSnapshot.data && data.latestSnapshot.data.skills;
-  if (!skills) throw new Error('WOM: ei snapshotia');
+  if (!skills) throw new Error('WOM: no snapshot');
   const levels = {};
   for (const [key, val] of Object.entries(skills)) {
     const norm = WOM_SKILL_MAP[key] || key;
@@ -61,7 +149,7 @@ async function fetchFromHiscores(nick) {
   const res = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(target)}`);
   if (!res.ok) throw new Error(`Hiscores ${res.status}`);
   const data = await res.json();
-  if (!data.skills) throw new Error('Hiscores: ei skillejä');
+  if (!data.skills) throw new Error('Hiscores: no skills');
   const levels = {};
   for (const s of data.skills) {
     const key = s.name.toLowerCase().replace(/\s+/g, '');
@@ -98,6 +186,7 @@ async function fetchLevels() {
   renderSkills();
   updateEligible();
   checkExistingDaily();
+  renderStats();
 }
 
 // ---------- UI ----------
@@ -109,7 +198,7 @@ function renderSkills() {
     if (!(key in playerLevels)) continue;
     const cell = document.createElement('div');
     cell.className = 'skill-cell';
-    cell.innerHTML = `<span>${meta.emoji}</span><span>${meta.name}</span><span class="lvl">${playerLevels[key]}</span>`;
+    cell.innerHTML = `${iconImg(key)}<span>${meta.name}</span><span class="lvl">${playerLevels[key]}</span>`;
     els.skillsGrid.appendChild(cell);
   }
   els.skillsPanel.classList.remove('hidden');
@@ -132,14 +221,26 @@ function updateEligible() {
   if (playerLevels) drawIdleWheel();
 }
 
-// ---------- Ruletti ----------
+// ---------- Roulette wheel ----------
 
 const WHEEL_COLORS = ['#8e44ad', '#c0392b', '#27ae60', '#2980b9', '#d35400', '#16a085', '#7f6000', '#5b2c6f', '#a04000', '#1e8449', '#884ea0', '#b03a2e', '#1f618d', '#9c640c'];
 const MAX_SEGMENTS = 14;
 
+// Preload skill icons for canvas drawing
+const ICON_IMGS = {};
+{
+  let loaded = 0;
+  const keys = Object.keys(SKILL_META);
+  for (const key of keys) {
+    const img = new Image();
+    img.onload = img.onerror = () => { if (++loaded === keys.length && playerLevels) drawIdleWheel(); };
+    img.src = SKILL_META[key].icon;
+    ICON_IMGS[key] = img;
+  }
+}
+
 function pickWheelTasks() {
   const pool = [...eligibleTasks()];
-  // Fisher-Yates ja poimitaan max MAX_SEGMENTS
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -167,23 +268,26 @@ function drawWheel(tasks, rotation) {
     ctx.lineWidth = 2;
     ctx.stroke();
 
-    // Teksti
+    // Skill icon near the rim + task name to its left
     ctx.save();
     ctx.translate(cx, cy);
     ctx.rotate(start + seg / 2);
+    const icon = ICON_IMGS[tasks[i].skill];
+    if (icon && icon.complete && icon.naturalWidth) {
+      ctx.drawImage(icon, r - 32, -10, 20, 20);
+    }
     ctx.textAlign = 'right';
     ctx.fillStyle = '#fff';
     ctx.font = 'bold 13px Georgia';
     ctx.shadowColor = 'rgba(0,0,0,0.7)';
     ctx.shadowBlur = 3;
-    const meta = SKILL_META[tasks[i].skill];
-    let label = `${meta.emoji} ${tasks[i].name}`;
-    if (label.length > 26) label = label.slice(0, 24) + '…';
-    ctx.fillText(label, r - 14, 5);
+    let label = tasks[i].name;
+    if (label.length > 24) label = label.slice(0, 22) + '…';
+    ctx.fillText(label, r - 38, 5);
     ctx.restore();
   }
 
-  // Keskiö
+  // Hub
   ctx.beginPath();
   ctx.arc(cx, cy, 34, 0, 2 * Math.PI);
   ctx.fillStyle = '#f5c542';
@@ -196,7 +300,7 @@ function drawWheel(tasks, rotation) {
   ctx.textAlign = 'center';
   ctx.fillText('⚔️', cx, cy + 8);
 
-  // Ulkoreunus
+  // Outer rim
   ctx.beginPath();
   ctx.arc(cx, cy, r, 0, 2 * Math.PI);
   ctx.strokeStyle = '#f5c542';
@@ -221,10 +325,10 @@ function spin() {
   const n = wheelTasks.length;
   const seg = (2 * Math.PI) / n;
   const winner = Math.floor(Math.random() * n);
-  // Osoitin on ylhäällä (-90°). Pyöritetään niin että voittajasegmentin keskikohta osuu osoittimeen.
+  // Pointer sits at the top (-90°); rotate so the winning segment's center lands on it.
   const pointerAngle = -Math.PI / 2;
   const targetRotation = pointerAngle - (winner * seg + seg / 2);
-  const fullTurns = 5 + Math.floor(Math.random() * 3); // 5–7 kierrosta
+  const fullTurns = 5 + Math.floor(Math.random() * 3); // 5–7 turns
   const startRotation = -Math.PI / 2;
   const totalDelta = fullTurns * 2 * Math.PI + (((targetRotation - startRotation) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
   const duration = 5500;
@@ -245,7 +349,7 @@ function spin() {
   requestAnimationFrame(frame);
 }
 
-// ---------- Tulos ----------
+// ---------- Result ----------
 
 function onSpinEnd(task) {
   currentTask = task;
@@ -258,8 +362,12 @@ function renderResult(task, restored) {
   const reqStr = Object.entries(task.reqs)
     .map(([s, l]) => `${SKILL_META[s].name} ${l}`)
     .join(', ');
+  const url = taskUrl(task);
+  const nameHtml = url
+    ? `<a href="${url}" target="_blank" rel="noopener">${task.name}</a> 🔗`
+    : task.name;
   els.resultCard.innerHTML = `
-    <div class="task-name">${meta.emoji} ${task.name}</div>
+    <div class="task-name">${iconImg(task.skill)} ${nameHtml}</div>
     <div class="task-skill">Skill: <b>${meta.name}</b> (yours: ${playerLevels ? (playerLevels[task.skill] || '?') : '?'})</div>
     <div class="task-meta">
       <div>⏱️ AFK time: ~${task.afk} per click</div>
@@ -267,8 +375,37 @@ function renderResult(task, restored) {
       ${task.notes ? `<div>💡 ${task.notes}</div>` : ''}
       ${restored ? '<div><i>(today\'s previously rolled task)</i></div>' : ''}
     </div>`;
+  updateDoneBtn();
   els.resultPanel.classList.remove('hidden');
   if (!restored) els.resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function updateDoneBtn() {
+  if (doneToday()) {
+    els.doneBtn.disabled = true;
+    els.doneBtn.textContent = '✅ Done today!';
+  } else {
+    els.doneBtn.disabled = false;
+    els.doneBtn.textContent = '✅ Mark as done';
+  }
+}
+
+function markDone() {
+  if (!currentTask || doneToday()) return;
+  logEntry('done', currentTask);
+  updateDoneBtn();
+  renderStats();
+}
+
+function skipAndReroll() {
+  if (spinning) return;
+  // A skip only counts if there's a task rolled today that hasn't been completed
+  if (currentTask && !doneToday()) {
+    logEntry('skipped', currentTask);
+    renderStats();
+  }
+  els.resultPanel.classList.add('hidden');
+  spin();
 }
 
 function checkExistingDaily() {
@@ -295,17 +432,24 @@ async function sendToDiscord() {
 
   const meta = SKILL_META[currentTask.skill];
   const reqStr = Object.entries(currentTask.reqs).map(([s, l]) => `${SKILL_META[s].name} ${l}`).join(', ');
+  const stats = computeStats(playerName);
+  const wikiLink = taskUrl(currentTask);
   const payload = {
     username: 'AFK Roulette',
     embeds: [{
-      title: `🎡 Today's AFK task: ${meta.emoji} ${currentTask.name}`,
+      title: `🎡 Today's AFK task: ${currentTask.name}`,
+      ...(wikiLink ? { url: wikiLink } : {}),
       color: 0xf5c542,
+      thumbnail: { url: iconUrl(currentTask.skill) },
       fields: [
         { name: 'Player', value: playerName, inline: true },
         { name: 'Skill', value: meta.name, inline: true },
         { name: 'AFK time', value: `~${currentTask.afk}`, inline: true },
         { name: 'Requirements', value: reqStr, inline: false },
         ...(currentTask.notes ? [{ name: 'Note', value: currentTask.notes, inline: false }] : []),
+        { name: '🔥 Streak', value: `${stats.current} days`, inline: true },
+        { name: '✅ Done', value: `${stats.doneCount}`, inline: true },
+        { name: '⏭️ Skips', value: `${stats.skips}`, inline: true },
       ],
       footer: { text: 'OSRS AFK Roulette' },
       timestamp: new Date().toISOString(),
@@ -333,7 +477,8 @@ async function sendToDiscord() {
 els.fetchBtn.addEventListener('click', fetchLevels);
 els.nick.addEventListener('keydown', (e) => { if (e.key === 'Enter') fetchLevels(); });
 els.spinBtn.addEventListener('click', spin);
-els.rerollBtn.addEventListener('click', () => { els.resultPanel.classList.add('hidden'); spin(); });
+els.rerollBtn.addEventListener('click', skipAndReroll);
+els.doneBtn.addEventListener('click', markDone);
 els.discordBtn.addEventListener('click', sendToDiscord);
 els.f2pOnly.addEventListener('change', updateEligible);
 els.settingsToggle.addEventListener('click', () => els.settingsBox.classList.toggle('hidden'));

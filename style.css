@@ -133,6 +133,44 @@ input:focus { outline: none; border-color: var(--gold-dim); }
 .result-card .task-meta { font-size: 0.9rem; color: #5a4a30; }
 .result-card .task-meta div { margin-top: 4px; }
 .result-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.btn-done { background: linear-gradient(180deg, #4caf50 0%, #2e7d32 100%); color: #fff; }
+
+.skill-icon { width: 20px; height: 20px; object-fit: contain; vertical-align: -4px; image-rendering: pixelated; }
+.result-card .skill-icon { width: 26px; height: 26px; }
+.result-card .task-name a { color: #6a3f00; text-decoration: underline; }
+.result-card .task-name a:hover { color: #9c5a00; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 8px;
+}
+.stat-card {
+  background: #221a13; border: 1px solid #3a2d1e; border-radius: 6px;
+  padding: 12px; text-align: center;
+}
+.stat-card .stat-value { font-size: 1.6rem; font-weight: bold; color: var(--gold); }
+.stat-card .stat-label { font-size: 0.8rem; color: var(--text-dim); margin-top: 2px; }
+
+.stats-subtitle { color: var(--gold-dim); font-size: 1rem; margin: 16px 0 8px; }
+.skill-stats { display: flex; flex-wrap: wrap; gap: 6px; }
+.skill-stat-chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: #221a13; border: 1px solid #3a2d1e; border-radius: 14px;
+  padding: 4px 10px; font-size: 0.85rem;
+}
+.skill-stat-chip b { color: var(--gold); }
+
+.history-list { display: flex; flex-direction: column; gap: 4px; }
+.history-row {
+  display: flex; align-items: center; gap: 8px;
+  background: #221a13; border-radius: 5px; padding: 6px 10px; font-size: 0.88rem;
+}
+.history-row .h-date { color: var(--text-dim); min-width: 84px; }
+.history-row .h-task { flex: 1; }
+.history-row .h-status { font-size: 0.8rem; }
+.history-row.done .h-status { color: var(--green); }
+.history-row.skipped .h-status { color: #e67e22; }
 
 footer { text-align: center; color: var(--text-dim); font-size: 0.8rem; margin-top: 28px; }
 footer a { color: var(--gold-dim); }

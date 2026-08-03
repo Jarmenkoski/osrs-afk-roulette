@@ -54,10 +54,20 @@
       <h2>📜 Today's AFK Task</h2>
       <div id="result-card" class="result-card"></div>
       <div class="result-actions">
+        <button id="done-btn" class="btn btn-done">✅ Mark as done</button>
         <button id="discord-btn" class="btn btn-discord">📨 Send to Discord</button>
-        <button id="reroll-btn" class="btn btn-secondary">🔄 Spin again</button>
+        <button id="reroll-btn" class="btn btn-secondary">⏭️ Skip &amp; spin again</button>
       </div>
       <div id="discord-status" class="status hidden"></div>
+    </section>
+
+    <section class="panel hidden" id="stats-panel">
+      <h2>🏆 Highscores</h2>
+      <div id="stats-grid" class="stats-grid"></div>
+      <h3 class="stats-subtitle">Tasks done per skill</h3>
+      <div id="skill-stats" class="skill-stats"></div>
+      <h3 class="stats-subtitle">History</h3>
+      <div id="history-list" class="history-list"></div>
     </section>
 
     <footer>
