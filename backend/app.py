@@ -13,6 +13,7 @@ from flask import Flask, g, jsonify, request
 
 DB_PATH = os.environ.get("DB_PATH", "/data/afk.db")
 ALLOWED_ORIGINS = {
+    "https://afk.rosu.fi",
     "https://jarmenkoski.github.io",
 }
 TZ = ZoneInfo("Europe/Helsinki")

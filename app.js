@@ -18,7 +18,7 @@ const els = {
 
 // Shared leaderboard API (Flask + SQLite on afk.rosu.fi). If it's unreachable,
 // everything falls back to this browser's localStorage.
-const API_BASE = 'https://afk.rosu.fi';
+const API_BASE = 'https://afk-api.rosu.fi';
 let serverStats = null; // own row from the leaderboard, when the API is reachable
 
 async function apiGet(path) {
@@ -58,7 +58,7 @@ function todayKey() {
 }
 
 function taskUrl(task) { return task.url ? WIKI_BASE + task.url : null; }
-function iconUrl(skill) { return `https://jarmenkoski.github.io/osrs-afk-roulette/${SKILL_META[skill].icon}`; }
+function iconUrl(skill) { return new URL(SKILL_META[skill].icon, location.href).href; }
 function iconImg(skill) { return `<img class="skill-icon" src="${SKILL_META[skill].icon}" alt="${SKILL_META[skill].name}">`; }
 
 // ---------- History / highscores (localStorage) ----------

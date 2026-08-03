@@ -2,7 +2,7 @@
 
 A static page that rolls your daily AFK task for Old School RuneScape — with a spinning roulette wheel.
 
-**Live**: https://jarmenkoski.github.io/osrs-afk-roulette/
+**Live**: https://afk.rosu.fi (leaderboard API: https://afk-api.rosu.fi)
 
 ## How it works
 
