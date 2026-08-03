@@ -1,43 +1,43 @@
 <!DOCTYPE html>
-<html lang="fi">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>OSRS AFK-ruletti</title>
+  <title>OSRS AFK Roulette</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>⚔️ OSRS AFK-ruletti 🎡</h1>
-      <p class="subtitle">Pyöräytä itsellesi päivän AFK-tehtävä!</p>
+      <h1>⚔️ OSRS AFK Roulette 🎡</h1>
+      <p class="subtitle">Spin the wheel for today's AFK task!</p>
     </header>
 
     <section class="panel" id="setup-panel">
       <div class="input-row">
         <div class="field">
-          <label for="nick">OSRS-nimimerkki</label>
-          <input type="text" id="nick" placeholder="esim. Zezima" autocomplete="off">
+          <label for="nick">OSRS username</label>
+          <input type="text" id="nick" placeholder="e.g. Zezima" autocomplete="off">
         </div>
-        <button id="fetch-btn" class="btn btn-secondary">Hae levelit</button>
+        <button id="fetch-btn" class="btn btn-secondary">Fetch levels</button>
       </div>
       <div class="options-row">
         <label class="checkbox-label">
-          <input type="checkbox" id="f2p-only"> Vain F2P-tehtävät
+          <input type="checkbox" id="f2p-only"> F2P tasks only
         </label>
-        <button id="settings-toggle" class="btn-link">⚙️ Discord-asetukset</button>
+        <button id="settings-toggle" class="btn-link">⚙️ Discord settings</button>
       </div>
       <div id="settings-box" class="settings-box hidden">
-        <label for="webhook">Discord-webhookin URL (tallentuu vain tähän selaimeen)</label>
+        <label for="webhook">Discord webhook URL (stored only in this browser)</label>
         <input type="password" id="webhook" placeholder="https://discord.com/api/webhooks/...">
-        <p class="hint">Luo webhook Discordissa: Kanavan asetukset → Integraatiot → Webhookit → Uusi webhook → Kopioi URL</p>
+        <p class="hint">Create a webhook in Discord: Channel settings → Integrations → Webhooks → New Webhook → Copy URL</p>
       </div>
       <div id="fetch-status" class="status hidden"></div>
     </section>
 
     <section class="panel hidden" id="skills-panel">
-      <h2 id="skills-title">Levelit</h2>
+      <h2 id="skills-title">Levels</h2>
       <div id="skills-grid" class="skills-grid"></div>
       <p id="eligible-count" class="eligible-count"></p>
     </section>
@@ -47,22 +47,22 @@
         <div class="pointer">▼</div>
         <canvas id="wheel" width="520" height="520"></canvas>
       </div>
-      <button id="spin-btn" class="btn btn-primary">🎰 Generoi päivän tehtävä!</button>
+      <button id="spin-btn" class="btn btn-primary">🎰 Generate today's task!</button>
     </section>
 
     <section class="panel result-panel hidden" id="result-panel">
-      <h2>📜 Päivän AFK-tehtävä</h2>
+      <h2>📜 Today's AFK Task</h2>
       <div id="result-card" class="result-card"></div>
       <div class="result-actions">
-        <button id="discord-btn" class="btn btn-discord">📨 Lähetä Discordiin</button>
-        <button id="reroll-btn" class="btn btn-secondary">🔄 Pyöräytä uudestaan</button>
+        <button id="discord-btn" class="btn btn-discord">📨 Send to Discord</button>
+        <button id="reroll-btn" class="btn btn-secondary">🔄 Spin again</button>
       </div>
       <div id="discord-status" class="status hidden"></div>
     </section>
 
     <footer>
-      <p>Tehtävät: <a href="https://oldschool.runescape.wiki/w/Guide:AFK_Skilling_Methods" target="_blank" rel="noopener">OSRS Wiki – AFK Skilling Methods</a>
-      · Levelit: <a href="https://wiseoldman.net" target="_blank" rel="noopener">Wise Old Man</a> / OSRS Hiscores</p>
+      <p>Tasks: <a href="https://oldschool.runescape.wiki/w/Guide:AFK_Skilling_Methods" target="_blank" rel="noopener">OSRS Wiki – AFK Skilling Methods</a>
+      · Levels: <a href="https://wiseoldman.net" target="_blank" rel="noopener">Wise Old Man</a> / OSRS Hiscores</p>
     </footer>
   </div>
 

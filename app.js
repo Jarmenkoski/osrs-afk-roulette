@@ -72,20 +72,20 @@ async function fetchFromHiscores(nick) {
 
 async function fetchLevels() {
   const nick = els.nick.value.trim();
-  if (!nick) { setStatus(els.fetchStatus, 'Syötä nimimerkki ensin!', 'error'); return; }
+  if (!nick) { setStatus(els.fetchStatus, 'Enter a username first!', 'error'); return; }
 
   els.fetchBtn.disabled = true;
-  setStatus(els.fetchStatus, `Haetaan pelaajan ${nick} levelejä…`, 'info');
+  setStatus(els.fetchStatus, `Fetching levels for ${nick}…`, 'info');
 
   try {
     playerLevels = await fetchFromWOM(nick);
   } catch (e1) {
     try {
-      setStatus(els.fetchStatus, 'Wise Old Man ei vastannut, kokeillaan virallista hiscorea…', 'info');
+      setStatus(els.fetchStatus, 'Wise Old Man did not respond, trying the official hiscores…', 'info');
       playerLevels = await fetchFromHiscores(nick);
     } catch (e2) {
       console.error(e1, e2);
-      setStatus(els.fetchStatus, `Pelaajaa "${nick}" ei löytynyt hiscoreista. Tarkista nimi (hiscoret näyttävät vain pelaajat joilla on vähintään yksi skill top 2M:ssä).`, 'error');
+      setStatus(els.fetchStatus, `Player "${nick}" was not found on the hiscores. Check the name (hiscores only list players with at least one skill in the top 2M).`, 'error');
       els.fetchBtn.disabled = false;
       return;
     }
@@ -103,13 +103,13 @@ async function fetchLevels() {
 // ---------- UI ----------
 
 function renderSkills() {
-  els.skillsTitle.textContent = `${playerName} — levelit`;
+  els.skillsTitle.textContent = `${playerName} — levels`;
   els.skillsGrid.innerHTML = '';
   for (const [key, meta] of Object.entries(SKILL_META)) {
     if (!(key in playerLevels)) continue;
     const cell = document.createElement('div');
     cell.className = 'skill-cell';
-    cell.innerHTML = `<span>${meta.emoji}</span><span>${meta.fi}</span><span class="lvl">${playerLevels[key]}</span>`;
+    cell.innerHTML = `<span>${meta.emoji}</span><span>${meta.name}</span><span class="lvl">${playerLevels[key]}</span>`;
     els.skillsGrid.appendChild(cell);
   }
   els.skillsPanel.classList.remove('hidden');
@@ -127,7 +127,7 @@ function eligibleTasks() {
 
 function updateEligible() {
   const n = eligibleTasks().length;
-  els.eligibleCount.textContent = `Tehtäväpankissa ${TASKS.length} tehtävää, joista sinulle avoinna: ${n}`;
+  els.eligibleCount.textContent = `${TASKS.length} tasks in the pool — available to you: ${n}`;
   els.spinBtn.disabled = n === 0;
   if (playerLevels) drawIdleWheel();
 }
@@ -256,16 +256,16 @@ function onSpinEnd(task) {
 function renderResult(task, restored) {
   const meta = SKILL_META[task.skill];
   const reqStr = Object.entries(task.reqs)
-    .map(([s, l]) => `${SKILL_META[s].fi} ${l}`)
+    .map(([s, l]) => `${SKILL_META[s].name} ${l}`)
     .join(', ');
   els.resultCard.innerHTML = `
     <div class="task-name">${meta.emoji} ${task.name}</div>
-    <div class="task-skill">Skilli: <b>${meta.fi}</b> (sinulla: ${playerLevels ? (playerLevels[task.skill] || '?') : '?'})</div>
+    <div class="task-skill">Skill: <b>${meta.name}</b> (yours: ${playerLevels ? (playerLevels[task.skill] || '?') : '?'})</div>
     <div class="task-meta">
-      <div>⏱️ AFK-aika: ~${task.afk} per klikkaus</div>
-      <div>📋 Vaatimukset: ${reqStr}</div>
+      <div>⏱️ AFK time: ~${task.afk} per click</div>
+      <div>📋 Requirements: ${reqStr}</div>
       ${task.notes ? `<div>💡 ${task.notes}</div>` : ''}
-      ${restored ? '<div><i>(tämän päivän aiemmin arvottu tehtävä)</i></div>' : ''}
+      ${restored ? '<div><i>(today\'s previously rolled task)</i></div>' : ''}
     </div>`;
   els.resultPanel.classList.remove('hidden');
   if (!restored) els.resultPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
@@ -287,27 +287,27 @@ async function sendToDiscord() {
   const url = els.webhook.value.trim();
   if (!url) {
     els.settingsBox.classList.remove('hidden');
-    setStatus(els.discordStatus, 'Syötä ensin Discord-webhookin URL asetuksiin (⚙️).', 'error');
+    setStatus(els.discordStatus, 'Enter your Discord webhook URL in the settings (⚙️) first.', 'error');
     return;
   }
   if (!currentTask) return;
   localStorage.setItem('afk_webhook', url);
 
   const meta = SKILL_META[currentTask.skill];
-  const reqStr = Object.entries(currentTask.reqs).map(([s, l]) => `${SKILL_META[s].fi} ${l}`).join(', ');
+  const reqStr = Object.entries(currentTask.reqs).map(([s, l]) => `${SKILL_META[s].name} ${l}`).join(', ');
   const payload = {
-    username: 'AFK-ruletti',
+    username: 'AFK Roulette',
     embeds: [{
-      title: `🎡 Päivän AFK-tehtävä: ${meta.emoji} ${currentTask.name}`,
+      title: `🎡 Today's AFK task: ${meta.emoji} ${currentTask.name}`,
       color: 0xf5c542,
       fields: [
-        { name: 'Pelaaja', value: playerName, inline: true },
-        { name: 'Skilli', value: meta.fi, inline: true },
-        { name: 'AFK-aika', value: `~${currentTask.afk}`, inline: true },
-        { name: 'Vaatimukset', value: reqStr, inline: false },
-        ...(currentTask.notes ? [{ name: 'Huom', value: currentTask.notes, inline: false }] : []),
+        { name: 'Player', value: playerName, inline: true },
+        { name: 'Skill', value: meta.name, inline: true },
+        { name: 'AFK time', value: `~${currentTask.afk}`, inline: true },
+        { name: 'Requirements', value: reqStr, inline: false },
+        ...(currentTask.notes ? [{ name: 'Note', value: currentTask.notes, inline: false }] : []),
       ],
-      footer: { text: 'OSRS AFK-ruletti' },
+      footer: { text: 'OSRS AFK Roulette' },
       timestamp: new Date().toISOString(),
     }],
   };
@@ -320,10 +320,10 @@ async function sendToDiscord() {
       body: JSON.stringify(payload),
     });
     if (!res.ok) throw new Error(`Discord ${res.status}`);
-    setStatus(els.discordStatus, '✅ Lähetetty Discord-kanavalle!', 'success');
+    setStatus(els.discordStatus, '✅ Sent to the Discord channel!', 'success');
   } catch (e) {
     console.error(e);
-    setStatus(els.discordStatus, 'Lähetys epäonnistui — tarkista webhookin URL.', 'error');
+    setStatus(els.discordStatus, 'Sending failed — check the webhook URL.', 'error');
   }
   els.discordBtn.disabled = false;
 }

@@ -1,18 +1,18 @@
-# OSRS AFK-ruletti 🎡
+# OSRS AFK Roulette 🎡
 
-Staattinen sivu, joka arpoo päivän AFK-tehtävän Old School RuneScapeen — rulettipyörällä.
+A static page that rolls your daily AFK task for Old School RuneScape — with a spinning roulette wheel.
 
 **Live**: https://jarmenkoski.github.io/osrs-afk-roulette/
 
-## Miten toimii
+## How it works
 
-1. Syötä OSRS-nimimerkki → levelit haetaan [Wise Old Man](https://wiseoldman.net) -APIsta (fallback: virallinen hiscores CORS-proxyn läpi).
-2. Tehtäväpankki ([tasks.js](tasks.js)) on kuratoitu [OSRS Wikin AFK-listasta](https://oldschool.runescape.wiki/w/Guide:AFK_Skilling_Methods) — vain tehtävät, joiden skill-vaatimukset täyttyvät, pääsevät pyörään.
-3. **Generoi** → rulettipyörä pyörii ja pysähtyy päivän tehtävään.
-4. Tuloksen voi postata Discord-kanavalle webhookilla (⚙️-asetuksista; URL tallentuu vain selaimen localStorageen, ei repoon).
+1. Enter your OSRS username → levels are fetched from the [Wise Old Man](https://wiseoldman.net) API (fallback: official hiscores via a CORS proxy).
+2. The task pool ([tasks.js](tasks.js)) is curated from the [OSRS Wiki AFK list](https://oldschool.runescape.wiki/w/Guide:AFK_Skilling_Methods) — only tasks whose skill requirements you meet make it onto the wheel.
+3. **Generate** → the roulette wheel spins and lands on today's task.
+4. The result can be posted to a Discord channel via a webhook (⚙️ settings; the URL is stored only in your browser's localStorage, never in the repo).
 
-## Discord-webhookin luonti
+## Creating the Discord webhook
 
-Discordissa: Kanavan asetukset → Integraatiot → Webhookit → Uusi webhook → Kopioi URL → liitä sivun ⚙️-asetuksiin.
+In Discord: Channel settings → Integrations → Webhooks → New Webhook → Copy URL → paste it into the page's ⚙️ settings.
 
-Ei buildia, ei backendiä — pelkkä HTML/CSS/JS, hostattu GitHub Pagesissa.
+No build, no backend — plain HTML/CSS/JS hosted on GitHub Pages.
