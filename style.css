@@ -60,6 +60,9 @@ input[type="text"], input[type="password"] {
   font-family: inherit;
 }
 input:focus { outline: none; border-color: var(--gold-dim); }
+/* Mask the webhook URL like a password without using type="password"
+   (a password field makes browsers offer saved logins for the nick field) */
+input.masked:not(:focus) { -webkit-text-security: disc; }
 
 .options-row {
   display: flex; justify-content: space-between; align-items: center;

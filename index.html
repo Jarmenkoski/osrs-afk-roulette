@@ -18,7 +18,7 @@
       <div class="input-row">
         <div class="field">
           <label for="nick">OSRS username</label>
-          <input type="text" id="nick" placeholder="e.g. Zezima" autocomplete="off">
+          <input type="text" id="nick" name="osrs-nick" placeholder="e.g. Zezima" autocomplete="nickname" autocapitalize="off" spellcheck="false">
         </div>
         <button id="fetch-btn" class="btn btn-secondary">Fetch levels</button>
       </div>
@@ -30,7 +30,7 @@
       </div>
       <div id="settings-box" class="settings-box hidden">
         <label for="webhook">Discord webhook URL (stored only in this browser)</label>
-        <input type="password" id="webhook" placeholder="https://discord.com/api/webhooks/...">
+        <input type="text" id="webhook" name="discord-webhook-url" class="masked" placeholder="https://discord.com/api/webhooks/..." autocomplete="off" autocapitalize="off" spellcheck="false">
         <p class="hint">Create a webhook in Discord: Channel settings → Integrations → Webhooks → New Webhook → Copy URL</p>
       </div>
       <div id="fetch-status" class="status hidden"></div>
