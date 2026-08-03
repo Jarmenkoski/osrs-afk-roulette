@@ -161,6 +161,16 @@ input:focus { outline: none; border-color: var(--gold-dim); }
 }
 .skill-stat-chip b { color: var(--gold); }
 
+.lb-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.lb-table th {
+  text-align: left; color: var(--gold-dim); font-size: 0.8rem;
+  padding: 6px 8px; border-bottom: 1px solid var(--panel-border);
+}
+.lb-table td { padding: 7px 8px; border-bottom: 1px solid #2e241a; }
+.lb-table tr.me td { background: rgba(245, 197, 66, 0.08); }
+.lb-table .lb-rank { width: 36px; text-align: center; }
+.lb-table .lb-num { text-align: right; }
+
 .history-list { display: flex; flex-direction: column; gap: 4px; }
 .history-row {
   display: flex; align-items: center; gap: 8px;

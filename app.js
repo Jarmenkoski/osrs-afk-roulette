@@ -13,7 +13,29 @@ const els = {
   resultPanel: $('result-panel'), resultCard: $('result-card'),
   doneBtn: $('done-btn'), discordBtn: $('discord-btn'), rerollBtn: $('reroll-btn'), discordStatus: $('discord-status'),
   statsPanel: $('stats-panel'), statsGrid: $('stats-grid'), skillStats: $('skill-stats'), historyList: $('history-list'),
+  leaderboardPanel: $('leaderboard-panel'), leaderboard: $('leaderboard'),
 };
+
+// Shared leaderboard API (Flask + SQLite on afk.rosu.fi). If it's unreachable,
+// everything falls back to this browser's localStorage.
+const API_BASE = 'https://afk.rosu.fi';
+let serverStats = null; // own row from the leaderboard, when the API is reachable
+
+async function apiGet(path) {
+  const r = await fetch(API_BASE + path);
+  if (!r.ok) throw new Error(`${path} ${r.status}`);
+  return r.json();
+}
+async function apiPost(path, body) {
+  const r = await fetch(API_BASE + path, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(body),
+  });
+  if (!r.ok) throw new Error(`${path} ${r.status}`);
+  return r.json();
+}
+function normKey(n) { return n.toLowerCase().replace(/[_-]/g, ' '); }
 
 let playerLevels = null;   // { attack: 60, ... }
 let playerName = '';
@@ -51,6 +73,27 @@ function logEntry(status, task) {
   const h = getHistory();
   h.push({ d: todayKey(), nick: playerName, task: task.name, skill: task.skill, status });
   saveHistory(h);
+}
+
+// Log locally (offline backup) + push to the shared API, then refresh views.
+function recordEvent(status, task) {
+  logEntry(status, task);
+  apiPost('/api/events', { nick: playerName, date: todayKey(), task: task.name, skill: task.skill, status })
+    .catch(() => {})
+    .finally(() => { renderStats(); renderLeaderboard(); });
+}
+
+// One-time upload of pre-backend localStorage history so streaks carry over.
+async function syncLocalHistory() {
+  if (localStorage.getItem('afk_synced')) return;
+  const h = getHistory();
+  if (!h.length) { localStorage.setItem('afk_synced', '1'); return; }
+  try {
+    await apiPost('/api/events/bulk', {
+      events: h.map((e) => ({ nick: e.nick, date: e.d, task: e.task, skill: e.skill, status: e.status })),
+    });
+    localStorage.setItem('afk_synced', '1');
+  } catch (_) { /* retry next visit */ }
 }
 
 function doneToday() {
@@ -93,9 +136,26 @@ function computeStats(nick) {
   return { doneCount: done.length, skips, current, best, bySkill, entries };
 }
 
-function renderStats() {
+async function renderStats() {
   if (!playerName) return;
-  const s = computeStats(playerName);
+  let s, hist;
+  try {
+    const [lb, h] = await Promise.all([
+      apiGet('/api/leaderboard'),
+      apiGet(`/api/history?nick=${encodeURIComponent(playerName)}&limit=15`),
+    ]);
+    const own = lb.players.find((p) => normKey(p.nick) === normKey(playerName));
+    serverStats = own || { current: 0, best: 0, done: 0, skips: 0, bySkill: {} };
+    s = { current: serverStats.current, best: serverStats.best, doneCount: serverStats.done, skips: serverStats.skips, bySkill: serverStats.bySkill || {} };
+    hist = h.entries;
+  } catch (_) {
+    // API unreachable — fall back to this browser's local history
+    serverStats = null;
+    const local = computeStats(playerName);
+    s = local;
+    hist = local.entries.slice(-15).reverse();
+  }
+
   els.statsGrid.innerHTML = `
     <div class="stat-card"><div class="stat-value">🔥 ${s.current}</div><div class="stat-label">Current streak (days)</div></div>
     <div class="stat-card"><div class="stat-value">🏅 ${s.best}</div><div class="stat-label">Best streak</div></div>
@@ -107,9 +167,8 @@ function renderStats() {
     ? skills.map(([sk, n]) => `<span class="skill-stat-chip">${iconImg(sk)} ${SKILL_META[sk].name} <b>${n}</b></span>`).join('')
     : '<span class="hint">Nothing completed yet — get AFKing!</span>';
 
-  const recent = s.entries.slice(-15).reverse();
-  els.historyList.innerHTML = recent.length
-    ? recent.map((e) => `
+  els.historyList.innerHTML = hist.length
+    ? hist.map((e) => `
         <div class="history-row ${e.status}">
           <span class="h-date">${e.d}</span>
           ${iconImg(e.skill)}
@@ -119,6 +178,35 @@ function renderStats() {
     : '<span class="hint">No history yet.</span>';
 
   els.statsPanel.classList.remove('hidden');
+}
+
+async function renderLeaderboard() {
+  try {
+    const lb = await apiGet('/api/leaderboard');
+    if (!lb.players.length) {
+      els.leaderboard.innerHTML = '<span class="hint">No players yet — be the first!</span>';
+    } else {
+      const medal = (i) => ['🥇', '🥈', '🥉'][i] || `${i + 1}.`;
+      els.leaderboard.innerHTML = `
+        <table class="lb-table">
+          <thead><tr><th class="lb-rank">#</th><th>Player</th><th class="lb-num">🔥 Streak</th><th class="lb-num">🏅 Best</th><th class="lb-num">✅ Done</th><th class="lb-num">⏭️ Skips</th></tr></thead>
+          <tbody>
+            ${lb.players.map((p, i) => `
+              <tr class="${playerName && normKey(p.nick) === normKey(playerName) ? 'me' : ''}">
+                <td class="lb-rank">${medal(i)}</td>
+                <td>${p.nick}</td>
+                <td class="lb-num">${p.current}</td>
+                <td class="lb-num">${p.best}</td>
+                <td class="lb-num">${p.done}</td>
+                <td class="lb-num">${p.skips}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>`;
+    }
+    els.leaderboardPanel.classList.remove('hidden');
+  } catch (_) {
+    els.leaderboardPanel.classList.add('hidden'); // API down — hide quietly
+  }
 }
 
 // ---------- Level fetching ----------
@@ -186,7 +274,9 @@ async function fetchLevels() {
   renderSkills();
   updateEligible();
   checkExistingDaily();
+  await syncLocalHistory();
   renderStats();
+  renderLeaderboard();
 }
 
 // ---------- UI ----------
@@ -392,17 +482,15 @@ function updateDoneBtn() {
 
 function markDone() {
   if (!currentTask || doneToday()) return;
-  logEntry('done', currentTask);
+  recordEvent('done', currentTask);
   updateDoneBtn();
-  renderStats();
 }
 
 function skipAndReroll() {
   if (spinning) return;
   // A skip only counts if there's a task rolled today that hasn't been completed
   if (currentTask && !doneToday()) {
-    logEntry('skipped', currentTask);
-    renderStats();
+    recordEvent('skipped', currentTask);
   }
   els.resultPanel.classList.add('hidden');
   spin();
@@ -432,7 +520,9 @@ async function sendToDiscord() {
 
   const meta = SKILL_META[currentTask.skill];
   const reqStr = Object.entries(currentTask.reqs).map(([s, l]) => `${SKILL_META[s].name} ${l}`).join(', ');
-  const stats = computeStats(playerName);
+  const stats = serverStats
+    ? { current: serverStats.current, doneCount: serverStats.done, skips: serverStats.skips }
+    : computeStats(playerName);
   const wikiLink = taskUrl(currentTask);
   const payload = {
     username: 'AFK Roulette',
@@ -487,3 +577,5 @@ const savedNick = localStorage.getItem('afk_nick');
 if (savedNick) els.nick.value = savedNick;
 const savedHook = localStorage.getItem('afk_webhook');
 if (savedHook) els.webhook.value = savedHook;
+
+renderLeaderboard(); // the shared board is visible even before fetching levels
