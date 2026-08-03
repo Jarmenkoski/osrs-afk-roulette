@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="fi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OSRS AFK-ruletti</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚔️ OSRS AFK-ruletti 🎡</h1>
+      <p class="subtitle">Pyöräytä itsellesi päivän AFK-tehtävä!</p>
+    </header>
+
+    <section class="panel" id="setup-panel">
+      <div class="input-row">
+        <div class="field">
+          <label for="nick">OSRS-nimimerkki</label>
+          <input type="text" id="nick" placeholder="esim. Zezima" autocomplete="off">
+        </div>
+        <button id="fetch-btn" class="btn btn-secondary">Hae levelit</button>
+      </div>
+      <div class="options-row">
+        <label class="checkbox-label">
+          <input type="checkbox" id="f2p-only"> Vain F2P-tehtävät
+        </label>
+        <button id="settings-toggle" class="btn-link">⚙️ Discord-asetukset</button>
+      </div>
+      <div id="settings-box" class="settings-box hidden">
+        <label for="webhook">Discord-webhookin URL (tallentuu vain tähän selaimeen)</label>
+        <input type="password" id="webhook" placeholder="https://discord.com/api/webhooks/...">
+        <p class="hint">Luo webhook Discordissa: Kanavan asetukset → Integraatiot → Webhookit → Uusi webhook → Kopioi URL</p>
+      </div>
+      <div id="fetch-status" class="status hidden"></div>
+    </section>
+
+    <section class="panel hidden" id="skills-panel">
+      <h2 id="skills-title">Levelit</h2>
+      <div id="skills-grid" class="skills-grid"></div>
+      <p id="eligible-count" class="eligible-count"></p>
+    </section>
+
+    <section class="wheel-section hidden" id="wheel-section">
+      <div class="wheel-wrap">
+        <div class="pointer">▼</div>
+        <canvas id="wheel" width="520" height="520"></canvas>
+      </div>
+      <button id="spin-btn" class="btn btn-primary">🎰 Generoi päivän tehtävä!</button>
+    </section>
+
+    <section class="panel result-panel hidden" id="result-panel">
+      <h2>📜 Päivän AFK-tehtävä</h2>
+      <div id="result-card" class="result-card"></div>
+      <div class="result-actions">
+        <button id="discord-btn" class="btn btn-discord">📨 Lähetä Discordiin</button>
+        <button id="reroll-btn" class="btn btn-secondary">🔄 Pyöräytä uudestaan</button>
+      </div>
+      <div id="discord-status" class="status hidden"></div>
+    </section>
+
+    <footer>
+      <p>Tehtävät: <a href="https://oldschool.runescape.wiki/w/Guide:AFK_Skilling_Methods" target="_blank" rel="noopener">OSRS Wiki – AFK Skilling Methods</a>
+      · Levelit: <a href="https://wiseoldman.net" target="_blank" rel="noopener">Wise Old Man</a> / OSRS Hiscores</p>
+    </footer>
+  </div>
+
+  <script src="tasks.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
