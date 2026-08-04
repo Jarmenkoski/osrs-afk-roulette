@@ -998,38 +998,191 @@ def _finish_highscores(token):
         con.close()
 
 
-def handle_slash(data):
-    cmd = data.get("data", {})
-    if cmd.get("name") == "highscores":
-        threading.Thread(target=finish_highscores, args=(data["token"],), daemon=True).start()
-        return jsonify({"type": 5})
-    if cmd.get("name") != "afk":
-        return ephemeral("Unknown command.")
-    user = (data.get("member") or {}).get("user") or data.get("user") or {}
-    discord_id = user.get("id", "")
-    con = db()
+TASKER_CATEGORY_META = {
+    "task": {"emoji": "📋", "title": "Task", "color": 0xF5C542},
+    "boss": {"emoji": "⚔️", "title": "Boss task", "color": 0xC0392B},
+    "collection": {"emoji": "📚", "title": "Collection task", "color": 0x2980B9},
+}
+
+
+def tasker_stats(con, key):
+    stats = {"task": 0, "boss": 0, "collection": 0, "skips": 0}
+    for r in con.execute(
+        "SELECT category, SUM(status = 'done') AS d, SUM(status = 'skipped') AS s "
+        "FROM tasker_events WHERE nick_key = ? GROUP BY category", (key,),
+    ):
+        stats[r["category"]] = r["d"] or 0
+        stats["skips"] += r["s"] or 0
+    return stats
+
+
+def tasker_discord_embed(con, nick, category, task, done=False):
+    meta = TASKER_CATEGORY_META[category]
+    s = tasker_stats(con, norm_key(nick))
+    fields = [{"name": "Player", "value": nick, "inline": True}]
+    if category == "task" and task.get("skill"):
+        fields.append({"name": "Skill", "value": f"{task['skill']} (req {task.get('req', '?')})", "inline": True})
+    if category == "boss" and task.get("reqs"):
+        req_str = ", ".join(f"{k.capitalize()} {v}" for k, v in sorted(task["reqs"].items()))
+        fields.append({"name": "Requirements", "value": req_str[:1000], "inline": False})
+    if task.get("tip"):
+        fields.append({"name": "Tip", "value": task["tip"][:1000], "inline": False})
+    fields.append({"name": "Totals", "value":
+                   f"📋 {s['task']} · ⚔️ {s['boss']} · 📚 {s['collection']} · ⏭️ {s['skips']} skips",
+                   "inline": False})
+    title = (f"✅ Done: {task['name']}" if done
+             else f"{meta['emoji']} {meta['title']}: {task['name']}")
+    return {
+        "title": title,
+        **({"url": task["wiki"]} if task.get("wiki") else {}),
+        "color": 0x4CAF50 if done else meta["color"],
+        "fields": fields,
+        "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")},
+    }
+
+
+def tasker_buttons(category, discord_id, after_done=False):
+    if after_done:
+        return [{"type": 1, "components": [
+            {"type": 2, "style": 1, "label": "🎲 New task", "custom_id": f"tsk:new:{category}:{discord_id}"},
+        ]}]
+    return [{"type": 1, "components": [
+        {"type": 2, "style": 3, "label": "✅ Done", "custom_id": f"tsk:done:{category}:{discord_id}"},
+        {"type": 2, "style": 2, "label": "⏭️ Skip", "custom_id": f"tsk:skip:{category}:{discord_id}"},
+    ]}]
+
+
+def finish_tasker(token, discord_id, nick, category):
+    try:
+        con = open_db()
+        try:
+            key = norm_key(nick)
+            levels = get_levels(con, nick)
+            if levels is None:
+                patch_original(token, {"content":
+                    f"Couldn't fetch hiscores for **{nick}** — check the name with `/{category} nick:YourName`."})
+                return
+            task = get_active(con, key, category)
+            if task is None:
+                task = roll_category(levels, category)
+                if task is None:
+                    patch_original(token, {"content": f"No eligible {category} tasks for **{nick}**."})
+                    return
+                set_active(con, key, category, task)
+            patch_original(token, {
+                "embeds": [tasker_discord_embed(con, nick, category, task)],
+                "components": tasker_buttons(category, discord_id),
+            })
+        finally:
+            con.close()
+    except Exception as e:
+        print(f"finish_tasker crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong — try again."})
+
+
+def resolve_nick(cmd, discord_id, con):
+    """Shared /afk-style nick resolution: optional nick option, else saved link."""
     nick_opt = next((o.get("value", "") for o in cmd.get("options", []) if o.get("name") == "nick"), "").strip()
     if nick_opt:
         if not NICK_RE.match(nick_opt):
-            return ephemeral("That doesn't look like a valid OSRS name (max 12 chars).")
+            return None, ephemeral("That doesn't look like a valid OSRS name (max 12 chars).")
         con.execute(
             "INSERT INTO discord_links (discord_id, nick) VALUES (?, ?) "
             "ON CONFLICT(discord_id) DO UPDATE SET nick = excluded.nick",
             (discord_id, nick_opt),
         )
         con.commit()
-        nick = nick_opt
+        return nick_opt, None
+    row = con.execute("SELECT nick FROM discord_links WHERE discord_id = ?", (discord_id,)).fetchone()
+    if row is None:
+        return None, ephemeral(
+            f"Tell me your OSRS name first: `/{cmd.get('name', 'afk')} nick:YourName` (remembered after that).")
+    return row["nick"], None
+
+
+def handle_slash(data):
+    cmd = data.get("data", {})
+    name = cmd.get("name")
+    if name == "highscores":
+        threading.Thread(target=finish_highscores, args=(data["token"],), daemon=True).start()
+        return jsonify({"type": 5})
+    if name not in ("afk", "task", "boss", "collection"):
+        return ephemeral("Unknown command.")
+    user = (data.get("member") or {}).get("user") or data.get("user") or {}
+    discord_id = user.get("id", "")
+    nick, err = resolve_nick(cmd, discord_id, db())
+    if err:
+        return err
+    if name == "afk":
+        threading.Thread(target=finish_roll, args=(data["token"], discord_id, nick), daemon=True).start()
     else:
-        row = con.execute("SELECT nick FROM discord_links WHERE discord_id = ?", (discord_id,)).fetchone()
-        if row is None:
-            return ephemeral("Tell me your OSRS name first: `/afk nick:YourName` (remembered after that).")
-        nick = row["nick"]
-    threading.Thread(target=finish_roll, args=(data["token"], discord_id, nick), daemon=True).start()
-    return jsonify({"type": 5})  # deferred — finish_roll edits the message
+        threading.Thread(target=finish_tasker, args=(data["token"], discord_id, nick, name), daemon=True).start()
+    return jsonify({"type": 5})  # deferred — the thread edits the message
+
+
+def handle_tasker_button(data):
+    parts = data.get("data", {}).get("custom_id", "").split(":")
+    if len(parts) != 4:
+        return ephemeral("Unknown button.")
+    _, action, category, owner_id = parts
+    if category not in TASKER_CATEGORY_META or action not in ("done", "skip", "new"):
+        return ephemeral("Unknown button.")
+    user = (data.get("member") or {}).get("user") or data.get("user") or {}
+    if user.get("id") != owner_id:
+        return ephemeral("Only the player who rolled this task can use these buttons.")
+    con = db()
+    link = con.execute("SELECT nick FROM discord_links WHERE discord_id = ?", (owner_id,)).fetchone()
+    if link is None:
+        return ephemeral(f"Link your OSRS name first: `/{category} nick:YourName`.")
+    nick = link["nick"]
+    key = norm_key(nick)
+    active = get_active(con, key, category)
+
+    if action == "done":
+        if active is None:
+            return ephemeral(f"No active {category} task — roll one with `/{category}`.")
+        con.execute(
+            "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",
+            (nick, key, category, active.get("name", "?"), "done", today().isoformat()),
+        )
+        con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
+        con.commit()
+        return jsonify({"type": 7, "data": {
+            "embeds": [tasker_discord_embed(con, nick, category, active, done=True)],
+            "components": tasker_buttons(category, owner_id, after_done=True),
+        }})
+
+    # skip / new both roll a fresh task from cached levels (no slow WOM fetch)
+    lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
+    if lv is None:
+        return ephemeral(f"Levels not cached — use `/{category}` first.")
+    if action == "skip":
+        if active is None:
+            return ephemeral(f"No active {category} task — roll one with `/{category}`.")
+        con.execute(
+            "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",
+            (nick, key, category, active.get("name", "?"), "skipped", today().isoformat()),
+        )
+        con.commit()
+    elif active is not None:  # "new" pressed but a task is already active -> show it
+        return jsonify({"type": 7, "data": {
+            "embeds": [tasker_discord_embed(con, nick, category, active)],
+            "components": tasker_buttons(category, owner_id),
+        }})
+    task = roll_category(json.loads(lv["levels"]), category)
+    if task is None:
+        return ephemeral(f"No eligible {category} tasks.")
+    set_active(con, key, category, task)
+    return jsonify({"type": 7, "data": {
+        "embeds": [tasker_discord_embed(con, nick, category, task)],
+        "components": tasker_buttons(category, owner_id),
+    }})
 
 
 def handle_button(data):
     custom_id = data.get("data", {}).get("custom_id", "")
+    if custom_id.startswith("tsk:"):
+        return handle_tasker_button(data)
     parts = custom_id.split(":")
     if len(parts) != 3 or parts[0] != "afk":
         return ephemeral("Unknown button.")
@@ -1281,6 +1434,37 @@ def skill_task_roll():
     }
     set_active(con, key, "task", {**result, "name": result["task"]})
     return jsonify({**result, "active": False})
+
+
+def roll_category(levels, category):
+    """Roll a fresh task dict for a category, or None if nothing is eligible."""
+    if category == "task":
+        _cb, pool = skill_task_pool(levels)
+        if not pool:
+            return None
+        skill = random.choice(list(pool.keys()))
+        entry = pool[skill]
+        near = [m for m in entry["methods"] if m["near"]]
+        far = [m for m in entry["methods"] if not m["near"]]
+        bucket = (near if random.random() < skill_tasks.NEAR_SHARE else far) if near and far else (near or far)
+        m = random.choice(bucket)
+        count = random.randint(m["lo"], m["hi"])
+        if m["hi"] >= 20:
+            count = max(m["lo"], round(count / 5) * 5)
+        return {"name": m["template"].replace("{n}", str(count)),
+                "skill": skill, "level": entry["level"], "req": m["req"]}
+    cb, eligible, _ = tasker_split(levels, category)
+    if not eligible:
+        return None
+    weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
+    task = dict(random.choice(weighted))
+    if "{n}" in task["name"] and "lo" in task:
+        count = random.randint(task["lo"], task["hi"])
+        if task["hi"] >= 20:
+            count = max(task["lo"], round(count / 5) * 5)
+        task["name"] = task["name"].replace("{n}", str(count))
+    return {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
+            "reqs": task.get("reqs", {})}
 
 
 @app.get("/api/tasker/current")
