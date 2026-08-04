@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Generator — TEST</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🧪</text></svg>">
+  <link rel="stylesheet" href="style.css">
+  <style>
+    .tier-btns { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0; }
+    .tier-btn { flex: 1; min-width: 90px; }
+    .tier-btn.active { outline: 2px solid var(--gold); }
+    .task-row { background: #221a13; border-radius: 5px; padding: 7px 10px; margin-bottom: 4px; font-size: 0.9rem; }
+    .task-row a { color: var(--gold); }
+    .task-row .why { color: #f0a0a0; font-size: 0.82rem; margin-top: 2px; }
+    .task-row .reqs { color: var(--text-dim); font-size: 0.8rem; }
+    .roll-card { background: var(--parchment); color: #2b2119; border-radius: 8px; padding: 18px; text-align: center; margin: 12px 0; }
+    .roll-card .task-name { font-size: 1.3rem; font-weight: bold; }
+    .roll-card a { color: #6a3f00; }
+    .roll-card .tip { font-size: 0.9rem; margin-top: 8px; color: #5a4a30; }
+    .counts { color: var(--text-dim); margin: 10px 0; }
+    details summary { cursor: pointer; color: var(--gold-dim); margin: 12px 0 8px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>🧪 Task Generator — TEST</h1>
+      <p class="subtitle">Taskman-style generator (Easy/Normal/Hard/Elite) — testing mode, not public yet</p>
+    </header>
+
+    <section class="panel">
+      <div class="input-row">
+        <div class="field">
+          <label for="nick">OSRS username</label>
+          <input type="text" id="nick" placeholder="e.g. VahvaJaakko" autocomplete="nickname" spellcheck="false">
+        </div>
+        <button id="load-btn" class="btn btn-secondary">Load</button>
+      </div>
+      <div class="tier-btns">
+        <button class="btn btn-secondary tier-btn active" data-tier="easy">Easy</button>
+        <button class="btn btn-secondary tier-btn" data-tier="normal">Normal</button>
+        <button class="btn btn-secondary tier-btn" data-tier="hard">Hard</button>
+        <button class="btn btn-secondary tier-btn" data-tier="elite">Elite</button>
+      </div>
+      <button id="roll-btn" class="btn btn-primary" disabled>🎲 Roll a task</button>
+      <div id="status" class="status hidden"></div>
+    </section>
+
+    <div id="roll-result"></div>
+
+    <section class="panel hidden" id="lists-panel">
+      <p class="counts" id="counts"></p>
+      <details open><summary>✅ Eligible tasks</summary><div id="eligible-list"></div></details>
+      <details><summary>🚫 Blocked tasks (with reasons — check these!)</summary><div id="blocked-list"></div></details>
+    </section>
+  </div>
+
+  <script>
+    const API = 'https://afk-api.rosu.fi';
+    const $ = (id) => document.getElementById(id);
+    let tier = 'easy';
+
+    document.querySelectorAll('.tier-btn').forEach((b) => b.addEventListener('click', () => {
+      document.querySelectorAll('.tier-btn').forEach((x) => x.classList.remove('active'));
+      b.classList.add('active');
+      tier = b.dataset.tier;
+      if ($('nick').value.trim()) load();
+    }));
+
+    function setStatus(msg, kind) {
+      const el = $('status');
+      el.textContent = msg; el.className = 'status ' + kind; el.classList.remove('hidden');
+    }
+
+    function fmtReqs(reqs) {
+      const e = Object.entries(reqs);
+      return e.length ? e.map(([s, l]) => `${s} ${l}`).join(', ') : 'no requirements';
+    }
+
+    async function load() {
+      const nick = $('nick').value.trim();
+      if (!nick) return;
+      localStorage.setItem('afk_nick', nick);
+      setStatus(`Loading ${tier} tasks for ${nick}…`, 'info');
+      try {
+        const r = await fetch(`${API}/api/tasker/eligible?nick=${encodeURIComponent(nick)}&tier=${tier}`);
+        if (!r.ok) throw new Error((await r.json()).error || r.status);
+        const d = await r.json();
+        $('counts').textContent = `Combat level ${d.combat} · ${d.eligibleCount} eligible / ${d.blockedCount} blocked (tier: ${d.tier})`;
+        $('eligible-list').innerHTML = d.eligible.map((t) => `
+          <div class="task-row">
+            ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.name}</a>` : t.name}
+            <span class="reqs"> — ${fmtReqs(t.reqs)} (weight ${t.weight})</span>
+          </div>`).join('') || '<i>none</i>';
+        $('blocked-list').innerHTML = d.blocked.map((t) => `
+          <div class="task-row">
+            ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.name}</a>` : t.name}
+            <div class="why">Missing: ${Object.entries(t.missing).map(([s, m]) => `${s} ${m.have}/${m.need}`).join(', ')}</div>
+          </div>`).join('') || '<i>none — everything eligible</i>';
+        $('lists-panel').classList.remove('hidden');
+        $('roll-btn').disabled = d.eligibleCount === 0;
+        $('status').classList.add('hidden');
+      } catch (e) {
+        setStatus('Failed: ' + e.message, 'error');
+      }
+    }
+
+    async function roll() {
+      const nick = $('nick').value.trim();
+      setStatus('Rolling…', 'info');
+      try {
+        const r = await fetch(`${API}/api/tasker/roll?nick=${encodeURIComponent(nick)}&tier=${tier}`);
+        if (!r.ok) throw new Error((await r.json()).error || r.status);
+        const d = await r.json();
+        $('roll-result').innerHTML = `
+          <div class="roll-card">
+            <div class="task-name">${d.task.wiki ? `<a href="${d.task.wiki}" target="_blank" rel="noopener">${d.task.name}</a>` : d.task.name}</div>
+            <div class="reqs">${fmtReqs(d.task.reqs)}</div>
+            ${d.task.tip ? `<div class="tip">💡 ${d.task.tip}</div>` : ''}
+          </div>`;
+        $('status').classList.add('hidden');
+      } catch (e) {
+        setStatus('Roll failed: ' + e.message, 'error');
+      }
+    }
+
+    $('load-btn').addEventListener('click', load);
+    $('nick').addEventListener('keydown', (e) => { if (e.key === 'Enter') load(); });
+    $('roll-btn').addEventListener('click', roll);
+    const saved = localStorage.getItem('afk_nick');
+    if (saved) $('nick').value = saved;
+  </script>
+</body>
+</html>
