@@ -1069,27 +1069,10 @@ def handle_button(data):
 import tasker_reqs  # noqa: E402
 
 with open(os.path.join(os.path.dirname(__file__), "tasker_tiers.json"), encoding="utf-8") as _f:
-    _raw_tiers = json.load(_f)
+    TASKER_TIERS = json.load(_f)
 
-# Split boss tasks out of the skill tiers into their own "boss" category.
-# The same boss task can appear in several tiers — merge and sum the weights.
-TASKER_TIERS = {}
-_bosses = {}
-for _tier, _tasks in _raw_tiers.items():
-    keep = []
-    for _t in _tasks:
-        if tasker_reqs.is_boss(_t["name"]):
-            if _t["name"] in _bosses:
-                _bosses[_t["name"]]["weight"] += _t.get("weight", 1)
-            else:
-                _bosses[_t["name"]] = {**_t, "origTier": _tier}
-        else:
-            keep.append(_t)
-    TASKER_TIERS[_tier] = keep
-TASKER_TIERS["boss"] = list(_bosses.values())
-
-# "collection" = all four Taskman tiers behind one button (level checks still
-# filter out the impossible ones); same task in several tiers -> weights summed.
+# "collection" = ALL Taskman collection-log tasks (incl. boss uniques) behind
+# one button; the same task in several tiers -> weights summed.
 _coll = {}
 for _tier in ("easy", "medium", "hard", "elite"):
     for _t in TASKER_TIERS[_tier]:
@@ -1098,6 +1081,12 @@ for _tier in ("easy", "medium", "hard", "elite"):
         else:
             _coll[_t["name"]] = {**_t, "origTier": _tier}
 TASKER_TIERS["collection"] = list(_coll.values())
+
+# "boss" = pure kill-count tasks with recommended stats (tasker_reqs.BOSS_KILLS)
+TASKER_TIERS["boss"] = [
+    {"name": t, "lo": lo, "hi": hi, "weight": 1, "reqs": reqs}
+    for t, lo, hi, reqs in tasker_reqs.BOSS_KILLS
+]
 TIER_ALIASES = {"normal": "medium", "bosses": "boss", "log": "collection"}
 
 import skill_tasks  # noqa: E402
@@ -1116,13 +1105,15 @@ def tasker_split(levels, tier):
     cb = combat_level(levels)
     eligible, blocked = [], []
     for t in TASKER_TIERS[tier]:
-        reqs = tasker_reqs.reqs_for(t["name"])
+        reqs = t["reqs"] if "reqs" in t else tasker_reqs.reqs_for(t["name"])
         missing = {}
         for skill, need in reqs.items():
             have = cb if skill == "combat" else levels.get(skill, 1)
             if have < need:
                 missing[skill] = {"have": have, "need": need}
         entry = {**t, "reqs": reqs}
+        if "{n}" in t["name"] and "lo" in t:
+            entry["display"] = t["name"].replace("{n}", f"{t['lo']}–{t['hi']}")
         if missing:
             blocked.append({**entry, "missing": missing})
         else:
@@ -1166,7 +1157,13 @@ def tasker_roll():
     if not eligible:
         return jsonify({"ok": False, "error": "no eligible tasks in this tier"}), 404
     weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
-    task = random.choice(weighted)
+    task = dict(random.choice(weighted))
+    if "{n}" in task["name"] and "lo" in task:
+        count = random.randint(task["lo"], task["hi"])
+        if task["hi"] >= 20:
+            count = max(task["lo"], round(count / 5) * 5)
+        task["name"] = task["name"].replace("{n}", str(count))
+        task["count"] = count
     return jsonify({"tier": tier, "combat": cb, "task": task})
 
 
@@ -1174,10 +1171,10 @@ def skill_task_pool(levels):
     """Per-skill eligible methods with the near-level bucket marked."""
     cb = combat_level(levels)
     pool = {}
-    for skill, methods in skill_tasks.SKILL_TASKS.items():
+    for skill in set(skill_tasks.SKILL_TASKS) | set(levels):
         lvl = cb if skill == "combat" else levels.get(skill, 1)
         elig = []
-        for m in methods:
+        for m in skill_tasks.SKILL_TASKS.get(skill, []):
             req, template, lo, hi = m[0], m[1], m[2], m[3]
             extra = m[4] if len(m) > 4 else {}
             if req > lvl:
@@ -1185,11 +1182,17 @@ def skill_task_pool(levels):
             if any((cb if s == "combat" else levels.get(s, 1)) < need for s, need in extra.items()):
                 continue
             elig.append({"req": req, "template": template, "lo": lo, "hi": hi, "extra": extra})
+        if elig:
+            top = max(e["req"] for e in elig)
+            for e in elig:
+                e["near"] = e["req"] >= lvl - skill_tasks.NEAR_WINDOW or e["req"] == top
+        # Every trainable skill also offers a "gain levels" task, always near-level
+        if skill != "combat" and lvl < 99:
+            gain_hi = 3 if lvl < 40 else (2 if lvl < 70 else 1)
+            elig.append({"req": 1, "template": f"Gain {{n}} {skill} level(s)",
+                         "lo": 1, "hi": gain_hi, "extra": {}, "near": True})
         if not elig:
             continue
-        top = max(e["req"] for e in elig)
-        for e in elig:
-            e["near"] = e["req"] >= lvl - skill_tasks.NEAR_WINDOW or e["req"] == top
         pool[skill] = {"level": lvl, "methods": elig}
     return cb, pool
 
@@ -1221,7 +1224,8 @@ def skill_task_roll():
         bucket = near or far
     m = random.choice(bucket)
     count = random.randint(m["lo"], m["hi"])
-    count = max(m["lo"], round(count / 5) * 5)
+    if m["hi"] >= 20:
+        count = max(m["lo"], round(count / 5) * 5)
     return jsonify({
         "skill": skill, "level": entry["level"], "req": m["req"], "near": m["near"],
         "count": count, "task": m["template"].replace("{n}", str(count)),
