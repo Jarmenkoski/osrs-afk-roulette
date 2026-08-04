@@ -1069,8 +1069,25 @@ def handle_button(data):
 import tasker_reqs  # noqa: E402
 
 with open(os.path.join(os.path.dirname(__file__), "tasker_tiers.json"), encoding="utf-8") as _f:
-    TASKER_TIERS = json.load(_f)
-TIER_ALIASES = {"normal": "medium"}
+    _raw_tiers = json.load(_f)
+
+# Split boss tasks out of the skill tiers into their own "boss" category.
+# The same boss task can appear in several tiers — merge and sum the weights.
+TASKER_TIERS = {}
+_bosses = {}
+for _tier, _tasks in _raw_tiers.items():
+    keep = []
+    for _t in _tasks:
+        if tasker_reqs.is_boss(_t["name"]):
+            if _t["name"] in _bosses:
+                _bosses[_t["name"]]["weight"] += _t.get("weight", 1)
+            else:
+                _bosses[_t["name"]] = {**_t, "origTier": _tier}
+        else:
+            keep.append(_t)
+    TASKER_TIERS[_tier] = keep
+TASKER_TIERS["boss"] = list(_bosses.values())
+TIER_ALIASES = {"normal": "medium", "bosses": "boss"}
 
 
 def combat_level(lv):
@@ -1107,7 +1124,7 @@ def tasker_prepare():
     if not NICK_RE.match(nick):
         return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
     if tier not in TASKER_TIERS:
-        return None, None, (jsonify({"ok": False, "error": "tier must be easy/normal/hard/elite"}), 400)
+        return None, None, (jsonify({"ok": False, "error": "tier must be easy/normal/hard/elite/boss"}), 400)
     levels = get_levels(db(), nick)
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
