@@ -154,6 +154,7 @@ SKILL_TASKS = {
         (27, "Plant {n} apple trees", 2, 4),
         (32, "Do {n} herb runs", 3, 8),
         (34, "Play {n} rounds of Tithe Farm", 2, 5),
+        (45, "Complete {n} farming contracts", 2, 5),
         (45, "Plant {n} maple trees", 2, 4),
         (60, "Plant {n} yew trees", 1, 3),
         (75, "Plant {n} magic trees", 1, 3),
@@ -219,6 +220,8 @@ SKILL_TASKS = {
     ],
     "sailing": [  # EST — 2025-26 content, tune after testing
         (1, "Complete {n} courier deliveries by ship", 3, 8),
+        (5, "Complete {n} port tasks", 3, 8),
+        (20, "Chart {n} sea areas", 3, 10),
         (15, "Salvage {n} small shipwrecks", 5, 15),
         (26, "Salvage {n} fisherman's shipwrecks", 5, 15),
         (35, "Salvage {n} barracuda shipwrecks", 5, 12),
