@@ -287,6 +287,10 @@ async function fetchLevels() {
   renderStats();
   renderLeaderboard();
   loadSuggestions(); // re-render with own votes highlighted
+  tk.panel.classList.remove('hidden');
+  tkResetCaches();
+  tkLoadActive();
+  loadTaskerHS();
 }
 
 // ---------- UI ----------
@@ -658,6 +662,213 @@ async function submitSuggestion(ev) {
   }
   els.sugSubmit.disabled = false;
 }
+
+// ---------- Task Generator (Task / Bosses / Collection) ----------
+
+const tk = {
+  panel: $('tasker-panel'), rollBtn: $('tasker-roll-btn'), wheelWrap: $('tasker-wheel-wrap'),
+  wheel: $('tasker-wheel'), result: $('tasker-result'), status: $('tasker-status'), hs: $('tasker-hs'),
+};
+let tcat = 'task';
+let tkSpinning = false;
+let tkTaskPool = null;     // cached /api/tasker/task/eligible
+const tkTierCache = {};    // category -> eligible list
+
+function tkResetCaches() { tkTaskPool = null; for (const k in tkTierCache) delete tkTierCache[k]; }
+
+function tkSample(arr, k) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a.slice(0, k);
+}
+
+function drawTaskerWheel(labels, rotation) {
+  const ctx = tk.wheel.getContext('2d');
+  const W = tk.wheel.width, cx = W / 2, cy = W / 2, r = W / 2 - 10;
+  ctx.clearRect(0, 0, W, W);
+  const n = labels.length;
+  if (!n) return;
+  const seg = (2 * Math.PI) / n;
+  for (let i = 0; i < n; i++) {
+    const start = rotation + i * seg;
+    ctx.beginPath(); ctx.moveTo(cx, cy);
+    ctx.arc(cx, cy, r, start, start + seg); ctx.closePath();
+    ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length]; ctx.fill();
+    ctx.strokeStyle = '#1a1410'; ctx.lineWidth = 2; ctx.stroke();
+    ctx.save();
+    ctx.translate(cx, cy); ctx.rotate(start + seg / 2);
+    ctx.textAlign = 'right'; ctx.fillStyle = '#fff';
+    ctx.font = 'bold 12px Georgia';
+    ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 3;
+    let label = labels[i];
+    if (label.length > 30) label = label.slice(0, 28) + '…';
+    ctx.fillText(label, r - 14, 4);
+    ctx.restore();
+  }
+  ctx.beginPath(); ctx.arc(cx, cy, 34, 0, 2 * Math.PI);
+  ctx.fillStyle = '#f5c542'; ctx.fill();
+  ctx.strokeStyle = '#7a5f1e'; ctx.lineWidth = 4; ctx.stroke();
+  ctx.fillStyle = '#241a08'; ctx.font = '22px Georgia'; ctx.textAlign = 'center';
+  ctx.fillText('🎯', cx, cy + 8);
+  ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+  ctx.strokeStyle = '#f5c542'; ctx.lineWidth = 6; ctx.stroke();
+}
+
+function spinTaskerWheel(labels, winnerIdx, onEnd) {
+  tk.wheelWrap.classList.remove('hidden');
+  tkSpinning = true;
+  tk.rollBtn.disabled = true;
+  const n = labels.length, seg = (2 * Math.PI) / n;
+  const pointerAngle = -Math.PI / 2, startRotation = -Math.PI / 2;
+  const targetRotation = pointerAngle - (winnerIdx * seg + seg / 2);
+  const fullTurns = 5 + Math.floor(Math.random() * 3);
+  const totalDelta = fullTurns * 2 * Math.PI + (((targetRotation - startRotation) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+  const duration = 4500;
+  const t0 = performance.now();
+  function frame(now) {
+    const t = Math.min(1, (now - t0) / duration);
+    const eased = 1 - Math.pow(1 - t, 4);
+    drawTaskerWheel(labels, startRotation + totalDelta * eased);
+    if (t < 1) { requestAnimationFrame(frame); }
+    else { tkSpinning = false; tk.rollBtn.disabled = false; onEnd(); }
+  }
+  requestAnimationFrame(frame);
+}
+
+async function tkCandidates() {
+  if (tcat === 'task') {
+    if (!tkTaskPool) {
+      try { tkTaskPool = await apiGet(`/api/tasker/task/eligible?nick=${encodeURIComponent(playerName)}`); }
+      catch (_) { return []; }
+    }
+    return Object.values(tkTaskPool.skills).flatMap((s) =>
+      s.methods.map((m) => m.template.replace('{n}', m.lo === m.hi ? `${m.lo}` : `${m.lo}–${m.hi}`)));
+  }
+  if (!tkTierCache[tcat]) {
+    try { tkTierCache[tcat] = (await apiGet(`/api/tasker/eligible?nick=${encodeURIComponent(playerName)}&tier=${tcat}`)).eligible; }
+    catch (_) { return []; }
+  }
+  return (tkTierCache[tcat] || []).map((t) => t.display || t.name);
+}
+
+function tkRenderCard(name, metaLine, tip, wiki, isActive) {
+  tk.result.innerHTML = `
+    <div class="result-card">
+      <div class="task-name">${wiki ? `<a href="${wiki}" target="_blank" rel="noopener">${name}</a> 🔗` : name}</div>
+      ${metaLine ? `<div class="task-meta">${metaLine}</div>` : ''}
+      ${tip ? `<div class="task-meta">💡 ${tip}</div>` : ''}
+      ${isActive ? '<div class="task-meta"><i>(your current task — finish or skip it)</i></div>' : ''}
+      <div class="result-actions">
+        <button class="btn btn-done" onclick="tkComplete('done')">✅ Done</button>
+        <button class="btn btn-secondary" onclick="tkComplete('skipped')">⏭️ Skip &amp; reroll</button>
+      </div>
+    </div>`;
+}
+
+function tkRenderFrom(d) {
+  if (tcat === 'task') {
+    tkRenderCard(d.task || d.name,
+      d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req})` : '', '', null, d.active);
+  } else {
+    const reqStr = Object.entries(d.task.reqs || {}).map(([s, l]) => `${s} ${l}`).join(', ');
+    tkRenderCard(d.task.name, reqStr, d.task.tip, d.task.wiki, d.active);
+  }
+}
+
+async function tkRoll() {
+  if (tkSpinning) return;
+  if (!playerName) { setStatus(tk.status, 'Fetch your levels first!', 'error'); return; }
+  tk.result.innerHTML = '';
+  clearStatus(tk.status);
+  try {
+    const url = tcat === 'task'
+      ? `/api/tasker/task/roll?nick=${encodeURIComponent(playerName)}`
+      : `/api/tasker/roll?nick=${encodeURIComponent(playerName)}&tier=${tcat}`;
+    const d = await apiGet(url);
+    if (d.active) {
+      tk.wheelWrap.classList.add('hidden');
+      tkRenderFrom(d);
+      return;
+    }
+    const winnerLabel = tcat === 'task' ? (d.task || d.name) : d.task.name;
+    const others = (await tkCandidates()).filter((l) => l !== winnerLabel);
+    const segments = tkSample(others, 13);
+    segments.splice(Math.floor(Math.random() * (segments.length + 1)), 0, winnerLabel);
+    if (segments.length < 2) { tkRenderFrom(d); return; }
+    spinTaskerWheel(segments, segments.indexOf(winnerLabel), () => tkRenderFrom(d));
+  } catch (e) {
+    console.error(e);
+    setStatus(tk.status, 'Roll failed — try again.', 'error');
+  }
+}
+
+window.tkComplete = async function (status) {
+  try {
+    await apiPost('/api/tasker/complete', { nick: playerName, category: tcat, status });
+    tk.result.innerHTML = '';
+    loadTaskerHS();
+    if (status === 'skipped') {
+      tkRoll();
+    } else {
+      setStatus(tk.status, '✅ Task completed and logged!', 'success');
+    }
+  } catch (e) {
+    console.error(e);
+    setStatus(tk.status, 'Failed — try again.', 'error');
+  }
+};
+
+async function tkLoadActive() {
+  if (!playerName) return;
+  try {
+    const d = await apiGet(`/api/tasker/current?nick=${encodeURIComponent(playerName)}&category=${tcat}`);
+    if (d.active) {
+      if (tcat === 'task') {
+        tkRenderCard(d.active.name, d.active.skill ? `${d.active.skill} (task req ${d.active.req})` : '', '', null, true);
+      } else {
+        tkRenderCard(d.active.name, '', d.active.tip, d.active.wiki, true);
+      }
+    }
+  } catch (_) { /* ignore */ }
+}
+
+async function loadTaskerHS() {
+  try {
+    const d = await apiGet('/api/tasker/highscores');
+    const medal = (i) => ['🥇', '🥈', '🥉'][i] || `${i + 1}.`;
+    const CATS = [['task', '📋 Task'], ['boss', '⚔️ Bosses'], ['collection', '📚 Collection']];
+    tk.hs.innerHTML = CATS.map(([key, label]) => {
+      const rows = d[key] || [];
+      if (!rows.length) return '';
+      return `
+        <h4 class="stats-subtitle">${label}</h4>
+        <table class="lb-table">
+          <thead><tr><th class="lb-rank">#</th><th>Player</th><th class="lb-num">✅ Done</th><th class="lb-num">⏭️ Skips</th></tr></thead>
+          <tbody>${rows.map((p, i) => `
+            <tr class="${playerName && normKey(p.nick) === normKey(playerName) ? 'me' : ''}">
+              <td class="lb-rank">${medal(i)}</td><td>${p.nick}</td>
+              <td class="lb-num"><b>${p.done}</b></td><td class="lb-num">${p.skips}</td></tr>`).join('')}
+          </tbody>
+        </table>`;
+    }).join('') || '<span class="hint">No completed tasks yet — roll one!</span>';
+  } catch (_) {
+    tk.hs.innerHTML = '<span class="hint">Could not load highscores.</span>';
+  }
+}
+
+document.querySelectorAll('[data-tcat]').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('[data-tcat]').forEach((x) => x.classList.remove('active'));
+  b.classList.add('active');
+  tcat = b.dataset.tcat;
+  tk.result.innerHTML = '';
+  tk.wheelWrap.classList.add('hidden');
+  clearStatus(tk.status);
+  tkLoadActive();
+}));
+tk.rollBtn.addEventListener('click', tkRoll);
 
 // ---------- Init ----------
 
