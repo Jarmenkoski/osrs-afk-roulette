@@ -1,0 +1,805 @@
+[
+ {
+  "name": "Infected Roots",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 80
+  },
+  "afk": "30:00",
+  "notes": "Log basket recommended",
+  "f2p": false,
+  "url": "/w/Infected_root"
+ },
+ {
+  "name": "Rosewood Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 92
+  },
+  "afk": "4:35",
+  "f2p": false,
+  "url": "/w/Rosewood_tree"
+ },
+ {
+  "name": "Redwood Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 90
+  },
+  "afk": "4:24",
+  "f2p": false,
+  "url": "/w/Redwood_tree"
+ },
+ {
+  "name": "Ironwood Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 80
+  },
+  "afk": "4:00",
+  "f2p": false,
+  "url": "/w/Ironwood_tree"
+ },
+ {
+  "name": "Magic Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 75
+  },
+  "afk": "3:54",
+  "f2p": false,
+  "url": "/w/Magic_tree"
+ },
+ {
+  "name": "Camphor Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 66
+  },
+  "afk": "2:00",
+  "f2p": false,
+  "url": "/w/Camphor_tree"
+ },
+ {
+  "name": "Yew Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 60
+  },
+  "afk": "1:54",
+  "f2p": true,
+  "url": "/w/Yew_tree"
+ },
+ {
+  "name": "Mahogany Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 50
+  },
+  "afk": "1:00",
+  "f2p": false,
+  "url": "/w/Mahogany_tree"
+ },
+ {
+  "name": "Maple Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 45
+  },
+  "afk": "1:00",
+  "f2p": true,
+  "url": "/w/Maple_tree"
+ },
+ {
+  "name": "Guardian Fragments (GOTR)",
+  "skill": "mining",
+  "reqs": {
+   "mining": 1,
+   "runecraft": 27
+  },
+  "afk": "10:00",
+  "notes": "XP capped at 1,250 per round",
+  "f2p": false,
+  "url": "/w/Guardian_fragments"
+ },
+ {
+  "name": "Shooting Stars",
+  "skill": "mining",
+  "reqs": {
+   "mining": 10
+  },
+  "afk": "7:00",
+  "f2p": true,
+  "url": "/w/Shooting_stars"
+ },
+ {
+  "name": "Duke Sucellus Mining",
+  "skill": "mining",
+  "reqs": {
+   "mining": 72
+  },
+  "afk": "5:00",
+  "f2p": false,
+  "url": "/w/Salt_Deposit"
+ },
+ {
+  "name": "Amethyst Crystals",
+  "skill": "mining",
+  "reqs": {
+   "mining": 92
+  },
+  "afk": "1:57",
+  "notes": "Expert mining gloves",
+  "f2p": false,
+  "url": "/w/Amethyst_crystals"
+ },
+ {
+  "name": "Daeyalt Essence",
+  "skill": "mining",
+  "reqs": {
+   "mining": 60
+  },
+  "afk": "1:00",
+  "f2p": false,
+  "url": "/w/Daeyalt_essence_mine"
+ },
+ {
+  "name": "Calcified Rocks",
+  "skill": "mining",
+  "reqs": {
+   "mining": 41
+  },
+  "afk": "0:35",
+  "notes": "Gives blessed bone shards for Prayer",
+  "f2p": false,
+  "url": "/w/Calcified_rocks"
+ },
+ {
+  "name": "Barronite Rocks",
+  "skill": "mining",
+  "reqs": {
+   "mining": 14
+  },
+  "afk": "0:20",
+  "f2p": true,
+  "url": "/w/Barronite_rocks"
+ },
+ {
+  "name": "Churning (cheese)",
+  "skill": "cooking",
+  "reqs": {
+   "cooking": 21
+  },
+  "afk": "7:17",
+  "f2p": false,
+  "url": "/w/Dairy_churn"
+ },
+ {
+  "name": "Cooking Fish/Meat",
+  "skill": "cooking",
+  "reqs": {
+   "cooking": 1
+  },
+  "afk": "1:07",
+  "f2p": true,
+  "url": "/w/Pay-to-play_Cooking_training"
+ },
+ {
+  "name": "Forester's Rations",
+  "skill": "cooking",
+  "reqs": {
+   "cooking": 35
+  },
+  "afk": "0:49",
+  "f2p": false,
+  "url": "/w/Money_making_guide/Creating_forester's_rations"
+ },
+ {
+  "name": "Pickpocketing Wealthy Citizens",
+  "skill": "thieving",
+  "reqs": {
+   "thieving": 50
+  },
+  "afk": "1:32",
+  "f2p": false,
+  "url": "/w/Wealthy_citizen"
+ },
+ {
+  "name": "Burgling Houses (Varlamore)",
+  "skill": "thieving",
+  "reqs": {
+   "thieving": 50
+  },
+  "afk": "0:55",
+  "notes": "Requires house keys",
+  "f2p": false,
+  "url": "/w/Stealing_valuables"
+ },
+ {
+  "name": "One-click Summer Garden",
+  "skill": "thieving",
+  "reqs": {
+   "thieving": 65
+  },
+  "afk": "0:36",
+  "f2p": false,
+  "url": "/w/Sorceress's_Garden/Summer"
+ },
+ {
+  "name": "Smithing One-bar Items",
+  "skill": "smithing",
+  "reqs": {
+   "smithing": 1
+  },
+  "afk": "1:07",
+  "f2p": true,
+  "url": "/w/Pay-to-play_Smithing_training"
+ },
+ {
+  "name": "Smithing Cannonballs",
+  "skill": "smithing",
+  "reqs": {
+   "smithing": 35
+  },
+  "afk": "1:02",
+  "notes": "Double ammo mould",
+  "f2p": false,
+  "url": "/w/Cannonball"
+ },
+ {
+  "name": "Bolt Tips",
+  "skill": "fletching",
+  "reqs": {
+   "fletching": 11
+  },
+  "afk": "1:21",
+  "f2p": false,
+  "url": "/w/Bolt_tips"
+ },
+ {
+  "name": "Battlestaves",
+  "skill": "fletching",
+  "reqs": {
+   "fletching": 40
+  },
+  "afk": "0:49",
+  "f2p": false,
+  "url": "/w/Fletching_training"
+ },
+ {
+  "name": "Redwood Shields",
+  "skill": "fletching",
+  "reqs": {
+   "fletching": 92
+  },
+  "afk": "0:47",
+  "f2p": false,
+  "url": "/w/Fletching_training"
+ },
+ {
+  "name": "Cutting Unstrung Bows",
+  "skill": "fletching",
+  "reqs": {
+   "fletching": 5
+  },
+  "afk": "0:32",
+  "f2p": false,
+  "url": "/w/Fletching_training"
+ },
+ {
+  "name": "Forester's Campfire",
+  "skill": "firemaking",
+  "reqs": {
+   "firemaking": 1
+  },
+  "afk": "2:31",
+  "f2p": true,
+  "url": "/w/Forester's_campfire"
+ },
+ {
+  "name": "The Stranglewood Fishing",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 63
+  },
+  "afk": "30:00",
+  "f2p": false,
+  "url": "/w/Fishing_spot_(The_Stranglewood)"
+ },
+ {
+  "name": "Karambwanji",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 5
+  },
+  "afk": "20:00",
+  "f2p": false,
+  "url": "/w/Raw_karambwanji"
+ },
+ {
+  "name": "Dark Crab",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 85
+  },
+  "afk": "7:32",
+  "notes": "Fish barrel + elite wilderness diary — in the Wilderness!",
+  "f2p": false,
+  "url": "/w/Dark_crab"
+ },
+ {
+  "name": "Civitas illa Fortis Fishing",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 1
+  },
+  "afk": "7:00",
+  "f2p": false,
+  "url": "/w/Fishing_spot_(Civitas_illa_Fortis)"
+ },
+ {
+  "name": "Cave Eel",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 38
+  },
+  "afk": "4:58",
+  "f2p": false,
+  "url": "/w/Raw_cave_eel"
+ },
+ {
+  "name": "Karambwan",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 65
+  },
+  "afk": "4:13",
+  "f2p": false,
+  "url": "/w/Raw_karambwan"
+ },
+ {
+  "name": "Anglerfish",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 82
+  },
+  "afk": "2:37",
+  "f2p": false,
+  "url": "/w/Raw_anglerfish"
+ },
+ {
+  "name": "General Fishing Spot",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 1
+  },
+  "afk": "1:57",
+  "f2p": true,
+  "url": "/w/Fishing"
+ },
+ {
+  "name": "Barbarian Fishing (Quidamortem)",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 48
+  },
+  "afk": "1:57",
+  "f2p": false,
+  "url": "/w/Barbarian_Training"
+ },
+ {
+  "name": "Sacred Eel",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 87
+  },
+  "afk": "1:00",
+  "notes": "Rada's blessing 4",
+  "f2p": false,
+  "url": "/w/Sacred_eel"
+ },
+ {
+  "name": "Infernal Eel",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 80
+  },
+  "afk": "1:00",
+  "notes": "Rada's blessing 4",
+  "f2p": false,
+  "url": "/w/Infernal_eel"
+ },
+ {
+  "name": "POH Agility",
+  "skill": "agility",
+  "reqs": {
+   "agility": 1,
+   "construction": 88
+  },
+  "afk": "10:00",
+  "f2p": false,
+  "url": "/w/Guide:POH_Agility"
+ },
+ {
+  "name": "Vampyrium Rocks",
+  "skill": "agility",
+  "reqs": {
+   "agility": 61
+  },
+  "afk": "7:30",
+  "notes": "Clicking early resets the cooldown",
+  "f2p": false,
+  "url": "/w/Rocks_(Vampyrium)"
+ },
+ {
+  "name": "Pedals",
+  "skill": "agility",
+  "reqs": {
+   "agility": 30
+  },
+  "afk": "5:19",
+  "f2p": false,
+  "url": "/w/Pedals"
+ },
+ {
+  "name": "Making Herb Tar",
+  "skill": "herblore",
+  "reqs": {
+   "herblore": 11
+  },
+  "afk": "0:47",
+  "f2p": false,
+  "url": "/w/Herblore_training"
+ },
+ {
+  "name": "Auto-cleaning Herbs",
+  "skill": "herblore",
+  "reqs": {
+   "herblore": 3
+  },
+  "afk": "0:34",
+  "f2p": false,
+  "url": "/w/Herblore_training"
+ },
+ {
+  "name": "Stackable Secondary Potions",
+  "skill": "herblore",
+  "reqs": {
+   "herblore": 77
+  },
+  "afk": "0:31",
+  "f2p": false,
+  "url": "/w/Herblore_training"
+ },
+ {
+  "name": "Blood Runes (Zeah)",
+  "skill": "runecraft",
+  "reqs": {
+   "runecraft": 77
+  },
+  "afk": "0:55",
+  "f2p": false,
+  "url": "/w/Pay-to-play_Runecraft_training"
+ },
+ {
+  "name": "Soul Runes (Zeah)",
+  "skill": "runecraft",
+  "reqs": {
+   "runecraft": 90
+  },
+  "afk": "0:55",
+  "f2p": false,
+  "url": "/w/Pay-to-play_Runecraft_training"
+ },
+ {
+  "name": "ZMI Runecrafting",
+  "skill": "runecraft",
+  "reqs": {
+   "runecraft": 1
+  },
+  "afk": "0:25",
+  "f2p": false,
+  "url": "/w/Ourania_altar"
+ },
+ {
+  "name": "Auto-cast Enchant Jewellery",
+  "skill": "magic",
+  "reqs": {
+   "magic": 7
+  },
+  "afk": "1:53",
+  "f2p": true,
+  "url": "/w/Enchantment_spells"
+ },
+ {
+  "name": "Plank Make",
+  "skill": "magic",
+  "reqs": {
+   "magic": 86
+  },
+  "afk": "1:30",
+  "f2p": false,
+  "url": "/w/Money_making_guide/Casting_plank_make"
+ },
+ {
+  "name": "String Jewellery",
+  "skill": "magic",
+  "reqs": {
+   "magic": 80
+  },
+  "afk": "0:49",
+  "f2p": false,
+  "url": "/w/String_Jewellery"
+ },
+ {
+  "name": "Splashing",
+  "skill": "magic",
+  "reqs": {
+   "magic": 1
+  },
+  "afk": "20:00",
+  "f2p": true,
+  "url": "/w/Splashing/Guide"
+ },
+ {
+  "name": "Firing Clay",
+  "skill": "crafting",
+  "reqs": {
+   "crafting": 1
+  },
+  "afk": "1:58",
+  "f2p": true,
+  "url": "/w/Pottery_Oven"
+ },
+ {
+  "name": "Glassblowing",
+  "skill": "crafting",
+  "reqs": {
+   "crafting": 1
+  },
+  "afk": "0:50",
+  "f2p": false,
+  "url": "/w/Pay-to-play_Crafting_training"
+ },
+ {
+  "name": "Spinning",
+  "skill": "crafting",
+  "reqs": {
+   "crafting": 1
+  },
+  "afk": "0:50",
+  "f2p": true,
+  "url": "/w/Spinning_wheel"
+ },
+ {
+  "name": "Blast Furnace Pump",
+  "skill": "strength",
+  "reqs": {
+   "strength": 30
+  },
+  "afk": "30:00",
+  "f2p": false,
+  "url": "/w/Pump_(Blast_Furnace)"
+ },
+ {
+  "name": "Crewmate-only Salvaging",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 40
+  },
+  "afk": "30:00",
+  "f2p": false,
+  "url": "/w/Shipwreck_salvaging"
+ },
+ {
+  "name": "Merchant Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 87
+  },
+  "afk": "4:00",
+  "f2p": false,
+  "url": "/w/Merchant_shipwreck"
+ },
+ {
+  "name": "Fremennik Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 80
+  },
+  "afk": "3:38",
+  "f2p": false,
+  "url": "/w/Fremennik_shipwreck"
+ },
+ {
+  "name": "Mercenary Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 73
+  },
+  "afk": "3:15",
+  "f2p": false,
+  "url": "/w/Mercenary_shipwreck"
+ },
+ {
+  "name": "Pirate Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 64
+  },
+  "afk": "2:38",
+  "f2p": false,
+  "url": "/w/Pirate_shipwreck"
+ },
+ {
+  "name": "Large Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 53
+  },
+  "afk": "2:31",
+  "f2p": false,
+  "url": "/w/Large_shipwreck"
+ },
+ {
+  "name": "Barracuda Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 35
+  },
+  "afk": "2:21",
+  "f2p": false,
+  "url": "/w/Barracuda_shipwreck"
+ },
+ {
+  "name": "Fisherman's Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 26
+  },
+  "afk": "2:12",
+  "f2p": false,
+  "url": "/w/Fisherman's_shipwreck"
+ },
+ {
+  "name": "Small Shipwreck",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 15
+  },
+  "afk": "1:00",
+  "f2p": false,
+  "url": "/w/Small_shipwreck"
+ },
+ {
+  "name": "Crystal Extractor",
+  "skill": "sailing",
+  "reqs": {
+   "sailing": 73
+  },
+  "afk": "1:00",
+  "f2p": false,
+  "url": "/w/Crystal_extractor"
+ },
+ {
+  "name": "Stymphike",
+  "skill": "hunter",
+  "reqs": {
+   "hunter": 82
+  },
+  "afk": "0:39",
+  "f2p": false,
+  "url": "/w/Stymphike"
+ },
+ {
+  "name": "Maniacal Monkey Hunting",
+  "skill": "hunter",
+  "reqs": {
+   "hunter": 60
+  },
+  "afk": "0:25",
+  "f2p": false,
+  "url": "/w/Maniacal_monkey_(Hunter)"
+ },
+ {
+  "name": "Gilded Altar (auto-offer)",
+  "skill": "prayer",
+  "reqs": {
+   "prayer": 1
+  },
+  "afk": "1:02",
+  "notes": "Bones on a gilded altar in a POH",
+  "f2p": false,
+  "url": "/w/Pay-to-play_Prayer_training"
+ },
+ {
+  "name": "Gemstone Crabs",
+  "skill": "hitpoints",
+  "reqs": {
+   "hitpoints": 10
+  },
+  "afk": "10:00",
+  "notes": "Requires Children of the Sun",
+  "f2p": false,
+  "url": "/w/Gemstone_Crab"
+ },
+ {
+  "name": "Sand Crabs",
+  "skill": "hitpoints",
+  "reqs": {
+   "hitpoints": 10
+  },
+  "afk": "10:00",
+  "f2p": false,
+  "url": "/w/Sand_Crab"
+ },
+ {
+  "name": "Ammonite Crabs",
+  "skill": "hitpoints",
+  "reqs": {
+   "hitpoints": 10
+  },
+  "afk": "10:00",
+  "notes": "Requires Bone Voyage",
+  "f2p": false,
+  "url": "/w/Ammonite_Crab"
+ },
+ {
+  "name": "NMZ Melee",
+  "skill": "strength",
+  "reqs": {
+   "attack": 60,
+   "strength": 60
+  },
+  "afk": "20:00",
+  "notes": "Requires Nightmare Zone quests",
+  "f2p": false,
+  "url": "/w/Nightmare_Zone/Strategies"
+ },
+ {
+  "name": "NMZ Ranged",
+  "skill": "ranged",
+  "reqs": {
+   "ranged": 70
+  },
+  "afk": "20:00",
+  "notes": "Requires Nightmare Zone quests",
+  "f2p": false,
+  "url": "/w/Nightmare_Zone/Strategies"
+ },
+ {
+  "name": "Vyrewatch Sentinels",
+  "skill": "slayer",
+  "reqs": {
+   "attack": 70,
+   "strength": 70,
+   "defence": 70
+  },
+  "afk": "17:00",
+  "notes": "Requires Sins of the Father",
+  "f2p": false,
+  "url": "/w/Vyrewatch_Sentinel"
+ },
+ {
+  "name": "Maniacal Monkeys (Ice Barrage)",
+  "skill": "magic",
+  "reqs": {
+   "magic": 94
+  },
+  "afk": "10:00",
+  "notes": "Requires Monkey Madness II",
+  "f2p": false,
+  "url": "/w/Maniacal_monkey/Strategies"
+ },
+ {
+  "name": "Maniacal Monkeys (chinning)",
+  "skill": "ranged",
+  "reqs": {
+   "ranged": 80
+  },
+  "afk": "10:00",
+  "notes": "MM II + red chinchompas",
+  "f2p": false,
+  "url": "/w/Maniacal_monkey/Strategies"
+ }
+]
