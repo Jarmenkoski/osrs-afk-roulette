@@ -166,49 +166,72 @@ SOTE = {"agility": 70, "construction": 70, "farming": 70, "herblore": 70, "hunte
 DT2Q = {"firemaking": 75, "magic": 75, "thieving": 70, "herblore": 62, "runecraft": 60,
         "construction": 60, "combat": 110}
 
+# --- Boss tasks: own category, requirements follow the wiki's "recommended
+# stats" style (combat stats, prayer, plus quest gates where relevant).
+# Matching any of these patterns ALSO moves the task to the "boss" category.
+BOSS_PATTERNS = [
+    (r"raids \(cox|cox or tob|theatre|tombs of amascut|vial of blood",
+     {"combat": 110, "attack": 75, "strength": 75, "defence": 75, "ranged": 75, "magic": 75, "prayer": 70}),
+    (r"vorkath",
+     {**DS2, "combat": 100, "ranged": 75, "defence": 70, "prayer": 70}),
+    (r"zulrah",
+     {"combat": 90, "ranged": 75, "magic": 75, "defence": 70, "prayer": 62, "agility": 56}),
+    (r"cerberus|granite boots",
+     {"slayer": 91, "combat": 100, "attack": 75, "strength": 75, "defence": 75, "prayer": 74}),
+    (r"kraken|uncharged trident", {"slayer": 87, "magic": 75, "defence": 60}),
+    (r"thermonuclear", {"slayer": 93, "magic": 75, "defence": 70}),
+    (r"unsired|abyssal whip",
+     {"slayer": 85, "combat": 100, "attack": 75, "strength": 75, "defence": 70, "magic": 70, "prayer": 70}),
+    (r"kalphite queen",
+     {"combat": 95, "attack": 75, "strength": 75, "defence": 75, "ranged": 70, "prayer": 70}),
+    (r"kbd", {"combat": 85, "attack": 70, "strength": 70, "defence": 70, "prayer": 43}),
+    (r"dagannoth king",
+     {"combat": 90, "ranged": 75, "magic": 75, "defence": 75, "prayer": 70}),
+    (r"god wars", {"combat": 90, "defence": 70, "prayer": 62}),  # boss doors have per-style 70 reqs
+    (r"grotesque guardian|granite dust",
+     {"slayer": 75, "combat": 90, "attack": 70, "strength": 70, "defence": 70, "prayer": 62}),
+    (r"wildy bosses|broken dragon pickaxe",
+     {"combat": 100, "attack": 75, "strength": 75, "defence": 75, "prayer": 70}),
+    (r"chaos fanatic|scorpia|crazy arch", {"combat": 80, "defence": 70, "prayer": 43}),
+    (r"sarachnis", {"combat": 85, "attack": 70, "strength": 70, "defence": 70}),
+    (r"scurrius", {"combat": 30}),
+    (r"hill giant club|bryophyta", {"combat": 50, "attack": 40, "strength": 40, "defence": 40}),
+    (r"mole claw|mole skin", {"combat": 65, "attack": 60, "strength": 60, "defence": 60}),
+    (r"barrows|bolt rack",
+     {"combat": 70, "attack": 60, "strength": 60, "defence": 60, "magic": 50, "prayer": 43}),
+    (r"fire cape", {"combat": 90, "ranged": 70, "defence": 60, "prayer": 43}),
+    (r"spirit shield|holy elixir",  # Corporeal Beast
+     {"combat": 100, "attack": 75, "strength": 75, "defence": 75, "prayer": 70}),
+    (r"gauntlet|crystal grail",
+     {**SOTE, "defence": 70, "ranged": 70, "magic": 70, "prayer": 70}),
+    (r"dt2 bosses",
+     {**DT2Q, "attack": 75, "strength": 75, "defence": 75, "prayer": 70}),
+    (r"phantom muspah", {"combat": 100, "ranged": 75, "prayer": 70, "agility": 64}),
+    (r"moons of peril", {"combat": 75, "attack": 70, "strength": 70, "defence": 70}),
+    (r"hueycoatl", {"combat": 90, "attack": 70, "defence": 70}),  # EST
+    (r"amoxliatl", {"combat": 70, "defence": 60}),  # EST
+    (r"royal titans|steel ring", {"combat": 80, "magic": 70, "defence": 70}),  # EST
+    (r"yama|doom of mokhaiotl", {"combat": 110, "defence": 75, "prayer": 70}),  # EST
+    (r"maggot king", {"combat": 100, "defence": 70}),  # EST
+    (r"araxxor|araxyte|aranea boot",
+     {"slayer": 92, "combat": 100, "attack": 75, "strength": 75, "defence": 75, "prayer": 70}),
+    (r"tormented demon",  # While Guthix Sleeps
+     {"combat": 110, "attack": 75, "strength": 75, "defence": 75, "prayer": 70}),
+    (r"fortis colosseum|sunfire splinter", {"combat": 110, "defence": 75, "prayer": 74}),
+    (r"nihil shard|ceremonial robe", {"combat": 100, "defence": 70, "prayer": 70}),
+    (r"boss pet", {"combat": 90, "defence": 70}),
+]
+
 # Ordered pattern rules: first regex (case-insensitive, searched) that matches wins.
 # EST = estimate for 2025-26 content, tune after testing.
 PATTERNS = [
-    # --- Raids & endgame bosses ---
-    (r"raids \(cox|cox or tob|theatre|tombs of amascut", {"combat": 100}),
-    (r"vorkath", {**DS2, "combat": 100}),
-    (r"demonic gorilla", {**MM2, "combat": 100}),
+    (r"demonic gorilla", {**MM2, "combat": 100, "attack": 75, "ranged": 75, "prayer": 70}),
     (r"monkey backpack", {"agility": 48, **MM2}),
-    (r"dt2 bosses", DT2Q),
-    (r"gauntlet|elven signet|enhanced crystal teleport seed|crystal grail|blood shard", SOTE),
-    (r"tormented demon", {"combat": 110}),  # While Guthix Sleeps
-    (r"yama|doom of mokhaiotl|maggot king", {"combat": 110}),  # EST new bosses
-    (r"fortis colosseum|sunfire splinter", {"combat": 110}),
-    (r"araxxor|araxyte|aranea boot", {"slayer": 92, "combat": 100}),
-    (r"phantom muspah", {"combat": 100, "agility": 64}),  # Secrets of the North
-    (r"nihil shard|ceremonial robe", {"combat": 100}),
-    (r"vial of blood", {"combat": 100}),  # ToB region
-    (r"spirit shield|holy elixir", {"combat": 100}),  # Corp
-    (r"cerberus|granite boot", {"slayer": 91, "combat": 100}),
-    (r"thermonuclear|smoke devil", {"slayer": 93}),
+    (r"elven signet|enhanced crystal teleport seed|blood shard", SOTE),
     (r"dust battlestaff|mist battlestaff", {"slayer": 93}),  # superior smoke devils EST
-    (r"kraken|uncharged trident", {"slayer": 87}),
-    (r"unsired|abyssal whip", {"slayer": 85, "combat": 90}),
-    (r"kalphite queen", {"combat": 95}),
-    (r"dagannoth king|dragon limbs", {"combat": 90}),
-    (r"god wars", {"combat": 90}),
-    (r"grotesque guardian|granite dust", {"slayer": 75, "combat": 90}),
-    (r"kbd", {"combat": 85}),
-    (r"wildy bosses|broken dragon pickaxe|venator", {"combat": 90}),
-    (r"boss pet", {"combat": 90}),
-    (r"zulrah", {"combat": 90, "ranged": 75, "agility": 56}),  # Regicide gate
-    (r"hueycoatl", {"combat": 90}),  # EST
-    (r"royal titans|steel ring", {"combat": 80}),  # EST
-    (r"amoxliatl", {"combat": 70}),  # EST
-    (r"moons of peril", {"combat": 75}),
-    (r"sarachnis", {"combat": 80}),
-    (r"scurrius", {"combat": 30}),
+    (r"dragon limbs", {"combat": 90}),
+    (r"venator", {"combat": 90}),
     (r"armoured zombies", {"combat": 60}),  # Defender of Varrock
-    (r"crazy arch", {"combat": 70}),
-    (r"chaos fanatic|scorpia", {"combat": 80}),
-    (r"mole claw|mole skin", {"combat": 50}),
-    (r"hill giant club|bryophyta", {"combat": 40}),
-    (r"barrows|bolt rack", {"combat": 60}),
     (r"revenant|rev cave|bracelet of ethereum", {"combat": 60}),
     (r"custodian stalker", {"slayer": 90, "combat": 90}),  # EST
     (r"dagon'hai", {"slayer": 60, "combat": 80}),  # Larran's chest EST
@@ -272,7 +295,6 @@ PATTERNS = [
     (r"superior mining", {"mining": 70}),
     (r"expert mining", {"mining": 85}),
     (r"tzhaar|obsidian|toktz", {"combat": 70}),
-    (r"fire cape", {"combat": 80}),
     (r"big swordfish", {"fishing": 50}),
     (r"big bass", {"fishing": 46}),
     (r"big shark", {"fishing": 76}),
@@ -328,7 +350,13 @@ PATTERNS = [
 ]
 
 _DIARY_RE = re.compile(r"complete the (.+) (easy|medium|hard|elite) diary", re.IGNORECASE)
+_BOSS_COMPILED = [(re.compile(p, re.IGNORECASE), reqs) for p, reqs in BOSS_PATTERNS]
 _COMPILED = [(re.compile(p, re.IGNORECASE), reqs) for p, reqs in PATTERNS]
+
+
+def is_boss(task_name):
+    """True if the task belongs to the boss category."""
+    return any(rx.search(task_name) for rx, _ in _BOSS_COMPILED)
 
 
 def reqs_for(task_name):
@@ -337,6 +365,9 @@ def reqs_for(task_name):
     if m:
         region, tier = m.group(1).strip().lower(), m.group(2).lower()
         return DIARY.get(region, {}).get(tier, {})
+    for rx, reqs in _BOSS_COMPILED:
+        if rx.search(task_name):
+            return dict(reqs)
     for rx, reqs in _COMPILED:
         if rx.search(task_name):
             return dict(reqs)
