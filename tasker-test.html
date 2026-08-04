@@ -50,6 +50,11 @@
 
     <div id="roll-result"></div>
 
+    <section class="panel" id="hs-panel">
+      <h2>🏆 Tasker Highscores</h2>
+      <div id="hs-table"><span class="hint">Loading…</span></div>
+    </section>
+
     <section class="panel hidden" id="lists-panel">
       <p class="counts" id="counts"></p>
       <div id="task-lists"></div>
@@ -66,7 +71,7 @@
       b.classList.add('active');
       cat = b.dataset.cat;
       $('roll-result').innerHTML = '';
-      if ($('nick').value.trim()) load();
+      if ($('nick').value.trim()) { load(); loadActive(); }
     }));
 
     function setStatus(msg, kind) {
@@ -126,6 +131,20 @@
       }
     }
 
+    function renderRollCard(name, metaLine, tip, wiki, isActive) {
+      $('roll-result').innerHTML = `
+        <div class="roll-card">
+          <div class="task-name">${wiki ? `<a href="${wiki}" target="_blank" rel="noopener">${name}</a>` : name}</div>
+          ${metaLine ? `<div class="reqs">${metaLine}</div>` : ''}
+          ${tip ? `<div class="tip">💡 ${tip}</div>` : ''}
+          ${isActive ? '<div class="reqs"><i>(your current task — finish or skip it)</i></div>' : ''}
+          <div style="margin-top:12px; display:flex; gap:8px; justify-content:center;">
+            <button class="btn btn-done" onclick="completeTask('done')">✅ Done</button>
+            <button class="btn btn-secondary" onclick="completeTask('skipped')">⏭️ Skip &amp; reroll</button>
+          </div>
+        </div>`;
+    }
+
     async function roll() {
       const nick = $('nick').value.trim();
       setStatus('Rolling…', 'info');
@@ -134,21 +153,14 @@
           const r = await fetch(`${API}/api/tasker/task/roll?nick=${encodeURIComponent(nick)}`);
           if (!r.ok) throw new Error((await r.json()).error || r.status);
           const d = await r.json();
-          $('roll-result').innerHTML = `
-            <div class="roll-card">
-              <div class="task-name">${d.task}</div>
-              <div class="reqs">${d.skill} (your level ${d.level}, task req ${d.req}${d.near ? ', near-level' : ''})</div>
-            </div>`;
+          renderRollCard(d.task || d.name,
+            d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req}${d.near ? ', near-level' : ''})` : '',
+            '', null, d.active);
         } else {
           const r = await fetch(`${API}/api/tasker/roll?nick=${encodeURIComponent(nick)}&tier=${cat}`);
           if (!r.ok) throw new Error((await r.json()).error || r.status);
           const d = await r.json();
-          $('roll-result').innerHTML = `
-            <div class="roll-card">
-              <div class="task-name">${d.task.wiki ? `<a href="${d.task.wiki}" target="_blank" rel="noopener">${d.task.name}</a>` : d.task.name}</div>
-              <div class="reqs">${fmtReqs(d.task.reqs)}</div>
-              ${d.task.tip ? `<div class="tip">💡 ${d.task.tip}</div>` : ''}
-            </div>`;
+          renderRollCard(d.task.name, fmtReqs(d.task.reqs), d.task.tip, d.task.wiki, d.active);
         }
         $('status').classList.add('hidden');
       } catch (e) {
@@ -156,11 +168,71 @@
       }
     }
 
-    $('load-btn').addEventListener('click', load);
-    $('nick').addEventListener('keydown', (e) => { if (e.key === 'Enter') load(); });
+    async function completeTask(status) {
+      const nick = $('nick').value.trim();
+      try {
+        const r = await fetch(`${API}/api/tasker/complete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ nick, category: cat, status }),
+        });
+        if (!r.ok) throw new Error((await r.json()).error || r.status);
+        $('roll-result').innerHTML = '';
+        loadHighscores();
+        if (status === 'skipped') {
+          roll(); // skip rolls a fresh task right away
+        } else {
+          setStatus('✅ Task completed and logged!', 'success');
+        }
+      } catch (e) {
+        setStatus('Failed: ' + e.message, 'error');
+      }
+    }
+
+    async function loadActive() {
+      const nick = $('nick').value.trim();
+      if (!nick) return;
+      try {
+        const r = await fetch(`${API}/api/tasker/current?nick=${encodeURIComponent(nick)}&category=${cat}`);
+        const d = await r.json();
+        if (d.active) {
+          if (cat === 'task') {
+            renderRollCard(d.active.name, d.active.skill ? `${d.active.skill} (task req ${d.active.req})` : '', '', null, true);
+          } else {
+            renderRollCard(d.active.name, '', d.active.tip, d.active.wiki, true);
+          }
+        }
+      } catch (_) { /* ignore */ }
+    }
+
+    async function loadHighscores() {
+      try {
+        const r = await fetch(`${API}/api/tasker/highscores`);
+        const d = await r.json();
+        if (!d.players.length) {
+          $('hs-table').innerHTML = '<span class="hint">No completed tasks yet.</span>';
+          return;
+        }
+        const medal = (i) => ['🥇', '🥈', '🥉'][i] || `${i + 1}.`;
+        $('hs-table').innerHTML = `
+          <table class="lb-table">
+            <thead><tr><th>#</th><th>Player</th><th>📋 Task</th><th>⚔️ Boss</th><th>📚 Coll.</th><th>Σ Done</th><th>⏭️ Skips</th></tr></thead>
+            <tbody>${d.players.map((p, i) => `
+              <tr><td>${medal(i)}</td><td>${p.nick}</td><td>${p.task}</td><td>${p.boss}</td>
+                  <td>${p.collection}</td><td><b>${p.total}</b></td><td>${p.skips}</td></tr>`).join('')}
+            </tbody>
+          </table>`;
+      } catch (_) {
+        $('hs-table').innerHTML = '<span class="hint">Could not load highscores.</span>';
+      }
+    }
+
+    $('load-btn').addEventListener('click', () => { load(); loadActive(); });
+    $('nick').addEventListener('keydown', (e) => { if (e.key === 'Enter') { load(); loadActive(); } });
     $('roll-btn').addEventListener('click', roll);
     const saved = localStorage.getItem('afk_nick');
     if (saved) $('nick').value = saved;
+    loadHighscores();
   </script>
 </body>
 </html>
