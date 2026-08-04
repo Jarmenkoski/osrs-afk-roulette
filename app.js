@@ -287,7 +287,6 @@ async function fetchLevels() {
   renderStats();
   renderLeaderboard();
   loadSuggestions(); // re-render with own votes highlighted
-  tk.panel.classList.remove('hidden');
   tkResetCaches();
   tkLoadActive();
   loadTaskerHS();
@@ -859,14 +858,25 @@ async function loadTaskerHS() {
   }
 }
 
-document.querySelectorAll('[data-tcat]').forEach((b) => b.addEventListener('click', () => {
-  document.querySelectorAll('[data-tcat]').forEach((x) => x.classList.remove('active'));
+const TAB_TITLES = { task: '📋 Task', boss: '⚔️ Boss', collection: '📚 Collection' };
+document.querySelectorAll('#main-tabs [data-tab]').forEach((b) => b.addEventListener('click', () => {
+  document.querySelectorAll('#main-tabs [data-tab]').forEach((x) => x.classList.remove('active'));
   b.classList.add('active');
-  tcat = b.dataset.tcat;
+  const tab = b.dataset.tab;
+  if (tab === 'afk') {
+    $('tab-afk').classList.remove('hidden');
+    $('tab-tasker').classList.add('hidden');
+    return;
+  }
+  $('tab-afk').classList.add('hidden');
+  $('tab-tasker').classList.remove('hidden');
+  tcat = tab;
+  $('tasker-title').textContent = `${TAB_TITLES[tab]} Generator`;
   tk.result.innerHTML = '';
   tk.wheelWrap.classList.add('hidden');
   clearStatus(tk.status);
   tkLoadActive();
+  loadTaskerHS();
 }));
 tk.rollBtn.addEventListener('click', tkRoll);
 
@@ -895,3 +905,4 @@ initSuggestForm();
 renderLeaderboard(); // shared board + suggestions are visible even before fetching levels
 loadSuggestions();
 loadApprovedTasks();
+loadTaskerHS();      // tasker highscores too — tabs are always visible
