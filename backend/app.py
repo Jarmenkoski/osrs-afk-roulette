@@ -1064,6 +1064,82 @@ def handle_button(data):
     }})
 
 
+# ---------- Taskman-style task generator (TEST MODE — not linked in UI yet) ----------
+
+import tasker_reqs  # noqa: E402
+
+with open(os.path.join(os.path.dirname(__file__), "tasker_tiers.json"), encoding="utf-8") as _f:
+    TASKER_TIERS = json.load(_f)
+TIER_ALIASES = {"normal": "medium"}
+
+
+def combat_level(lv):
+    base = 0.25 * (lv.get("defence", 1) + lv.get("hitpoints", 10) + lv.get("prayer", 1) // 2)
+    melee = 0.325 * (lv.get("attack", 1) + lv.get("strength", 1))
+    ranged = 0.325 * (lv.get("ranged", 1) * 3 // 2)
+    magic = 0.325 * (lv.get("magic", 1) * 3 // 2)
+    return int(base + max(melee, ranged, magic))
+
+
+def tasker_split(levels, tier):
+    """Split a tier's tasks into eligible / blocked (with reasons) for the given levels."""
+    cb = combat_level(levels)
+    eligible, blocked = [], []
+    for t in TASKER_TIERS[tier]:
+        reqs = tasker_reqs.reqs_for(t["name"])
+        missing = {}
+        for skill, need in reqs.items():
+            have = cb if skill == "combat" else levels.get(skill, 1)
+            if have < need:
+                missing[skill] = {"have": have, "need": need}
+        entry = {**t, "reqs": reqs}
+        if missing:
+            blocked.append({**entry, "missing": missing})
+        else:
+            eligible.append(entry)
+    return cb, eligible, blocked
+
+
+def tasker_prepare():
+    nick = (request.args.get("nick") or "").strip()
+    tier = (request.args.get("tier") or "easy").strip().lower()
+    tier = TIER_ALIASES.get(tier, tier)
+    if not NICK_RE.match(nick):
+        return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
+    if tier not in TASKER_TIERS:
+        return None, None, (jsonify({"ok": False, "error": "tier must be easy/normal/hard/elite"}), 400)
+    levels = get_levels(db(), nick)
+    if levels is None:
+        return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
+    return tier, levels, None
+
+
+@app.get("/api/tasker/eligible")
+def tasker_eligible():
+    tier, levels, err = tasker_prepare()
+    if err:
+        return err
+    cb, eligible, blocked = tasker_split(levels, tier)
+    return jsonify({
+        "tier": tier, "combat": cb, "levels": levels,
+        "eligibleCount": len(eligible), "blockedCount": len(blocked),
+        "eligible": eligible, "blocked": blocked,
+    })
+
+
+@app.get("/api/tasker/roll")
+def tasker_roll():
+    tier, levels, err = tasker_prepare()
+    if err:
+        return err
+    cb, eligible, _ = tasker_split(levels, tier)
+    if not eligible:
+        return jsonify({"ok": False, "error": "no eligible tasks in this tier"}), 404
+    weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
+    task = random.choice(weighted)
+    return jsonify({"tier": tier, "combat": cb, "task": task})
+
+
 @app.post("/api/discord/interactions")
 def discord_interactions():
     if not DISCORD_PUBLIC_KEY:

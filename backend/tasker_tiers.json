@@ -1,0 +1,2901 @@
+{
+ "easy": [
+  {
+   "name": "Get Bolt racks from Barrows",
+   "short": "Bolt Racks",
+   "tip": "Kill as many brothers as you can; the melee brothers can be kited around their coffin or safespotted on ladders in the crypt. Fill your reward potential to 100% by killing crypt monsters.",
+   "wiki": "https://oldschool.runescape.wiki/w/Bolt_rack",
+   "weight": 1
+  },
+  {
+   "name": "Get a Mole claw + skin",
+   "short": "Mole Claw+Skin",
+   "tip": "Obtained as a guaranteed drop from the Giant Mole boss. Abuse its earth weakness and don't forget your light source!",
+   "wiki": "https://oldschool.runescape.wiki/w/Giant_Mole",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Wintertodt",
+   "short": "WT Unique",
+   "tip": "Can be reached quickly with a Games necklace. The Phoenix and Dragon axe do not count for this task. Why Fletch?",
+   "wiki": "https://oldschool.runescape.wiki/w/Wintertodt",
+   "weight": 5
+  },
+  {
+   "name": "Get 3 new uniques from beginner clues",
+   "short": "Beg Clues",
+   "tip": "Allowed sources for clues are Goblins, Minotaurs in the Stronghold of Security, and Young Implings in Puro-Puro. Don't pull a Ritz, kill the level 12 Minotaurs.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(beginner)",
+   "weight": 2
+  },
+  {
+   "name": "Get 5 new uniques from easy clues",
+   "short": "Easy Clues",
+   "tip": "Pickpocket H.A.M. Members in their hideout near Lumbridge. Wear their pink clothes for extra fashion (and a lower chance of being kicked out). You may train to 15 Thieving for this task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(easy)",
+   "weight": 6
+  },
+  {
+   "name": "Get 5 new uniques from medium clues",
+   "short": "Medium Clues",
+   "tip": "Allowed sources for clues are killing Guards, Aldarin Villa Chests (with 35 Thieving and Varlamore access) and Eclectic Implings in Puro-Puro (with 50 Hunter).",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(medium)",
+   "weight": 4
+  },
+  {
+   "name": "Get 5 new uniques from hard clues",
+   "short": "Hard Clues",
+   "tip": "Allowed sources for clues are Hellhounds, Warped/Chilled Jellies (with 52 Slayer) and Gryphons (with the Troubled Tortugans quest).",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(hard)",
+   "weight": 2
+  },
+  {
+   "name": "Get Runner boots",
+   "short": "Runner Boots",
+   "tip": "Obtained from the Barbarian Assault minigame. Train to 30 Ranged, Defence and Hitpoints and get a team to help you by tagging @BAHelper in the #group-content channel. Read our miniguide too, link in the FAQ.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get Penance gloves",
+   "short": "Penance Gloves",
+   "tip": "Obtained from the Barbarian Assault minigame. Train to 30 Ranged, Defence and Hitpoints and get a team to help you by tagging @BAHelper in the #group-content channel. Read our miniguide too, link in the FAQ.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Granite body",
+   "short": "Granite Body",
+   "tip": "Obtained from the Barbarian Assault minigame. Train to 30 Ranged, Defence and Hitpoints and get a team to help you by tagging @BAHelper in the #group-content channel. Read our miniguide too, link in the FAQ.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 new halo",
+   "short": "CW Halo",
+   "tip": "Purchased using Castle Wars tickets. Playing on official worlds is recommended, as the plaudits will shorten your task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get the full Red decorative set",
+   "short": "CW Red Set",
+   "tip": "Purchased using Castle Wars tickets. Playing on official worlds is recommended, as the plaudits will shorten your task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get the Zamorak hood & cloak",
+   "short": "CW Zammy Set",
+   "tip": "Purchased using Castle Wars tickets. Playing on official worlds is recommended, as the plaudits will shorten your task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get the Saradomin hood & cloak",
+   "short": "CW Sara Set",
+   "tip": "Purchased using Castle Wars tickets. Playing on official worlds is recommended, as the plaudits will shorten your task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 Angler piece",
+   "short": "Angler Piece",
+   "tip": "Obtained from the Fishing Trawler minigame in Port Khazard, after level 15 Fishing. Fix the leaks on the boat for a kickstart into Construction or repair the net and fend off the kraken.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fishing_Trawler",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 new unique from Gnome Restaurant",
+   "short": "Gnome Rest",
+   "tip": "Only specific hard deliveries (see wiki) can give uniques. You may not complete quests to expand your delivery options.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gnome_Restaurant",
+   "weight": 1
+  },
+  {
+   "name": "Get the next tier of MTA wand",
+   "short": "MTA Wand",
+   "tip": "Obtained from the Mage Training Arena minigame. You're a wizard, Harry!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 3
+  },
+  {
+   "name": "Unlock bones to peaches",
+   "short": "Bones2Peaches",
+   "tip": "Obtained from the Mage Training Arena minigame. Telekinetic room is the worst!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get Infinity boots",
+   "short": "Inf Boots",
+   "tip": "Obtained from the Mage Training Arena minigame. Telekinetic room is the worst!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get Infinity gloves",
+   "short": "Inf Gloves",
+   "tip": "Obtained from the Mage Training Arena minigame. Telekinetic room is the worst!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void Knight seal",
+   "short": "VK Seal",
+   "tip": "Purchased with Pest Control commendation points. I sure don't miss the novice boat...",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get Void Knight gloves",
+   "short": "VK Gloves",
+   "tip": "Purchased with Pest Control commendation points. Requires 42 in all combat stats and 22 Prayer to purchase. Always attack the spinners!",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 piece of Rogue equipment",
+   "short": "Rogue Piece",
+   "tip": "Potential reward from the Rogues' Den minigame. Remember to pick the right dialogue option!",
+   "wiki": "https://oldschool.runescape.wiki/w/Rogues'_Den",
+   "weight": 5
+  },
+  {
+   "name": "Get 1 unique from Shades of Mort'ton",
+   "short": "Shades Unique",
+   "tip": "Set ghost remains ablaze on top of logs soaked in sacred oil. Somehow that makes shiny keys and gold. Who knows?",
+   "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton_(minigame)",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 piece of Lumberjack equipment",
+   "short": "Lumberjack",
+   "tip": "Obtained by completing easy Temple Treks in Burgh de Rott. Keep killing Undead Lumberjacks that spawn during the Bridge Repair event (the one without a tree) - do not repair the bridge.",
+   "wiki": "https://oldschool.runescape.wiki/w/Temple_Trekking",
+   "weight": 4
+  },
+  {
+   "name": "Get the Gricoller's can",
+   "short": "Gricol. Can",
+   "tip": "Can be purchased at the Tithe Farm minigame. You can boost using a garden pie to access it earlier, as well as for higher tier seeds.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gricoller's_can",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 piece of Farmer's equipment",
+   "short": "Farmer Piece",
+   "tip": "Can be purchased at the Tithe Farm minigame. You can boost using a garden pie to access it earlier, as well as for higher tier seeds.",
+   "wiki": "https://oldschool.runescape.wiki/w/Tithe_Farm",
+   "weight": 2
+  },
+  {
+   "name": "Get Blue Rum",
+   "short": "Blue Rum",
+   "tip": "Obtained from the Trouble Brewing minigame. Fill and deposit 100 buckets of water for maximum AFKness or help the runners brew for extra points. Requires completion of the Cabin Fever quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get Red Rum",
+   "short": "Red Rum",
+   "tip": "Obtained from the Trouble Brewing minigame. Fill and deposit 100 buckets of water for maximum AFKness or help the runners brew for extra points. Requires completion of the Cabin Fever quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get The stuff",
+   "short": "The Stuff",
+   "tip": "Obtained from the Trouble Brewing minigame. Fill and deposit 100 buckets of water for maximum AFKness or help the runners brew for extra points. Requires completion of the Cabin Fever quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Pearl fishing rod",
+   "short": "Pearl Fish Rod",
+   "tip": "Obtained from Aerial Fishing on Molch Island. Good luck with that RSI.",
+   "wiki": "https://oldschool.runescape.wiki/w/Aerial_fishing",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Champion scroll",
+   "short": "Champ Scroll",
+   "tip": "Can be received as a drop from several monsters once you have at least 32 quest points. Follow the list in the #quest-lists Discord channel if you don't have enough quest points yet.",
+   "wiki": "https://oldschool.runescape.wiki/w/Champion's_scroll",
+   "weight": 1
+  },
+  {
+   "name": "Get the Marksman headpiece",
+   "short": "Chompy Hat",
+   "tip": "Get the stabbie chucker from Rantz, make some stabbers, stick lotsa chompies.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_bird_hunting",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Creature Creation",
+   "short": "Creat Creation",
+   "tip": "Make an abomination with two different ingredients, mix together and murder. Do these in order of combat level, but leave Jubster for last as it requires RFD subquest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Creature_Creation",
+   "weight": 7
+  },
+  {
+   "name": "Get a Rune defender",
+   "short": "Rune Defender",
+   "tip": "Obtained as a drop from Cyclops in the Warrior's guild. Good ole defender grind.",
+   "wiki": "https://oldschool.runescape.wiki/w/Defender",
+   "weight": 1
+  },
+  {
+   "name": "Get 2 unique notes from Fossil Island",
+   "short": "FosIslandNotes",
+   "tip": "The #quest-lists Discord channel has a list for unlocking Fossil Island. Hoop snakes are the fastest option for gathering Nummulite, but Crabs are AFK and allowed too.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_note",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 piece of Prospector equipment",
+   "short": "Prospector",
+   "tip": "Can be purchased from the Motherlode Mine. Bring a pick to clear the debris on the way.",
+   "wiki": "https://oldschool.runescape.wiki/w/Motherlode_Mine",
+   "weight": 4
+  },
+  {
+   "name": "Get 2 unique Ancient pages",
+   "short": "Ancient Pages",
+   "tip": "Requires completing the Firemaking portion of the Barbarian Training miniquest - you don't need the other parts! Check out the Ancient pages guide on the FAQ!",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_page",
+   "weight": 4
+  },
+  {
+   "name": "Get Revenant ether",
+   "short": "Revenant Ether",
+   "tip": "Guaranteed drop from any Revenant. Requires a 100k entry fee into the Revenant Caves. ",
+   "wiki": "https://oldschool.runescape.wiki/w/Revenant_ether",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 piece of Graceful equipment",
+   "short": "Graceful Piece",
+   "tip": "Can be purchased from Grace in the Rogues' Den. The Canifis and Colossal Worm courses (at 62 Agility) are the fastest for marks, but you may do any course you want.",
+   "wiki": "https://oldschool.runescape.wiki/w/Graceful_outfit",
+   "weight": 6
+  },
+  {
+   "name": "Get a Crawling hand",
+   "short": "Crawling Hand",
+   "tip": "Can be received as drop from Crawling hands. Coincidence? Maybe.",
+   "wiki": "https://oldschool.runescape.wiki/w/Crawling_Hand",
+   "weight": 1
+  },
+  {
+   "name": "Get a Cockatrice head",
+   "short": "Cock Head",
+   "tip": "Obtained from Cockatrices in the Fremennik Slayer Cave. Don't forget your mirror shield!",
+   "wiki": "https://oldschool.runescape.wiki/w/Cockatrice_head",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Mogres",
+   "short": "Mogres Unique",
+   "tip": "Kill the mogres in the water off the western coast of Karamja. You don't need to complete Skippy and the Mogres, 32 Slayer is still required to attack them.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mogre",
+   "weight": 2
+  },
+  {
+   "name": "Get a Brine sabre",
+   "short": "Brine Sabre",
+   "tip": "Can be received as a drop from Brine Rats. Requires partial completion of Olaf's Quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Brine_sabre",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Turoths",
+   "short": "Turoth Unique",
+   "tip": "Requires special weaponry to kill: a leaf-bladed spear, broad arrows or the slayer dart spell.",
+   "wiki": "https://oldschool.runescape.wiki/w/Turoth",
+   "weight": 2
+  },
+  {
+   "name": "Get a Black mask",
+   "short": "Black Mask",
+   "tip": "Can be received as a drop from Cave Horrors on Mos Le'Harmless. Requires the Cabin Fever quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Black_mask",
+   "weight": 1
+  },
+  {
+   "name": "Get the next tier of metal boots",
+   "short": "Metal Boots",
+   "tip": "You must start by obtaining the lowest tier you do not currently have.",
+   "wiki": "https://oldschool.runescape.wiki/w/Metal_boots",
+   "weight": 5
+  },
+  {
+   "name": "Get a Mystic hat (light)",
+   "short": "Myst Hat L",
+   "tip": "Obtained as a drop from Wall Beasts or Basilisks. Don't forget your Spiny helmet or Mirror shield!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mystic_hat_(light)",
+   "weight": 1
+  },
+  {
+   "name": "Get Mystic gloves (light)",
+   "short": "Myst Gloves L",
+   "tip": "Obtained from Lizards and Rockslugs. Don't forget your ice coolers as Sulphur Lizards are not allowed.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mystic_gloves_(light)",
+   "weight": 1
+  },
+  {
+   "name": "Get Mystic boots (light)",
+   "short": "Myst Boots L",
+   "tip": "Obtained from Cockatrices in the Fremennik Slayer Cave. Don't forget your mirror shield!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mystic_boots_(light)",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Infernal Mages",
+   "short": "Infernal Mages",
+   "tip": "One of the mages (ID 444) can be safespotted using long range with your bow. The Lava battlestaff does not count as it is not in theeee Collection Log.",
+   "wiki": "https://oldschool.runescape.wiki/w/Infernal_Mage",
+   "weight": 2
+  },
+  {
+   "name": "Get Mystic gloves (dark)",
+   "short": "Myst Gloves D",
+   "tip": "Obtained from Banshees of all kinds. Don't forget your earmuffs!",
+   "wiki": "https://oldschool.runescape.wiki/w/Mystic_gloves_(dark)",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique TzHaar drop",
+   "short": "TzHaar Unique",
+   "tip": "Recommended to kill TzHaar-Kets until you have all their unique drops, then kill TzHaar-Xils.",
+   "wiki": "https://oldschool.runescape.wiki/w/TzHaar",
+   "weight": 2
+  },
+  {
+   "name": "Get a Big swordfish",
+   "short": "Big Swordfish",
+   "tip": "Fishing inside the Fishing Guild provides an invisible +7 boost once you can access it. Feeeeeeeesh!",
+   "wiki": "https://oldschool.runescape.wiki/w/Big_swordfish",
+   "weight": 1
+  },
+  {
+   "name": "Get a Big bass",
+   "short": "Big Bass",
+   "tip": "Fishing inside the Fishing Guild provides an invisible +7 boost once you can access it. How many boots can you get?",
+   "wiki": "https://oldschool.runescape.wiki/w/Big_bass",
+   "weight": 1
+  },
+  {
+   "name": "Get a Long bone",
+   "short": "Long Bone",
+   "tip": "Can be received as a drop from any monster that drop big bones. Hill Giants or Giant frogs are recommended.",
+   "wiki": "https://oldschool.runescape.wiki/w/Long_bone",
+   "weight": 1
+  },
+  {
+   "name": "Get an Ecumenical key",
+   "short": "Ecumenical Key",
+   "tip": "Obtained as a drop from any monster in the Wilderness God Wars Dungeon. It's recommended to kill Imps and hop between two worlds for faster kills.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ecumenical_key",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Dark totem piece / Ancient shard",
+   "short": "DarkTotem/AS",
+   "tip": "Kill Skeletons or Hill Giants in the Catacombs of Kourend to get one. Magic axes and Possessed pickaxes are also allowed, but less efficient.",
+   "wiki": "https://oldschool.runescape.wiki/w/Catacombs_of_Kourend",
+   "weight": 4
+  },
+  {
+   "name": "Get Mining gloves",
+   "short": "Mining Gloves",
+   "tip": "Can be purchased as a reward in the Mining Guild. Obtain unidentified minerals by mining ore inside the guild. Iron is recommended for fast completion.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mining_gloves",
+   "weight": 1
+  },
+  {
+   "name": "Get a Right skull half",
+   "short": "R Skull Half",
+   "tip": "Obtained as a drop from Minotaurs in the Stronghold of Security.",
+   "wiki": "https://oldschool.runescape.wiki/w/Right_skull_half",
+   "weight": 1
+  },
+  {
+   "name": "Get a Left skull half",
+   "short": "L Skull Half",
+   "tip": "Obtained as a drop from Ankous in the Stronghold of Security.",
+   "wiki": "https://oldschool.runescape.wiki/w/Left_skull_half",
+   "weight": 1
+  },
+  {
+   "name": "Get a Top of sceptre",
+   "short": "Top Sceptre",
+   "tip": "Obtained as a drop from Catablepons in the Stronghold of Security.",
+   "wiki": "https://oldschool.runescape.wiki/w/Top_of_sceptre",
+   "weight": 1
+  },
+  {
+   "name": "Get a Bottom of sceptre",
+   "short": "Bottom Sceptre",
+   "tip": "Can be received as a drop from Flesh Crawlers in the Stronghold of Security.",
+   "wiki": "https://oldschool.runescape.wiki/w/Bottom_of_sceptre",
+   "weight": 1
+  },
+  {
+   "name": "Get a Mossy key",
+   "short": "Mossy Key",
+   "tip": "Obtained as a drop from Moss Giants.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mossy_key",
+   "weight": 1
+  },
+  {
+   "name": "Get a Giant key",
+   "short": "Giant Key",
+   "tip": "Obtained as a drop from Hill Giants.",
+   "wiki": "https://oldschool.runescape.wiki/w/Giant_key",
+   "weight": 1
+  },
+  {
+   "name": "Get a Fresh crab claw & Fresh crab shell",
+   "short": "CrabClaw+Shell",
+   "tip": "Can be received as a drop from Crabs. Requires Pirate Pete's subquest of Recipe for Disaster.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fresh_crab_claw",
+   "weight": 1
+  },
+  {
+   "name": "Get a Xeric's talisman (inert)",
+   "short": "Xeric Talisman",
+   "tip": "Obtained as a drop from Lizardmen.",
+   "wiki": "https://oldschool.runescape.wiki/w/Xeric's_talisman",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Ardougne Easy Diary",
+   "short": "Ardougne Easy",
+   "tip": "No stealing! You can buy Silk in Al Kharid.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Desert Easy Diary",
+   "short": "Desert Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Falador Easy Diary",
+   "short": "Falador Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Fremennik Easy Diary",
+   "short": "Frem Easy",
+   "tip": "Kill Catablepons for the raw trout if you do not have 20 Fishing.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kandarin Easy Diary",
+   "short": "Kandarin Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Karamja Easy Diary",
+   "short": "Karamja Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kourend & Kebos Easy Diary",
+   "short": "Kourend Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Kourend_&_Kebos_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Lumbridge & Draynor Easy Diary",
+   "short": "Lumby Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_&_Draynor_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Morytania Easy Diary",
+   "short": "Mory Easy",
+   "tip": "Ghosts Ahoy quest is not needed to get into Port Phasmatys, you can charter into it.",
+   "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Varrock Easy Diary",
+   "short": "Varrock Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Western Provinces Easy Diary",
+   "short": "WestProv Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Wilderness Easy Diary",
+   "short": "Wildy Easy",
+   "tip": "The task is not complete until you have claimed the reward item and lamp. Do not forget!",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Get a Supply crate from Mahogany Homes",
+   "short": "Supply Crate",
+   "tip": "Daddy's Home is not required to start the activity (don't pull a Shadu). You may purchase a house before starting.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Tempoross",
+   "short": "Tempo Unique",
+   "tip": "Can be received directly from Tempoross' reward pool or by combining the Angler outfit pieces with 1,200 Spirit flakes, if you have one. The Dragon harpoon does not count.",
+   "wiki": "https://oldschool.runescape.wiki/w/Tempoross",
+   "weight": 4
+  },
+  {
+   "name": "Get 5 unique items at Camdozaal",
+   "short": "Camdozaal",
+   "tip": "There are 6 uniques from mining and breaking ore deposits, 1 from fishing, 1 from golems and 2 by assembling the mace and hammer. It's recommended to start with mining.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ruins_of_Camdozaal",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Guardians of the Rift",
+   "short": "GotR Unique",
+   "tip": "Uniques can come from the Rewards Guardian or purchased in the shop with Abyssal pearls. Requires the Temple of the Eye quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Guardians_of_the_Rift",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 unique from Giants' Foundry",
+   "short": "GF Unique",
+   "tip": "Requires the Sleeping Giants quest. You can buy warhammers and battleaxes in Mt Karuulm and Cam Torum for cheap sword materials.",
+   "wiki": "https://oldschool.runescape.wiki/w/Giants'_Foundry",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 unique from Forestry",
+   "short": "Forestry",
+   "tip": "Uniques can come from Forestry events or purchased in the shop from the Friendly Forester.",
+   "wiki": "https://oldschool.runescape.wiki/w/Forestry",
+   "weight": 6
+  },
+  {
+   "name": "Get a Warped sceptre",
+   "short": "Warped Sceptre",
+   "tip": "Obtained as a drop from Warped terrorbirds and tortoises. The tortoises can be safespotted in the first room. Requires completion of The Path of Glouphrie quest. Don't forget your crystal chimes! ",
+   "wiki": "https://oldschool.runescape.wiki/w/Warped_sceptre",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Hunter Guild",
+   "short": "Hunter Guild",
+   "tip": "Only Adept rumours or better can reward uniques, requiring 57 Hunter.",
+   "wiki": "https://oldschool.runescape.wiki/w/Hunter_Guild#Other",
+   "weight": 1
+  },
+  {
+   "name": "Get the Sulphur blades",
+   "short": "Sulphur Blades",
+   "tip": "Obtained as a drop from Sulphur Naguas. Requires partial completion of the Perilous Moons quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sulphur_Nagua",
+   "weight": 1
+  },
+  {
+   "name": "Get a Colossal wyrm teleport scroll",
+   "short": "Wyrm TP Scroll",
+   "tip": "Purchased with Termites at the Colossal Wyrm Agility Course in Varlamore.",
+   "wiki": "https://oldschool.runescape.wiki/w/Colossal_Wyrm_Agility_Course",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Vale Totems",
+   "short": "VT Unique",
+   "tip": "Obtained by rummaging offerings or, if you're unlucky, buying from Ranulph with research points. You may chop logs for this task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Vale_Totems",
+   "weight": 2
+  },
+  {
+   "name": "Get a Gryphon feather",
+   "short": "GryphonFeather",
+   "tip": "Obtained as a guaranteed drop from regular Gryphons after completion of the Troubled Tortugans quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gryphon_feather",
+   "weight": 1
+  },
+  {
+   "name": "Get the next reward from The Tempor Tantrum",
+   "short": "Tempor Tantrum",
+   "tip": "Obtained by completing the next rank's course under the corresponding time.",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Tempor_Tantrum",
+   "weight": 3
+  },
+  {
+   "name": "Get the Shark paint",
+   "short": "Shark Paint",
+   "tip": "Obtained by completing courier tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shark_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Salvaging station schematic",
+   "short": "Salv Station",
+   "tip": "Obtained from the locked lockbox on Chinchompa Island. The key is buried on The Pandemonium.",
+   "wiki": "https://oldschool.runescape.wiki/w/Salvaging_station_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Ballistic attractor schematic",
+   "short": "Ball Attractor",
+   "tip": "Obtained by talking to Ava after completion of Animal Magnetism. Back in my day piss gems didn't have Ava's...",
+   "wiki": "https://oldschool.runescape.wiki/w/Ballistic_attractor_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get Ray barbs",
+   "short": "Ray Barbs",
+   "tip": "Obtained as a drop from Butterfly Rays; these can be safespotted from land on the northern shore of the Isle of Souls.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ray_barbs",
+   "weight": 1
+  },
+  {
+   "name": "Get a Boat bottle",
+   "short": "Boat Bottle",
+   "tip": "Obtained while sorting Small, Fishy and Barracuda salvages. Higher tier salvages have better rates!",
+   "wiki": "https://oldschool.runescape.wiki/w/Boat_bottle",
+   "weight": 1
+  },
+  {
+   "name": "Get the next Sea Treasure",
+   "short": "Sea Treasure",
+   "tip": "Obtained while sorting salvage. Each sea treasure can be found in a unique salvage type. The Sailors' amulet can be found in all salvages and also completes the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sea_treasure",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 unique from Brutus",
+   "short": "Brutus Unique",
+   "tip": "Requires the Ides of Milk quest. Hope you like bull milk. Moooooooo.",
+   "wiki": "https://oldschool.runescape.wiki/w/Brutus",
+   "weight": 3
+  }
+ ],
+ "medium": [
+  {
+   "name": "Get 1 unique from Barrows",
+   "short": "Barrows Unique",
+   "tip": "Can be received as a reward from the Barrows Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barrows",
+   "weight": 5
+  },
+  {
+   "name": "Get 1 unique from Crazy Archeologist",
+   "short": "Crazy Arch",
+   "tip": "Can be received as a drop from the Crazy Archaeologist.",
+   "wiki": "https://oldschool.runescape.wiki/w/Crazy_archaeologist",
+   "weight": 3
+  },
+  {
+   "name": "Get a Fire cape",
+   "short": "Fire Cape",
+   "tip": "Guaranteed reward upon completion of the Fight Caves. Good luck with Jad!",
+   "wiki": "https://oldschool.runescape.wiki/w/TzHaar_Fight_Cave",
+   "weight": 1
+  },
+  {
+   "name": "Get Granite dust",
+   "short": "Granite Dust",
+   "tip": "Guaranteed drop from the Grotesque Guardians boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Grotesque_Guardians",
+   "weight": 1
+  },
+  {
+   "name": "Get a Hill giant club",
+   "short": "HillGiantClub",
+   "tip": "Can be received as a drop form Obor.",
+   "wiki": "https://oldschool.runescape.wiki/w/Obor",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Wintertodt",
+   "short": "WT Unique",
+   "tip": "Wintertodt uniques come from the Wintertodt Skilling boss. Dragon axe does not count this task. Dragon axe is a Dagannoth Kings task. Rip TaskOnly UIM",
+   "wiki": "https://oldschool.runescape.wiki/w/Wintertodt",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Zulrah",
+   "short": "Zulrah Unique",
+   "tip": "Guaranteed drop from the Zulrah boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Zulrah",
+   "weight": 2
+  },
+  {
+   "name": "Get 3 new uniques from beginner clues",
+   "short": "Beg Clues",
+   "tip": "Potential reward from beginner clues. Typically you would want to kill Goblins or Minotaurs for the clues themselves.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(beginner)",
+   "weight": 2
+  },
+  {
+   "name": "Get 5 new uniques from easy clues",
+   "short": "Easy Clues",
+   "tip": "Potential reward from easy clues. Pick pocketing H.A.M members are a great way of getting the clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(easy)",
+   "weight": 6
+  },
+  {
+   "name": "Get 5 new uniques from medium clues",
+   "short": "Medium Clues",
+   "tip": "Killing guards is a decent way of getting the clues. Once you have 50 hunter, Eclectic implings are also a fantastic source.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(medium)",
+   "weight": 4
+  },
+  {
+   "name": "Get 5 new uniques from hard clues",
+   "short": "Hard Clues",
+   "tip": "Potential reward from hard clues. Killing hellhounds is a decent way of getting the clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(hard)",
+   "weight": 4
+  },
+  {
+   "name": "Get a Fighter hat",
+   "short": "Fighter Hat",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. YIKES.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Healer hat",
+   "short": "Healer Hat",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. YIKES.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Runner hat",
+   "short": "Runner Hat",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. YIKES.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Ranger hat",
+   "short": "Ranger Hat",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. YIKES.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Fighter torso",
+   "short": "Fighter Torso",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. YIKES.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Granite helm",
+   "short": "Granite Helm",
+   "tip": "Can be received as a drop Terror Dogs.",
+   "wiki": "https://oldschool.runescape.wiki/w/Granite_helm",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 new halo",
+   "short": "CW Halo",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get the Decorative ranged set",
+   "short": "CW Ranged Set",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get the Decorative magic set",
+   "short": "CW Magic Set",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 new unique from Gnome Restaurant",
+   "short": "Gnome Rest",
+   "tip": "Potential reward from the Gnome Restaurant minigame. You should no the deal by now having done this task in the Easy Tier!",
+   "wiki": "https://oldschool.runescape.wiki/w/Gnome_Restaurant",
+   "weight": 2
+  },
+  {
+   "name": "Upgrade to a Master wand",
+   "short": "Master Wand",
+   "tip": "Can be purchased as a reward from the Mage Training Arena minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get an Infinity hat",
+   "short": "Infinity Hat",
+   "tip": "Can be purchased as a reward from the Mage Training Arena minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get an Infinity top",
+   "short": "Infinity Top",
+   "tip": "Can be purchased as a reward from the Mage Training Arena minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get Infinity bottoms",
+   "short": "Inf Bottoms",
+   "tip": "Can be purchased as a reward from the Mage Training Arena minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get a Mage's book",
+   "short": "Mage's Book",
+   "tip": "Can be purchased as a reward from the Mage Training Arena minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mage_Training_Arena",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void melee helm",
+   "short": "VK Melee Helm",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void magic helm",
+   "short": "VK Magic Helm",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void ranger helm",
+   "short": "VK Ranger Helm",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void Knight top",
+   "short": "VK Top",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void Knight robe",
+   "short": "VK Robe",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get a Void Knight mace",
+   "short": "VK Mace",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Shades of Mort'ton",
+   "short": "Shades Unique",
+   "tip": "Potential reward from the Shades of Morton minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton_(minigame)",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 piece of Farmer's equipment",
+   "short": "Farmer Piece",
+   "tip": "Can be purchased as a reward from the Tithe Farm minigame. Plant those seeds!",
+   "wiki": "https://oldschool.runescape.wiki/w/Tithe_Farm",
+   "weight": 2
+  },
+  {
+   "name": "Get the Seed box",
+   "short": "Seed Box",
+   "tip": "Can be purchased as a reward from the Tithe Farm minigame. Plant those seeds!",
+   "wiki": "https://oldschool.runescape.wiki/w/Tithe_Farm",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 Naval set",
+   "short": "Naval Set",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. Fill and deposit 100 buckets of water. Enjoy your AFK time.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 2
+  },
+  {
+   "name": "Get the Cutthroat flag",
+   "short": "Cutthroat Flag",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. Fill and deposit 100 buckets of water. Enjoy your AFK time.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Gilded smile flag",
+   "short": "GildedSmileFlg",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. Fill and deposit 100 buckets of water. Enjoy your AFK time.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Pearl fly fishing rod",
+   "short": "Pearl Fly Rod",
+   "tip": "Can be purchased as a reward from the Aerial Fishing hunter method. Good luck with that RSI.",
+   "wiki": "https://oldschool.runescape.wiki/w/Aerial_fishing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Pearl barbarian rod",
+   "short": "Pearl Barb Rod",
+   "tip": "Can be purchased as a reward from the Aerial Fishing hunter method. Good luck with that RSI.",
+   "wiki": "https://oldschool.runescape.wiki/w/Aerial_fishing",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Champion scroll",
+   "short": "Champ Scroll",
+   "tip": "Can be received from a drop from several monsters.",
+   "wiki": "https://oldschool.runescape.wiki/w/Champion's_scroll",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique Elder chaos robe piece",
+   "short": "ECD Piece",
+   "tip": "Can be received as a drop from Elder Chaos Druids.",
+   "wiki": "https://oldschool.runescape.wiki/w/Elder_Chaos_druid",
+   "weight": 2
+  },
+  {
+   "name": "Get the Ogre forester headpiece",
+   "short": "Chompy Hat",
+   "tip": "Guaranteed from Chompy bird hunting.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_bird_hunting",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dragon defender",
+   "short": "DragonDefender",
+   "tip": "Can be received as a drop from Cyclops in the Warriors Guild basement.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_defender",
+   "weight": 1
+  },
+  {
+   "name": "Get 2 unique notes from Fossil Island",
+   "short": "FosIslandNotes",
+   "tip": "Can be received by opening the chest(s) on Fossil Island with 100 Nummulite. Killing hoop snakes for the Nummulite is recommended.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_note",
+   "weight": 3
+  },
+  {
+   "name": "Get the Coal bag",
+   "short": "Coal Bag",
+   "tip": "Can be purchased as a reward from the Motherlode Mine training method. Pay-Dirt!",
+   "wiki": "https://oldschool.runescape.wiki/w/Motherlode_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get the Gem bag",
+   "short": "Gem Bag",
+   "tip": "Can be purchased as a reward from the Motherlode Mine training method. Pay-Dirt!",
+   "wiki": "https://oldschool.runescape.wiki/w/Motherlode_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get 2 unique Ancient pages",
+   "short": "Ancient Pages",
+   "tip": "Can be received when searching remains in the Whirlpool Dungeon. Check out the Ancient Page guide on the FAQ page! I'm not going to remember to link that page here I feel.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_page",
+   "weight": 4
+  },
+  {
+   "name": "Get tier 5 Shayzien armour",
+   "short": "ShayzienArmour",
+   "tip": "Guaranteed drop by fighting the members of the Shayzien Combat Ring. Must obtain armour sets 1 through 5 to complete the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shayzien_armour",
+   "weight": 1
+  },
+  {
+   "name": "Get a Basilisk head",
+   "short": "Basilisk Head",
+   "tip": "Can be received as a drop from Basilisk.",
+   "wiki": "https://oldschool.runescape.wiki/w/Basilisk_head",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Gargoyles",
+   "short": "GargoyleUnique",
+   "tip": "Can be received as a drop from Gargoyles.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gargoyle",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Kurasks",
+   "short": "Kurask Unique",
+   "tip": "Can be received as a drop from Kurask.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kurask",
+   "weight": 2
+  },
+  {
+   "name": "Get a Granite longsword",
+   "short": "Granite LS",
+   "tip": "Can be received as a drop from Fossil Island Wyverns.",
+   "wiki": "https://oldschool.runescape.wiki/w/Granite_longsword",
+   "weight": 1
+  },
+  {
+   "name": "Get Granite legs",
+   "short": "Granite Legs",
+   "tip": "Can be received as a drop from Wyverns.",
+   "wiki": "https://oldschool.runescape.wiki/w/Granite_legs",
+   "weight": 1
+  },
+  {
+   "name": "Get the next tier of metal boots",
+   "short": "Metal Boots",
+   "tip": "Can be received as a drop from several monsters. You must start by obtaining the lowest pair of you do not currently have. Bronze through Rune.",
+   "wiki": "https://oldschool.runescape.wiki/w/Metal_boots",
+   "weight": 2
+  },
+  {
+   "name": "Get a Mystic robe bottom (dark)",
+   "short": "Myst Bottom D",
+   "tip": "Can be received as a drop from Aberrant spectres.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mystic_robe_bottom_(dark)",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique TzHaar drop",
+   "short": "TzHaar Unique",
+   "tip": "Can be received as a drop from TzHaar creatures. Recommended to kill Kets until you have all their unique drops, the kill Xils.",
+   "wiki": "https://oldschool.runescape.wiki/w/TzHaar",
+   "weight": 4
+  },
+  {
+   "name": "Get a Big shark",
+   "short": "Big Shark",
+   "tip": "Obtained randomly whilst fishing for sharks. Good Luck.",
+   "wiki": "https://oldschool.runescape.wiki/w/Big_shark",
+   "weight": 1
+  },
+  {
+   "name": "Get a Curved bone",
+   "short": "Curved Bone",
+   "tip": "Can be received as a drop rarely, from any monster that drop big bones.",
+   "wiki": "https://oldschool.runescape.wiki/w/Curved_bone",
+   "weight": 1
+  },
+  {
+   "name": "Get a Shaman mask",
+   "short": "Shaman Mask",
+   "tip": "Can be received as drop from Shaman Ogress Warriors",
+   "wiki": "https://oldschool.runescape.wiki/w/Shaman_mask",
+   "weight": 1
+  },
+  {
+   "name": "Get Superior mining gloves",
+   "short": "Sup Mining Gl",
+   "tip": "Can be purchased as a reward in the Mining Guild. Obtain unidentified minerals by mining in the guild. Mining iron ore is recommended.",
+   "wiki": "https://oldschool.runescape.wiki/w/Superior_mining_gloves",
+   "weight": 1
+  },
+  {
+   "name": "Get a Bracelet of ethereum or Rev cave teleport",
+   "short": "Rev Unique",
+   "tip": "Can be received as a drop from any Revenant.",
+   "wiki": "https://oldschool.runescape.wiki/w/Revenants",
+   "weight": 2
+  },
+  {
+   "name": "Complete the Ardougne Medium Diary",
+   "short": "Ardougne Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Desert Medium Diary",
+   "short": "Desert Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Falador Medium Diary",
+   "short": "Falador Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Fremennik Medium Diary",
+   "short": "Frem Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kandarin Medium Diary",
+   "short": "Kandarin Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Karamja Medium Diary",
+   "short": "Karamja Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kourend & Kebos Medium Diary",
+   "short": "Kourend Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kourend_&_Kebos_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Lumbridge & Draynor Medium Diary",
+   "short": "Lumby Med",
+   "tip": "Complete all the diary tasks. FINALLY AVA'S DEVICE!",
+   "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_&_Draynor_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Morytania Medium Diary",
+   "short": "Mory Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Varrock Medium Diary",
+   "short": "Varrock Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Western Provinces Medium Diary",
+   "short": "WestProv Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Wilderness Medium Diary",
+   "short": "Wildy Med",
+   "tip": "Complete all the diary tasks. Don't really have much else to tell you.",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Get a Mask of Ranul",
+   "short": "Mask of Ranul",
+   "tip": "Can be received as a drop from Undead Druids.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mask_of_ranul",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Sarachnis",
+   "short": "Sarachnis Uni",
+   "tip": "Can be received as a drop from Sarachnis.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sarachnis",
+   "weight": 2
+  },
+  {
+   "name": "Get a Herb sack",
+   "short": "Herb Sack",
+   "tip": "Can be purchased from Tithe farm or Slayer shop.",
+   "wiki": "https://oldschool.runescape.wiki/w/Herb_sack",
+   "weight": 1
+  },
+  {
+   "name": "Get a Plank sack",
+   "short": "Plank Sack",
+   "tip": "Can be purchased as a reward from the Mahogany Homes minigame. Don't pull a Shadu and do Daddy's Home. :) This joke is more applicable in easy tier but still, don't.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 piece of Carpenter equipment",
+   "short": "CarpenterPiece",
+   "tip": "Can be purchased as a reward from the Mahogany Homes minigame. Don't pull a Shadu and do Daddy's Home. :) This joke is more applicable in easy tier but still, don't.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 2
+  },
+  {
+   "name": "Get an Ectoplasmator",
+   "short": "Ectoplasmator",
+   "tip": "Can be purchased as a reward from the Soul Wars minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ectoplasmator",
+   "weight": 1
+  },
+  {
+   "name": "Get a Penance skirt",
+   "short": "Penance Skirt",
+   "tip": "Can be purchased as a reward from the Barbarian Assault Combat minigame. You can ask the Clan Chat or the Discord to gather a team, last ditch effort would be to do PUB runs in World 306.. Defender is best role, AMA.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+   "weight": 1
+  },
+  {
+   "name": "Get a Celestial ring",
+   "short": "Celestial Ring",
+   "tip": "Can be purchased as a reward from the Shooting Stars Diversion and Distraction minigame. Star Miners Clan Chat to find stars.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shooting_Stars",
+   "weight": 1
+  },
+  {
+   "name": "Get a Star fragment",
+   "short": "Star Fragment",
+   "tip": "Can be purchased as a reward from the Shooting Stars Diversion and Distraction minigame. Star Miners Clan Chat to find stars.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shooting_Stars",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Tempoross",
+   "short": "Tempo Unique",
+   "tip": "Can be received as a reward from the Tempoross Skilling boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Tempoross",
+   "weight": 5
+  },
+  {
+   "name": "Get the Merfolk trident",
+   "short": "MerfolkTrident",
+   "tip": "Can be purchased as a reward from the Underwater agility course on Fossil Island.",
+   "wiki": "https://oldschool.runescape.wiki/w/Merfolk_trident",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Guardians of the Rift",
+   "short": "GotR Unique",
+   "tip": "Can be received as a reward from the Guardians of the Rift Skilling minigame. Runecrafting... it's actually kinda fun now.",
+   "wiki": "https://oldschool.runescape.wiki/w/Guardians_of_the_Rift",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 unique from Giants' Foundry",
+   "short": "GF Unique",
+   "tip": "Can be purchased as a reward from the Giants' Foundry Skilling minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Giants'_Foundry",
+   "weight": 4
+  },
+  {
+   "name": "Get 1 unique from Forestry",
+   "short": "Forestry",
+   "tip": "Can be purchased as a reward from the Friendly Forester",
+   "wiki": "https://oldschool.runescape.wiki/w/Forestry",
+   "weight": 4
+  },
+  {
+   "name": "Get a Scurrius' spine",
+   "short": "Scurrius Spine",
+   "tip": "Received as a drop when killing Scurrius",
+   "wiki": "https://oldschool.runescape.wiki/w/Scurrius",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Armoured Zombies",
+   "short": "Arm Zombie Uni",
+   "tip": "First unique is Defender of Varrock for Broken zombie axe, and 2nd unique is completing Curse of Arrav for the helmet",
+   "wiki": "https://oldschool.runescape.wiki/w/Armoured_zombie_(Zemouregal's_Fort)",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Moons of Peril",
+   "short": "Moons Unique",
+   "tip": "Received as a drop from Moons of Peril bosses",
+   "wiki": "https://oldschool.runescape.wiki/w/Moons_of_Peril",
+   "weight": 5
+  },
+  {
+   "name": "Get 1 unique from the Hunter Guild",
+   "short": "Hunter Guild",
+   "tip": "Received as a drop when completing Hunters Rumours",
+   "wiki": "https://oldschool.runescape.wiki/w/Hunter_Guild#Other",
+   "weight": 2
+  },
+  {
+   "name": "Get a Calcified acorn",
+   "short": "CalcifiedAcorn",
+   "tip": "Obtained by spending termites through Wyrm Agility Course",
+   "wiki": "https://oldschool.runescape.wiki/w/Colossal_Wyrm_Agility_Course",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 Alchemist outfit piece",
+   "short": "AlchemistPiece",
+   "tip": "Obtained through Mastering Mixology herblore minigame",
+   "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Amoxliatl",
+   "short": "Amox Unique",
+   "tip": "Obtained when killing Amoxliatl. Taskers may also kill Frost naguas as they drop the same uniques excluding the pet",
+   "wiki": "https://oldschool.runescape.wiki/w/Amoxliatl",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Royal Titans",
+   "short": "Titans Unique",
+   "tip": "Obtained by killing the Royal Titans boss. First kill you must choose Take Pages option as you can force this unique.",
+   "wiki": "https://oldschool.runescape.wiki/w/Royal_Titans",
+   "weight": 4
+  },
+  {
+   "name": "Get a Steel ring",
+   "short": "Steel Ring",
+   "tip": "Can be received as a drop from the Deranged Archaeologist.",
+   "wiki": "https://oldschool.runescape.wiki/w/Steel_ring",
+   "weight": 1
+  },
+  {
+   "name": "Get a Huasca seed",
+   "short": "Huasca Seed",
+   "tip": "Can be received as a drop from the Hueycoatl, Amoxliatl or Custodian stalkers. Pick any of those you can access without additional quests.",
+   "wiki": "https://oldschool.runescape.wiki/w/Huasca_seed",
+   "weight": 1
+  },
+  {
+   "name": "Get a Wyrm/Brimhaven graceful recolor",
+   "short": "Grace Recolour",
+   "tip": "You must recolor your existing graceful, whichever graceful you want to keep do that color last.",
+   "wiki": "https://oldschool.runescape.wiki/w/Graceful_outfit",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Vale Totems",
+   "short": "VT Unique",
+   "tip": "This fletching minigame takes place in Auburn Valley. You can chop your own logs.",
+   "wiki": "https://oldschool.runescape.wiki/w/Vale_Totems",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Custodian stalkers",
+   "short": "Custodian Uni",
+   "tip": "Three different variants can be found inside the Stalker Den in Varlamore, after completion of the Shadows of Custodia quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Custodian_stalker",
+   "weight": 3
+  },
+  {
+   "name": "Get the Earthbound tecpatl",
+   "short": "Earth Tecpatl",
+   "tip": "Dropped from Earthen naguas in the Tonali Cavern, after progression in The Final Dawn quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Earthbound_tecpatl",
+   "weight": 1
+  },
+  {
+   "name": "Get Belle's folly (tarnished)",
+   "short": "Belle's Folly",
+   "tip": "Obtained as a drop by the Shellbane gryphon.",
+   "wiki": "https://oldschool.runescape.wiki/w/Belle%27s_folly_(tarnished)",
+   "weight": 1
+  },
+  {
+   "name": "Get a Horn of plenty",
+   "short": "Horn of Plenty",
+   "tip": "Obtained as a drop by regular Gryphons; being on a slayer task significantly improves the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Horn_of_plenty",
+   "weight": 1
+  },
+  {
+   "name": "Get the next reward from The Jubbly Jive",
+   "short": "Jubbly Jive",
+   "tip": "Obtained by completing the next rank's course under the corresponding time.",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Jubbly_Jive",
+   "weight": 3
+  },
+  {
+   "name": "Get the Zamorakian paint",
+   "short": "Zammy Paint",
+   "tip": "Obtained by fully charting the Unquiet Ocean. Show your Captain's Log to Gerardus on Port Roberts, then use the key on the chest on Charred Island.",
+   "wiki": "https://oldschool.runescape.wiki/w/Zamorakian_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Saradominist paint",
+   "short": "Sara Paint",
+   "tip": "Obtained by fully charting the Ardent Ocean. Show your Captain's Log to Gerardus on Port Roberts, and trade the item you receive to the Head Priest for the paint.",
+   "wiki": "https://oldschool.runescape.wiki/w/Saradominist_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Sandy paint",
+   "short": "Sandy Paint",
+   "tip": "Obtained by killing a Hermit crab while performing the Crab Dance emote.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sandy_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Gale catcher schematic",
+   "short": "Gale Catcher",
+   "tip": "Obtained from the locked lockbox on Angler's Retreat. The key is buried on The Onyx Crest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gale_catcher_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Rosewood cargo hold schematic",
+   "short": "Rosewood Cargo",
+   "tip": "Obtained from the locked lockbox on The Crown Jewel. The key is buried on Minotaur's Rest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Rosewood_cargo_hold_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Rosewood hull schematic",
+   "short": "Rosewood Hull",
+   "tip": "Obtained from the locked lockbox on Shimmering Atoll. The key is buried on the Isle of Bones.",
+   "wiki": "https://oldschool.runescape.wiki/w/Rosewood_hull_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dragon metal sheet",
+   "short": "Dragon M Sheet",
+   "tip": "Obtained as a drop from Orcas, which can be safespotted. Bounty Tasks increase the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_metal_sheet",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dragon cannonball",
+   "short": "Dragon CBall",
+   "tip": "Obtained as a drop from Great White Sharks, which can be safespotted.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_cannonball",
+   "weight": 1
+  },
+  {
+   "name": "Get a Swift albatross feather",
+   "short": "Alba Feather",
+   "tip": "Obtained as a drop from Albatross.",
+   "wiki": "https://oldschool.runescape.wiki/w/Swift_albatross_feather",
+   "weight": 1
+  },
+  {
+   "name": "Assemble the Medallion of the deep",
+   "short": "Medallion Deep",
+   "tip": "Assembled from eight fragments, which are found on different islands and through different methods. Check the wiki for more information.",
+   "wiki": "https://oldschool.runescape.wiki/w/Medallion_of_the_deep",
+   "weight": 1
+  },
+  {
+   "name": "Get the next Sea Treasure",
+   "short": "Sea Treasure",
+   "tip": "Obtained while sorting salvage. Each sea treasure can be found in a unique salvage type. The Sailors' amulet can be found in all salvages and also completes the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sea_treasure",
+   "weight": 2
+  },
+  {
+   "name": "Get a Squid beak",
+   "short": "Squid Beak",
+   "tip": "Obtained while cutting squids caught with lantern harpooning",
+   "wiki": "https://oldschool.runescape.wiki/w/Squid_beak",
+   "weight": 1
+  },
+  {
+   "name": "Get a Giant blue krill",
+   "short": "GiantBlueKrill",
+   "tip": "Obtained while deep sea trawling for Giant krill.",
+   "wiki": "https://oldschool.runescape.wiki/w/Giant_blue_krill",
+   "weight": 1
+  },
+  {
+   "name": "Get a Facility bottle",
+   "short": "FacilityBottle",
+   "tip": "Obtained while sorting Large, Plundered, Martial, Fremennik and Opulent salvages.",
+   "wiki": "https://oldschool.runescape.wiki/w/Facility_bottle",
+   "weight": 1
+  },
+  {
+   "name": "Get a new boss pet",
+   "short": "Boss Pet",
+   "tip": "If doing this task actively, you must go first for Beef.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pet",
+   "weight": 1
+  },
+  {
+   "name": "Get an Immaculate mole skin",
+   "short": "Imm Mole Skin",
+   "tip": "Can be obtained from the Giant Mole.",
+   "wiki": "https://oldschool.runescape.wiki/w/Immaculate_mole_skin",
+   "weight": 1
+  },
+  {
+   "name": "Get the Bosun's workbench schematic",
+   "short": "BosunWorkbench",
+   "tip": "Obtained by completing The Red Reef quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Bosun's_workbench_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get a Volcanic mine teleport",
+   "short": "Volc Mine TP",
+   "tip": "Can be purchased as a reward from the Volcanic Mine minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Volcanic_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get a Heat-proof vessel",
+   "short": "Heat-proof Ves",
+   "tip": "Can be purchased as a reward from the Volcanic Mine minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Volcanic_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Hueycoatl",
+   "short": "Huey Unique",
+   "tip": "Obtained by killing The Hueycoatl",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Hueycoatl",
+   "weight": 1
+  },
+  {
+   "name": "Get an Echo pearl",
+   "short": "Echo Pearl",
+   "tip": "Obtained as a drop from Orcas, which can be safespotted. Bounty Tasks increase the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Echo_pearl",
+   "weight": 1
+  }
+ ],
+ "hard": [
+  {
+   "name": "Get 1 unique from Barrows",
+   "short": "Barrows Unique",
+   "tip": "Can be received as a reward from the Barrows Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barrows",
+   "weight": 15
+  },
+  {
+   "name": "Get a unique from an Unsired",
+   "short": "Unsired Unique",
+   "tip": "Can be received as a drop from the Abyssal Sire boss. The Unsired drop itself does NOT count for the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Abyssal_Sire",
+   "weight": 3
+  },
+  {
+   "name": "Get an Abyssal whip",
+   "short": "Abyssal Whip",
+   "tip": "Can be received as a drop from Abyssal Demons.",
+   "wiki": "https://oldschool.runescape.wiki/w/Abyssal_whip",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique item from Mount Karuulm",
+   "short": "Mt Karuulm Uni",
+   "tip": "Received as drop from several monsters in the Mount Karuulm Dungeon.",
+   "wiki": "https://oldschool.runescape.wiki/w/Karuulm_Slayer_Dungeon",
+   "weight": 5
+  },
+  {
+   "name": "Get 1 unique from the Wildy bosses",
+   "short": "Wildy Boss Uni",
+   "tip": "Wildy boss uniques are: Dragon 2H, Dragon pickaxe, 3 voidwaker pieces, 3 rev weapon upgrades, 3 rings",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness#bosses",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Cerberus",
+   "short": "Cerb Unique",
+   "tip": "Received as a drop from the Cerberus boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Cerberus",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique shard from Chaos Fanatic",
+   "short": "Fanatic Shard",
+   "tip": "Received as a drop from the Chaos Fanatic.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chaos_Fanatic",
+   "weight": 2
+  },
+  {
+   "name": "Get a new boss pet",
+   "short": "Boss Pet",
+   "tip": "If doing this task actively, you must go first for Beef and then Pet chaos elemental. After you have both, you can pick the boss you prefer.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pet",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique drop from God Wars Dungeon",
+   "short": "GWD Unique",
+   "tip": "Can be received as a drop from the God Wars Dungeon bosses. Saradomin is easiest to kill, but requires stamina potions, while Zamorak spear can be useful in elite tier.",
+   "wiki": "https://oldschool.runescape.wiki/w/God_Wars_Dungeon",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique drop from Dagannoth Kings",
+   "short": "DKs Unique",
+   "tip": "Received as a drop from the Dagannoth Kings bosses.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dagannoth_Kings",
+   "weight": 7
+  },
+  {
+   "name": "Get 1 unique drop from Grotesque Guardians",
+   "short": "GGs Unique",
+   "tip": "Received as a drop from the Grotesque Guardians bosses.",
+   "wiki": "https://oldschool.runescape.wiki/w/Grotesque_Guardians",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from the Kalphite Queen",
+   "short": "KQ Unique",
+   "tip": "Received as a drop from the Kalphite Queen boss. Dragon 2H sword does not count for the task, as it is apart of Wildy Unique Tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kalphite_Queen",
+   "weight": 2
+  },
+  {
+   "name": "Get Kbd heads",
+   "short": "KBD Heads",
+   "tip": "Received as a drop from the King Black Dragon boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/King_Black_Dragon",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique drop from Kraken",
+   "short": "Kraken Unique",
+   "tip": "Received as a drop from the Kraken boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kraken#Kraken",
+   "weight": 2
+  },
+  {
+   "name": "Get an Uncharged Trident",
+   "short": "Unch Trident",
+   "tip": "Received as a drop from Cave Krakens.",
+   "wiki": "https://oldschool.runescape.wiki/w/Cave_kraken",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique shard from Scorpia",
+   "short": "Scorpia Shard",
+   "tip": "Received as a drop from Scorpia.",
+   "wiki": "https://oldschool.runescape.wiki/w/Scorpia",
+   "weight": 2
+  },
+  {
+   "name": "Get Vorkath's head",
+   "short": "Vorkath Head",
+   "tip": "Received as a drop from the Vorkath boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Vorkath",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Zulrah",
+   "short": "Zulrah Unique",
+   "tip": "Received as a drop from the Zulrah boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Zulrah",
+   "weight": 4
+  },
+  {
+   "name": "Get 3 new uniques from beginner clues",
+   "short": "Beg Clues",
+   "tip": "Potential reward from beginner clues. Minotaurs baby.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(beginner)",
+   "weight": 1
+  },
+  {
+   "name": "Get 5 new uniques from easy clues",
+   "short": "Easy Clues",
+   "tip": "Potential reward from easy clues. Pick pocketing H.A.M members are a great way of getting the clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(easy)",
+   "weight": 5
+  },
+  {
+   "name": "Get 5 new uniques from medium clues",
+   "short": "Medium Clues",
+   "tip": "Killing guards is a decent way of getting the clues. Once you have 50 hunter, Eclectic implings are also a fantastic source.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(medium)",
+   "weight": 5
+  },
+  {
+   "name": "Get 5 new uniques from hard clues",
+   "short": "Hard Clues",
+   "tip": "Potential reward from hard clues. Barrage/Burst Jellies if you have ancients.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(hard)",
+   "weight": 7
+  },
+  {
+   "name": "Get 2 new uniques from elite clues",
+   "short": "Elite Clues",
+   "tip": "Potential reward from elite clues. Elite clue rewards are not real. Jagex please fix.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(elite)",
+   "weight": 5
+  },
+  {
+   "name": "Get 1 new unique from Gnome Restaurant",
+   "short": "Gnome Rest",
+   "tip": "Potential reward from the Gnome Restaurant minigame. Last one yay!",
+   "wiki": "https://oldschool.runescape.wiki/w/Gnome_Restaurant",
+   "weight": 1
+  },
+  {
+   "name": "Get 2 White decorative pieces",
+   "short": "CW 2x White",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 4
+  },
+  {
+   "name": "Get an Elite void top",
+   "short": "Elite Void Top",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame. Poggers elite void!",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get an Elite void robe",
+   "short": "Elite Void Bot",
+   "tip": "Can be purchased as a reward from the Pest Control Combat minigame. Poggers elite void!",
+   "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 Naval set",
+   "short": "Naval Set",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. This one time at Trouble Brewing...",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 3
+  },
+  {
+   "name": "Get the Bronze fist flag",
+   "short": "BronzeFistFlag",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. This one time at Trouble Brewing...",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Lucky shot flag",
+   "short": "LuckyShotFlag",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame. This one time at Trouble Brewing...",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Champion scroll",
+   "short": "Champ Scroll",
+   "tip": "Can be received from a drop from several monsters.",
+   "wiki": "https://oldschool.runescape.wiki/w/Champion's_scroll",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique Elder chaos robe piece",
+   "short": "ECD Piece",
+   "tip": "Can be received as a drop from Elder Chaos Druids. Last one yay!",
+   "wiki": "https://oldschool.runescape.wiki/w/Elder_Chaos_druid",
+   "weight": 1
+  },
+  {
+   "name": "Get the Ogre expert headpiece",
+   "short": "Champy Hat",
+   "tip": "Guaranteed from Chompy bird hunting.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_bird_hunting",
+   "weight": 1
+  },
+  {
+   "name": "Get a unique from Demonic gorillas",
+   "short": "Demonic Unique",
+   "tip": "Can be received as a drop from Demonic Gorillas(Murder Monkeys)",
+   "wiki": "https://oldschool.runescape.wiki/w/Demonic_gorilla",
+   "weight": 4
+  },
+  {
+   "name": "Get 2 unique Ancient pages",
+   "short": "Ancient Pages",
+   "tip": "Can be received when searching remains in the Whirlpool Dungeon. Check out the Ancient Page guide on the FAQ page! I'm not going to remember to link that page here I feel.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_page",
+   "weight": 3
+  },
+  {
+   "name": "Get a Kurask head",
+   "short": "Kurask Head",
+   "tip": "Can be received as a drop from Kurask.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kurask_head",
+   "weight": 1
+  },
+  {
+   "name": "Get Dragon boots",
+   "short": "Dragon Boots",
+   "tip": "Can be received as a drop from Spiritual Mages.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_boots",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dark bow",
+   "short": "Dark Bow",
+   "tip": "Can be received as a drop from Dark Beasts.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dark_bow",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Thermonuclear smoke devil",
+   "short": "Thermy Unique",
+   "tip": "Can be received as a drop from the Thermonuclear Smoke Devil boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Thermonuclear_smoke_devil",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Obsidian armour drop",
+   "short": "ObsidianArmour",
+   "tip": "Can be received as a drop from TzHaar Kets in the inner section of Mor Ul Rek. Burst/Barraging them is the best method for obtaining.",
+   "wiki": "https://oldschool.runescape.wiki/w/Obsidian_armour",
+   "weight": 2
+  },
+  {
+   "name": "Get a Dragon warhammer",
+   "short": "Dragon WH",
+   "tip": "Can be received as a drop rarely, from Lizardmen Shaman.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_warhammer",
+   "weight": 1
+  },
+  {
+   "name": "Get a Pharaoh's sceptre",
+   "short": "PharaohSceptre",
+   "tip": "Can be received as a drop from the Pyramid Plunder Thieving minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pharaoh's_sceptre",
+   "weight": 1
+  },
+  {
+   "name": "Get Chewed bones",
+   "short": "Chewed Bones",
+   "tip": "Can be received as a drop from Mithril Dragons.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chewed_bones",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dragon spear",
+   "short": "Dragon Spear",
+   "tip": "Can be received as a drop from the RDT. Killing Goraks with a Ring of Wealth a decent method.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_spear",
+   "weight": 1
+  },
+  {
+   "name": "Get Expert mining gloves",
+   "short": "Exp Mining Gl",
+   "tip": "Can be purchased as a reward in the Mining Guild. Two pairs of gloves and some minerals, ok Jamflex.",
+   "wiki": "https://oldschool.runescape.wiki/w/Expert_mining_gloves",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Ardougne Hard Diary",
+   "short": "Ardougne Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Desert Hard Diary",
+   "short": "Desert Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Falador Hard Diary",
+   "short": "Falador Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Fremennik Hard Diary",
+   "short": "Frem hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kandarin Hard Diary",
+   "short": "Kandarin Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Karamja Hard Diary",
+   "short": "Karamja Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kourend & Kebos Hard Diary",
+   "short": "Kourend Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kourend_&_Kebos_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Lumbridge & Draynor Hard Diary",
+   "short": "Lumby Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_&_Draynor_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Morytania Hard Diary",
+   "short": "Mory Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Varrock Hard Diary",
+   "short": "Varrock Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Western Provinces Hard Diary",
+   "short": "WestProv Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Wilderness Hard Diary",
+   "short": "Wildy Hard",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Get Bryophyta's essence",
+   "short": "Bryophyta Ess",
+   "tip": "Can be received as a drop from the Bryophyta boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Bryophyta's_essence",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Sarachnis",
+   "short": "Sarachnis Uni",
+   "tip": "Can be received as a drop from the Sarachnis boss. You can't make me go back to that hellish boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sarachnis",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Gauntlet",
+   "short": "GauntletUnique",
+   "tip": "Can be received as a drop from the Gauntlet. Been there done that.",
+   "wiki": "https://oldschool.runescape.wiki/w/Gauntlet",
+   "weight": 2
+  },
+  {
+   "name": "Get the Elven signet",
+   "short": "Elven Signet",
+   "tip": "Can be received as a drop whilst catching Crystal implings.",
+   "wiki": "https://oldschool.runescape.wiki/w/Elven_signet",
+   "weight": 1
+  },
+  {
+   "name": "Get an Enhanced crystal teleport seed",
+   "short": "Enh Tele Seed",
+   "tip": "Can be received as a drop from Iorwerth Warriors in the Iorwerth Dungeon. Alternatively, if already 85 thieving, can be pick pocketed from Elves in Priffdinas.",
+   "wiki": "https://oldschool.runescape.wiki/w/Enhanced_crystal_teleport_seed",
+   "weight": 1
+  },
+  {
+   "name": "Get the Basilisk jaw",
+   "short": "Basilisk Jaw",
+   "tip": "Can be received as a drop from Basilisk Knights.",
+   "wiki": "https://oldschool.runescape.wiki/w/Basilisk_jaw",
+   "weight": 1
+  },
+  {
+   "name": "Get a shield left half",
+   "short": "ShieldLeftHalf",
+   "tip": "Can be received as a drop from the RDT. Killing Goraks with a Ring of Wealth is a decent method.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shield_left_half",
+   "weight": 1
+  },
+  {
+   "name": "Get a Pirate's hook",
+   "short": "Pirate Hook",
+   "tip": "Can be purchased as a reward from the Brimhaven Agility Arena.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pirate's_hook",
+   "weight": 1
+  },
+  {
+   "name": "Get 2 uniques from the Hallowed Sepulchre",
+   "short": "2x HS Unique",
+   "tip": "Can be received as a drop / purchased from the Hallowed Sepulchre.",
+   "wiki": "https://oldschool.runescape.wiki/w/Hallowed_Sepulchre",
+   "weight": 6
+  },
+  {
+   "name": "Unlock 2 monkey backpack transformations",
+   "short": "OokOokBackpack",
+   "tip": "Unlocked after many laps on the Ape Atoll Agility course. Only after completion of Monkey Madness II.",
+   "wiki": "https://oldschool.runescape.wiki/w/Monkey_(Monkey_Madness_II)",
+   "weight": 3
+  },
+  {
+   "name": "Get Amy's saw",
+   "short": "Amy's Saw",
+   "tip": "Can be purchased as a reward from the Mahogany Homes minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 piece of Carpenter equipment",
+   "short": "CarpenterPiece",
+   "tip": "Can be purchased as a reward from the Mahogany Homes minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 2
+  },
+  {
+   "name": "Get a Blood shard",
+   "short": "Blood Shard",
+   "tip": "Can be received as a drop whilst killing Vyrewatch Sentinels or pickpocketing Vyres. Killing is pretty chill.",
+   "wiki": "https://oldschool.runescape.wiki/w/Blood_shard",
+   "weight": 1
+  },
+  {
+   "name": "Get a Soul cape",
+   "short": "Soul Cape",
+   "tip": "Can be purchased as a reward from the Soul Wars minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Soul_cape",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Shades of Mort'ton",
+   "short": "Shades Unique",
+   "tip": "Potential reward from the Shades of Morton minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton_(minigame)",
+   "weight": 4
+  },
+  {
+   "name": "Get the Ash covered tome",
+   "short": "AshCoveredTome",
+   "tip": "Can be purchased as a reward from the Volcanic Mine minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Volcanic_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Tempoross",
+   "short": "Tempo Unique",
+   "tip": "Can be received as a reward from the Tempoross Skilling boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Tempoross",
+   "weight": 1
+  },
+  {
+   "name": "Get a Vial of blood",
+   "short": "Vial of Blood",
+   "tip": "Can be received as a reward from completing the Theatre of Blood in any mode. Entry mode is easiest to solo, but Normal can be easier to find teams.",
+   "wiki": "https://oldschool.runescape.wiki/w/Theatre_of_Blood/Entry_Mode",
+   "weight": 1
+  },
+  {
+   "name": "Get a unique Egg Sac from the Grubby Chest",
+   "short": "Egg Sac",
+   "tip": "Can be received as a drop whilst opening the Grubby Chest in the Forthos Dungeon.",
+   "wiki": "https://oldschool.runescape.wiki/w/Grubby_Chest",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique Nihil shard / Ceremonial robe piece",
+   "short": "Nihil/Cere",
+   "tip": "Can be received as a drop whilst killing Ancient Creatures in the God Wars Dungeon.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_Prison",
+   "weight": 6
+  },
+  {
+   "name": "Get 1 unique from Guardians of the Rift",
+   "short": "GotR Unique",
+   "tip": "Can be received as a reward from the Guardians of the Rift Skilling minigame. Runecrafting... it's actually kinda fun now.",
+   "wiki": "https://oldschool.runescape.wiki/w/Guardians_of_the_Rift",
+   "weight": 4
+  },
+  {
+   "name": "Get a Colossal blade",
+   "short": "Colossal Blade",
+   "tip": "Can be purchased as a reward from the Giants' Foundry Skilling minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Giants'_Foundry",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Tombs of Amascut",
+   "short": "ToA Unique",
+   "tip": "Can be received as a reward from the Tombs of Amascut raid",
+   "wiki": "https://oldschool.runescape.wiki/w/Tombs_of_Amascut",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from the Phantom Muspah",
+   "short": "Muspah Unique",
+   "tip": "Can be received a drop from Phantom Muspah boss",
+   "wiki": "https://oldschool.runescape.wiki/w/Phantom_Muspah",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Forestry",
+   "short": "Forestry",
+   "tip": "Can be purchased as a reward from the Friendly Forester",
+   "wiki": "https://oldschool.runescape.wiki/w/Forestry",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Moons of Peril",
+   "short": "Moons Unique",
+   "tip": "Received as a drop from Moons of Peril bosses",
+   "wiki": "https://oldschool.runescape.wiki/w/Moons_of_Peril",
+   "weight": 8
+  },
+  {
+   "name": "Get 1 unique from the Hunter Guild",
+   "short": "Hunter Guild",
+   "tip": "Received as a drop when completing Hunters Rumours",
+   "wiki": "https://oldschool.runescape.wiki/w/Hunter_Guild#Other",
+   "weight": 2
+  },
+  {
+   "name": "Obtain Sunfire splinters",
+   "short": "Sunfire Splint",
+   "tip": "Reward from Fortis Colosseum or from hunting Sunfire Antelope",
+   "wiki": "https://oldschool.runescape.wiki/w/Sunfire_splinters",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Tormented Demons",
+   "short": "TD Unique",
+   "tip": "Can be obtained when killing Tormented Demons",
+   "wiki": "https://oldschool.runescape.wiki/w/Tormented_demon",
+   "weight": 3
+  },
+  {
+   "name": "Get the Aranea Boots",
+   "short": "Aranea Boots",
+   "tip": "Can be obtained when killing Araxytes, with 2.5x drop chance when on task!",
+   "wiki": "https://oldschool.runescape.wiki/w/Aranea_boots",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Araxytes/Araxxor",
+   "short": "Rax Unique",
+   "tip": "Can be obtained when killing Araxytes/Araxxor",
+   "wiki": "https://oldschool.runescape.wiki/w/Araxxor",
+   "weight": 2
+  },
+  {
+   "name": "Get a Wyrm/Brimhaven graceful recolor",
+   "short": "Grace Recolour",
+   "tip": "Obtained through Brimhaven agility course or Wyrm agility course. Taskers have to replace their current graceful for the 2nd task, so the set you like the most should be grinded last.",
+   "wiki": "https://oldschool.runescape.wiki/w/Graceful_outfit",
+   "weight": 1
+  },
+  {
+   "name": "Get the Prescription goggles",
+   "short": "Pres Goggles",
+   "tip": "Obtained through Mastering Mixology Herblore minigame",
+   "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+   "weight": 1
+  },
+  {
+   "name": "Get the Alchemist's amulet",
+   "short": "Alchem Amulet",
+   "tip": "Obtained through Mastering Mixology Herblore minigame",
+   "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Hueycoatl",
+   "short": "Huey Unique",
+   "tip": "Obtained by killing The Hueycoatl",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Hueycoatl",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Royal Titans",
+   "short": "Titans Unique",
+   "tip": "Obtained by killing the Royal Titans boss. First kill you must choose Take Pages option as you can force this unique.",
+   "wiki": "https://oldschool.runescape.wiki/w/Royal_Titans",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Doom of Mokhaiotl",
+   "short": "Doom Unique",
+   "tip": "Giant, insect-like, demonic boss found in the Tonali Cavern after completion of The Final Dawn quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl",
+   "weight": 2
+  },
+  {
+   "name": "Get the next reward from The Gwenith Glide",
+   "short": "Gwenith Glide",
+   "tip": "Obtained by completing the next rank's course under the corresponding time.",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Gwenith_Glide",
+   "weight": 3
+  },
+  {
+   "name": "Get the Armadylean paint",
+   "short": "Arma Paint",
+   "tip": "Obtained by fully charting the Northern Ocean. Show your Captain's Log to Gerardus on Port Roberts, and trade the item you receive to Larissa for the paint.",
+   "wiki": "https://oldschool.runescape.wiki/w/Armadylean_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Guthixian paint",
+   "short": "Guthix Paint",
+   "tip": "Obtained by fully charting the Shrouded Ocean. Show your Captain's Log to Gerardus on Port Roberts, and trade the item you receive to the Elite Void Knight for the paint.",
+   "wiki": "https://oldschool.runescape.wiki/w/Guthixian_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Eternal brazier schematic",
+   "short": "EternalBrazier",
+   "tip": "Obtained from the locked lockbox on Buccaneers' Haven. The key is buried on Tear of the Soul.",
+   "wiki": "https://oldschool.runescape.wiki/w/Eternal_brazier_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Dragon helm schematic",
+   "short": "Dragon Helm",
+   "tip": "Obtained from the locked lockbox on Sunbleak Island. The key is buried on Laguna Aurorae.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_helm_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Dragon salvaging hook schematic",
+   "short": "DSHook Schem",
+   "tip": "Obtained from the locked lockbox on Lledrith Island. The key is buried on Ynysdail.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_salvaging_hook_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Dragon cannon schematic",
+   "short": "DCannon Schem",
+   "tip": "Obtained from the locked lockbox on Deepfin Point. The key is buried on Buccaneers' Haven.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_cannon_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get some Dragon nails",
+   "short": "Dragon Nails",
+   "tip": "Obtained as a drop from Narwhals.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_nails",
+   "weight": 1
+  },
+  {
+   "name": "Get a Narwhal horn",
+   "short": "Narwhal Horn",
+   "tip": "Obtained as a drop from Narwhals.",
+   "wiki": "https://oldschool.runescape.wiki/w/Narwhal_horn",
+   "weight": 1
+  },
+  {
+   "name": "Get a Broken dragon hook",
+   "short": "Broken D Hook",
+   "tip": "Obtained as a drop from Great White Sharks. Bounty Tasks increase the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Broken_dragon_hook",
+   "weight": 1
+  },
+  {
+   "name": "Get the next Sea Treasure",
+   "short": "Sea Treasure",
+   "tip": "Obtained while sorting salvage. Each sea treasure can be found in a unique salvage type. The Sailors' amulet can be found in all salvages and also completes the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sea_treasure",
+   "weight": 1
+  },
+  {
+   "name": "Get an Aquanite tendon",
+   "short": "AquaniteTendon",
+   "tip": "Obtained as a drop from Aquanites; being on a slayer task significantly improves the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Aquanite_tendon",
+   "weight": 1
+  },
+  {
+   "name": "Get a Golden haddock",
+   "short": "Golden Haddock",
+   "tip": "Obtained while deep sea trawling for Haddock.",
+   "wiki": "https://oldschool.runescape.wiki/w/Golden_haddock",
+   "weight": 1
+  },
+  {
+   "name": "Get an Orangefin",
+   "short": "Orangefin",
+   "tip": "Obtained while deep sea trawling for Yellowfin.",
+   "wiki": "https://oldschool.runescape.wiki/w/Orangefin",
+   "weight": 1
+  },
+  {
+   "name": "Get a Huge halibut",
+   "short": "Huge Halibut",
+   "tip": "Obtained while deep sea trawling for Halibut",
+   "wiki": "https://oldschool.runescape.wiki/w/Huge_halibut",
+   "weight": 1
+  },
+  {
+   "name": "Get a Venator fang + tooth",
+   "short": "Ven Fang+Tooth",
+   "tip": "Requires completion of the Blood Moon Rises quest. If Doc did it, you can too!",
+   "wiki": "https://oldschool.runescape.wiki/w/Venator",
+   "weight": 1
+  }
+ ],
+ "elite": [
+  {
+   "name": "Get 1 unique from Barrows",
+   "short": "Barrows Unique",
+   "tip": "Can be received as a reward from the Barrows Combat minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barrows",
+   "weight": 4
+  },
+  {
+   "name": "Get a unique from Unsired",
+   "short": "Unsired Unique",
+   "tip": "Can be received as a drop from the Abyssal Sire boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Abyssal_Sire",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique item from Mount Karuulm",
+   "short": "Mt Karuulm Uni",
+   "tip": "Received as drop from several monsters in the Mount Karuulm Dungeon.",
+   "wiki": "https://oldschool.runescape.wiki/w/Karuulm_Slayer_Dungeon",
+   "weight": 8
+  },
+  {
+   "name": "Get 1 unique from Cerberus",
+   "short": "Cerb Unique",
+   "tip": "Received as a drop from the Cerberus boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Cerberus",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique drop from God Wars Dungeon",
+   "short": "GWD Unique",
+   "tip": "Can be received as a drop from the God Wars Dungeon bosses.",
+   "wiki": "https://oldschool.runescape.wiki/w/God_Wars_Dungeon",
+   "weight": 16
+  },
+  {
+   "name": "Get a Spirit shield or Holy elixir",
+   "short": "Corp Unique",
+   "tip": "Can be received as a drop from the Corporeal Beast boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Corporeal_Beast",
+   "weight": 2
+  },
+  {
+   "name": "Get a new boss pet",
+   "short": "Boss Pet",
+   "tip": "If doing this task actively, you must go first for Beef and then Pet chaos elemental. After you have both, you can pick the boss you prefer.",
+   "wiki": "https://oldschool.runescape.wiki/w/Pet",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Thermonuclear smoke devil",
+   "short": "Thermy Unique",
+   "tip": "Can be received as a drop from the Thermonuclear Smoke Devil boss.",
+   "wiki": "https://oldschool.runescape.wiki/w/Thermonuclear_smoke_devil",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Wildy bosses",
+   "short": "Wildy Boss Uni",
+   "tip": "Wildy boss uniques are: Dragon 2H, Dragon pickaxe, 3 voidwaker pieces, 3 rev weapon upgrades, 3 rings",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness#bosses",
+   "weight": 6
+  },
+  {
+   "name": "Get 1 unique drop from Grotesque Guardians",
+   "short": "GGs Unique",
+   "tip": "Received as a drop from the Grotesque Guardians bosses.",
+   "wiki": "https://oldschool.runescape.wiki/w/Grotesque_Guardians",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Raids (CoX or ToB or ToA)",
+   "short": "Raid Unique",
+   "tip": "Can be received as a drop from any raid: Chambers of Xeric, Theatre of Blood or Tombs of Amascut.",
+   "wiki": "https://oldschool.runescape.wiki/w/Raids",
+   "weight": 14
+  },
+  {
+   "name": "Get 5 new uniques from easy clues",
+   "short": "Easy Clues",
+   "tip": "Potential reward from easy clues. Pick pocketing H.A.M members are a great way of getting the clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(easy)",
+   "weight": 5
+  },
+  {
+   "name": "Get 5 new uniques from medium clues",
+   "short": "Medium Clues",
+   "tip": "Killing guards is a decent way of getting the clues. Once you have 50 hunter, Eclectic implings are also a fantastic source.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(medium)",
+   "weight": 5
+  },
+  {
+   "name": "Get 5 new uniques from hard clues",
+   "short": "Hard Clues",
+   "tip": "Potential reward from hard clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(hard)",
+   "weight": 8
+  },
+  {
+   "name": "Get 1 new unique from elite clues",
+   "short": "Elite Clues",
+   "tip": "Potential reward from elite clues. Elite clue rewards are not real. Jagex please fix.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(elite)",
+   "weight": 10
+  },
+  {
+   "name": "Get 1 new unique from master clues",
+   "short": "Master Clues",
+   "tip": "Potential reward from master clues.",
+   "wiki": "https://oldschool.runescape.wiki/w/Clue_scroll_(master)",
+   "weight": 12
+  },
+  {
+   "name": "Get a Saradomin banner",
+   "short": "Sara Banner",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get a Zamorak banner",
+   "short": "Zammy Banner",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 new halo",
+   "short": "CW Halo",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get a Gold decorative helm",
+   "short": "CW Gold Helm",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get a pair of Gold decorative boots",
+   "short": "CW Gold Boots",
+   "tip": "Can be purchased as a reward from the Castle Wars minigame. Playing on official worlds is recommended, as you get about the same amount of tickets in addition to other resources. Alternatively, you may play with an alt account (works in F2P) for complete AFK.",
+   "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 Naval set",
+   "short": "Naval Set",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 2
+  },
+  {
+   "name": "Get the Treasure flag",
+   "short": "Treasure Flag",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Phasmatys flag",
+   "short": "Phasmatys Flag",
+   "tip": "Can be purchased as a reward from the Trouble Brewing minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+   "weight": 1
+  },
+  {
+   "name": "Get the Chompy chick",
+   "short": "Chompy Chick",
+   "tip": "Received as a drop from Chompy bird hunting after completing the Western Provinces Elite Diary.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_chick",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Champion scroll",
+   "short": "Champ Scroll",
+   "tip": "Can be received from a drop from several monsters.",
+   "wiki": "https://oldschool.runescape.wiki/w/Champion's_scroll",
+   "weight": 4
+  },
+  {
+   "name": "Upgrade to the dragon archer headpiece",
+   "short": "Chompy Hat",
+   "tip": "Guaranteed reward from Chompy bird hunting. The first time you receive this task, you must get the Dragon Archer Hat. Second time get the Expert Dragon Archer Hat.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_bird_hunting",
+   "weight": 1
+  },
+  {
+   "name": "Upgrade to the expert dragon archer headpiece",
+   "short": "Chompy Hat",
+   "tip": "Guaranteed reward from Chompy bird hunting. The first time you receive this task, you must get the Dragon Archer Hat. Second time get the Expert Dragon Archer Hat.",
+   "wiki": "https://oldschool.runescape.wiki/w/Chompy_bird_hunting",
+   "weight": 1
+  },
+  {
+   "name": "Get a unique from Demonic gorillas",
+   "short": "Demonic Unique",
+   "tip": "Can be received as a drop from Demonic Gorillas(Murder Monkeys)",
+   "wiki": "https://oldschool.runescape.wiki/w/Demonic_gorilla",
+   "weight": 2
+  },
+  {
+   "name": "Get 2 unique Ancient pages",
+   "short": "Ancient Pages",
+   "tip": "Can be received when searching remains in the Whirlpool Dungeon. Check out the Ancient Page guide on the FAQ page! I'm not going to remember to link that page here I feel.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ancient_page",
+   "weight": 2
+  },
+  {
+   "name": "Get a Dust battlestaff",
+   "short": "Dust BStaff",
+   "tip": "Received as a drop from Superior Slayer Creatures.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dust_battlestaff",
+   "weight": 1
+  },
+  {
+   "name": "Get a Mist battlestaff",
+   "short": "Mist BStaff",
+   "tip": "Received as a drop from Superior Slayer Creatures.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mist_battlestaff",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique Obsidian armour drop",
+   "short": "ObsidianArmour",
+   "tip": "Can be received as a drop from TzHaar Kets in the inner section of Mor Ul Rek.",
+   "wiki": "https://oldschool.runescape.wiki/w/Obsidian_armour",
+   "weight": 1
+  },
+  {
+   "name": "Get a Toktz-mej-tal",
+   "short": "Toktz-mej-tal",
+   "tip": "Received as a drop from TzHaar-Mej.",
+   "wiki": "https://oldschool.runescape.wiki/w/Toktz-mej-tal",
+   "weight": 1
+  },
+  {
+   "name": "Get dragon limbs",
+   "short": "Dragon Limbs",
+   "tip": "Received as a drop from Rune/Adamant dragons.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_limbs",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Ardougne Elite Diary",
+   "short": "Ardougne Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Desert Elite Diary",
+   "short": "Desert Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Falador Elite Diary",
+   "short": "Falador Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Fremennik Elite Diary",
+   "short": "Frem Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kandarin Elite Diary",
+   "short": "Kandarin Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Karamja Elite Diary",
+   "short": "Karamja Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Kourend & Kebos Elite Diary",
+   "short": "Kourend Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Kourend_&_Kebos_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Lumbridge & Draynor Elite Diary",
+   "short": "Lumby Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_&_Draynor_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Morytania Elite Diary",
+   "short": "Mory Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Varrock Elite Diary",
+   "short": "Varrock Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Western Provinces Elite Diary",
+   "short": "WestProv Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Complete the Wilderness Elite Diary",
+   "short": "Wildy Elite",
+   "tip": "Complete all the diary tasks.",
+   "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+   "weight": 1
+  },
+  {
+   "name": "Get the Crystal grail",
+   "short": "Crystal Grail",
+   "tip": "Guaranteed drop from the Rabbit in Prifddinas.",
+   "wiki": "https://oldschool.runescape.wiki/w/Crystal_grail",
+   "weight": 1
+  },
+  {
+   "name": "Get the Fish sack",
+   "short": "Fish Sack",
+   "tip": "Can be purchased as a reward from Aerial Fishing hunter method. Giga RSI.",
+   "wiki": "https://oldschool.runescape.wiki/w/Fish_sack",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique piece of the Dagon'hai robes",
+   "short": "Dagonhai Piece",
+   "tip": "Can be received as a drop from the Larren's chest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dagon'hai_robes",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from the Hallowed Sepulchre",
+   "short": "HS Unique",
+   "tip": "Can be received as a drop / purchased from the Hallowed Sepulchre.",
+   "wiki": "https://oldschool.runescape.wiki/w/Hallowed_Sepulchre",
+   "weight": 3
+  },
+  {
+   "name": "Get Granite boots",
+   "short": "Granite Boots",
+   "tip": "Can be received as a drop from Fossil Island Wyverns.",
+   "wiki": "https://oldschool.runescape.wiki/w/Granite_boots",
+   "weight": 1
+  },
+  {
+   "name": "Get the Hosidius blueprints",
+   "short": "HosiBlueprints",
+   "tip": "Can be purchased as a reward from the Mahogany Homes minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Shades of Mort'ton",
+   "short": "Shades Unique",
+   "tip": "Potential reward from the Shades of Morton minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton_(minigame)",
+   "weight": 5
+  },
+  {
+   "name": "Get a Broken dragon pickaxe",
+   "short": "Broken DPick",
+   "tip": "Can be purchased as a reward from the Volcanic Mine minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Volcanic_Mine",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Revenants",
+   "short": "Rev Unique",
+   "tip": "Can be received as a drop from any Revenant.",
+   "wiki": "https://oldschool.runescape.wiki/w/Revenants",
+   "weight": 7
+  },
+  {
+   "name": "Get 1 unique from Guardians of the Rift",
+   "short": "GotR Unique",
+   "tip": "Can be received as a reward from the Guardians of the Rift Skilling minigame.",
+   "wiki": "https://oldschool.runescape.wiki/w/Guardians_of_the_Rift",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from the Phantom Muspah",
+   "short": "Muspah Unique",
+   "tip": "Can be received a drop from Phantom Muspah boss",
+   "wiki": "https://oldschool.runescape.wiki/w/Phantom_Muspah",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Forestry",
+   "short": "Forestry",
+   "tip": "Can be purchased as a reward from the Friendly Forester",
+   "wiki": "https://oldschool.runescape.wiki/w/Forestry",
+   "weight": 6
+  },
+  {
+   "name": "Get 1 unique from the DT2 bosses",
+   "short": "DT2 Unique",
+   "tip": "Can be received as drop from any of the four DT2 bosses",
+   "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_II_-_The_Fallen_Empire",
+   "weight": 11
+  },
+  {
+   "name": "Get a teleport anchoring scroll",
+   "short": "TeleAnchScroll",
+   "tip": "Received as drop from Zombie Pirate Locker",
+   "wiki": "https://oldschool.runescape.wiki/w/Teleport_anchoring_scroll",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from Fortis Colosseum",
+   "short": "Colo Unique",
+   "tip": "Reward from Fortis Colosseum",
+   "wiki": "https://oldschool.runescape.wiki/w/Fortis_Colosseum",
+   "weight": 3
+  },
+  {
+   "name": "Get 1 unique from Araxytes/Araxxor",
+   "short": "Rax Unique",
+   "tip": "Can be obtained when killing Araxytes/Araxxor",
+   "wiki": "https://oldschool.runescape.wiki/w/Araxxor",
+   "weight": 5
+  },
+  {
+   "name": "Get a Chugging barrel",
+   "short": "ChuggingBarrel",
+   "tip": "Obtained through Mastering Mixology Herblore minigame",
+   "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+   "weight": 1
+  },
+  {
+   "name": "Get a Reagent pouch",
+   "short": "Reagent Pouch",
+   "tip": "Obtained through Mastering Mixology Herblore minigame",
+   "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Hueycoatl",
+   "short": "Huey Unique",
+   "tip": "Obtained by killing The Hueycoatl",
+   "wiki": "https://oldschool.runescape.wiki/w/The_Hueycoatl",
+   "weight": 2
+  },
+  {
+   "name": "Get 1 unique from Yama",
+   "short": "Yama Unique",
+   "tip": "Obtained by killing the solo/duo boss Yama",
+   "wiki": "https://oldschool.runescape.wiki/w/Yama",
+   "weight": 7
+  },
+  {
+   "name": "Get 1 unique from Doom of Mokhaiotl",
+   "short": "Doom Unique",
+   "tip": "Giant, insect-like, demonic boss found in the Tonali Cavern after completion of The Final Dawn quest.",
+   "wiki": "https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl",
+   "weight": 2
+  },
+  {
+   "name": "Get the Barracuda paint",
+   "short": "BarracudaPaint",
+   "tip": "Can be obtained by achieving Marlin rank time at any Barracuda trial.",
+   "wiki": "https://oldschool.runescape.wiki/w/Barracuda_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Inky paint",
+   "short": "Inky Paint",
+   "tip": "Can be rarely obtained from sailing krakens.",
+   "wiki": "https://oldschool.runescape.wiki/w/Inky_paint",
+   "weight": 1
+  },
+  {
+   "name": "Get the Rosewood & cotton sails schematic",
+   "short": "Rose&Cot Sails",
+   "tip": "Obtained from the locked lockbox on Brittle Isle. The key is buried on Charred Island.",
+   "wiki": "https://oldschool.runescape.wiki/w/Rosewood_&_cotton_sails_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get the Dragon keel schematic",
+   "short": "Dragon Keel",
+   "tip": "Obtained from the locked lockbox on Grimstone. The key is buried on Drumstick Isle.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_keel_schematic",
+   "weight": 1
+  },
+  {
+   "name": "Get a Bottled storm",
+   "short": "Bottled Storm",
+   "tip": "Obtained as a drop from Armoured and Vampyre Krakens. Bounty Tasks increase the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Bottled_storm",
+   "weight": 1
+  },
+  {
+   "name": "Get a Dragon cannon barrel",
+   "short": "DCannon Barrel",
+   "tip": "Obtained as a drop from Veiled Krakens. Bounty Tasks increase the drop rate.",
+   "wiki": "https://oldschool.runescape.wiki/w/Dragon_cannon_barrel",
+   "weight": 1
+  },
+  {
+   "name": "Get the next Sea Treasure",
+   "short": "Sea Treasure",
+   "tip": "Obtained while sorting salvage. Each sea treasure can be found in a unique salvage type. The Sailors' amulet can be found in all salvages and also completes the task.",
+   "wiki": "https://oldschool.runescape.wiki/w/Sea_treasure",
+   "weight": 2
+  },
+  {
+   "name": "Get a Purplefin",
+   "short": "Purplefin",
+   "tip": "Obtained while deep sea trawling for Bluefin",
+   "wiki": "https://oldschool.runescape.wiki/w/Purplefin",
+   "weight": 1
+  },
+  {
+   "name": "Get a Swift marlin",
+   "short": "Swift Marlin",
+   "tip": "Obtained while deep sea trawling for Marlin",
+   "wiki": "https://oldschool.runescape.wiki/w/Swift_marlin",
+   "weight": 1
+  },
+  {
+   "name": "Get 1 unique from the Maggot King",
+   "short": "Maggot King",
+   "tip": "Don't forget to unlock the quick-travel scout for faster access to the Maggot King!",
+   "wiki": "https://oldschool.runescape.wiki/w/Maggot_King",
+   "weight": 2
+  }
+ ]
+}
