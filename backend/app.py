@@ -814,8 +814,178 @@ def _finish_roll(token, discord_id, nick):
         con.close()
 
 
+# ---------- /highscores podium image ----------
+
+def fetch_discord_avatar(discord_id):
+    """Returns PNG bytes of the user's Discord avatar (or their default one)."""
+    token = os.environ.get("DISCORD_BOT_TOKEN", "")
+    avatar_hash = None
+    if token:
+        try:
+            req = urllib.request.Request(
+                f"https://discord.com/api/v10/users/{discord_id}",
+                headers={"Authorization": f"Bot {token}", "User-Agent": "osrs-afk-roulette"},
+            )
+            with urllib.request.urlopen(req, timeout=10) as r:
+                avatar_hash = json.load(r).get("avatar")
+        except Exception:
+            pass
+    if avatar_hash:
+        url = f"https://cdn.discordapp.com/avatars/{discord_id}/{avatar_hash}.png?size=256"
+    else:
+        url = f"https://cdn.discordapp.com/embed/avatars/{(int(discord_id) >> 22) % 6}.png"
+    try:
+        req = urllib.request.Request(url, headers={"User-Agent": "osrs-afk-roulette"})
+        with urllib.request.urlopen(req, timeout=10) as r:
+            return r.read()
+    except Exception:
+        return None
+
+
+def draw_podium(players):
+    """players: rank-ordered [{nick, done, avatar(bytes|None)}], 1-3 entries. Returns PNG bytes."""
+    import io
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
+
+    W, H = 1200, 700
+    img = Image.new("RGB", (W, H), "#1a1410")
+    d = ImageDraw.Draw(img)
+    for r in range(H, 0, -8):  # soft glow
+        a = int(14 * (1 - r / H))
+        d.ellipse([W / 2 - r * 1.4, H - r, W / 2 + r * 1.4, H + r], fill=(26 + a, 20 + a // 2, 16))
+
+    font_path = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+    f_title = ImageFont.truetype(font_path, 56)
+    f_nick = ImageFont.truetype(font_path, 34)
+    f_done = ImageFont.truetype(font_path, 28)
+    f_rank = ImageFont.truetype(font_path, 72)
+
+    def center_text(text, font, cx, y, fill):
+        bb = d.textbbox((0, 0), text, font=font)
+        d.text((cx - (bb[2] - bb[0]) / 2 - bb[0], y), text, font=font, fill=fill)
+
+    center_text("AFK HIGHSCORES", f_title, W / 2, 28, "#f5c542")
+
+    base = 660
+    # layout per rank: (center_x, block_height, block_color, rank_label_color)
+    slots = [
+        (W / 2, 280, "#f5c542", "#241a08"),        # 1st, middle
+        (W / 2 - 340, 200, "#c0c0c0", "#2b2119"),  # 2nd, left
+        (W / 2 + 340, 150, "#cd7f32", "#2b2119"),  # 3rd, right
+    ]
+    bw = 280
+    for i, p in enumerate(players[:3]):
+        cx, bh, col, rankcol = slots[i]
+        top = base - bh
+        d.rounded_rectangle([cx - bw / 2, top, cx + bw / 2, base], radius=14, fill=col,
+                            outline="#7a5f1e", width=4)
+        center_text(str(i + 1), f_rank, cx, top + bh / 2 - 45, rankcol)
+
+        # avatar circle above the block
+        av_d = 150
+        av_y = top - av_d - 78
+        if p["avatar"]:
+            try:
+                av = Image.open(io.BytesIO(p["avatar"])).convert("RGB").resize((av_d, av_d))
+                mask = Image.new("L", (av_d, av_d), 0)
+                ImageDraw.Draw(mask).ellipse([0, 0, av_d, av_d], fill=255)
+                img.paste(av, (int(cx - av_d / 2), av_y), mask)
+            except Exception:
+                p["avatar"] = None
+        if not p["avatar"]:
+            d.ellipse([cx - av_d / 2, av_y, cx + av_d / 2, av_y + av_d], fill="#4d3b28")
+            center_text(p["nick"][:1].upper(), f_rank, cx, av_y + av_d / 2 - 45, "#f5c542")
+        d.ellipse([cx - av_d / 2, av_y, cx + av_d / 2, av_y + av_d], outline="#f5c542", width=5)
+
+        center_text(p["nick"], f_nick, cx, top - 72, "#e8dcc0")
+        center_text(f"{p['done']} done", f_done, cx, top - 36, "#f5c542")
+
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def patch_original_with_file(token, payload, filename, filebytes):
+    boundary = f"----afkpodium{int(time.time() * 1000)}"
+    parts = [
+        f'--{boundary}\r\nContent-Disposition: form-data; name="payload_json"\r\n'
+        f"Content-Type: application/json\r\n\r\n".encode() + json.dumps(payload).encode() + b"\r\n",
+        f'--{boundary}\r\nContent-Disposition: form-data; name="files[0]"; filename="{filename}"\r\n'
+        f"Content-Type: image/png\r\n\r\n".encode() + filebytes + b"\r\n",
+        f"--{boundary}--\r\n".encode(),
+    ]
+    req = urllib.request.Request(
+        f"https://discord.com/api/v10/webhooks/{DISCORD_APP_ID}/{token}/messages/@original",
+        data=b"".join(parts),
+        headers={"Content-Type": f"multipart/form-data; boundary={boundary}",
+                 "User-Agent": "osrs-afk-roulette"},
+        method="PATCH",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=15):
+            pass
+    except urllib.error.HTTPError as e:
+        print(f"patch_with_file HTTP {e.code}: {e.read()[:500]}", flush=True)
+    except Exception as e:
+        print(f"patch_with_file failed: {e!r}", flush=True)
+
+
+def finish_highscores(token):
+    try:
+        _finish_highscores(token)
+    except Exception as e:
+        print(f"finish_highscores crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong building the highscores — try again."})
+
+
+def _finish_highscores(token):
+    con = open_db()
+    try:
+        rows = con.execute(
+            """SELECT nick_key, MAX(nick) AS nick,
+                      SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
+               FROM events GROUP BY nick_key
+               HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3"""
+        ).fetchall()
+        if not rows:
+            patch_original(token, {"content": "No completed tasks yet — the podium is empty! Go AFK something."})
+            return
+        links = {norm_key(r["nick"]): r["discord_id"]
+                 for r in con.execute("SELECT discord_id, nick FROM discord_links")}
+        players, medals = [], ["🥇", "🥈", "🥉"]
+        desc_lines = []
+        for i, r in enumerate(rows):
+            days = [x["d"] for x in con.execute(
+                "SELECT DISTINCT d FROM events WHERE nick_key = ? AND status = 'done' ORDER BY d",
+                (r["nick_key"],))]
+            current, _ = streaks(days)
+            avatar = None
+            did = links.get(r["nick_key"])
+            if did:
+                avatar = fetch_discord_avatar(did)
+            players.append({"nick": r["nick"], "done": r["done"], "avatar": avatar})
+            desc_lines.append(
+                f"{medals[i]} **{r['nick']}** — ✅ {r['done']} done · 🔥 {current} streak · ⏭️ {r['skips']} skips")
+        png = draw_podium(players)
+        patch_original_with_file(token, {
+            "embeds": [{
+                "title": "🏆 AFK Highscores — Top 3",
+                "description": "\n".join(desc_lines),
+                "color": 0xF5C542,
+                "image": {"url": "attachment://podium.png"},
+                "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")},
+            }],
+            "attachments": [{"id": 0, "filename": "podium.png"}],
+        }, "podium.png", png)
+    finally:
+        con.close()
+
+
 def handle_slash(data):
     cmd = data.get("data", {})
+    if cmd.get("name") == "highscores":
+        threading.Thread(target=finish_highscores, args=(data["token"],), daemon=True).start()
+        return jsonify({"type": 5})
     if cmd.get("name") != "afk":
         return ephemeral("Unknown command.")
     user = (data.get("member") or {}).get("user") or data.get("user") or {}
