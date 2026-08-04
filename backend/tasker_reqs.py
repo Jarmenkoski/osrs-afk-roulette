@@ -350,8 +350,20 @@ PATTERNS = [
 ]
 
 _DIARY_RE = re.compile(r"complete the (.+) (easy|medium|hard|elite) diary", re.IGNORECASE)
-_BOSS_COMPILED = [(re.compile(p, re.IGNORECASE), reqs) for p, reqs in BOSS_PATTERNS]
-_COMPILED = [(re.compile(p, re.IGNORECASE), reqs) for p, reqs in PATTERNS]
+
+# Recommended-stat prayer gates are capped here (user preference). Diary prayer
+# requirements are real wiki requirements and are NOT capped.
+PRAYER_CAP = 45
+
+
+def _cap(reqs):
+    if "prayer" in reqs and reqs["prayer"] > PRAYER_CAP:
+        return {**reqs, "prayer": PRAYER_CAP}
+    return reqs
+
+
+_BOSS_COMPILED = [(re.compile(p, re.IGNORECASE), _cap(reqs)) for p, reqs in BOSS_PATTERNS]
+_COMPILED = [(re.compile(p, re.IGNORECASE), _cap(reqs)) for p, reqs in PATTERNS]
 
 
 def is_boss(task_name):
