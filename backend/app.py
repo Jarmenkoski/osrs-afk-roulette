@@ -1005,20 +1005,17 @@ TASKER_CATEGORY_META = {
 }
 
 
-def tasker_stats(con, key):
-    stats = {"task": 0, "boss": 0, "collection": 0, "skips": 0}
-    for r in con.execute(
-        "SELECT category, SUM(status = 'done') AS d, SUM(status = 'skipped') AS s "
-        "FROM tasker_events WHERE nick_key = ? GROUP BY category", (key,),
-    ):
-        stats[r["category"]] = r["d"] or 0
-        stats["skips"] += r["s"] or 0
-    return stats
+def tasker_stats(con, key, category):
+    row = con.execute(
+        "SELECT SUM(status = 'done') AS d, SUM(status = 'skipped') AS s "
+        "FROM tasker_events WHERE nick_key = ? AND category = ?", (key, category),
+    ).fetchone()
+    return {"done": row["d"] or 0, "skips": row["s"] or 0}
 
 
 def tasker_discord_embed(con, nick, category, task, done=False):
     meta = TASKER_CATEGORY_META[category]
-    s = tasker_stats(con, norm_key(nick))
+    s = tasker_stats(con, norm_key(nick), category)
     fields = [{"name": "Player", "value": nick, "inline": True}]
     if category == "task" and task.get("skill"):
         fields.append({"name": "Skill", "value": f"{task['skill']} (req {task.get('req', '?')})", "inline": True})
@@ -1027,8 +1024,8 @@ def tasker_discord_embed(con, nick, category, task, done=False):
         fields.append({"name": "Requirements", "value": req_str[:1000], "inline": False})
     if task.get("tip"):
         fields.append({"name": "Tip", "value": task["tip"][:1000], "inline": False})
-    fields.append({"name": "Totals", "value":
-                   f"📋 {s['task']} · ⚔️ {s['boss']} · 📚 {s['collection']} · ⏭️ {s['skips']} skips",
+    fields.append({"name": f"{meta['emoji']} {meta['title']} totals", "value":
+                   f"✅ {s['done']} done · ⏭️ {s['skips']} skips",
                    "inline": False})
     title = (f"✅ Done: {task['name']}" if done
              else f"{meta['emoji']} {meta['title']}: {task['name']}")
@@ -1507,17 +1504,14 @@ def tasker_highscores():
                   SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
            FROM tasker_events GROUP BY nick_key, category"""
     ).fetchall()
-    players = {}
+    boards = {"task": [], "boss": [], "collection": []}
     for r in rows:
-        p = players.setdefault(r["nick_key"], {"nick": r["nick"], "task": 0, "boss": 0,
-                                               "collection": 0, "skips": 0})
-        p[r["category"]] = r["done"] or 0
-        p["skips"] += r["skips"] or 0
-    result = sorted(players.values(),
-                    key=lambda p: (-(p["task"] + p["boss"] + p["collection"]), p["skips"]))
-    for p in result:
-        p["total"] = p["task"] + p["boss"] + p["collection"]
-    return jsonify({"players": result})
+        if r["category"] in boards:
+            boards[r["category"]].append(
+                {"nick": r["nick"], "done": r["done"] or 0, "skips": r["skips"] or 0})
+    for cat in boards:
+        boards[cat].sort(key=lambda p: (-p["done"], p["skips"]))
+    return jsonify(boards)
 
 
 def tasker_prepare_nick_only():

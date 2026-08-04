@@ -209,19 +209,21 @@
       try {
         const r = await fetch(`${API}/api/tasker/highscores`);
         const d = await r.json();
-        if (!d.players.length) {
-          $('hs-table').innerHTML = '<span class="hint">No completed tasks yet.</span>';
-          return;
-        }
         const medal = (i) => ['🥇', '🥈', '🥉'][i] || `${i + 1}.`;
-        $('hs-table').innerHTML = `
-          <table class="lb-table">
-            <thead><tr><th>#</th><th>Player</th><th>📋 Task</th><th>⚔️ Boss</th><th>📚 Coll.</th><th>Σ Done</th><th>⏭️ Skips</th></tr></thead>
-            <tbody>${d.players.map((p, i) => `
-              <tr><td>${medal(i)}</td><td>${p.nick}</td><td>${p.task}</td><td>${p.boss}</td>
-                  <td>${p.collection}</td><td><b>${p.total}</b></td><td>${p.skips}</td></tr>`).join('')}
-            </tbody>
-          </table>`;
+        const CATS = [['task', '📋 Task'], ['boss', '⚔️ Bosses'], ['collection', '📚 Collection']];
+        const html = CATS.map(([key, label]) => {
+          const rows = d[key] || [];
+          return `
+            <h3 class="stats-subtitle">${label}</h3>
+            ${rows.length ? `
+              <table class="lb-table">
+                <thead><tr><th>#</th><th>Player</th><th>✅ Done</th><th>⏭️ Skips</th></tr></thead>
+                <tbody>${rows.map((p, i) => `
+                  <tr><td>${medal(i)}</td><td>${p.nick}</td><td><b>${p.done}</b></td><td>${p.skips}</td></tr>`).join('')}
+                </tbody>
+              </table>` : '<span class="hint">No completed tasks yet.</span>'}`;
+        }).join('');
+        $('hs-table').innerHTML = html;
       } catch (_) {
         $('hs-table').innerHTML = '<span class="hint">Could not load highscores.</span>';
       }
