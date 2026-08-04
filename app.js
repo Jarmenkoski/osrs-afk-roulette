@@ -754,6 +754,7 @@ async function tkCandidates() {
 }
 
 function tkRenderCard(name, metaLine, tip, wiki, isActive) {
+  const isQuest = name.startsWith('Complete the quest:');
   tk.result.innerHTML = `
     <div class="result-card">
       <div class="task-name">${wiki ? `<a href="${wiki}" target="_blank" rel="noopener">${name}</a> 🔗` : name}</div>
@@ -763,14 +764,19 @@ function tkRenderCard(name, metaLine, tip, wiki, isActive) {
       <div class="result-actions">
         <button class="btn btn-done" onclick="tkComplete('done')">✅ Done</button>
         <button class="btn btn-secondary" onclick="tkComplete('skipped')">⏭️ Skip &amp; reroll</button>
+        ${isQuest ? `<button class="btn btn-secondary" onclick="tkComplete('already')" title="Removes this quest from your pool without counting as done or skip">☑️ Already done</button>` : ''}
       </div>
     </div>`;
 }
 
+function tkTaskMeta(d) {
+  if (d.skill === 'quests') return `Quest (${d.difficulty || '?'})`;
+  return d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req})` : '';
+}
+
 function tkRenderFrom(d) {
   if (tcat === 'task') {
-    tkRenderCard(d.task || d.name,
-      d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req})` : '', '', null, d.active);
+    tkRenderCard(d.task || d.name, tkTaskMeta(d), '', d.wiki || null, d.active);
   } else {
     const reqStr = Object.entries(d.task.reqs || {}).map(([s, l]) => `${s} ${l}`).join(', ');
     tkRenderCard(d.task.name, reqStr, d.task.tip, d.task.wiki, d.active);
@@ -809,8 +815,8 @@ window.tkComplete = async function (status) {
     await apiPost('/api/tasker/complete', { nick: playerName, category: tcat, status });
     tk.result.innerHTML = '';
     loadTaskerHS();
-    if (status === 'skipped') {
-      tkRoll();
+    if (status === 'skipped' || status === 'already') {
+      tkRoll(); // roll a fresh one right away
     } else {
       setStatus(tk.status, '✅ Task completed and logged!', 'success');
     }
@@ -826,7 +832,7 @@ async function tkLoadActive() {
     const d = await apiGet(`/api/tasker/current?nick=${encodeURIComponent(playerName)}&category=${tcat}`);
     if (d.active) {
       if (tcat === 'task') {
-        tkRenderCard(d.active.name, d.active.skill ? `${d.active.skill} (task req ${d.active.req})` : '', '', null, true);
+        tkRenderCard(d.active.name, tkTaskMeta(d.active), '', d.active.wiki || null, true);
       } else {
         tkRenderCard(d.active.name, '', d.active.tip, d.active.wiki, true);
       }

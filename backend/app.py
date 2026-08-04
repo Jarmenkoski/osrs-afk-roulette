@@ -134,6 +134,11 @@ def init_db():
           task TEXT NOT NULL,
           PRIMARY KEY (nick_key, category)
         );
+        CREATE TABLE IF NOT EXISTS quest_flags (
+          nick_key TEXT NOT NULL,
+          quest TEXT NOT NULL,
+          PRIMARY KEY (nick_key, quest)
+        );
         CREATE TABLE IF NOT EXISTS tasker_events (
           id INTEGER PRIMARY KEY AUTOINCREMENT,
           nick TEXT NOT NULL,
@@ -1039,7 +1044,9 @@ def tasker_discord_embed(con, nick, category, task, done=False):
     meta = TASKER_CATEGORY_META[category]
     s = tasker_stats(con, norm_key(nick), category)
     fields = [{"name": "Player", "value": nick, "inline": True}]
-    if category == "task" and task.get("skill"):
+    if category == "task" and task.get("skill") == "quests":
+        fields.append({"name": "Type", "value": f"Quest ({task.get('difficulty', '?')})", "inline": True})
+    elif category == "task" and task.get("skill"):
         fields.append({"name": "Skill", "value": f"{task['skill']} (req {task.get('req', '?')})", "inline": True})
     if category == "boss" and task.get("reqs"):
         req_str = ", ".join(f"{k.capitalize()} {v}" for k, v in sorted(task["reqs"].items()))
@@ -1051,24 +1058,29 @@ def tasker_discord_embed(con, nick, category, task, done=False):
                    "inline": False})
     title = (f"✅ Done: {task['name']}" if done
              else f"{meta['emoji']} {meta['title']}: {task['name']}")
+    wiki = task.get("wiki") or ""
     return {
         "title": title,
-        **({"url": task["wiki"]} if task.get("wiki") else {}),
+        **({"url": wiki} if wiki.startswith("http") else {}),
         "color": 0x4CAF50 if done else meta["color"],
         "fields": fields,
         "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")},
     }
 
 
-def tasker_buttons(category, discord_id, after_done=False):
+def tasker_buttons(category, discord_id, after_done=False, is_quest=False):
     if after_done:
         return [{"type": 1, "components": [
             {"type": 2, "style": 1, "label": "🎲 New task", "custom_id": f"tsk:new:{category}:{discord_id}"},
         ]}]
-    return [{"type": 1, "components": [
+    buttons = [
         {"type": 2, "style": 3, "label": "✅ Done", "custom_id": f"tsk:done:{category}:{discord_id}"},
         {"type": 2, "style": 2, "label": "⏭️ Skip", "custom_id": f"tsk:skip:{category}:{discord_id}"},
-    ]}]
+    ]
+    if is_quest:
+        buttons.append({"type": 2, "style": 2, "label": "☑️ Already done",
+                        "custom_id": f"tsk:already:{category}:{discord_id}"})
+    return [{"type": 1, "components": buttons}]
 
 
 def finish_tasker(token, discord_id, nick, category):
@@ -1083,14 +1095,15 @@ def finish_tasker(token, discord_id, nick, category):
                 return
             task = get_active(con, key, category)
             if task is None:
-                task = roll_category(levels, category)
+                task = roll_category(levels, category, con, key)
                 if task is None:
                     patch_original(token, {"content": f"No eligible {category} tasks for **{nick}**."})
                     return
                 set_active(con, key, category, task)
             patch_original(token, {
                 "embeds": [tasker_discord_embed(con, nick, category, task)],
-                "components": tasker_buttons(category, discord_id),
+                "components": tasker_buttons(category, discord_id,
+                                             is_quest=task.get("name", "").startswith(QUEST_PREFIX)),
             })
         finally:
             con.close()
@@ -1148,7 +1161,7 @@ def handle_tasker_button(data):
     if len(parts) != 4:
         return ephemeral("Unknown button.")
     _, action, category, owner_id = parts
-    if category not in TASKER_CATEGORY_META or action not in ("done", "skip", "new"):
+    if category not in TASKER_CATEGORY_META or action not in ("done", "skip", "new", "already"):
         return ephemeral("Unknown button.")
     user = (data.get("member") or {}).get("user") or data.get("user") or {}
     if user.get("id") != owner_id:
@@ -1175,7 +1188,7 @@ def handle_tasker_button(data):
             "components": tasker_buttons(category, owner_id, after_done=True),
         }})
 
-    # skip / new both roll a fresh task from cached levels (no slow WOM fetch)
+    # skip / already / new all roll a fresh task from cached levels (no slow WOM fetch)
     lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
     if lv is None:
         return ephemeral(f"Levels not cached — use `/{category}` first.")
@@ -1187,18 +1200,26 @@ def handle_tasker_button(data):
             (nick, key, category, active.get("name", "?"), "skipped", today().isoformat()),
         )
         con.commit()
+    elif action == "already":
+        if active is None or not active.get("name", "").startswith(QUEST_PREFIX):
+            return ephemeral("That button only works on an active quest task.")
+        con.execute("INSERT OR IGNORE INTO quest_flags (nick_key, quest) VALUES (?, ?)",
+                    (key, active["name"][len(QUEST_PREFIX):]))
+        con.commit()
     elif active is not None:  # "new" pressed but a task is already active -> show it
         return jsonify({"type": 7, "data": {
             "embeds": [tasker_discord_embed(con, nick, category, active)],
-            "components": tasker_buttons(category, owner_id),
+            "components": tasker_buttons(category, owner_id,
+                                         is_quest=active.get("name", "").startswith(QUEST_PREFIX)),
         }})
-    task = roll_category(json.loads(lv["levels"]), category)
+    task = roll_category(json.loads(lv["levels"]), category, con, key)
     if task is None:
         return ephemeral(f"No eligible {category} tasks.")
     set_active(con, key, category, task)
     return jsonify({"type": 7, "data": {
         "embeds": [tasker_discord_embed(con, nick, category, task)],
-        "components": tasker_buttons(category, owner_id),
+        "components": tasker_buttons(category, owner_id,
+                                     is_quest=task.get("name", "").startswith(QUEST_PREFIX)),
     }})
 
 
@@ -1283,6 +1304,22 @@ TASKER_TIERS["boss"] = [
 TIER_ALIASES = {"normal": "medium", "bosses": "boss", "log": "collection"}
 
 import skill_tasks  # noqa: E402
+
+with open(os.path.join(os.path.dirname(__file__), "quests.json"), encoding="utf-8") as _f:
+    QUESTS = json.load(_f)
+QUEST_PREFIX = "Complete the quest: "
+
+
+def excluded_quests(con, key):
+    """Quests never offered again: flagged 'already done' or completed via a task."""
+    ex = {r["quest"] for r in con.execute(
+        "SELECT quest FROM quest_flags WHERE nick_key = ?", (key,))}
+    for r in con.execute(
+        "SELECT task FROM tasker_events WHERE nick_key = ? AND status = 'done' AND task LIKE ?",
+        (key, QUEST_PREFIX + "%"),
+    ):
+        ex.add(r["task"][len(QUEST_PREFIX):])
+    return ex
 
 
 def combat_level(lv):
@@ -1386,10 +1423,23 @@ def tasker_roll():
     return jsonify({"tier": tier, "combat": cb, "task": task, "active": False})
 
 
-def skill_task_pool(levels):
+def skill_task_pool(levels, quests_excluded=None):
     """Per-skill eligible methods with the near-level bucket marked."""
     cb = combat_level(levels)
     pool = {}
+    # Quests as their own "skill": offer only quests whose skill requirements the
+    # player meets and which they haven't done (tracked by us — hiscores can't
+    # tell quest completion, so there's an "Already done" action to flag old ones).
+    q_methods = []
+    for q in QUESTS:
+        if quests_excluded and q["name"] in quests_excluded:
+            continue
+        if any((cb if s == "combat" else levels.get(s, 1)) < need for s, need in q["reqs"].items()):
+            continue
+        q_methods.append({"req": 1, "template": QUEST_PREFIX + q["name"], "lo": 1, "hi": 1,
+                          "extra": {}, "near": True, "wiki": q["wiki"], "difficulty": q["difficulty"]})
+    if q_methods:
+        pool["quests"] = {"level": len(q_methods), "methods": q_methods}
     for skill in set(skill_tasks.SKILL_TASKS) | set(levels):
         lvl = cb if skill == "combat" else levels.get(skill, 1)
         elig = []
@@ -1424,7 +1474,8 @@ def skill_task_eligible():
     _tier, levels, err = tasker_prepare_nick_only()
     if err:
         return err
-    cb, pool = skill_task_pool(levels)
+    key = norm_key(request.args.get("nick", "").strip())
+    cb, pool = skill_task_pool(levels, excluded_quests(db(), key))
     return jsonify({"combat": cb, "skills": pool})
 
 
@@ -1439,33 +1490,18 @@ def skill_task_roll():
     active = get_active(con, key, "task")
     if active:
         return jsonify({**active, "active": True})
-    cb, pool = skill_task_pool(levels)
-    if not pool:
+    result = roll_category(levels, "task", con, key)
+    if result is None:
         return jsonify({"ok": False, "error": "no eligible tasks"}), 404
-    skill = random.choice(list(pool.keys()))
-    entry = pool[skill]
-    near = [m for m in entry["methods"] if m["near"]]
-    far = [m for m in entry["methods"] if not m["near"]]
-    if near and far:
-        bucket = near if random.random() < skill_tasks.NEAR_SHARE else far
-    else:
-        bucket = near or far
-    m = random.choice(bucket)
-    count = random.randint(m["lo"], m["hi"])
-    if m["hi"] >= 20:
-        count = max(m["lo"], round(count / 5) * 5)
-    result = {
-        "skill": skill, "level": entry["level"], "req": m["req"], "near": m["near"],
-        "count": count, "task": m["template"].replace("{n}", str(count)),
-    }
-    set_active(con, key, "task", {**result, "name": result["task"]})
+    set_active(con, key, "task", result)
     return jsonify({**result, "active": False})
 
 
-def roll_category(levels, category):
+def roll_category(levels, category, con=None, key=None):
     """Roll a fresh task dict for a category, or None if nothing is eligible."""
     if category == "task":
-        _cb, pool = skill_task_pool(levels)
+        excluded = excluded_quests(con, key) if con is not None and key else None
+        _cb, pool = skill_task_pool(levels, excluded)
         if not pool:
             return None
         skill = random.choice(list(pool.keys()))
@@ -1477,8 +1513,14 @@ def roll_category(levels, category):
         count = random.randint(m["lo"], m["hi"])
         if m["hi"] >= 20:
             count = max(m["lo"], round(count / 5) * 5)
-        return {"name": m["template"].replace("{n}", str(count)),
-                "skill": skill, "level": entry["level"], "req": m["req"]}
+        name = m["template"].replace("{n}", str(count))
+        result = {"name": name, "task": name, "skill": skill, "level": entry["level"],
+                  "req": m["req"], "near": m["near"], "count": count}
+        if m.get("wiki"):
+            result["wiki"] = m["wiki"]
+        if m.get("difficulty"):
+            result["difficulty"] = m["difficulty"]
+        return result
     cb, eligible, _ = tasker_split(levels, category)
     if not eligible:
         return None
@@ -1510,17 +1552,29 @@ def tasker_complete():
     category = (body.get("category") or "").strip().lower()
     status = (body.get("status") or "").strip().lower()
     if not NICK_RE.match(nick) or category not in ("task", "boss", "collection") \
-            or status not in ("done", "skipped"):
+            or status not in ("done", "skipped", "already"):
         return jsonify({"ok": False, "error": "invalid params"}), 400
     key = norm_key(nick)
     con = db()
     active = get_active(con, key, category)
     if active is None:
         return jsonify({"ok": False, "error": "no active task"}), 404
-    con.execute(
-        "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",
-        (nick, key, category, active.get("name", "?"), status, today().isoformat()),
-    )
+    name = active.get("name", "?")
+    if status == "already":
+        # "Already done" is only for quests: flag it so it's never offered again,
+        # without counting as a done or a skip.
+        if not name.startswith(QUEST_PREFIX):
+            return jsonify({"ok": False, "error": "only quest tasks can be flagged already done"}), 400
+        con.execute("INSERT OR IGNORE INTO quest_flags (nick_key, quest) VALUES (?, ?)",
+                    (key, name[len(QUEST_PREFIX):]))
+    else:
+        con.execute(
+            "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",
+            (nick, key, category, name, status, today().isoformat()),
+        )
+        if status == "done" and name.startswith(QUEST_PREFIX):
+            con.execute("INSERT OR IGNORE INTO quest_flags (nick_key, quest) VALUES (?, ?)",
+                        (key, name[len(QUEST_PREFIX):]))
     con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
     con.commit()
     return jsonify({"ok": True})
