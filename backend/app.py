@@ -1087,7 +1087,20 @@ for _tier, _tasks in _raw_tiers.items():
             keep.append(_t)
     TASKER_TIERS[_tier] = keep
 TASKER_TIERS["boss"] = list(_bosses.values())
-TIER_ALIASES = {"normal": "medium", "bosses": "boss"}
+
+# "collection" = all four Taskman tiers behind one button (level checks still
+# filter out the impossible ones); same task in several tiers -> weights summed.
+_coll = {}
+for _tier in ("easy", "medium", "hard", "elite"):
+    for _t in TASKER_TIERS[_tier]:
+        if _t["name"] in _coll:
+            _coll[_t["name"]]["weight"] += _t.get("weight", 1)
+        else:
+            _coll[_t["name"]] = {**_t, "origTier": _tier}
+TASKER_TIERS["collection"] = list(_coll.values())
+TIER_ALIASES = {"normal": "medium", "bosses": "boss", "log": "collection"}
+
+import skill_tasks  # noqa: E402
 
 
 def combat_level(lv):
@@ -1155,6 +1168,74 @@ def tasker_roll():
     weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
     task = random.choice(weighted)
     return jsonify({"tier": tier, "combat": cb, "task": task})
+
+
+def skill_task_pool(levels):
+    """Per-skill eligible methods with the near-level bucket marked."""
+    cb = combat_level(levels)
+    pool = {}
+    for skill, methods in skill_tasks.SKILL_TASKS.items():
+        lvl = cb if skill == "combat" else levels.get(skill, 1)
+        elig = []
+        for m in methods:
+            req, template, lo, hi = m[0], m[1], m[2], m[3]
+            extra = m[4] if len(m) > 4 else {}
+            if req > lvl:
+                continue
+            if any((cb if s == "combat" else levels.get(s, 1)) < need for s, need in extra.items()):
+                continue
+            elig.append({"req": req, "template": template, "lo": lo, "hi": hi, "extra": extra})
+        if not elig:
+            continue
+        top = max(e["req"] for e in elig)
+        for e in elig:
+            e["near"] = e["req"] >= lvl - skill_tasks.NEAR_WINDOW or e["req"] == top
+        pool[skill] = {"level": lvl, "methods": elig}
+    return cb, pool
+
+
+@app.get("/api/tasker/task/eligible")
+def skill_task_eligible():
+    _tier, levels, err = tasker_prepare_nick_only()
+    if err:
+        return err
+    cb, pool = skill_task_pool(levels)
+    return jsonify({"combat": cb, "skills": pool})
+
+
+@app.get("/api/tasker/task/roll")
+def skill_task_roll():
+    _tier, levels, err = tasker_prepare_nick_only()
+    if err:
+        return err
+    cb, pool = skill_task_pool(levels)
+    if not pool:
+        return jsonify({"ok": False, "error": "no eligible tasks"}), 404
+    skill = random.choice(list(pool.keys()))
+    entry = pool[skill]
+    near = [m for m in entry["methods"] if m["near"]]
+    far = [m for m in entry["methods"] if not m["near"]]
+    if near and far:
+        bucket = near if random.random() < skill_tasks.NEAR_SHARE else far
+    else:
+        bucket = near or far
+    m = random.choice(bucket)
+    count = random.randint(m["lo"], m["hi"])
+    count = max(m["lo"], round(count / 5) * 5)
+    return jsonify({
+        "skill": skill, "level": entry["level"], "req": m["req"], "near": m["near"],
+        "count": count, "task": m["template"].replace("{n}", str(count)),
+    })
+
+
+def tasker_prepare_nick_only():
+    nick = (request.args.get("nick") or "").strip()
+    if not NICK_RE.match(nick):
+        return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
+    levels = get_levels(db(), nick)
+    if levels is None:
+        return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
+    return None, levels, None
 
 
 @app.post("/api/discord/interactions")
