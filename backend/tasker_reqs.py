@@ -365,6 +365,71 @@ def _cap(reqs):
 _BOSS_COMPILED = [(re.compile(p, re.IGNORECASE), _cap(reqs)) for p, reqs in BOSS_PATTERNS]
 _COMPILED = [(re.compile(p, re.IGNORECASE), _cap(reqs)) for p, reqs in PATTERNS]
 
+# ---- Boss KILL tasks (the "Bosses" category): pure kill counts, slayer-style.
+# (template with {n}, count_lo, count_hi, recommended-stat requirements)
+_MELEE70 = {"attack": 70, "strength": 70, "defence": 70}
+_MELEE75 = {"attack": 75, "strength": 75, "defence": 75}
+_WILDY = {"combat": 100, **_MELEE75, "prayer": 45}
+_GWD = {"combat": 90, "defence": 70, "prayer": 45}
+_RAID = {"combat": 110, **_MELEE75, "ranged": 75, "magic": 75, "prayer": 45}
+_DT2B = {**DT2Q, **_MELEE75, "prayer": 45}
+
+_BOSS_KILLS_RAW = [
+    ("Kill Scurrius {n} times", 10, 30, {"combat": 30}),
+    ("Kill Obor {n} times", 1, 3, {"combat": 50, "attack": 40, "strength": 40, "defence": 40}),
+    ("Kill Bryophyta {n} times", 1, 3, {"combat": 50, "attack": 40, "strength": 40, "defence": 40}),
+    ("Kill the Giant Mole {n} times", 10, 25, {"combat": 65, "attack": 60, "strength": 60, "defence": 60}),
+    ("Complete {n} Barrows runs", 5, 15, {"combat": 70, "attack": 60, "strength": 60, "defence": 60, "magic": 50, "prayer": 43}),
+    ("Kill Sarachnis {n} times", 10, 25, {"combat": 85, **_MELEE70}),
+    ("Kill the King Black Dragon {n} times", 10, 25, {"combat": 85, **_MELEE70, "prayer": 43}),
+    ("Kill Scorpia {n} times", 8, 20, {"combat": 80, "defence": 70, "prayer": 43}),
+    ("Kill the Chaos Fanatic {n} times", 8, 20, {"combat": 80, "defence": 70, "prayer": 43}),
+    ("Kill the Crazy Archaeologist {n} times", 8, 20, {"combat": 80, "defence": 70, "prayer": 43}),
+    ("Kill the Chaos Elemental {n} times", 5, 15, _WILDY),
+    ("Kill Callisto or Artio {n} times", 5, 15, _WILDY),
+    ("Kill Vet'ion or Calvar'ion {n} times", 5, 15, _WILDY),
+    ("Kill Venenatis or Spindel {n} times", 5, 15, _WILDY),
+    ("Kill Hespori {n} times", 1, 3, {"farming": 65, "combat": 60}),
+    ("Kill Skotizo {n} times", 1, 3, {"combat": 90, "defence": 70}),
+    ("Kill Zalcano {n} times", 5, 15, SOTE),
+    ("Kill the Kalphite Queen {n} times", 8, 20, {"combat": 95, **_MELEE75, "ranged": 70, "prayer": 45}),
+    ("Kill each Dagannoth King {n} times", 8, 20, {"combat": 90, "ranged": 75, "magic": 75, "defence": 75, "prayer": 45}),
+    ("Kill General Graardor {n} times", 10, 25, {**_GWD, "strength": 70}),
+    ("Kill Kree'arra {n} times", 10, 25, {**_GWD, "ranged": 70}),
+    ("Kill K'ril Tsutsaroth {n} times", 10, 25, {**_GWD, "hitpoints": 70}),
+    ("Kill Commander Zilyana {n} times", 10, 25, {**_GWD, "agility": 70}),
+    ("Kill Zulrah {n} times", 10, 25, {"combat": 90, "ranged": 75, "magic": 75, "defence": 70, "prayer": 45, "agility": 56}),
+    ("Kill Vorkath {n} times", 10, 25, {**DS2, "combat": 100, "ranged": 75, "defence": 70, "prayer": 45}),
+    ("Complete the Fight Caves {n} times (TzTok-Jad)", 1, 2, {"combat": 90, "ranged": 70, "defence": 60, "prayer": 43}),
+    ("Kill the Kraken {n} times", 15, 40, {"slayer": 87, "magic": 75}),
+    ("Kill Cerberus {n} times", 10, 25, {"slayer": 91, "combat": 100, **_MELEE75, "prayer": 45}),
+    ("Kill the Thermonuclear Smoke Devil {n} times", 15, 40, {"slayer": 93, "magic": 75, "defence": 70}),
+    ("Kill the Abyssal Sire {n} times", 8, 20, {"slayer": 85, "combat": 100, **_MELEE75, "magic": 70, "prayer": 45}),
+    ("Kill the Grotesque Guardians {n} times", 10, 25, {"slayer": 75, "combat": 90, **_MELEE70, "prayer": 45}),
+    ("Complete {n} Gauntlet runs", 3, 8, {**SOTE, "defence": 70, "ranged": 70, "magic": 70, "prayer": 45}),
+    ("Kill the Corporeal Beast {n} times", 5, 15, {"combat": 100, **_MELEE75, "prayer": 45}),
+    ("Kill the Phantom Muspah {n} times", 5, 15, {"combat": 100, "ranged": 75, "prayer": 45, "agility": 64}),
+    ("Complete {n} Moons of Peril runs", 3, 8, {"combat": 75, **_MELEE70}),
+    ("Kill Amoxliatl {n} times", 10, 20, {"combat": 70, "defence": 60}),
+    ("Kill the Hueycoatl {n} times", 5, 10, {"combat": 90, "attack": 70, "defence": 70}),
+    ("Kill the Royal Titans {n} times", 5, 15, {"combat": 80, "magic": 70, "defence": 70}),
+    ("Kill Araxxor {n} times", 10, 20, {"slayer": 92, "combat": 100, **_MELEE75, "prayer": 45}),
+    ("Kill {n} Tormented Demons", 10, 25, {"combat": 110, **_MELEE75, "prayer": 45}),
+    ("Kill Vardorvis {n} times", 5, 12, _DT2B),
+    ("Kill the Leviathan {n} times", 5, 12, _DT2B),
+    ("Kill the Whisperer {n} times", 5, 12, _DT2B),
+    ("Kill Duke Sucellus {n} times", 5, 12, _DT2B),
+    ("Kill Nex {n} times", 5, 10, {"combat": 110, "ranged": 80, "defence": 75, "prayer": 45}),
+    ("Kill the Nightmare {n} times", 3, 8, {"combat": 110, **_MELEE75, "magic": 75, "prayer": 45}),
+    ("Complete {n} Chambers of Xeric raids", 2, 5, _RAID),
+    ("Complete {n} Theatre of Blood raids", 2, 5, _RAID),
+    ("Complete {n} Tombs of Amascut raids", 2, 5, _RAID),
+    ("Complete {n} Fortis Colosseum waves", 4, 12, {"combat": 110, "defence": 75, "prayer": 45}),
+    ("Kill Yama {n} times", 3, 8, {"combat": 110, "defence": 75, "prayer": 45}),  # EST
+    ("Kill the Doom of Mokhaiotl {n} times", 3, 8, {"combat": 110, "defence": 75, "prayer": 45}),  # EST
+]
+BOSS_KILLS = [(t, lo, hi, _cap(r)) for t, lo, hi, r in _BOSS_KILLS_RAW]
+
 
 def is_boss(task_name):
     """True if the task belongs to the boss category."""

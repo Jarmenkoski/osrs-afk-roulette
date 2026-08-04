@@ -109,12 +109,12 @@
           $('task-lists').innerHTML = `
             <details open><summary>✅ Eligible</summary>${d.eligible.map((t) => `
               <div class="task-row">
-                ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.name}</a>` : t.name}
-                <span class="reqs"> — ${fmtReqs(t.reqs)} (weight ${t.weight})</span>
+                ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.display || t.name}</a>` : (t.display || t.name)}
+                <span class="reqs"> — ${fmtReqs(t.reqs)}</span>
               </div>`).join('') || '<i>none</i>'}</details>
             <details><summary>🚫 Blocked (with reasons)</summary>${d.blocked.map((t) => `
               <div class="task-row">
-                ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.name}</a>` : t.name}
+                ${t.wiki ? `<a href="${t.wiki}" target="_blank" rel="noopener">${t.display || t.name}</a>` : (t.display || t.name)}
                 <div class="why">Missing: ${Object.entries(t.missing).map(([s, m]) => `${s} ${m.have}/${m.need}`).join(', ')}</div>
               </div>`).join('') || '<i>none</i>'}</details>`;
         }
