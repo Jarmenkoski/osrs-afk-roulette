@@ -762,8 +762,10 @@ def patch_original(token, payload):
     try:
         with urllib.request.urlopen(req, timeout=10):
             pass
-    except Exception:
-        pass
+    except urllib.error.HTTPError as e:
+        print(f"patch_original HTTP {e.code}: {e.read()[:500]}", flush=True)
+    except Exception as e:
+        print(f"patch_original failed: {e!r}", flush=True)
 
 
 def ephemeral(msg):
@@ -771,6 +773,14 @@ def ephemeral(msg):
 
 
 def finish_roll(token, discord_id, nick):
+    try:
+        _finish_roll(token, discord_id, nick)
+    except Exception as e:
+        print(f"finish_roll crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong rolling your task — try again."})
+
+
+def _finish_roll(token, discord_id, nick):
     con = open_db()
     try:
         key = norm_key(nick)
