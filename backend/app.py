@@ -128,6 +128,23 @@ def init_db():
           levels TEXT NOT NULL,
           updated_at REAL NOT NULL
         );
+        CREATE TABLE IF NOT EXISTS tasker_active (
+          nick_key TEXT NOT NULL,
+          category TEXT NOT NULL,
+          task TEXT NOT NULL,
+          PRIMARY KEY (nick_key, category)
+        );
+        CREATE TABLE IF NOT EXISTS tasker_events (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          nick TEXT NOT NULL,
+          nick_key TEXT NOT NULL,
+          category TEXT NOT NULL,
+          task TEXT NOT NULL,
+          status TEXT NOT NULL CHECK (status IN ('done', 'skipped')),
+          d TEXT NOT NULL,
+          created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+        CREATE INDEX IF NOT EXISTS idx_tasker_events_nick ON tasker_events(nick_key);
         """
     )
     con.commit()
@@ -1148,11 +1165,34 @@ def tasker_eligible():
     })
 
 
+def get_active(con, key, category):
+    row = con.execute(
+        "SELECT task FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category)
+    ).fetchone()
+    return json.loads(row["task"]) if row else None
+
+
+def set_active(con, key, category, task):
+    con.execute(
+        "INSERT INTO tasker_active (nick_key, category, task) VALUES (?, ?, ?) "
+        "ON CONFLICT(nick_key, category) DO UPDATE SET task = excluded.task",
+        (key, category, json.dumps(task)),
+    )
+    con.commit()
+
+
 @app.get("/api/tasker/roll")
 def tasker_roll():
     tier, levels, err = tasker_prepare()
     if err:
         return err
+    nick = request.args.get("nick", "").strip()
+    key = norm_key(nick)
+    con = db()
+    if tier in ("boss", "collection"):
+        active = get_active(con, key, tier)
+        if active:
+            return jsonify({"tier": tier, "task": active, "active": True})
     cb, eligible, _ = tasker_split(levels, tier)
     if not eligible:
         return jsonify({"ok": False, "error": "no eligible tasks in this tier"}), 404
@@ -1164,7 +1204,10 @@ def tasker_roll():
             count = max(task["lo"], round(count / 5) * 5)
         task["name"] = task["name"].replace("{n}", str(count))
         task["count"] = count
-    return jsonify({"tier": tier, "combat": cb, "task": task})
+    if tier in ("boss", "collection"):
+        stored = {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", "")}
+        set_active(con, key, tier, stored)
+    return jsonify({"tier": tier, "combat": cb, "task": task, "active": False})
 
 
 def skill_task_pool(levels):
@@ -1211,6 +1254,12 @@ def skill_task_roll():
     _tier, levels, err = tasker_prepare_nick_only()
     if err:
         return err
+    nick = request.args.get("nick", "").strip()
+    key = norm_key(nick)
+    con = db()
+    active = get_active(con, key, "task")
+    if active:
+        return jsonify({**active, "active": True})
     cb, pool = skill_task_pool(levels)
     if not pool:
         return jsonify({"ok": False, "error": "no eligible tasks"}), 404
@@ -1226,10 +1275,65 @@ def skill_task_roll():
     count = random.randint(m["lo"], m["hi"])
     if m["hi"] >= 20:
         count = max(m["lo"], round(count / 5) * 5)
-    return jsonify({
+    result = {
         "skill": skill, "level": entry["level"], "req": m["req"], "near": m["near"],
         "count": count, "task": m["template"].replace("{n}", str(count)),
-    })
+    }
+    set_active(con, key, "task", {**result, "name": result["task"]})
+    return jsonify({**result, "active": False})
+
+
+@app.get("/api/tasker/current")
+def tasker_current():
+    nick = (request.args.get("nick") or "").strip()
+    category = (request.args.get("category") or "").strip().lower()
+    if not NICK_RE.match(nick) or category not in ("task", "boss", "collection"):
+        return jsonify({"ok": False, "error": "invalid params"}), 400
+    active = get_active(db(), norm_key(nick), category)
+    return jsonify({"active": active})
+
+
+@app.post("/api/tasker/complete")
+def tasker_complete():
+    body = request.get_json(silent=True) or {}
+    nick = (body.get("nick") or "").strip()
+    category = (body.get("category") or "").strip().lower()
+    status = (body.get("status") or "").strip().lower()
+    if not NICK_RE.match(nick) or category not in ("task", "boss", "collection") \
+            or status not in ("done", "skipped"):
+        return jsonify({"ok": False, "error": "invalid params"}), 400
+    key = norm_key(nick)
+    con = db()
+    active = get_active(con, key, category)
+    if active is None:
+        return jsonify({"ok": False, "error": "no active task"}), 404
+    con.execute(
+        "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",
+        (nick, key, category, active.get("name", "?"), status, today().isoformat()),
+    )
+    con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
+    con.commit()
+    return jsonify({"ok": True})
+
+
+@app.get("/api/tasker/highscores")
+def tasker_highscores():
+    rows = db().execute(
+        """SELECT nick_key, MAX(nick) AS nick, category,
+                  SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
+           FROM tasker_events GROUP BY nick_key, category"""
+    ).fetchall()
+    players = {}
+    for r in rows:
+        p = players.setdefault(r["nick_key"], {"nick": r["nick"], "task": 0, "boss": 0,
+                                               "collection": 0, "skips": 0})
+        p[r["category"]] = r["done"] or 0
+        p["skips"] += r["skips"] or 0
+    result = sorted(players.values(),
+                    key=lambda p: (-(p["task"] + p["boss"] + p["collection"]), p["skips"]))
+    for p in result:
+        p["total"] = p["task"] + p["boss"] + p["collection"]
+    return jsonify({"players": result})
 
 
 def tasker_prepare_nick_only():
