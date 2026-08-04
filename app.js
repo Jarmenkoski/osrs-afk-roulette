@@ -812,10 +812,17 @@ async function tkRoll() {
 
 window.tkComplete = async function (status) {
   try {
-    await apiPost('/api/tasker/complete', { nick: playerName, category: tcat, status });
+    const resp = await apiPost('/api/tasker/complete', { nick: playerName, category: tcat, status });
     tk.result.innerHTML = '';
     loadTaskerHS();
-    if (status === 'skipped' || status === 'already') {
+    if (status === 'already') {
+      // Flagged a pre-completed quest -> the server hands out another quest
+      if (resp.next) {
+        tkRenderFrom({ ...resp.next, active: false });
+      } else {
+        tkRoll(); // no quests left in the pool -> roll anything
+      }
+    } else if (status === 'skipped') {
       tkRoll(); // roll a fresh one right away
     } else {
       setStatus(tk.status, '✅ Task completed and logged!', 'success');

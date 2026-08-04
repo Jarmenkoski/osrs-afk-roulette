@@ -1212,7 +1212,15 @@ def handle_tasker_button(data):
             "components": tasker_buttons(category, owner_id,
                                          is_quest=active.get("name", "").startswith(QUEST_PREFIX)),
         }})
-    task = roll_category(json.loads(lv["levels"]), category, con, key)
+    levels = json.loads(lv["levels"])
+    task = None
+    if action == "already":
+        # After flagging a pre-completed quest, hand out ANOTHER quest
+        con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
+        con.commit()
+        task = roll_quest_task(levels, con, key)
+    if task is None:
+        task = roll_category(levels, category, con, key)
     if task is None:
         return ephemeral(f"No eligible {category} tasks.")
     set_active(con, key, category, task)
@@ -1431,8 +1439,13 @@ def skill_task_pool(levels, quests_excluded=None):
     # player meets and which they haven't done (tracked by us — hiscores can't
     # tell quest completion, so there's an "Already done" action to flag old ones).
     q_methods = []
+    completed = quests_excluded or set()
     for q in QUESTS:
-        if quests_excluded and q["name"] in quests_excluded:
+        if q["name"] in completed:
+            continue
+        # Quest chains: sequels are offered only once every prerequisite quest
+        # has been marked done / already-done in our tracking.
+        if any(pr not in completed for pr in q.get("quest_reqs", [])):
             continue
         if any((cb if s == "combat" else levels.get(s, 1)) < need for s, need in q["reqs"].items()):
             continue
@@ -1495,6 +1508,18 @@ def skill_task_roll():
         return jsonify({"ok": False, "error": "no eligible tasks"}), 404
     set_active(con, key, "task", result)
     return jsonify({**result, "active": False})
+
+
+def roll_quest_task(levels, con, key):
+    """Roll a random eligible QUEST task (used after 'Already done')."""
+    _cb, pool = skill_task_pool(levels, excluded_quests(con, key))
+    q = pool.get("quests")
+    if not q:
+        return None
+    m = random.choice(q["methods"])
+    return {"name": m["template"], "task": m["template"], "skill": "quests",
+            "level": q["level"], "req": 1, "near": True, "count": 1,
+            "wiki": m.get("wiki"), "difficulty": m.get("difficulty")}
 
 
 def roll_category(levels, category, con=None, key=None):
@@ -1562,11 +1587,18 @@ def tasker_complete():
     name = active.get("name", "?")
     if status == "already":
         # "Already done" is only for quests: flag it so it's never offered again,
-        # without counting as a done or a skip.
+        # without counting as a done or a skip — and hand out ANOTHER quest.
         if not name.startswith(QUEST_PREFIX):
             return jsonify({"ok": False, "error": "only quest tasks can be flagged already done"}), 400
         con.execute("INSERT OR IGNORE INTO quest_flags (nick_key, quest) VALUES (?, ?)",
                     (key, name[len(QUEST_PREFIX):]))
+        con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
+        con.commit()
+        lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
+        nxt = roll_quest_task(json.loads(lv["levels"]), con, key) if lv else None
+        if nxt:
+            set_active(con, key, category, nxt)
+        return jsonify({"ok": True, "next": nxt})
     else:
         con.execute(
             "INSERT INTO tasker_events (nick, nick_key, category, task, status, d) VALUES (?, ?, ?, ?, ?, ?)",

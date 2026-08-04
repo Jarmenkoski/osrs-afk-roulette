@@ -4,14 +4,16 @@
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/The_Ides_of_Milk"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Ides_of_Milk",
+  "quest_reqs": []
  },
  {
   "name": "Learning the Ropes",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Learning_the_Ropes"
+  "wiki": "https://oldschool.runescape.wiki/w/Learning_the_Ropes",
+  "quest_reqs": []
  },
  {
   "name": "Below Ice Mountain",
@@ -20,56 +22,64 @@
   "reqs": {
    "mining": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Below_Ice_Mountain"
+  "wiki": "https://oldschool.runescape.wiki/w/Below_Ice_Mountain",
+  "quest_reqs": []
  },
  {
   "name": "X Marks the Spot",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/X_Marks_the_Spot"
+  "wiki": "https://oldschool.runescape.wiki/w/X_Marks_the_Spot",
+  "quest_reqs": []
  },
  {
   "name": "The Corsair Curse",
   "difficulty": "Intermediate",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/The_Corsair_Curse"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Corsair_Curse",
+  "quest_reqs": []
  },
  {
   "name": "Misthalin Mystery",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Misthalin_Mystery"
+  "wiki": "https://oldschool.runescape.wiki/w/Misthalin_Mystery",
+  "quest_reqs": []
  },
  {
   "name": "Rune Mysteries",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Rune_Mysteries"
+  "wiki": "https://oldschool.runescape.wiki/w/Rune_Mysteries",
+  "quest_reqs": []
  },
  {
   "name": "Dragon Slayer I",
   "difficulty": "Experienced",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_I",
+  "quest_reqs": []
  },
  {
   "name": "Pirate's Treasure",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Pirate's_Treasure"
+  "wiki": "https://oldschool.runescape.wiki/w/Pirate's_Treasure",
+  "quest_reqs": []
  },
  {
   "name": "Goblin Diplomacy",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Goblin_Diplomacy"
+  "wiki": "https://oldschool.runescape.wiki/w/Goblin_Diplomacy",
+  "quest_reqs": []
  },
  {
   "name": "The Knight's Sword",
@@ -78,105 +88,120 @@
   "reqs": {
    "mining": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Knight's_Sword"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Knight's_Sword",
+  "quest_reqs": []
  },
  {
   "name": "Witch's Potion",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Witch's_Potion"
+  "wiki": "https://oldschool.runescape.wiki/w/Witch's_Potion",
+  "quest_reqs": []
  },
  {
   "name": "Black Knights' Fortress",
   "difficulty": "Intermediate",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Black_Knights'_Fortress"
+  "wiki": "https://oldschool.runescape.wiki/w/Black_Knights'_Fortress",
+  "quest_reqs": []
  },
  {
   "name": "Doric's Quest",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Doric's_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Doric's_Quest",
+  "quest_reqs": []
  },
  {
   "name": "Prince Ali Rescue",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Prince_Ali_Rescue"
+  "wiki": "https://oldschool.runescape.wiki/w/Prince_Ali_Rescue",
+  "quest_reqs": []
  },
  {
   "name": "Imp Catcher",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Imp_Catcher"
+  "wiki": "https://oldschool.runescape.wiki/w/Imp_Catcher",
+  "quest_reqs": []
  },
  {
   "name": "Vampyre Slayer",
   "difficulty": "Intermediate",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Vampyre_Slayer"
+  "wiki": "https://oldschool.runescape.wiki/w/Vampyre_Slayer",
+  "quest_reqs": []
  },
  {
   "name": "Ernest the Chicken",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Ernest_the_Chicken"
+  "wiki": "https://oldschool.runescape.wiki/w/Ernest_the_Chicken",
+  "quest_reqs": []
  },
  {
   "name": "The Restless Ghost",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/The_Restless_Ghost"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Restless_Ghost",
+  "quest_reqs": []
  },
  {
   "name": "Sheep Shearer",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Sheep_Shearer"
+  "wiki": "https://oldschool.runescape.wiki/w/Sheep_Shearer",
+  "quest_reqs": []
  },
  {
   "name": "Shield of Arrav",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Shield_of_Arrav"
+  "wiki": "https://oldschool.runescape.wiki/w/Shield_of_Arrav",
+  "quest_reqs": []
  },
  {
   "name": "Demon Slayer",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Demon_Slayer"
+  "wiki": "https://oldschool.runescape.wiki/w/Demon_Slayer",
+  "quest_reqs": []
  },
  {
   "name": "Romeo & Juliet",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Romeo_%26_Juliet"
+  "wiki": "https://oldschool.runescape.wiki/w/Romeo_%26_Juliet",
+  "quest_reqs": []
  },
  {
   "name": "Cook's Assistant",
   "difficulty": "Novice",
   "members": false,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Cook's_Assistant"
+  "wiki": "https://oldschool.runescape.wiki/w/Cook's_Assistant",
+  "quest_reqs": []
  },
  {
   "name": "Druidic Ritual",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Druidic_Ritual"
+  "wiki": "https://oldschool.runescape.wiki/w/Druidic_Ritual",
+  "quest_reqs": []
  },
  {
   "name": "Lost City",
@@ -186,21 +211,24 @@
    "crafting": 31,
    "woodcutting": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Lost_City"
+  "wiki": "https://oldschool.runescape.wiki/w/Lost_City",
+  "quest_reqs": []
  },
  {
   "name": "Witch's House",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Witch's_House"
+  "wiki": "https://oldschool.runescape.wiki/w/Witch's_House",
+  "quest_reqs": []
  },
  {
   "name": "Merlin's Crystal",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Merlin's_Crystal"
+  "wiki": "https://oldschool.runescape.wiki/w/Merlin's_Crystal",
+  "quest_reqs": []
  },
  {
   "name": "Heroes' Quest",
@@ -214,7 +242,13 @@
    "mining": 50,
    "woodcutting": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Heroes'_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Heroes'_Quest",
+  "quest_reqs": [
+   "Dragon Slayer I",
+   "Lost City",
+   "Merlin's Crystal",
+   "Shield of Arrav"
+  ]
  },
  {
   "name": "Scorpion Catcher",
@@ -223,7 +257,8 @@
   "reqs": {
    "prayer": 31
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Scorpion_Catcher"
+  "wiki": "https://oldschool.runescape.wiki/w/Scorpion_Catcher",
+  "quest_reqs": []
  },
  {
   "name": "Family Crest",
@@ -235,7 +270,8 @@
    "mining": 40,
    "smithing": 40
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Family_Crest"
+  "wiki": "https://oldschool.runescape.wiki/w/Family_Crest",
+  "quest_reqs": []
  },
  {
   "name": "Fishing Contest",
@@ -244,7 +280,8 @@
   "reqs": {
    "fishing": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Fishing_Contest"
+  "wiki": "https://oldschool.runescape.wiki/w/Fishing_Contest",
+  "quest_reqs": []
  },
  {
   "name": "Tribal Totem",
@@ -253,14 +290,16 @@
   "reqs": {
    "thieving": 21
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Tribal_Totem"
+  "wiki": "https://oldschool.runescape.wiki/w/Tribal_Totem",
+  "quest_reqs": []
  },
  {
   "name": "Monk's Friend",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Monk's_Friend"
+  "wiki": "https://oldschool.runescape.wiki/w/Monk's_Friend",
+  "quest_reqs": []
  },
  {
   "name": "Temple of Ikov",
@@ -270,14 +309,16 @@
    "ranged": 40,
    "thieving": 42
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Temple_of_Ikov"
+  "wiki": "https://oldschool.runescape.wiki/w/Temple_of_Ikov",
+  "quest_reqs": []
  },
  {
   "name": "Clock Tower",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Clock_Tower"
+  "wiki": "https://oldschool.runescape.wiki/w/Clock_Tower",
+  "quest_reqs": []
  },
  {
   "name": "Holy Grail",
@@ -286,42 +327,50 @@
   "reqs": {
    "attack": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Holy_Grail"
+  "wiki": "https://oldschool.runescape.wiki/w/Holy_Grail",
+  "quest_reqs": [
+   "Merlin's Crystal"
+  ]
  },
  {
   "name": "Tree Gnome Village",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Tree_Gnome_Village"
+  "wiki": "https://oldschool.runescape.wiki/w/Tree_Gnome_Village",
+  "quest_reqs": []
  },
  {
   "name": "Fight Arena",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Fight_Arena"
+  "wiki": "https://oldschool.runescape.wiki/w/Fight_Arena",
+  "quest_reqs": []
  },
  {
   "name": "Hazeel Cult",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Hazeel_Cult"
+  "wiki": "https://oldschool.runescape.wiki/w/Hazeel_Cult",
+  "quest_reqs": []
  },
  {
   "name": "Sheep Herder",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Sheep_Herder"
+  "wiki": "https://oldschool.runescape.wiki/w/Sheep_Herder",
+  "quest_reqs": []
  },
  {
   "name": "Plague City",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Plague_City"
+  "wiki": "https://oldschool.runescape.wiki/w/Plague_City",
+  "quest_reqs": []
  },
  {
   "name": "Sea Slug",
@@ -330,14 +379,16 @@
   "reqs": {
    "firemaking": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Sea_Slug"
+  "wiki": "https://oldschool.runescape.wiki/w/Sea_Slug",
+  "quest_reqs": []
  },
  {
   "name": "Waterfall Quest",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Waterfall_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Waterfall_Quest",
+  "quest_reqs": []
  },
  {
   "name": "Jungle Potion",
@@ -346,7 +397,10 @@
   "reqs": {
    "herblore": 3
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Jungle_Potion"
+  "wiki": "https://oldschool.runescape.wiki/w/Jungle_Potion",
+  "quest_reqs": [
+   "Druidic Ritual"
+  ]
  },
  {
   "name": "The Grand Tree",
@@ -355,7 +409,8 @@
   "reqs": {
    "agility": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Grand_Tree"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Grand_Tree",
+  "quest_reqs": []
  },
  {
   "name": "Underground Pass",
@@ -364,14 +419,19 @@
   "reqs": {
    "ranged": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Underground_Pass"
+  "wiki": "https://oldschool.runescape.wiki/w/Underground_Pass",
+  "quest_reqs": [
+   "Biohazard",
+   "Plague City"
+  ]
  },
  {
   "name": "Observatory Quest",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Observatory_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Observatory_Quest",
+  "quest_reqs": []
  },
  {
   "name": "The Tourist Trap",
@@ -381,7 +441,8 @@
    "fletching": 10,
    "smithing": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Tourist_Trap"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Tourist_Trap",
+  "quest_reqs": []
  },
  {
   "name": "Watchtower",
@@ -394,21 +455,24 @@
    "mining": 40,
    "thieving": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Watchtower"
+  "wiki": "https://oldschool.runescape.wiki/w/Watchtower",
+  "quest_reqs": []
  },
  {
   "name": "Dwarf Cannon",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Dwarf_Cannon"
+  "wiki": "https://oldschool.runescape.wiki/w/Dwarf_Cannon",
+  "quest_reqs": []
  },
  {
   "name": "Murder Mystery",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Murder_Mystery"
+  "wiki": "https://oldschool.runescape.wiki/w/Murder_Mystery",
+  "quest_reqs": []
  },
  {
   "name": "The Dig Site",
@@ -419,14 +483,16 @@
    "herblore": 10,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Dig_Site"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Dig_Site",
+  "quest_reqs": []
  },
  {
   "name": "Gertrude's Cat",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Gertrude's_Cat"
+  "wiki": "https://oldschool.runescape.wiki/w/Gertrude's_Cat",
+  "quest_reqs": []
  },
  {
   "name": "Legends' Quest",
@@ -447,14 +513,30 @@
    "thieving": 50,
    "woodcutting": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Legends'_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Legends'_Quest",
+  "quest_reqs": [
+   "Biohazard",
+   "Dragon Slayer I",
+   "Druidic Ritual",
+   "Family Crest",
+   "Heroes' Quest",
+   "Jungle Potion",
+   "Lost City",
+   "Merlin's Crystal",
+   "Plague City",
+   "Shield of Arrav",
+   "Shilo Village",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Death Plateau",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Death_Plateau"
+  "wiki": "https://oldschool.runescape.wiki/w/Death_Plateau",
+  "quest_reqs": []
  },
  {
   "name": "Eadgar's Ruse",
@@ -464,7 +546,12 @@
    "agility": 15,
    "herblore": 31
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Eadgar's_Ruse"
+  "wiki": "https://oldschool.runescape.wiki/w/Eadgar's_Ruse",
+  "quest_reqs": [
+   "Death Plateau",
+   "Druidic Ritual",
+   "Troll Stronghold"
+  ]
  },
  {
   "name": "Big Chompy Bird Hunting",
@@ -475,7 +562,8 @@
    "fletching": 5,
    "ranged": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Big_Chompy_Bird_Hunting"
+  "wiki": "https://oldschool.runescape.wiki/w/Big_Chompy_Bird_Hunting",
+  "quest_reqs": []
  },
  {
   "name": "Elemental Workshop I",
@@ -486,21 +574,27 @@
    "mining": 20,
    "smithing": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Elemental_Workshop_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Elemental_Workshop_I",
+  "quest_reqs": []
  },
  {
   "name": "Nature Spirit",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Nature_Spirit"
+  "wiki": "https://oldschool.runescape.wiki/w/Nature_Spirit",
+  "quest_reqs": [
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Priest in Peril",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Priest_in_Peril"
+  "wiki": "https://oldschool.runescape.wiki/w/Priest_in_Peril",
+  "quest_reqs": []
  },
  {
   "name": "Regicide",
@@ -511,7 +605,12 @@
    "crafting": 10,
    "ranged": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Regicide"
+  "wiki": "https://oldschool.runescape.wiki/w/Regicide",
+  "quest_reqs": [
+   "Biohazard",
+   "Plague City",
+   "Underground Pass"
+  ]
  },
  {
   "name": "Tai Bwo Wannai Trio",
@@ -522,7 +621,11 @@
    "cooking": 30,
    "fishing": 5
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Tai_Bwo_Wannai_Trio"
+  "wiki": "https://oldschool.runescape.wiki/w/Tai_Bwo_Wannai_Trio",
+  "quest_reqs": [
+   "Druidic Ritual",
+   "Jungle Potion"
+  ]
  },
  {
   "name": "Troll Stronghold",
@@ -532,7 +635,10 @@
    "agility": 15,
    "thieving": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Troll_Stronghold"
+  "wiki": "https://oldschool.runescape.wiki/w/Troll_Stronghold",
+  "quest_reqs": [
+   "Death Plateau"
+  ]
  },
  {
   "name": "Shades of Mort'ton",
@@ -543,14 +649,18 @@
    "firemaking": 5,
    "herblore": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton"
+  "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton",
+  "quest_reqs": [
+   "Priest in Peril"
+  ]
  },
  {
   "name": "The Fremennik Trials",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Trials"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Trials",
+  "quest_reqs": []
  },
  {
   "name": "Horror from the Deep",
@@ -559,7 +669,8 @@
   "reqs": {
    "agility": 35
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Horror_from_the_Deep"
+  "wiki": "https://oldschool.runescape.wiki/w/Horror_from_the_Deep",
+  "quest_reqs": []
  },
  {
   "name": "Throne of Miscellania",
@@ -574,7 +685,15 @@
    "mining": 50,
    "woodcutting": 45
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Throne_of_Miscellania"
+  "wiki": "https://oldschool.runescape.wiki/w/Throne_of_Miscellania",
+  "quest_reqs": [
+   "Dragon Slayer I",
+   "Heroes' Quest",
+   "Lost City",
+   "Merlin's Crystal",
+   "Shield of Arrav",
+   "The Fremennik Trials"
+  ]
  },
  {
   "name": "Monkey Madness I",
@@ -583,7 +702,11 @@
   "reqs": {
    "agility": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_I",
+  "quest_reqs": [
+   "The Grand Tree",
+   "Tree Gnome Village"
+  ]
  },
  {
   "name": "Haunted Mine",
@@ -593,7 +716,10 @@
    "agility": 15,
    "crafting": 35
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Haunted_Mine"
+  "wiki": "https://oldschool.runescape.wiki/w/Haunted_Mine",
+  "quest_reqs": [
+   "Priest in Peril"
+  ]
  },
  {
   "name": "Troll Romance",
@@ -602,7 +728,11 @@
   "reqs": {
    "agility": 28
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Troll_Romance"
+  "wiki": "https://oldschool.runescape.wiki/w/Troll_Romance",
+  "quest_reqs": [
+   "Death Plateau",
+   "Troll Stronghold"
+  ]
  },
  {
   "name": "In Search of the Myreque",
@@ -611,7 +741,12 @@
   "reqs": {
    "agility": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/In_Search_of_the_Myreque"
+  "wiki": "https://oldschool.runescape.wiki/w/In_Search_of_the_Myreque",
+  "quest_reqs": [
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Creature of Fenkenstrain",
@@ -621,7 +756,11 @@
    "crafting": 20,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Creature_of_Fenkenstrain"
+  "wiki": "https://oldschool.runescape.wiki/w/Creature_of_Fenkenstrain",
+  "quest_reqs": [
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Roving Elves",
@@ -632,7 +771,14 @@
    "crafting": 10,
    "ranged": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Roving_Elves"
+  "wiki": "https://oldschool.runescape.wiki/w/Roving_Elves",
+  "quest_reqs": [
+   "Biohazard",
+   "Plague City",
+   "Regicide",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Ghosts Ahoy",
@@ -642,7 +788,11 @@
    "agility": 25,
    "cooking": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Ghosts_Ahoy"
+  "wiki": "https://oldschool.runescape.wiki/w/Ghosts_Ahoy",
+  "quest_reqs": [
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "One Small Favour",
@@ -654,7 +804,13 @@
    "herblore": 18,
    "smithing": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/One_Small_Favour"
+  "wiki": "https://oldschool.runescape.wiki/w/One_Small_Favour",
+  "quest_reqs": [
+   "Druidic Ritual",
+   "Jungle Potion",
+   "Rune Mysteries",
+   "Shilo Village"
+  ]
  },
  {
   "name": "Mountain Daughter",
@@ -663,7 +819,8 @@
   "reqs": {
    "agility": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Mountain_Daughter"
+  "wiki": "https://oldschool.runescape.wiki/w/Mountain_Daughter",
+  "quest_reqs": []
  },
  {
   "name": "Between a Rock...",
@@ -675,7 +832,11 @@
    "mining": 40,
    "smithing": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Between_a_Rock..."
+  "wiki": "https://oldschool.runescape.wiki/w/Between_a_Rock...",
+  "quest_reqs": [
+   "Dwarf Cannon",
+   "Fishing Contest"
+  ]
  },
  {
   "name": "The Feud",
@@ -684,7 +845,8 @@
   "reqs": {
    "thieving": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Feud"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Feud",
+  "quest_reqs": []
  },
  {
   "name": "The Golem",
@@ -694,7 +856,8 @@
    "crafting": 20,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Golem"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Golem",
+  "quest_reqs": []
  },
  {
   "name": "Desert Treasure I",
@@ -711,14 +874,27 @@
    "smithing": 20,
    "thieving": 53
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_I",
+  "quest_reqs": [
+   "Death Plateau",
+   "Plague City",
+   "Priest in Peril",
+   "Temple of Ikov",
+   "The Dig Site",
+   "The Tourist Trap",
+   "Troll Stronghold",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Icthlarin's Little Helper",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Icthlarin's_Little_Helper"
+  "wiki": "https://oldschool.runescape.wiki/w/Icthlarin's_Little_Helper",
+  "quest_reqs": [
+   "Gertrude's Cat"
+  ]
  },
  {
   "name": "Tears of Guthix",
@@ -729,7 +905,8 @@
    "firemaking": 49,
    "mining": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Tears_of_Guthix"
+  "wiki": "https://oldschool.runescape.wiki/w/Tears_of_Guthix",
+  "quest_reqs": []
  },
  {
   "name": "The Lost Tribe",
@@ -740,7 +917,11 @@
    "mining": 17,
    "thieving": 13
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Lost_Tribe"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Lost_Tribe",
+  "quest_reqs": [
+   "Goblin Diplomacy",
+   "Rune Mysteries"
+  ]
  },
  {
   "name": "The Giant Dwarf",
@@ -752,14 +933,19 @@
    "magic": 33,
    "thieving": 14
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Giant_Dwarf"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Giant_Dwarf",
+  "quest_reqs": []
  },
  {
   "name": "Recruitment Drive",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recruitment_Drive"
+  "wiki": "https://oldschool.runescape.wiki/w/Recruitment_Drive",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Druidic Ritual"
+  ]
  },
  {
   "name": "Mourning's End Part I",
@@ -773,7 +959,17 @@
    "ranged": 60,
    "thieving": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Mourning's_End_Part_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Mourning's_End_Part_I",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Biohazard",
+   "Plague City",
+   "Regicide",
+   "Roving Elves",
+   "Sheep Herder",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Forgettable Tale...",
@@ -788,7 +984,11 @@
    "magic": 33,
    "thieving": 14
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Forgettable_Tale..."
+  "wiki": "https://oldschool.runescape.wiki/w/Forgettable_Tale...",
+  "quest_reqs": [
+   "Fishing Contest",
+   "The Giant Dwarf"
+  ]
  },
  {
   "name": "Garden of Tranquillity",
@@ -799,14 +999,23 @@
    "crafting": 20,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Garden_of_Tranquillity"
+  "wiki": "https://oldschool.runescape.wiki/w/Garden_of_Tranquillity",
+  "quest_reqs": [
+   "Creature of Fenkenstrain",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "A Tail of Two Cats",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/A_Tail_of_Two_Cats"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Tail_of_Two_Cats",
+  "quest_reqs": [
+   "Gertrude's Cat",
+   "Icthlarin's Little Helper"
+  ]
  },
  {
   "name": "Wanted!",
@@ -817,7 +1026,16 @@
    "mining": 17,
    "thieving": 13
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Wanted!"
+  "wiki": "https://oldschool.runescape.wiki/w/Wanted!",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Druidic Ritual",
+   "Goblin Diplomacy",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Rune Mysteries",
+   "The Lost Tribe"
+  ]
  },
  {
   "name": "Mourning's End Part II",
@@ -831,7 +1049,18 @@
    "ranged": 60,
    "thieving": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Mourning's_End_Part_II"
+  "wiki": "https://oldschool.runescape.wiki/w/Mourning's_End_Part_II",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Biohazard",
+   "Mourning's End Part I",
+   "Plague City",
+   "Regicide",
+   "Roving Elves",
+   "Sheep Herder",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Rum Deal",
@@ -849,7 +1078,14 @@
    "slayer": 42,
    "smithing": 4
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Rum_Deal"
+  "wiki": "https://oldschool.runescape.wiki/w/Rum_Deal",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Druidic Ritual",
+   "Jungle Potion",
+   "Priest in Peril",
+   "Zogre Flesh Eaters"
+  ]
  },
  {
   "name": "Shadow of the Storm",
@@ -859,14 +1095,22 @@
    "crafting": 30,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Shadow_of_the_Storm"
+  "wiki": "https://oldschool.runescape.wiki/w/Shadow_of_the_Storm",
+  "quest_reqs": [
+   "Demon Slayer",
+   "The Golem"
+  ]
  },
  {
   "name": "Making History",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Making_History"
+  "wiki": "https://oldschool.runescape.wiki/w/Making_History",
+  "quest_reqs": [
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Ratcatchers",
@@ -878,7 +1122,12 @@
    "magic": 33,
    "thieving": 14
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Ratcatchers"
+  "wiki": "https://oldschool.runescape.wiki/w/Ratcatchers",
+  "quest_reqs": [
+   "Gertrude's Cat",
+   "Icthlarin's Little Helper",
+   "The Giant Dwarf"
+  ]
  },
  {
   "name": "Spirits of the Elid",
@@ -890,7 +1139,8 @@
    "ranged": 37,
    "thieving": 37
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Spirits_of_the_Elid"
+  "wiki": "https://oldschool.runescape.wiki/w/Spirits_of_the_Elid",
+  "quest_reqs": []
  },
  {
   "name": "Devious Minds",
@@ -904,7 +1154,20 @@
    "smithing": 65,
    "thieving": 13
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Devious_Minds"
+  "wiki": "https://oldschool.runescape.wiki/w/Devious_Minds",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Death Plateau",
+   "Doric's Quest",
+   "Druidic Ritual",
+   "Goblin Diplomacy",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Rune Mysteries",
+   "The Lost Tribe",
+   "Troll Stronghold",
+   "Wanted!"
+  ]
  },
  {
   "name": "The Hand in the Sand",
@@ -914,7 +1177,8 @@
    "crafting": 49,
    "thieving": 17
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Hand_in_the_Sand"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Hand_in_the_Sand",
+  "quest_reqs": []
  },
  {
   "name": "Enakhra's Lament",
@@ -926,7 +1190,8 @@
    "magic": 39,
    "prayer": 43
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Enakhra's_Lament"
+  "wiki": "https://oldschool.runescape.wiki/w/Enakhra's_Lament",
+  "quest_reqs": []
  },
  {
   "name": "Cabin Fever",
@@ -945,7 +1210,16 @@
    "slayer": 42,
    "smithing": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Cabin_Fever"
+  "wiki": "https://oldschool.runescape.wiki/w/Cabin_Fever",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Druidic Ritual",
+   "Jungle Potion",
+   "Pirate's Treasure",
+   "Priest in Peril",
+   "Rum Deal",
+   "Zogre Flesh Eaters"
+  ]
  },
  {
   "name": "Fairytale I - Growing Pains",
@@ -955,7 +1229,13 @@
    "crafting": 31,
    "woodcutting": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Fairytale_I_-_Growing_Pains"
+  "wiki": "https://oldschool.runescape.wiki/w/Fairytale_I_-_Growing_Pains",
+  "quest_reqs": [
+   "Lost City",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Recipe for Disaster",
@@ -977,7 +1257,47 @@
    "thieving": 53,
    "woodcutting": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Biohazard",
+   "Cook's Assistant",
+   "Death Plateau",
+   "Demon Slayer",
+   "Desert Treasure I",
+   "Dragon Slayer I",
+   "Druidic Ritual",
+   "Family Crest",
+   "Fishing Contest",
+   "Gertrude's Cat",
+   "Goblin Diplomacy",
+   "Heroes' Quest",
+   "Horror from the Deep",
+   "Jungle Potion",
+   "Legends' Quest",
+   "Lost City",
+   "Merlin's Crystal",
+   "Monkey Madness I",
+   "Murder Mystery",
+   "Nature Spirit",
+   "Plague City",
+   "Priest in Peril",
+   "Recipe for Disaster/Another Cook's Quest",
+   "Shadow of the Storm",
+   "Shield of Arrav",
+   "Shilo Village",
+   "Temple of Ikov",
+   "The Dig Site",
+   "The Golem",
+   "The Grand Tree",
+   "The Restless Ghost",
+   "The Tourist Trap",
+   "Tree Gnome Village",
+   "Troll Stronghold",
+   "Underground Pass",
+   "Waterfall Quest",
+   "Witch's House"
+  ]
  },
  {
   "name": "In Aid of the Myreque",
@@ -989,21 +1309,29 @@
    "magic": 7,
    "mining": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/In_Aid_of_the_Myreque"
+  "wiki": "https://oldschool.runescape.wiki/w/In_Aid_of_the_Myreque",
+  "quest_reqs": [
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "A Soul's Bane",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/A_Soul's_Bane"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Soul's_Bane",
+  "quest_reqs": []
  },
  {
   "name": "Rag and Bone Man I",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Rag_and_Bone_Man_I"
+  "wiki": "https://oldschool.runescape.wiki/w/Rag_and_Bone_Man_I",
+  "quest_reqs": []
  },
  {
   "name": "Swan Song",
@@ -1021,7 +1349,18 @@
    "smithing": 45,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Swan_Song"
+  "wiki": "https://oldschool.runescape.wiki/w/Swan_Song",
+  "quest_reqs": [
+   "Creature of Fenkenstrain",
+   "Druidic Ritual",
+   "Garden of Tranquillity",
+   "Jungle Potion",
+   "One Small Favour",
+   "Priest in Peril",
+   "Rune Mysteries",
+   "Shilo Village",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Royal Trouble",
@@ -1038,7 +1377,16 @@
    "slayer": 40,
    "woodcutting": 45
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Royal_Trouble"
+  "wiki": "https://oldschool.runescape.wiki/w/Royal_Trouble",
+  "quest_reqs": [
+   "Dragon Slayer I",
+   "Heroes' Quest",
+   "Lost City",
+   "Merlin's Crystal",
+   "Shield of Arrav",
+   "The Fremennik Trials",
+   "Throne of Miscellania"
+  ]
  },
  {
   "name": "Death to the Dorgeshuun",
@@ -1049,7 +1397,12 @@
    "mining": 17,
    "thieving": 23
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Death_to_the_Dorgeshuun"
+  "wiki": "https://oldschool.runescape.wiki/w/Death_to_the_Dorgeshuun",
+  "quest_reqs": [
+   "Goblin Diplomacy",
+   "Rune Mysteries",
+   "The Lost Tribe"
+  ]
  },
  {
   "name": "Fairytale II - Cure a Queen",
@@ -1062,7 +1415,14 @@
    "thieving": 40,
    "woodcutting": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Fairytale_II_-_Cure_a_Queen"
+  "wiki": "https://oldschool.runescape.wiki/w/Fairytale_II_-_Cure_a_Queen",
+  "quest_reqs": [
+   "Fairytale I - Growing Pains",
+   "Lost City",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Lunar Diplomacy",
@@ -1078,7 +1438,15 @@
    "mining": 60,
    "woodcutting": 55
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Lunar_Diplomacy"
+  "wiki": "https://oldschool.runescape.wiki/w/Lunar_Diplomacy",
+  "quest_reqs": [
+   "Druidic Ritual",
+   "Jungle Potion",
+   "Lost City",
+   "Rune Mysteries",
+   "Shilo Village",
+   "The Fremennik Trials"
+  ]
  },
  {
   "name": "The Eyes of Glouphrie",
@@ -1089,7 +1457,10 @@
    "construction": 5,
    "magic": 46
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Eyes_of_Glouphrie"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Eyes_of_Glouphrie",
+  "quest_reqs": [
+   "The Grand Tree"
+  ]
  },
  {
   "name": "Darkness of Hallowvale",
@@ -1104,7 +1475,14 @@
    "strength": 40,
    "thieving": 22
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Darkness_of_Hallowvale"
+  "wiki": "https://oldschool.runescape.wiki/w/Darkness_of_Hallowvale",
+  "quest_reqs": [
+   "In Aid of the Myreque",
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "The Slug Menace",
@@ -1119,7 +1497,18 @@
    "slayer": 30,
    "thieving": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Slug_Menace"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Slug_Menace",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Druidic Ritual",
+   "Goblin Diplomacy",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Rune Mysteries",
+   "Sea Slug",
+   "The Lost Tribe",
+   "Wanted!"
+  ]
  },
  {
   "name": "Elemental Workshop II",
@@ -1131,7 +1520,10 @@
    "mining": 20,
    "smithing": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Elemental_Workshop_II"
+  "wiki": "https://oldschool.runescape.wiki/w/Elemental_Workshop_II",
+  "quest_reqs": [
+   "Elemental Workshop I"
+  ]
  },
  {
   "name": "My Arm's Big Adventure",
@@ -1144,7 +1536,15 @@
    "thieving": 30,
    "woodcutting": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/My_Arm's_Big_Adventure"
+  "wiki": "https://oldschool.runescape.wiki/w/My_Arm's_Big_Adventure",
+  "quest_reqs": [
+   "Death Plateau",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Jungle Potion",
+   "The Feud",
+   "Troll Stronghold"
+  ]
  },
  {
   "name": "Enlightened Journey",
@@ -1155,7 +1555,8 @@
    "farming": 30,
    "firemaking": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Enlightened_Journey"
+  "wiki": "https://oldschool.runescape.wiki/w/Enlightened_Journey",
+  "quest_reqs": []
  },
  {
   "name": "Eagles' Peak",
@@ -1164,7 +1565,8 @@
   "reqs": {
    "hunter": 27
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Eagles'_Peak"
+  "wiki": "https://oldschool.runescape.wiki/w/Eagles'_Peak",
+  "quest_reqs": []
  },
  {
   "name": "Animal Magnetism",
@@ -1176,14 +1578,24 @@
    "slayer": 18,
    "woodcutting": 35
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Animal_Magnetism"
+  "wiki": "https://oldschool.runescape.wiki/w/Animal_Magnetism",
+  "quest_reqs": [
+   "Ernest the Chicken",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Contact!",
   "difficulty": "Experienced",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Contact!"
+  "wiki": "https://oldschool.runescape.wiki/w/Contact!",
+  "quest_reqs": [
+   "Gertrude's Cat",
+   "Icthlarin's Little Helper",
+   "Prince Ali Rescue"
+  ]
  },
  {
   "name": "Cold War",
@@ -1196,7 +1608,8 @@
    "hunter": 10,
    "thieving": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Cold_War"
+  "wiki": "https://oldschool.runescape.wiki/w/Cold_War",
+  "quest_reqs": []
  },
  {
   "name": "The Fremennik Isles",
@@ -1205,7 +1618,10 @@
   "reqs": {
    "construction": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Isles"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Isles",
+  "quest_reqs": [
+   "The Fremennik Trials"
+  ]
  },
  {
   "name": "The Great Brain Robbery",
@@ -1226,7 +1642,21 @@
    "smithing": 50,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Great_Brain_Robbery"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Great_Brain_Robbery",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Cabin Fever",
+   "Cook's Assistant",
+   "Creature of Fenkenstrain",
+   "Druidic Ritual",
+   "Jungle Potion",
+   "Pirate's Treasure",
+   "Priest in Peril",
+   "Recipe for Disaster/Another Cook's Quest",
+   "Recipe for Disaster/Freeing Pirate Pete",
+   "Rum Deal",
+   "Zogre Flesh Eaters"
+  ]
  },
  {
   "name": "What Lies Below",
@@ -1235,7 +1665,10 @@
   "reqs": {
    "runecraft": 35
   },
-  "wiki": "https://oldschool.runescape.wiki/w/What_Lies_Below"
+  "wiki": "https://oldschool.runescape.wiki/w/What_Lies_Below",
+  "quest_reqs": [
+   "Rune Mysteries"
+  ]
  },
  {
   "name": "Olaf's Quest",
@@ -1245,7 +1678,10 @@
    "firemaking": 40,
    "woodcutting": 50
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Olaf's_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Olaf's_Quest",
+  "quest_reqs": [
+   "The Fremennik Trials"
+  ]
  },
  {
   "name": "Another Slice of H.A.M.",
@@ -1262,7 +1698,15 @@
    "prayer": 25,
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Another_Slice_of_H.A.M."
+  "wiki": "https://oldschool.runescape.wiki/w/Another_Slice_of_H.A.M.",
+  "quest_reqs": [
+   "Death to the Dorgeshuun",
+   "Goblin Diplomacy",
+   "Rune Mysteries",
+   "The Dig Site",
+   "The Giant Dwarf",
+   "The Lost Tribe"
+  ]
  },
  {
   "name": "Dream Mentor",
@@ -1278,7 +1722,19 @@
    "mining": 60,
    "woodcutting": 55
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Dream_Mentor"
+  "wiki": "https://oldschool.runescape.wiki/w/Dream_Mentor",
+  "quest_reqs": [
+   "Death Plateau",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Jungle Potion",
+   "Lost City",
+   "Lunar Diplomacy",
+   "Rune Mysteries",
+   "Shilo Village",
+   "The Fremennik Trials",
+   "Troll Stronghold"
+  ]
  },
  {
   "name": "Grim Tales",
@@ -1291,7 +1747,10 @@
    "thieving": 58,
    "woodcutting": 71
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Grim_Tales"
+  "wiki": "https://oldschool.runescape.wiki/w/Grim_Tales",
+  "quest_reqs": [
+   "Witch's House"
+  ]
  },
  {
   "name": "King's Ransom",
@@ -1306,7 +1765,18 @@
    "magic": 45,
    "smithing": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/King's_Ransom"
+  "wiki": "https://oldschool.runescape.wiki/w/King's_Ransom",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Druidic Ritual",
+   "Holy Grail",
+   "Jungle Potion",
+   "Merlin's Crystal",
+   "Murder Mystery",
+   "One Small Favour",
+   "Rune Mysteries",
+   "Shilo Village"
+  ]
  },
  {
   "name": "Shilo Village",
@@ -1316,14 +1786,21 @@
    "agility": 32,
    "crafting": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Shilo_Village"
+  "wiki": "https://oldschool.runescape.wiki/w/Shilo_Village",
+  "quest_reqs": [
+   "Druidic Ritual",
+   "Jungle Potion"
+  ]
  },
  {
   "name": "Biohazard",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Biohazard"
+  "wiki": "https://oldschool.runescape.wiki/w/Biohazard",
+  "quest_reqs": [
+   "Plague City"
+  ]
  },
  {
   "name": "Tower of Life",
@@ -1332,7 +1809,8 @@
   "reqs": {
    "construction": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Tower_of_Life"
+  "wiki": "https://oldschool.runescape.wiki/w/Tower_of_Life",
+  "quest_reqs": []
  },
  {
   "name": "Rag and Bone Man II",
@@ -1350,7 +1828,14 @@
    "thieving": 25,
    "defence": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Rag_and_Bone_Man_II"
+  "wiki": "https://oldschool.runescape.wiki/w/Rag_and_Bone_Man_II",
+  "quest_reqs": [
+   "Creature of Fenkenstrain",
+   "Horror from the Deep",
+   "Rag and Bone Man I",
+   "The Fremennik Trials",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Land of the Goblins",
@@ -1362,7 +1847,17 @@
    "thieving": 45,
    "herblore": 48
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Land_of_the_Goblins"
+  "wiki": "https://oldschool.runescape.wiki/w/Land_of_the_Goblins",
+  "quest_reqs": [
+   "Another Slice of H.A.M.",
+   "Death to the Dorgeshuun",
+   "Fishing Contest",
+   "Goblin Diplomacy",
+   "Rune Mysteries",
+   "The Dig Site",
+   "The Giant Dwarf",
+   "The Lost Tribe"
+  ]
  },
  {
   "name": "While Guthix Sleeps",
@@ -1379,7 +1874,50 @@
    "attack": 99,
    "strength": 99
   },
-  "wiki": "https://oldschool.runescape.wiki/w/While_Guthix_Sleeps"
+  "wiki": "https://oldschool.runescape.wiki/w/While_Guthix_Sleeps",
+  "quest_reqs": [
+   "A Tail of Two Cats",
+   "Below Ice Mountain",
+   "Black Knights' Fortress",
+   "Creature of Fenkenstrain",
+   "Death Plateau",
+   "Defender of Varrock",
+   "Demon Slayer",
+   "Dream Mentor",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Family Crest",
+   "Fight Arena",
+   "Garden of Tranquillity",
+   "Gertrude's Cat",
+   "Goblin Diplomacy",
+   "Icthlarin's Little Helper",
+   "Jungle Potion",
+   "Lost City",
+   "Lunar Diplomacy",
+   "Nature Spirit",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Shield of Arrav",
+   "Shilo Village",
+   "Tears of Guthix",
+   "Temple of Ikov",
+   "Temple of the Eye",
+   "The Eyes of Glouphrie",
+   "The Fremennik Trials",
+   "The Grand Tree",
+   "The Hand in the Sand",
+   "The Lost Tribe",
+   "The Path of Glouphrie",
+   "The Restless Ghost",
+   "Tree Gnome Village",
+   "Troll Stronghold",
+   "Wanted!",
+   "Waterfall Quest",
+   "What Lies Below"
+  ]
  },
  {
   "name": "Zogre Flesh Eaters",
@@ -1392,7 +1930,12 @@
    "ranged": 30,
    "smithing": 4
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Zogre_Flesh_Eaters"
+  "wiki": "https://oldschool.runescape.wiki/w/Zogre_Flesh_Eaters",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Druidic Ritual",
+   "Jungle Potion"
+  ]
  },
  {
   "name": "Monkey Madness II",
@@ -1412,14 +1955,27 @@
    "slayer": 69,
    "thieving": 55
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_II"
+  "wiki": "https://oldschool.runescape.wiki/w/Monkey_Madness_II",
+  "quest_reqs": [
+   "Death Plateau",
+   "Enlightened Journey",
+   "Monkey Madness I",
+   "The Eyes of Glouphrie",
+   "The Grand Tree",
+   "Tree Gnome Village",
+   "Troll Stronghold",
+   "Watchtower"
+  ]
  },
  {
   "name": "Client of Kourend",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Client_of_Kourend"
+  "wiki": "https://oldschool.runescape.wiki/w/Client_of_Kourend",
+  "quest_reqs": [
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "The Queen of Thieves",
@@ -1428,14 +1984,21 @@
   "reqs": {
    "thieving": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Queen_of_Thieves"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Queen_of_Thieves",
+  "quest_reqs": [
+   "Client of Kourend",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "Bone Voyage",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Bone_Voyage"
+  "wiki": "https://oldschool.runescape.wiki/w/Bone_Voyage",
+  "quest_reqs": [
+   "The Dig Site"
+  ]
  },
  {
   "name": "Dragon Slayer II",
@@ -1451,7 +2014,42 @@
    "smithing": 70,
    "thieving": 60
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_II"
+  "wiki": "https://oldschool.runescape.wiki/w/Dragon_Slayer_II",
+  "quest_reqs": [
+   "A Tail of Two Cats",
+   "Animal Magnetism",
+   "Biohazard",
+   "Bone Voyage",
+   "Client of Kourend",
+   "Death Plateau",
+   "Dragon Slayer I",
+   "Dream Mentor",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Ernest the Chicken",
+   "Family Crest",
+   "Gertrude's Cat",
+   "Ghosts Ahoy",
+   "Heroes' Quest",
+   "Icthlarin's Little Helper",
+   "Jungle Potion",
+   "Legends' Quest",
+   "Lost City",
+   "Lunar Diplomacy",
+   "Merlin's Crystal",
+   "Plague City",
+   "Priest in Peril",
+   "Rune Mysteries",
+   "Shield of Arrav",
+   "Shilo Village",
+   "The Dig Site",
+   "The Fremennik Trials",
+   "The Restless Ghost",
+   "Troll Stronghold",
+   "Underground Pass",
+   "Waterfall Quest",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "The Depths of Despair",
@@ -1460,7 +2058,11 @@
   "reqs": {
    "agility": 18
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Depths_of_Despair"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Depths_of_Despair",
+  "quest_reqs": [
+   "Client of Kourend",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "Recipe for Disaster/Another Cook's Quest",
@@ -1469,28 +2071,49 @@
   "reqs": {
    "cooking": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Another_Cook's_Quest"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Another_Cook's_Quest",
+  "quest_reqs": [
+   "Cook's Assistant"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing the Goblin generals",
   "difficulty": "Special",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Goblin_generals"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Goblin_generals",
+  "quest_reqs": [
+   "Cook's Assistant",
+   "Goblin Diplomacy",
+   "Recipe for Disaster/Another Cook's Quest"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing the Mountain Dwarf",
   "difficulty": "Special",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Mountain_Dwarf"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Mountain_Dwarf",
+  "quest_reqs": [
+   "Cook's Assistant",
+   "Fishing Contest",
+   "Recipe for Disaster/Another Cook's Quest"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing Evil Dave",
   "difficulty": "Special",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Evil_Dave"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Evil_Dave",
+  "quest_reqs": [
+   "Cook's Assistant",
+   "Demon Slayer",
+   "Gertrude's Cat",
+   "Recipe for Disaster/Another Cook's Quest",
+   "Shadow of the Storm",
+   "The Golem"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing Pirate Pete",
@@ -1499,7 +2122,11 @@
   "reqs": {
    "cooking": 31
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Pirate_Pete"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Pirate_Pete",
+  "quest_reqs": [
+   "Cook's Assistant",
+   "Recipe for Disaster/Another Cook's Quest"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing the Lumbridge Guide",
@@ -1508,14 +2135,45 @@
   "reqs": {
    "cooking": 40
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Lumbridge_Guide"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_the_Lumbridge_Guide",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Biohazard",
+   "Cook's Assistant",
+   "Demon Slayer",
+   "Murder Mystery",
+   "Nature Spirit",
+   "Plague City",
+   "Priest in Peril",
+   "Recipe for Disaster/Another Cook's Quest",
+   "The Restless Ghost",
+   "Witch's House"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing Sir Amik Varze",
   "difficulty": "Special",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Sir_Amik_Varze"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Sir_Amik_Varze",
+  "quest_reqs": [
+   "Biohazard",
+   "Cook's Assistant",
+   "Dragon Slayer I",
+   "Druidic Ritual",
+   "Family Crest",
+   "Heroes' Quest",
+   "Jungle Potion",
+   "Legends' Quest",
+   "Lost City",
+   "Merlin's Crystal",
+   "Plague City",
+   "Recipe for Disaster/Another Cook's Quest",
+   "Shield of Arrav",
+   "Shilo Village",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing King Awowogei",
@@ -1525,7 +2183,14 @@
    "cooking": 70,
    "agility": 48
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_King_Awowogei"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_King_Awowogei",
+  "quest_reqs": [
+   "Cook's Assistant",
+   "Monkey Madness I",
+   "Recipe for Disaster/Another Cook's Quest",
+   "The Grand Tree",
+   "Tree Gnome Village"
+  ]
  },
  {
   "name": "Recipe for Disaster/Freeing Skrach Uglogwee",
@@ -1535,7 +2200,12 @@
    "cooking": 41,
    "firemaking": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Skrach_Uglogwee"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Freeing_Skrach_Uglogwee",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Cook's Assistant",
+   "Recipe for Disaster/Another Cook's Quest"
+  ]
  },
  {
   "name": "A Taste of Hope",
@@ -1548,7 +2218,15 @@
    "herblore": 40,
    "slayer": 38
   },
-  "wiki": "https://oldschool.runescape.wiki/w/A_Taste_of_Hope"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Taste_of_Hope",
+  "quest_reqs": [
+   "Darkness of Hallowvale",
+   "In Aid of the Myreque",
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Tale of the Righteous",
@@ -1558,7 +2236,11 @@
    "strength": 16,
    "mining": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Tale_of_the_Righteous"
+  "wiki": "https://oldschool.runescape.wiki/w/Tale_of_the_Righteous",
+  "quest_reqs": [
+   "Client of Kourend",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "Making Friends with My Arm",
@@ -1570,14 +2252,52 @@
    "firemaking": 66,
    "mining": 72
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Making_Friends_with_My_Arm"
+  "wiki": "https://oldschool.runescape.wiki/w/Making_Friends_with_My_Arm",
+  "quest_reqs": [
+   "Cold War",
+   "Creature of Fenkenstrain",
+   "Death Plateau",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Garden of Tranquillity",
+   "Jungle Potion",
+   "My Arm's Big Adventure",
+   "One Small Favour",
+   "Priest in Peril",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Shilo Village",
+   "Swan Song",
+   "The Feud",
+   "The Restless Ghost",
+   "Troll Stronghold"
+  ]
  },
  {
   "name": "Recipe for Disaster/Defeating the Culinaromancer",
   "difficulty": "Special",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Defeating_the_Culinaromancer"
+  "wiki": "https://oldschool.runescape.wiki/w/Recipe_for_Disaster/Defeating_the_Culinaromancer",
+  "quest_reqs": [
+   "Death Plateau",
+   "Desert Treasure I",
+   "Horror from the Deep",
+   "Priest in Peril",
+   "Recipe for Disaster/Freeing Evil Dave",
+   "Recipe for Disaster/Freeing King Awowogei",
+   "Recipe for Disaster/Freeing Pirate Pete",
+   "Recipe for Disaster/Freeing Sir Amik Varze",
+   "Recipe for Disaster/Freeing Skrach Uglogwee",
+   "Recipe for Disaster/Freeing the Goblin generals",
+   "Recipe for Disaster/Freeing the Lumbridge Guide",
+   "Recipe for Disaster/Freeing the Mountain Dwarf",
+   "Temple of Ikov",
+   "The Dig Site",
+   "The Tourist Trap",
+   "Troll Stronghold",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Song of the Elves",
@@ -1593,7 +2313,23 @@
    "smithing": 70,
    "woodcutting": 70
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Song_of_the_Elves"
+  "wiki": "https://oldschool.runescape.wiki/w/Song_of_the_Elves",
+  "quest_reqs": [
+   "Big Chompy Bird Hunting",
+   "Biohazard",
+   "Druidic Ritual",
+   "Making History",
+   "Mourning's End Part I",
+   "Mourning's End Part II",
+   "Plague City",
+   "Priest in Peril",
+   "Regicide",
+   "Roving Elves",
+   "Sheep Herder",
+   "The Restless Ghost",
+   "Underground Pass",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "The Ascent of Arceuus",
@@ -1602,14 +2338,22 @@
   "reqs": {
    "hunter": 12
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Ascent_of_Arceuus"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Ascent_of_Arceuus",
+  "quest_reqs": [
+   "Client of Kourend",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "The Forsaken Tower",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/The_Forsaken_Tower"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Forsaken_Tower",
+  "quest_reqs": [
+   "Client of Kourend",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "The Fremennik Exiles",
@@ -1623,7 +2367,22 @@
    "runecraft": 55,
    "mining": 60
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Exiles"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Fremennik_Exiles",
+  "quest_reqs": [
+   "Dragon Slayer I",
+   "Druidic Ritual",
+   "Heroes' Quest",
+   "Jungle Potion",
+   "Lost City",
+   "Lunar Diplomacy",
+   "Merlin's Crystal",
+   "Mountain Daughter",
+   "Rune Mysteries",
+   "Shield of Arrav",
+   "Shilo Village",
+   "The Fremennik Isles",
+   "The Fremennik Trials"
+  ]
  },
  {
   "name": "The Curse of Arrav",
@@ -1637,7 +2396,25 @@
    "strength": 58,
    "slayer": 37
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Curse_of_Arrav"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Curse_of_Arrav",
+  "quest_reqs": [
+   "Below Ice Mountain",
+   "Creature of Fenkenstrain",
+   "Death Plateau",
+   "Defender of Varrock",
+   "Demon Slayer",
+   "Family Crest",
+   "Garden of Tranquillity",
+   "Priest in Peril",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Shield of Arrav",
+   "Temple of Ikov",
+   "The Restless Ghost",
+   "Troll Romance",
+   "Troll Stronghold",
+   "What Lies Below"
+  ]
  },
  {
   "name": "Defender of Varrock",
@@ -1647,7 +2424,21 @@
    "smithing": 55,
    "hunter": 52
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Defender_of_Varrock"
+  "wiki": "https://oldschool.runescape.wiki/w/Defender_of_Varrock",
+  "quest_reqs": [
+   "Below Ice Mountain",
+   "Creature of Fenkenstrain",
+   "Demon Slayer",
+   "Family Crest",
+   "Garden of Tranquillity",
+   "Priest in Peril",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Shield of Arrav",
+   "Temple of Ikov",
+   "The Restless Ghost",
+   "What Lies Below"
+  ]
  },
  {
   "name": "Sins of the Father",
@@ -1662,7 +2453,17 @@
    "slayer": 50,
    "woodcutting": 62
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Sins_of_the_Father"
+  "wiki": "https://oldschool.runescape.wiki/w/Sins_of_the_Father",
+  "quest_reqs": [
+   "A Taste of Hope",
+   "Darkness of Hallowvale",
+   "In Aid of the Myreque",
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost",
+   "Vampyre Slayer"
+  ]
  },
  {
   "name": "A Kingdom Divided",
@@ -1677,14 +2478,24 @@
    "thieving": 52,
    "woodcutting": 52
   },
-  "wiki": "https://oldschool.runescape.wiki/w/A_Kingdom_Divided"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Kingdom_Divided",
+  "quest_reqs": [
+   "Client of Kourend",
+   "Tale of the Righteous",
+   "The Ascent of Arceuus",
+   "The Depths of Despair",
+   "The Forsaken Tower",
+   "The Queen of Thieves",
+   "X Marks the Spot"
+  ]
  },
  {
   "name": "A Porcine of Interest",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/A_Porcine_of_Interest"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Porcine_of_Interest",
+  "quest_reqs": []
  },
  {
   "name": "Getting Ahead",
@@ -1694,14 +2505,24 @@
    "crafting": 30,
    "construction": 26
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Getting_Ahead"
+  "wiki": "https://oldschool.runescape.wiki/w/Getting_Ahead",
+  "quest_reqs": []
  },
  {
   "name": "A Night at the Theatre",
   "difficulty": "Master",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/A_Night_at_the_Theatre"
+  "wiki": "https://oldschool.runescape.wiki/w/A_Night_at_the_Theatre",
+  "quest_reqs": [
+   "A Taste of Hope",
+   "Darkness of Hallowvale",
+   "In Aid of the Myreque",
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "The Restless Ghost"
+  ]
  },
  {
   "name": "Beneath Cursed Sands",
@@ -1712,7 +2533,13 @@
    "crafting": 55,
    "firemaking": 55
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Beneath_Cursed_Sands"
+  "wiki": "https://oldschool.runescape.wiki/w/Beneath_Cursed_Sands",
+  "quest_reqs": [
+   "Contact!",
+   "Gertrude's Cat",
+   "Icthlarin's Little Helper",
+   "Prince Ali Rescue"
+  ]
  },
  {
   "name": "Temple of the Eye",
@@ -1721,7 +2548,10 @@
   "reqs": {
    "runecraft": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Temple_of_the_Eye"
+  "wiki": "https://oldschool.runescape.wiki/w/Temple_of_the_Eye",
+  "quest_reqs": [
+   "Rune Mysteries"
+  ]
  },
  {
   "name": "The Path of Glouphrie",
@@ -1734,7 +2564,13 @@
    "ranged": 47,
    "agility": 45
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Path_of_Glouphrie"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Path_of_Glouphrie",
+  "quest_reqs": [
+   "The Eyes of Glouphrie",
+   "The Grand Tree",
+   "Tree Gnome Village",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Sleeping Giants",
@@ -1743,7 +2579,8 @@
   "reqs": {
    "smithing": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Sleeping_Giants"
+  "wiki": "https://oldschool.runescape.wiki/w/Sleeping_Giants",
+  "quest_reqs": []
  },
  {
   "name": "The Garden of Death",
@@ -1752,7 +2589,8 @@
   "reqs": {
    "farming": 20
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Garden_of_Death"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Garden_of_Death",
+  "quest_reqs": []
  },
  {
   "name": "Desert Treasure II - The Fallen Empire",
@@ -1766,7 +2604,46 @@
    "runecraft": 60,
    "construction": 60
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_II_-_The_Fallen_Empire"
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Treasure_II_-_The_Fallen_Empire",
+  "quest_reqs": [
+   "Below Ice Mountain",
+   "Black Knights' Fortress",
+   "Cold War",
+   "Creature of Fenkenstrain",
+   "Death Plateau",
+   "Desert Treasure I",
+   "Devious Minds",
+   "Doric's Quest",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Enakhra's Lament",
+   "Fight Arena",
+   "Garden of Tranquillity",
+   "Goblin Diplomacy",
+   "Hazeel Cult",
+   "Jungle Potion",
+   "Making Friends with My Arm",
+   "My Arm's Big Adventure",
+   "One Small Favour",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Secrets of the North",
+   "Shilo Village",
+   "Swan Song",
+   "Temple of Ikov",
+   "Temple of the Eye",
+   "The Dig Site",
+   "The Feud",
+   "The Garden of Death",
+   "The Lost Tribe",
+   "The Restless Ghost",
+   "The Tourist Trap",
+   "Troll Stronghold",
+   "Wanted!",
+   "Waterfall Quest"
+  ]
  },
  {
   "name": "Secrets of the North",
@@ -1777,14 +2654,45 @@
    "thieving": 64,
    "hunter": 56
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Secrets_of_the_North"
+  "wiki": "https://oldschool.runescape.wiki/w/Secrets_of_the_North",
+  "quest_reqs": [
+   "Black Knights' Fortress",
+   "Cold War",
+   "Creature of Fenkenstrain",
+   "Death Plateau",
+   "Desert Treasure I",
+   "Devious Minds",
+   "Doric's Quest",
+   "Druidic Ritual",
+   "Eadgar's Ruse",
+   "Fight Arena",
+   "Garden of Tranquillity",
+   "Goblin Diplomacy",
+   "Hazeel Cult",
+   "Jungle Potion",
+   "Making Friends with My Arm",
+   "My Arm's Big Adventure",
+   "One Small Favour",
+   "Priest in Peril",
+   "Recruitment Drive",
+   "Romeo & Juliet",
+   "Rune Mysteries",
+   "Shilo Village",
+   "Swan Song",
+   "The Feud",
+   "The Lost Tribe",
+   "The Restless Ghost",
+   "Troll Stronghold",
+   "Wanted!"
+  ]
  },
  {
   "name": "Children of the Sun",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Children_of_the_Sun"
+  "wiki": "https://oldschool.runescape.wiki/w/Children_of_the_Sun",
+  "quest_reqs": []
  },
  {
   "name": "Perilous Moons",
@@ -1797,7 +2705,11 @@
    "runecraft": 20,
    "construction": 10
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Perilous_Moons"
+  "wiki": "https://oldschool.runescape.wiki/w/Perilous_Moons",
+  "quest_reqs": [
+   "Children of the Sun",
+   "Twilight's Promise"
+  ]
  },
  {
   "name": "The Ribbiting Tale of a Lily Pad Labour Dispute",
@@ -1806,14 +2718,20 @@
   "reqs": {
    "woodcutting": 15
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Ribbiting_Tale_of_a_Lily_Pad_Labour_Dispute"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Ribbiting_Tale_of_a_Lily_Pad_Labour_Dispute",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "Twilight's Promise",
   "difficulty": "Intermediate",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Twilight's_Promise"
+  "wiki": "https://oldschool.runescape.wiki/w/Twilight's_Promise",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "At First Light",
@@ -1824,7 +2742,11 @@
    "herblore": 30,
    "construction": 27
   },
-  "wiki": "https://oldschool.runescape.wiki/w/At_First_Light"
+  "wiki": "https://oldschool.runescape.wiki/w/At_First_Light",
+  "quest_reqs": [
+   "Children of the Sun",
+   "Eagles' Peak"
+  ]
  },
  {
   "name": "The Heart of Darkness",
@@ -1836,7 +2758,11 @@
    "slayer": 48,
    "agility": 46
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Heart_of_Darkness"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Heart_of_Darkness",
+  "quest_reqs": [
+   "Children of the Sun",
+   "Twilight's Promise"
+  ]
  },
  {
   "name": "Death on the Isle",
@@ -1846,14 +2772,20 @@
    "agility": 32,
    "thieving": 34
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Death_on_the_Isle"
+  "wiki": "https://oldschool.runescape.wiki/w/Death_on_the_Isle",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "Meat and Greet",
   "difficulty": "Experienced",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Meat_and_Greet"
+  "wiki": "https://oldschool.runescape.wiki/w/Meat_and_Greet",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "Ethically Acquired Antiquities",
@@ -1862,7 +2794,11 @@
   "reqs": {
    "thieving": 25
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Ethically_Acquired_Antiquities"
+  "wiki": "https://oldschool.runescape.wiki/w/Ethically_Acquired_Antiquities",
+  "quest_reqs": [
+   "Children of the Sun",
+   "Shield of Arrav"
+  ]
  },
  {
   "name": "The Blood Moon Rises",
@@ -1880,7 +2816,19 @@
    "smithing": 72,
    "woodcutting": 74
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Blood_Moon_Rises"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Blood_Moon_Rises",
+  "quest_reqs": [
+   "A Night at the Theatre",
+   "A Taste of Hope",
+   "Darkness of Hallowvale",
+   "In Aid of the Myreque",
+   "In Search of the Myreque",
+   "Nature Spirit",
+   "Priest in Peril",
+   "Sins of the Father",
+   "The Restless Ghost",
+   "Vampyre Slayer"
+  ]
  },
  {
   "name": "The Final Dawn",
@@ -1891,14 +2839,21 @@
    "fletching": 52,
    "runecraft": 52
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Final_Dawn"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Final_Dawn",
+  "quest_reqs": [
+   "Children of the Sun",
+   "Perilous Moons",
+   "The Heart of Darkness",
+   "Twilight's Promise"
+  ]
  },
  {
   "name": "Pandemonium",
   "difficulty": "Novice",
   "members": true,
   "reqs": {},
-  "wiki": "https://oldschool.runescape.wiki/w/Pandemonium"
+  "wiki": "https://oldschool.runescape.wiki/w/Pandemonium",
+  "quest_reqs": []
  },
  {
   "name": "Prying Times",
@@ -1908,7 +2863,11 @@
    "sailing": 12,
    "smithing": 30
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Prying_Times"
+  "wiki": "https://oldschool.runescape.wiki/w/Prying_Times",
+  "quest_reqs": [
+   "Pandemonium",
+   "The Knight's Sword"
+  ]
  },
  {
   "name": "Current Affairs",
@@ -1918,7 +2877,10 @@
    "fishing": 10,
    "sailing": 22
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Current_Affairs"
+  "wiki": "https://oldschool.runescape.wiki/w/Current_Affairs",
+  "quest_reqs": [
+   "Pandemonium"
+  ]
  },
  {
   "name": "Troubled Tortugans",
@@ -1932,7 +2894,10 @@
    "slayer": 51,
    "woodcutting": 40
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Troubled_Tortugans"
+  "wiki": "https://oldschool.runescape.wiki/w/Troubled_Tortugans",
+  "quest_reqs": [
+   "Pandemonium"
+  ]
  },
  {
   "name": "The Red Reef",
@@ -1942,7 +2907,11 @@
    "sailing": 52,
    "smithing": 48
   },
-  "wiki": "https://oldschool.runescape.wiki/w/The_Red_Reef"
+  "wiki": "https://oldschool.runescape.wiki/w/The_Red_Reef",
+  "quest_reqs": [
+   "Pandemonium",
+   "Troubled Tortugans"
+  ]
  },
  {
   "name": "Shadows of Custodia",
@@ -1954,7 +2923,10 @@
    "construction": 41,
    "hunter": 36
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Shadows_of_Custodia"
+  "wiki": "https://oldschool.runescape.wiki/w/Shadows_of_Custodia",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "Scrambled!",
@@ -1965,7 +2937,10 @@
    "cooking": 36,
    "smithing": 35
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Scrambled!"
+  "wiki": "https://oldschool.runescape.wiki/w/Scrambled!",
+  "quest_reqs": [
+   "Children of the Sun"
+  ]
  },
  {
   "name": "Fallen From Grace",
@@ -1977,6 +2952,9 @@
    "sailing": 62,
    "runecraft": 47
   },
-  "wiki": "https://oldschool.runescape.wiki/w/Fallen_From_Grace"
+  "wiki": "https://oldschool.runescape.wiki/w/Fallen_From_Grace",
+  "quest_reqs": [
+   "Pandemonium"
+  ]
  }
 ]
