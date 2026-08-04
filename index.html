@@ -28,8 +28,15 @@
         </label>
       </div>
       <div id="fetch-status" class="status hidden"></div>
+      <div class="tier-btns" id="main-tabs">
+        <button class="btn btn-secondary tier-btn active" data-tab="afk">🎡 AFK Roulette</button>
+        <button class="btn btn-secondary tier-btn" data-tab="task">📋 Task</button>
+        <button class="btn btn-secondary tier-btn" data-tab="boss">⚔️ Bosses</button>
+        <button class="btn btn-secondary tier-btn" data-tab="collection">📚 Collection</button>
+      </div>
     </section>
 
+    <div id="tab-afk">
     <section class="panel hidden" id="skills-panel">
       <h2 id="skills-title">Levels</h2>
       <div id="skills-grid" class="skills-grid"></div>
@@ -54,15 +61,12 @@
       </div>
       <div id="discord-status" class="status hidden"></div>
     </section>
+    </div>
 
-    <section class="panel hidden" id="tasker-panel">
-      <h2>🎯 Task Generator</h2>
-      <p class="hint">Slayer-style tasks for every skill, boss kill tasks and collection log tasks — all filtered by your levels. Your task stays active until you finish or skip it.</p>
-      <div class="tier-btns">
-        <button class="btn btn-secondary tier-btn active" data-tcat="task">📋 Task</button>
-        <button class="btn btn-secondary tier-btn" data-tcat="boss">⚔️ Bosses</button>
-        <button class="btn btn-secondary tier-btn" data-tcat="collection">📚 Collection</button>
-      </div>
+    <div id="tab-tasker" class="hidden">
+    <section class="panel" id="tasker-panel">
+      <h2 id="tasker-title">🎯 Task Generator</h2>
+      <p class="hint">Slayer-style tasks filtered by your levels — your task stays active until you finish or skip it. Fetch your levels first, then roll!</p>
       <div class="tasker-center">
         <div class="wheel-wrap hidden" id="tasker-wheel-wrap">
           <div class="pointer">▼</div>
@@ -75,6 +79,7 @@
       <h3 class="stats-subtitle">🏆 Task Generator Highscores</h3>
       <div id="tasker-hs"><span class="hint">No completed tasks yet.</span></div>
     </section>
+    </div>
 
     <section class="panel" id="suggestions-panel">
       <h2 id="suggestions">💡 Task Suggestions</h2>
