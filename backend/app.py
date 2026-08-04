@@ -859,7 +859,7 @@ def fetch_discord_avatar(discord_id):
         return None
 
 
-def draw_podium(players):
+def draw_podium(players, title="AFK HIGHSCORES"):
     """players: rank-ordered [{nick, done, avatar(bytes|None)}], 1-3 entries. Returns PNG bytes."""
     import io
     from PIL import Image, ImageDraw, ImageFont, ImageOps
@@ -881,7 +881,7 @@ def draw_podium(players):
         bb = d.textbbox((0, 0), text, font=font)
         d.text((cx - (bb[2] - bb[0]) / 2 - bb[0], y), text, font=font, fill=fill)
 
-    center_text("AFK HIGHSCORES", f_title, W / 2, 28, "#f5c542")
+    center_text(title, f_title, W / 2, 28, "#f5c542")
 
     base = 660
     # layout per rank: (center_x, block_height, block_color, rank_label_color)
@@ -947,46 +947,68 @@ def patch_original_with_file(token, payload, filename, filebytes):
         print(f"patch_with_file failed: {e!r}", flush=True)
 
 
-def finish_highscores(token):
+HS_CATEGORIES = {
+    "afk": {"label": "AFK", "img_title": "AFK HIGHSCORES"},
+    "task": {"label": "Task", "img_title": "TASK HIGHSCORES"},
+    "boss": {"label": "Boss", "img_title": "BOSS HIGHSCORES"},
+    "collection": {"label": "Collection", "img_title": "COLLECTION HIGHSCORES"},
+}
+
+
+def finish_highscores(token, category="afk"):
     try:
-        _finish_highscores(token)
+        _finish_highscores(token, category)
     except Exception as e:
         print(f"finish_highscores crashed: {e!r}", flush=True)
         patch_original(token, {"content": "Something went wrong building the highscores — try again."})
 
 
-def _finish_highscores(token):
+def _finish_highscores(token, category):
+    meta = HS_CATEGORIES.get(category, HS_CATEGORIES["afk"])
     con = open_db()
     try:
-        rows = con.execute(
-            """SELECT nick_key, MAX(nick) AS nick,
-                      SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
-               FROM events GROUP BY nick_key
-               HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3"""
-        ).fetchall()
+        if category == "afk":
+            rows = con.execute(
+                """SELECT nick_key, MAX(nick) AS nick,
+                          SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
+                   FROM events GROUP BY nick_key
+                   HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3"""
+            ).fetchall()
+        else:
+            rows = con.execute(
+                """SELECT nick_key, MAX(nick) AS nick,
+                          SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
+                   FROM tasker_events WHERE category = ? GROUP BY nick_key
+                   HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3""",
+                (category,),
+            ).fetchall()
         if not rows:
-            patch_original(token, {"content": "No completed tasks yet — the podium is empty! Go AFK something."})
+            patch_original(token, {"content":
+                f"No completed {meta['label']} tasks yet — the podium is empty!"})
             return
         links = {norm_key(r["nick"]): r["discord_id"]
                  for r in con.execute("SELECT discord_id, nick FROM discord_links")}
         players, medals = [], ["🥇", "🥈", "🥉"]
         desc_lines = []
         for i, r in enumerate(rows):
-            days = [x["d"] for x in con.execute(
-                "SELECT DISTINCT d FROM events WHERE nick_key = ? AND status = 'done' ORDER BY d",
-                (r["nick_key"],))]
-            current, _ = streaks(days)
             avatar = None
             did = links.get(r["nick_key"])
             if did:
                 avatar = fetch_discord_avatar(did)
             players.append({"nick": r["nick"], "done": r["done"], "avatar": avatar})
-            desc_lines.append(
-                f"{medals[i]} **{r['nick']}** — ✅ {r['done']} done · 🔥 {current} streak · ⏭️ {r['skips']} skips")
-        png = draw_podium(players)
+            line = f"{medals[i]} **{r['nick']}** — ✅ {r['done']} done · ⏭️ {r['skips']} skips"
+            if category == "afk":
+                days = [x["d"] for x in con.execute(
+                    "SELECT DISTINCT d FROM events WHERE nick_key = ? AND status = 'done' ORDER BY d",
+                    (r["nick_key"],))]
+                current, _ = streaks(days)
+                line = (f"{medals[i]} **{r['nick']}** — ✅ {r['done']} done · "
+                        f"🔥 {current} streak · ⏭️ {r['skips']} skips")
+            desc_lines.append(line)
+        png = draw_podium(players, meta["img_title"])
         patch_original_with_file(token, {
             "embeds": [{
-                "title": "🏆 AFK Highscores — Top 3",
+                "title": f"🏆 {meta['label']} Highscores — Top 3",
                 "description": "\n".join(desc_lines),
                 "color": 0xF5C542,
                 "image": {"url": "attachment://podium.png"},
@@ -1101,7 +1123,11 @@ def handle_slash(data):
     cmd = data.get("data", {})
     name = cmd.get("name")
     if name == "highscores":
-        threading.Thread(target=finish_highscores, args=(data["token"],), daemon=True).start()
+        hs_cat = next((o.get("value", "") for o in cmd.get("options", [])
+                       if o.get("name") == "category"), "afk")
+        if hs_cat not in HS_CATEGORIES:
+            hs_cat = "afk"
+        threading.Thread(target=finish_highscores, args=(data["token"], hs_cat), daemon=True).start()
         return jsonify({"type": 5})
     if name not in ("afk", "task", "boss", "collection"):
         return ephemeral("Unknown command.")

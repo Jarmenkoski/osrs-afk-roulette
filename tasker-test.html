@@ -48,6 +48,13 @@
       <div id="status" class="status hidden"></div>
     </section>
 
+    <section class="wheel-section hidden" id="wheel-box">
+      <div class="wheel-wrap">
+        <div class="pointer">▼</div>
+        <canvas id="wheel" width="520" height="520"></canvas>
+      </div>
+    </section>
+
     <div id="roll-result"></div>
 
     <section class="panel" id="hs-panel">
@@ -65,12 +72,99 @@
     const API = 'https://afk-api.rosu.fi';
     const $ = (id) => document.getElementById(id);
     let cat = 'task';
+    let taskPoolCache = null;          // /api/tasker/task/eligible response
+    const tierCache = {};              // cat -> eligible list from /api/tasker/eligible
+    let spinning = false;
+
+    // --- Roulette wheel (same look as the AFK front page) ---
+    const WHEEL_COLORS = ['#8e44ad', '#c0392b', '#27ae60', '#2980b9', '#d35400', '#16a085', '#7f6000', '#5b2c6f', '#a04000', '#1e8449', '#884ea0', '#b03a2e', '#1f618d', '#9c640c'];
+
+    function drawWheel(labels, rotation) {
+      const cv = $('wheel'), ctx = cv.getContext('2d');
+      const W = cv.width, cx = W / 2, cy = W / 2, r = W / 2 - 10;
+      ctx.clearRect(0, 0, W, W);
+      const n = labels.length;
+      if (!n) return;
+      const seg = (2 * Math.PI) / n;
+      for (let i = 0; i < n; i++) {
+        const start = rotation + i * seg;
+        ctx.beginPath(); ctx.moveTo(cx, cy);
+        ctx.arc(cx, cy, r, start, start + seg); ctx.closePath();
+        ctx.fillStyle = WHEEL_COLORS[i % WHEEL_COLORS.length]; ctx.fill();
+        ctx.strokeStyle = '#1a1410'; ctx.lineWidth = 2; ctx.stroke();
+        ctx.save();
+        ctx.translate(cx, cy); ctx.rotate(start + seg / 2);
+        ctx.textAlign = 'right'; ctx.fillStyle = '#fff';
+        ctx.font = 'bold 12px Georgia';
+        ctx.shadowColor = 'rgba(0,0,0,0.7)'; ctx.shadowBlur = 3;
+        let label = labels[i];
+        if (label.length > 30) label = label.slice(0, 28) + '…';
+        ctx.fillText(label, r - 14, 4);
+        ctx.restore();
+      }
+      ctx.beginPath(); ctx.arc(cx, cy, 34, 0, 2 * Math.PI);
+      ctx.fillStyle = '#f5c542'; ctx.fill();
+      ctx.strokeStyle = '#7a5f1e'; ctx.lineWidth = 4; ctx.stroke();
+      ctx.fillStyle = '#241a08'; ctx.font = '22px Georgia'; ctx.textAlign = 'center';
+      ctx.fillText('⚔️', cx, cy + 8);
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#f5c542'; ctx.lineWidth = 6; ctx.stroke();
+    }
+
+    function spinWheel(labels, winnerIdx, onEnd) {
+      $('wheel-box').classList.remove('hidden');
+      spinning = true;
+      $('roll-btn').disabled = true;
+      const n = labels.length, seg = (2 * Math.PI) / n;
+      const pointerAngle = -Math.PI / 2;
+      const startRotation = -Math.PI / 2;
+      const targetRotation = pointerAngle - (winnerIdx * seg + seg / 2);
+      const fullTurns = 5 + Math.floor(Math.random() * 3);
+      const totalDelta = fullTurns * 2 * Math.PI + (((targetRotation - startRotation) % (2 * Math.PI)) + 2 * Math.PI) % (2 * Math.PI);
+      const duration = 4500;
+      const t0 = performance.now();
+      function frame(now) {
+        const t = Math.min(1, (now - t0) / duration);
+        const eased = 1 - Math.pow(1 - t, 4);
+        drawWheel(labels, startRotation + totalDelta * eased);
+        if (t < 1) { requestAnimationFrame(frame); }
+        else { spinning = false; $('roll-btn').disabled = false; onEnd(); }
+      }
+      requestAnimationFrame(frame);
+    }
+
+    function sample(arr, k) {
+      const a = [...arr];
+      for (let i = a.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [a[i], a[j]] = [a[j], a[i]];
+      }
+      return a.slice(0, k);
+    }
+
+    async function candidateLabels() {
+      if (cat === 'task') {
+        if (!taskPoolCache) {
+          const r = await fetch(`${API}/api/tasker/task/eligible?nick=${encodeURIComponent($('nick').value.trim())}`);
+          if (r.ok) taskPoolCache = await r.json();
+        }
+        if (!taskPoolCache) return [];
+        return Object.entries(taskPoolCache.skills).flatMap(([skill, s]) =>
+          s.methods.map((m) => `${m.template.replace('{n}', `${m.lo}–${m.hi}`)}`));
+      }
+      if (!tierCache[cat]) {
+        const r = await fetch(`${API}/api/tasker/eligible?nick=${encodeURIComponent($('nick').value.trim())}&tier=${cat}`);
+        if (r.ok) tierCache[cat] = (await r.json()).eligible;
+      }
+      return (tierCache[cat] || []).map((t) => t.display || t.name);
+    }
 
     document.querySelectorAll('.tier-btn').forEach((b) => b.addEventListener('click', () => {
       document.querySelectorAll('.tier-btn').forEach((x) => x.classList.remove('active'));
       b.classList.add('active');
       cat = b.dataset.cat;
       $('roll-result').innerHTML = '';
+      $('wheel-box').classList.add('hidden');
       if ($('nick').value.trim()) { load(); loadActive(); }
     }));
 
@@ -84,9 +178,11 @@
       return e.length ? e.map(([s, l]) => `${s} ${l}`).join(', ') : 'no requirements';
     }
 
+    let lastNick = '';
     async function load() {
       const nick = $('nick').value.trim();
       if (!nick) return;
+      if (nick !== lastNick) { taskPoolCache = null; for (const k in tierCache) delete tierCache[k]; lastNick = nick; }
       localStorage.setItem('afk_nick', nick);
       setStatus('Loading…', 'info');
       try {
@@ -94,6 +190,7 @@
           const r = await fetch(`${API}/api/tasker/task/eligible?nick=${encodeURIComponent(nick)}`);
           if (!r.ok) throw new Error((await r.json()).error || r.status);
           const d = await r.json();
+          taskPoolCache = d;
           const skills = Object.entries(d.skills);
           $('counts').textContent = `Combat level ${d.combat} · ${skills.length} skills with available tasks. ` +
             `Gold-edged = "near your level" bucket (gets 50% of roll weight).`;
@@ -110,6 +207,7 @@
           const r = await fetch(`${API}/api/tasker/eligible?nick=${encodeURIComponent(nick)}&tier=${cat}`);
           if (!r.ok) throw new Error((await r.json()).error || r.status);
           const d = await r.json();
+          tierCache[cat] = d.eligible;
           $('counts').textContent = `Combat level ${d.combat} · ${d.eligibleCount} eligible / ${d.blockedCount} blocked`;
           $('task-lists').innerHTML = `
             <details open><summary>✅ Eligible</summary>${d.eligible.map((t) => `
@@ -145,24 +243,44 @@
         </div>`;
     }
 
+    function renderFromResponse(d) {
+      if (cat === 'task') {
+        renderRollCard(d.task || d.name,
+          d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req}${d.near ? ', near-level' : ''})` : '',
+          '', null, d.active);
+      } else {
+        renderRollCard(d.task.name, fmtReqs(d.task.reqs), d.task.tip, d.task.wiki, d.active);
+      }
+    }
+
     async function roll() {
+      if (spinning) return;
       const nick = $('nick').value.trim();
+      $('roll-result').innerHTML = '';
       setStatus('Rolling…', 'info');
       try {
-        if (cat === 'task') {
-          const r = await fetch(`${API}/api/tasker/task/roll?nick=${encodeURIComponent(nick)}`);
-          if (!r.ok) throw new Error((await r.json()).error || r.status);
-          const d = await r.json();
-          renderRollCard(d.task || d.name,
-            d.skill ? `${d.skill} (your level ${d.level}, task req ${d.req}${d.near ? ', near-level' : ''})` : '',
-            '', null, d.active);
-        } else {
-          const r = await fetch(`${API}/api/tasker/roll?nick=${encodeURIComponent(nick)}&tier=${cat}`);
-          if (!r.ok) throw new Error((await r.json()).error || r.status);
-          const d = await r.json();
-          renderRollCard(d.task.name, fmtReqs(d.task.reqs), d.task.tip, d.task.wiki, d.active);
-        }
+        const url = cat === 'task'
+          ? `${API}/api/tasker/task/roll?nick=${encodeURIComponent(nick)}`
+          : `${API}/api/tasker/roll?nick=${encodeURIComponent(nick)}&tier=${cat}`;
+        const r = await fetch(url);
+        if (!r.ok) throw new Error((await r.json()).error || r.status);
+        const d = await r.json();
         $('status').classList.add('hidden');
+        if (d.active) {
+          // Existing task -> no spin, just show it
+          $('wheel-box').classList.add('hidden');
+          renderFromResponse(d);
+          return;
+        }
+        const winnerLabel = cat === 'task' ? (d.task || d.name) : d.task.name;
+        const others = (await candidateLabels()).filter((l) => l !== winnerLabel);
+        const segments = sample(others, 13);
+        segments.splice(Math.floor(Math.random() * (segments.length + 1)), 0, winnerLabel);
+        if (segments.length < 2) {
+          renderFromResponse(d);
+          return;
+        }
+        spinWheel(segments, segments.indexOf(winnerLabel), () => renderFromResponse(d));
       } catch (e) {
         setStatus('Roll failed: ' + e.message, 'error');
       }
