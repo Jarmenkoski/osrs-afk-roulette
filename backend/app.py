@@ -1405,11 +1405,14 @@ def skill_task_pool(levels):
             top = max(e["req"] for e in elig)
             for e in elig:
                 e["near"] = e["req"] >= lvl - skill_tasks.NEAR_WINDOW or e["req"] == top
-        # Every trainable skill also offers a "gain levels" task, always near-level
+        # Every trainable skill also offers a "gain levels" task, always near-level.
+        # Amount scales down as levels get slower: 1-20 -> 5, 21-40 -> 4, 41-60 -> 3,
+        # 61-80 -> 2, 81-98 -> 1 (capped so the target never exceeds 99).
         if skill != "combat" and lvl < 99:
-            gain_hi = 3 if lvl < 40 else (2 if lvl < 70 else 1)
+            gain = 5 if lvl <= 20 else 4 if lvl <= 40 else 3 if lvl <= 60 else 2 if lvl <= 80 else 1
+            gain = min(gain, 99 - lvl)
             elig.append({"req": 1, "template": f"Gain {{n}} {skill} level(s)",
-                         "lo": 1, "hi": gain_hi, "extra": {}, "near": True})
+                         "lo": gain, "hi": gain, "extra": {}, "near": True})
         if not elig:
             continue
         pool[skill] = {"level": lvl, "methods": elig}

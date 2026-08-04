@@ -111,7 +111,7 @@ input:focus { outline: none; border-color: var(--gold-dim); }
 
 .wheel-section { text-align: center; margin-bottom: 18px; }
 .wheel-wrap { position: relative; display: inline-block; margin-bottom: 16px; }
-#wheel { max-width: 100%; height: auto; filter: drop-shadow(0 6px 20px rgba(0,0,0,0.6)); }
+.wheel-wrap canvas { max-width: 100%; height: auto; filter: drop-shadow(0 6px 20px rgba(0,0,0,0.6)); }
 .pointer {
   position: absolute; top: -6px; left: 50%; transform: translateX(-50%);
   font-size: 2rem; color: var(--red); z-index: 2;
@@ -171,6 +171,14 @@ select {
   font-family: inherit;
 }
 select:focus { outline: none; border-color: var(--gold-dim); }
+
+.tier-btns { display: flex; gap: 8px; flex-wrap: wrap; margin: 10px 0 14px; }
+.tier-btn { flex: 1; min-width: 100px; }
+.tier-btn.active { outline: 2px solid var(--gold); }
+.tasker-center { text-align: center; margin-bottom: 12px; }
+#tasker-result .result-card { margin-top: 12px; }
+#tasker-result .task-meta { font-size: 0.9rem; color: #5a4a30; margin-top: 6px; }
+#tasker-result .result-actions { margin-top: 12px; }
 
 .suggestions-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 14px; }
 .suggestion-card {

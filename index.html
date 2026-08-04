@@ -55,6 +55,27 @@
       <div id="discord-status" class="status hidden"></div>
     </section>
 
+    <section class="panel hidden" id="tasker-panel">
+      <h2>🎯 Task Generator</h2>
+      <p class="hint">Slayer-style tasks for every skill, boss kill tasks and collection log tasks — all filtered by your levels. Your task stays active until you finish or skip it.</p>
+      <div class="tier-btns">
+        <button class="btn btn-secondary tier-btn active" data-tcat="task">📋 Task</button>
+        <button class="btn btn-secondary tier-btn" data-tcat="boss">⚔️ Bosses</button>
+        <button class="btn btn-secondary tier-btn" data-tcat="collection">📚 Collection</button>
+      </div>
+      <div class="tasker-center">
+        <div class="wheel-wrap hidden" id="tasker-wheel-wrap">
+          <div class="pointer">▼</div>
+          <canvas id="tasker-wheel" width="520" height="520"></canvas>
+        </div>
+        <button id="tasker-roll-btn" class="btn btn-primary">🎲 Roll a task</button>
+      </div>
+      <div id="tasker-result"></div>
+      <div id="tasker-status" class="status hidden"></div>
+      <h3 class="stats-subtitle">🏆 Task Generator Highscores</h3>
+      <div id="tasker-hs"><span class="hint">No completed tasks yet.</span></div>
+    </section>
+
     <section class="panel" id="suggestions-panel">
       <h2 id="suggestions">💡 Task Suggestions</h2>
       <p class="hint">Suggest new AFK tasks for the pool. Two 👍 votes approve a suggestion straight into the task list, two 👎 votes reject it.</p>
