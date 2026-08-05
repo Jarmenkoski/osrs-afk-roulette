@@ -813,6 +813,7 @@ def _finish_roll(token, discord_id, nick):
             return
         d = today().isoformat()
         row = con.execute("SELECT * FROM daily_rolls WHERE nick_key = ? AND d = ?", (key, d)).fetchone()
+        gif = None
         if row is not None:
             task = json.loads(row["task"])
             done = row["status"] == "done"
@@ -828,12 +829,109 @@ def _finish_roll(token, discord_id, nick):
                 (key, d, json.dumps(task)),
             )
             con.commit()
-        patch_original(token, {
-            "embeds": [task_embed(con, nick, task, done)],
-            "components": [] if done else task_buttons(discord_id),
-        })
+            try:
+                labels, widx = spin_labels([t["name"] for t in elig], task["name"])
+                if len(labels) >= 2:
+                    gif = make_spin_gif(labels, widx)
+            except Exception as e:
+                print(f"spin gif failed: {e!r}", flush=True)
+        embed = task_embed(con, nick, task, done)
+        components = [] if done else task_buttons(discord_id)
+        if gif:
+            embed["image"] = {"url": "attachment://spin.gif"}
+            patch_original_with_file(token, {
+                "embeds": [embed], "components": components,
+                "attachments": [{"id": 0, "filename": "spin.gif"}],
+            }, "spin.gif", gif)
+        else:
+            patch_original(token, {"embeds": [embed], "components": components})
     finally:
         con.close()
+
+
+# ---------- Spinning wheel GIF for Discord rolls ----------
+
+WHEEL_COLORS_RGB = [(142, 68, 173), (192, 57, 43), (39, 174, 96), (41, 128, 185),
+                    (211, 84, 0), (22, 160, 133), (127, 96, 0), (91, 44, 111),
+                    (160, 64, 0), (30, 132, 73), (136, 78, 160), (176, 58, 46),
+                    (31, 97, 141), (156, 100, 12)]
+_FONT_PATH = "/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf"
+
+
+def build_wheel_base(labels, size):
+    """Wheel with segments + labels drawn once; frames rotate this image."""
+    import math
+    from PIL import Image, ImageDraw, ImageFont
+
+    cx = cy = size // 2
+    R = size // 2 - 6
+    img = Image.new("RGBA", (size, size), (26, 20, 16, 255))
+    d = ImageDraw.Draw(img)
+    n = len(labels)
+    seg = 360 / n
+    for i in range(n):
+        d.pieslice([cx - R, cy - R, cx + R, cy + R], i * seg, (i + 1) * seg,
+                   fill=WHEEL_COLORS_RGB[i % len(WHEEL_COLORS_RGB)], outline=(26, 20, 16), width=2)
+    font = ImageFont.truetype(_FONT_PATH, 14)
+    for i, lab in enumerate(labels):
+        txt = lab if len(lab) <= 24 else lab[:22] + "…"
+        mid = (i + 0.5) * seg
+        bbox = font.getbbox(txt)
+        timg = Image.new("RGBA", (bbox[2] - bbox[0] + 6, bbox[3] - bbox[1] + 10), (0, 0, 0, 0))
+        ImageDraw.Draw(timg).text((3, 3), txt, font=font, fill=(255, 255, 255, 255))
+        rimg = timg.rotate(-mid, expand=True, resample=Image.BICUBIC)
+        rad = math.radians(mid)
+        rtext = R * 0.58
+        img.alpha_composite(rimg, (int(cx + math.cos(rad) * rtext - rimg.width / 2),
+                                   int(cy + math.sin(rad) * rtext - rimg.height / 2)))
+    d.ellipse([cx - R, cy - R, cx + R, cy + R], outline=(245, 197, 66), width=5)
+    return img
+
+
+def wheel_frame(base, rot):
+    """Rotate the wheel clockwise by rot degrees, add hub + pointer on top."""
+    from PIL import Image, ImageDraw
+
+    fr = base.rotate(rot, resample=Image.BICUBIC, fillcolor=(26, 20, 16, 255))
+    size = fr.width
+    cx = cy = size // 2
+    d = ImageDraw.Draw(fr)
+    d.ellipse([cx - 26, cy - 26, cx + 26, cy + 26], fill=(245, 197, 66), outline=(122, 95, 30), width=3)
+    d.polygon([(cx - 16, 2), (cx + 16, 2), (cx, 36)], fill=(192, 57, 43))
+    return fr.convert("RGB")
+
+
+def make_spin_gif(labels, winner_idx):
+    """Animated GIF spinning to the winner (pointer at top). Returns bytes."""
+    import io
+
+    size = 380
+    base = build_wheel_base(labels, size)
+    n = len(labels)
+    seg = 360 / n
+    theta_w = (winner_idx + 0.5) * seg  # winner center, clockwise from 3 o'clock
+    # verified visually: base.rotate(theta_w - 270) puts the winner under the pointer
+    rot_total = 3 * 360 + (theta_w - 270) % 360
+    frames, durations = [], []
+    F = 32
+    for i in range(F):
+        t = (i + 1) / F
+        eased = 1 - (1 - t) ** 4
+        frames.append(wheel_frame(base, rot_total * eased))
+        durations.append(45 if i < F - 1 else 2500)
+    buf = io.BytesIO()
+    frames[0].save(buf, format="GIF", save_all=True, append_images=frames[1:],
+                   duration=durations, optimize=True)
+    return buf.getvalue()
+
+
+def spin_labels(candidates, winner_name, max_segments=12):
+    """Winner + a shuffled sample of other candidates; returns (labels, winner_idx)."""
+    others = [c for c in candidates if c != winner_name]
+    random.shuffle(others)
+    labels = others[:max_segments - 1]
+    labels.insert(random.randint(0, len(labels)), winner_name)
+    return labels, labels.index(winner_name)
 
 
 # ---------- /highscores podium image ----------
@@ -933,7 +1031,8 @@ def patch_original_with_file(token, payload, filename, filebytes):
         f'--{boundary}\r\nContent-Disposition: form-data; name="payload_json"\r\n'
         f"Content-Type: application/json\r\n\r\n".encode() + json.dumps(payload).encode() + b"\r\n",
         f'--{boundary}\r\nContent-Disposition: form-data; name="files[0]"; filename="{filename}"\r\n'
-        f"Content-Type: image/png\r\n\r\n".encode() + filebytes + b"\r\n",
+        f"Content-Type: image/{'gif' if filename.endswith('.gif') else 'png'}\r\n\r\n".encode()
+        + filebytes + b"\r\n",
         f"--{boundary}--\r\n".encode(),
     ]
     req = urllib.request.Request(
@@ -1094,22 +1193,46 @@ def finish_tasker(token, discord_id, nick, category):
                     f"Couldn't fetch hiscores for **{nick}** — check the name with `/{category} nick:YourName`."})
                 return
             task = get_active(con, key, category)
+            gif = None
             if task is None:
                 task = roll_category(levels, category, con, key)
                 if task is None:
                     patch_original(token, {"content": f"No eligible {category} tasks for **{nick}**."})
                     return
                 set_active(con, key, category, task)
-            patch_original(token, {
-                "embeds": [tasker_discord_embed(con, nick, category, task)],
-                "components": tasker_buttons(category, discord_id,
-                                             is_quest=task.get("name", "").startswith(QUEST_PREFIX)),
-            })
+                try:
+                    labels, widx = spin_labels(tasker_candidates(levels, category, con, key),
+                                               task["name"])
+                    if len(labels) >= 2:
+                        gif = make_spin_gif(labels, widx)
+                except Exception as e:
+                    print(f"spin gif failed: {e!r}", flush=True)
+            embed = tasker_discord_embed(con, nick, category, task)
+            components = tasker_buttons(category, discord_id,
+                                        is_quest=task.get("name", "").startswith(QUEST_PREFIX))
+            if gif:
+                embed["image"] = {"url": "attachment://spin.gif"}
+                patch_original_with_file(token, {
+                    "embeds": [embed], "components": components,
+                    "attachments": [{"id": 0, "filename": "spin.gif"}],
+                }, "spin.gif", gif)
+            else:
+                patch_original(token, {"embeds": [embed], "components": components})
         finally:
             con.close()
     except Exception as e:
         print(f"finish_tasker crashed: {e!r}", flush=True)
         patch_original(token, {"content": "Something went wrong — try again."})
+
+
+def tasker_candidates(levels, category, con, key):
+    """Candidate labels for the spin GIF (same idea as the site's wheel)."""
+    if category == "task":
+        _cb, pool = skill_task_pool(levels, excluded_quests(con, key))
+        return [m["template"].replace("{n}", str(m["lo"]) if m["lo"] == m["hi"] else f"{m['lo']}–{m['hi']}")
+                for s in pool.values() for m in s["methods"]]
+    _cb, eligible, _ = tasker_split(levels, category)
+    return [t.get("display") or t["name"] for t in eligible]
 
 
 def resolve_nick(cmd, discord_id, con):
