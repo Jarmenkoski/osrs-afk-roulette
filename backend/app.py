@@ -1337,18 +1337,23 @@ def finish_stats(token, discord_id, nick):
         patch_original(token, {"content": "Something went wrong — try again."})
 
 
+GROUP_MEMBERS = ["VahvaJaakko", "HanssGIM", "HenooGIM", "Rauta Deffi", "Rauta Kemsu"]
+
+
 def finish_group(token, discord_id, nick):
     try:
         con = open_db()
         try:
-            own = get_levels(con, nick, force=True)
-            players = []
-            for r in con.execute("SELECT nick, levels FROM player_levels"):
-                lv = json.loads(r["levels"])
-                players.append({"nick": r["nick"], "levels": lv,
+            players, missing = [], []
+            for member in GROUP_MEMBERS:
+                lv = get_levels(con, member, force=True)
+                if lv is None:
+                    missing.append(member)
+                    continue
+                players.append({"nick": member, "levels": lv,
                                 "combat": combat_level(lv), "total": sum(lv.values())})
             if not players:
-                patch_original(token, {"content": "No players known yet — roll something first!"})
+                patch_original(token, {"content": "Couldn't fetch hiscores for any group member!"})
                 return
             links = {norm_key(r["nick"]): r["discord_id"]
                      for r in con.execute("SELECT discord_id, nick FROM discord_links")}
@@ -1368,13 +1373,17 @@ def finish_group(token, discord_id, nick):
             png_cb = podium(by_cb, "combat", "combat", "TOP COMBAT")
             png_total = podium(by_total, "total", "total", "TOP TOTAL LEVEL")
 
-            own_cb = combat_level(own) if own else "?"
-            own_total = sum(own.values()) if own else "?"
             group_total = sum(p["total"] for p in players)
+            member_lines = [
+                f"{'🥇🥈🥉'[i] if i < 3 else '▫️'} **{p['nick']}** — ⚔️ {p['combat']} · 📊 {p['total']}"
+                for i, p in enumerate(by_total)
+            ]
+            if missing:
+                member_lines.append("⚠️ Not on hiscores: " + ", ".join(missing))
             fields = [
-                {"name": f"{nick}", "value": f"⚔️ Combat {own_cb} · 📊 Total {own_total}", "inline": False},
-                {"name": "Players", "value": str(len(players)), "inline": True},
-                {"name": "Group combined total level", "value": f"{group_total:,}".replace(",", " "), "inline": True},
+                {"name": "Members", "value": "\n".join(member_lines), "inline": False},
+                {"name": "Group combined total level",
+                 "value": f"{group_total:,}".replace(",", " "), "inline": False},
             ]
             patch_original_with_files(token, {
                 "embeds": [
