@@ -1402,6 +1402,43 @@ def finish_group(token, discord_id, nick):
         patch_original(token, {"content": "Something went wrong — try again."})
 
 
+def finish_skill(token, skill):
+    try:
+        con = open_db()
+        try:
+            rows, missing = [], []
+            for member in GROUP_MEMBERS:
+                lv = get_levels(con, member, force=True)
+                if lv is None:
+                    missing.append(member)
+                    continue
+                rows.append({"nick": member, "level": lv.get(skill, 1)})
+            if not rows:
+                patch_original(token, {"content": "Couldn't fetch hiscores for any group member!"})
+                return
+            rows.sort(key=lambda r: -r["level"])
+            medals = ["🥇", "🥈", "🥉"]
+            lines = [f"{medals[i] if i < 3 else '▫️'} **{r['nick']}** — {r['level']}"
+                     + (" 🎉" if r["level"] == 99 else "")
+                     for i, r in enumerate(rows)]
+            if missing:
+                lines.append("⚠️ Not on hiscores: " + ", ".join(missing))
+            total = sum(r["level"] for r in rows)
+            patch_original(token, {"embeds": [{
+                "title": f"{skill.capitalize()} — Group levels",
+                "description": "\n".join(lines),
+                "color": 0xF5C542,
+                "thumbnail": {"url": f"{SITE_BASE}/icons/{skill}.png"},
+                "fields": [{"name": "Group combined", "value": str(total), "inline": True}],
+                "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")},
+            }]})
+        finally:
+            con.close()
+    except Exception as e:
+        print(f"finish_skill crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong — try again."})
+
+
 def tasker_candidates(levels, category, con, key):
     """Candidate labels for the spin GIF (same idea as the site's wheel)."""
     if category == "task":
@@ -1442,7 +1479,17 @@ def handle_slash(data):
             hs_cat = "afk"
         threading.Thread(target=finish_highscores, args=(data["token"], hs_cat), daemon=True).start()
         return jsonify({"type": 5})
-    if name not in ("afk", "task", "boss", "collection", "stats", "group"):
+    if name == "skill":
+        sk = next((o.get("value", "") for o in cmd.get("options", [])
+                   if o.get("name") == "skill"), "").lower()
+        if sk not in SKILLS or sk == "combat":
+            return ephemeral("Pick a skill from the list.")
+        threading.Thread(target=finish_skill, args=(data["token"], sk), daemon=True).start()
+        return jsonify({"type": 5})
+    if name == "group":  # fixed roster — no nick needed
+        threading.Thread(target=finish_group, args=(data["token"], "", ""), daemon=True).start()
+        return jsonify({"type": 5})
+    if name not in ("afk", "task", "boss", "collection", "stats"):
         return ephemeral("Unknown command.")
     user = (data.get("member") or {}).get("user") or data.get("user") or {}
     discord_id = user.get("id", "")
@@ -1453,8 +1500,6 @@ def handle_slash(data):
         threading.Thread(target=finish_roll, args=(data["token"], discord_id, nick), daemon=True).start()
     elif name == "stats":
         threading.Thread(target=finish_stats, args=(data["token"], discord_id, nick), daemon=True).start()
-    elif name == "group":
-        threading.Thread(target=finish_group, args=(data["token"], discord_id, nick), daemon=True).start()
     else:
         threading.Thread(target=finish_tasker, args=(data["token"], discord_id, nick, name), daemon=True).start()
     return jsonify({"type": 5})  # deferred — the thread edits the message
