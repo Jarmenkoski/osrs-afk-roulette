@@ -28,7 +28,7 @@ SITE_BASE = "https://afk.rosu.fi"
 # Discord slash-command app (/afk) — HTTP interactions, no gateway bot needed.
 DISCORD_APP_ID = os.environ.get("DISCORD_APP_ID", "")
 DISCORD_PUBLIC_KEY = os.environ.get("DISCORD_PUBLIC_KEY", "")
-LEVELS_CACHE_S = 12 * 3600
+LEVELS_CACHE_S = 30 * 60  # official hiscores are cheap to hit; keep levels fresh
 
 ANNOUNCE_COOLDOWN_S = 30
 SUGGEST_COOLDOWN_S = 60
@@ -668,6 +668,24 @@ def norm_key(nick):
     return nick.lower().replace("_", " ").replace("-", " ")
 
 
+def fetch_levels_official(nick):
+    """Official OSRS hiscores — always current (no CORS on the server side)."""
+    url = ("https://secure.runescape.com/m=hiscore_oldschool/index_lite.json?player="
+           + urllib.parse.quote(nick))
+    req = urllib.request.Request(url, headers={"User-Agent": "osrs-afk-roulette"})
+    try:
+        with urllib.request.urlopen(req, timeout=15) as resp:
+            data = json.load(resp)
+        levels = {}
+        for s in data.get("skills", []):
+            k = s.get("name", "").lower().replace(" ", "")
+            if k in SKILLS and isinstance(s.get("level"), int):
+                levels[k] = max(1, s["level"])
+        return levels or None
+    except Exception:
+        return None
+
+
 def fetch_levels_wom(nick):
     """Fetch skill levels from the Wise Old Man API. Returns dict or None."""
     enc = urllib.parse.quote(nick)
@@ -697,12 +715,12 @@ def fetch_levels_wom(nick):
     return None
 
 
-def get_levels(con, nick):
+def get_levels(con, nick, force=False):
     key = norm_key(nick)
     row = con.execute("SELECT levels, updated_at FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
-    if row is not None and time.time() - row["updated_at"] < LEVELS_CACHE_S:
+    if not force and row is not None and time.time() - row["updated_at"] < LEVELS_CACHE_S:
         return json.loads(row["levels"])
-    levels = fetch_levels_wom(nick)
+    levels = fetch_levels_official(nick) or fetch_levels_wom(nick)
     if levels is None:
         return json.loads(row["levels"]) if row is not None else None  # stale beats nothing
     con.execute(
@@ -1296,7 +1314,7 @@ def finish_stats(token, discord_id, nick):
     try:
         con = open_db()
         try:
-            levels = get_levels(con, nick)
+            levels = get_levels(con, nick, force=True)
             if levels is None:
                 patch_original(token, {"content":
                     f"Couldn't fetch hiscores for **{nick}** — check the name with `/stats nick:YourName`."})
@@ -1323,7 +1341,7 @@ def finish_group(token, discord_id, nick):
     try:
         con = open_db()
         try:
-            own = get_levels(con, nick)
+            own = get_levels(con, nick, force=True)
             players = []
             for r in con.execute("SELECT nick, levels FROM player_levels"):
                 lv = json.loads(r["levels"])
@@ -1648,6 +1666,18 @@ def tasker_prepare():
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
     return tier, levels, None
+
+
+@app.get("/api/levels")
+def api_levels():
+    """Fresh levels for the site (official hiscores server-side, 30 min cache)."""
+    nick = (request.args.get("nick") or "").strip()
+    if not NICK_RE.match(nick):
+        return jsonify({"ok": False, "error": "invalid nick"}), 400
+    levels = get_levels(db(), nick)
+    if levels is None:
+        return jsonify({"ok": False, "error": "player not found"}), 404
+    return jsonify({"levels": levels, "combat": combat_level(levels)})
 
 
 @app.get("/api/tasker/eligible")

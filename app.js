@@ -263,16 +263,22 @@ async function fetchLevels() {
   setStatus(els.fetchStatus, `Fetching levels for ${nick}…`, 'info');
 
   try {
-    playerLevels = await fetchFromWOM(nick);
-  } catch (e1) {
+    // Our backend proxies the OFFICIAL hiscores (always current) — WOM snapshots
+    // can be days old, which made totals look wrong.
+    playerLevels = (await apiGet(`/api/levels?nick=${encodeURIComponent(nick)}`)).levels;
+  } catch (e0) {
     try {
-      setStatus(els.fetchStatus, 'Wise Old Man did not respond, trying the official hiscores…', 'info');
-      playerLevels = await fetchFromHiscores(nick);
-    } catch (e2) {
-      console.error(e1, e2);
-      setStatus(els.fetchStatus, `Player "${nick}" was not found on the hiscores. Check the name (hiscores only list players with at least one skill in the top 2M).`, 'error');
-      els.fetchBtn.disabled = false;
-      return;
+      playerLevels = await fetchFromWOM(nick);
+    } catch (e1) {
+      try {
+        setStatus(els.fetchStatus, 'Trying the official hiscores via proxy…', 'info');
+        playerLevels = await fetchFromHiscores(nick);
+      } catch (e2) {
+        console.error(e0, e1, e2);
+        setStatus(els.fetchStatus, `Player "${nick}" was not found on the hiscores. Check the name (hiscores only list players with at least one skill in the top 2M).`, 'error');
+        els.fetchBtn.disabled = false;
+        return;
+      }
     }
   }
 
