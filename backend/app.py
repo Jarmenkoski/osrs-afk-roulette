@@ -1018,7 +1018,7 @@ def draw_podium(players, title="AFK HIGHSCORES"):
         d.ellipse([cx - av_d / 2, av_y, cx + av_d / 2, av_y + av_d], outline="#f5c542", width=5)
 
         center_text(p["nick"], f_nick, cx, top - 72, "#e8dcc0")
-        center_text(f"{p['done']} done", f_done, cx, top - 36, "#f5c542")
+        center_text(p.get("label") or f"{p['done']} done", f_done, cx, top - 36, "#f5c542")
 
     buf = io.BytesIO()
     img.save(buf, format="PNG")
@@ -1026,15 +1026,21 @@ def draw_podium(players, title="AFK HIGHSCORES"):
 
 
 def patch_original_with_file(token, payload, filename, filebytes):
+    patch_original_with_files(token, payload, [(filename, filebytes)])
+
+
+def patch_original_with_files(token, payload, files):
     boundary = f"----afkpodium{int(time.time() * 1000)}"
     parts = [
         f'--{boundary}\r\nContent-Disposition: form-data; name="payload_json"\r\n'
         f"Content-Type: application/json\r\n\r\n".encode() + json.dumps(payload).encode() + b"\r\n",
-        f'--{boundary}\r\nContent-Disposition: form-data; name="files[0]"; filename="{filename}"\r\n'
-        f"Content-Type: image/{'gif' if filename.endswith('.gif') else 'png'}\r\n\r\n".encode()
-        + filebytes + b"\r\n",
-        f"--{boundary}--\r\n".encode(),
     ]
+    for idx, (filename, filebytes) in enumerate(files):
+        parts.append(
+            f'--{boundary}\r\nContent-Disposition: form-data; name="files[{idx}]"; filename="{filename}"\r\n'
+            f"Content-Type: image/{'gif' if filename.endswith('.gif') else 'png'}\r\n\r\n".encode()
+            + filebytes + b"\r\n")
+    parts.append(f"--{boundary}--\r\n".encode())
     req = urllib.request.Request(
         f"https://discord.com/api/v10/webhooks/{DISCORD_APP_ID}/{token}/messages/@original",
         data=b"".join(parts),
@@ -1225,6 +1231,150 @@ def finish_tasker(token, discord_id, nick, category):
         patch_original(token, {"content": "Something went wrong — try again."})
 
 
+# ---------- /stats skill panel & /group ----------
+
+STATS_LAYOUT = [  # in-game skill tab order (3 columns)
+    ["attack", "hitpoints", "mining"],
+    ["strength", "agility", "smithing"],
+    ["defence", "herblore", "fishing"],
+    ["ranged", "thieving", "cooking"],
+    ["prayer", "crafting", "firemaking"],
+    ["magic", "fletching", "woodcutting"],
+    ["runecraft", "slayer", "farming"],
+    ["construction", "hunter", "sailing"],
+]
+
+
+def draw_stats_panel(nick, levels, cb):
+    """OSRS skill-tab style stats panel with the real skill icons. Returns PNG bytes."""
+    import io
+    from PIL import Image, ImageDraw, ImageFont
+
+    cell_w, cell_h, gap, pad = 158, 54, 6, 12
+    W = cell_w * 3 + gap * 2 + pad * 2
+    header_h, footer_h = 66, 60
+    H = header_h + len(STATS_LAYOUT) * (cell_h + gap) + footer_h + pad
+    img = Image.new("RGB", (W, H), (26, 20, 16))
+    d = ImageDraw.Draw(img)
+    f_nick = ImageFont.truetype(_FONT_PATH, 30)
+    f_lvl = ImageFont.truetype(_FONT_PATH, 24)
+    f_foot = ImageFont.truetype(_FONT_PATH, 20)
+
+    def center(text, font, cx, y, fill):
+        bb = d.textbbox((0, 0), text, font=font)
+        d.text((cx - (bb[2] - bb[0]) / 2 - bb[0], y), text, font=font, fill=fill)
+
+    center(nick, f_nick, W / 2, 14, (245, 197, 66))
+    total = sum(levels.values())
+    for r, row in enumerate(STATS_LAYOUT):
+        for c, skill in enumerate(row):
+            x = pad + c * (cell_w + gap)
+            y = header_h + r * (cell_h + gap)
+            d.rounded_rectangle([x, y, x + cell_w, y + cell_h], radius=8,
+                                fill=(43, 33, 25), outline=(77, 59, 40), width=2)
+            try:
+                icon = Image.open(os.path.join(os.path.dirname(__file__), "icons", f"{skill}.png")).convert("RGBA")
+                ih = 30
+                icon = icon.resize((max(1, int(icon.width * ih / icon.height)), ih))
+                img.paste(icon, (x + 12, y + (cell_h - ih) // 2), icon)
+            except Exception:
+                pass
+            lvl = str(levels.get(skill, "-"))
+            bb = d.textbbox((0, 0), lvl, font=f_lvl)
+            d.text((x + cell_w - 16 - (bb[2] - bb[0]), y + (cell_h - (bb[3] - bb[1])) / 2 - bb[1]),
+                   lvl, font=f_lvl, fill=(245, 197, 66))
+    fy = header_h + len(STATS_LAYOUT) * (cell_h + gap) + 6
+    d.rounded_rectangle([pad, fy, W - pad, fy + 42], radius=8,
+                        fill=(43, 33, 25), outline=(122, 95, 30), width=2)
+    center(f"Total level: {total}    ·    Combat: {cb}", f_foot, W / 2, fy + 9, (232, 220, 192))
+    buf = io.BytesIO()
+    img.save(buf, format="PNG")
+    return buf.getvalue()
+
+
+def finish_stats(token, discord_id, nick):
+    try:
+        con = open_db()
+        try:
+            levels = get_levels(con, nick)
+            if levels is None:
+                patch_original(token, {"content":
+                    f"Couldn't fetch hiscores for **{nick}** — check the name with `/stats nick:YourName`."})
+                return
+            cb = combat_level(levels)
+            png = draw_stats_panel(nick, levels, cb)
+            patch_original_with_file(token, {
+                "embeds": [{
+                    "title": f"📊 {nick} — Hiscores",
+                    "color": 0xF5C542,
+                    "image": {"url": "attachment://stats.png"},
+                    "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")},
+                }],
+                "attachments": [{"id": 0, "filename": "stats.png"}],
+            }, "stats.png", png)
+        finally:
+            con.close()
+    except Exception as e:
+        print(f"finish_stats crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong — try again."})
+
+
+def finish_group(token, discord_id, nick):
+    try:
+        con = open_db()
+        try:
+            own = get_levels(con, nick)
+            players = []
+            for r in con.execute("SELECT nick, levels FROM player_levels"):
+                lv = json.loads(r["levels"])
+                players.append({"nick": r["nick"], "levels": lv,
+                                "combat": combat_level(lv), "total": sum(lv.values())})
+            if not players:
+                patch_original(token, {"content": "No players known yet — roll something first!"})
+                return
+            links = {norm_key(r["nick"]): r["discord_id"]
+                     for r in con.execute("SELECT discord_id, nick FROM discord_links")}
+
+            def podium(sorted_players, value_key, suffix, title):
+                top = sorted_players[:3]
+                pl = []
+                for p in top:
+                    did = links.get(norm_key(p["nick"]))
+                    avatar = fetch_discord_avatar(did) if did else None
+                    pl.append({"nick": p["nick"], "done": p[value_key], "avatar": avatar,
+                               "label": f"{p[value_key]} {suffix}"})
+                return draw_podium(pl, title)
+
+            by_cb = sorted(players, key=lambda p: -p["combat"])
+            by_total = sorted(players, key=lambda p: -p["total"])
+            png_cb = podium(by_cb, "combat", "combat", "TOP COMBAT")
+            png_total = podium(by_total, "total", "total", "TOP TOTAL LEVEL")
+
+            own_cb = combat_level(own) if own else "?"
+            own_total = sum(own.values()) if own else "?"
+            group_total = sum(p["total"] for p in players)
+            fields = [
+                {"name": f"{nick}", "value": f"⚔️ Combat {own_cb} · 📊 Total {own_total}", "inline": False},
+                {"name": "Players", "value": str(len(players)), "inline": True},
+                {"name": "Group combined total level", "value": f"{group_total:,}".replace(",", " "), "inline": True},
+            ]
+            patch_original_with_files(token, {
+                "embeds": [
+                    {"title": "👥 Group Stats", "color": 0xF5C542, "fields": fields,
+                     "image": {"url": "attachment://combat.png"}},
+                    {"color": 0xF5C542, "image": {"url": "attachment://total.png"},
+                     "footer": {"text": "OSRS AFK Roulette · " + SITE_BASE.replace("https://", "")}},
+                ],
+                "attachments": [{"id": 0, "filename": "combat.png"},
+                                {"id": 1, "filename": "total.png"}],
+            }, [("combat.png", png_cb), ("total.png", png_total)])
+        finally:
+            con.close()
+    except Exception as e:
+        print(f"finish_group crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong — try again."})
+
+
 def tasker_candidates(levels, category, con, key):
     """Candidate labels for the spin GIF (same idea as the site's wheel)."""
     if category == "task":
@@ -1265,7 +1415,7 @@ def handle_slash(data):
             hs_cat = "afk"
         threading.Thread(target=finish_highscores, args=(data["token"], hs_cat), daemon=True).start()
         return jsonify({"type": 5})
-    if name not in ("afk", "task", "boss", "collection"):
+    if name not in ("afk", "task", "boss", "collection", "stats", "group"):
         return ephemeral("Unknown command.")
     user = (data.get("member") or {}).get("user") or data.get("user") or {}
     discord_id = user.get("id", "")
@@ -1274,6 +1424,10 @@ def handle_slash(data):
         return err
     if name == "afk":
         threading.Thread(target=finish_roll, args=(data["token"], discord_id, nick), daemon=True).start()
+    elif name == "stats":
+        threading.Thread(target=finish_stats, args=(data["token"], discord_id, nick), daemon=True).start()
+    elif name == "group":
+        threading.Thread(target=finish_group, args=(data["token"], discord_id, nick), daemon=True).start()
     else:
         threading.Thread(target=finish_tasker, args=(data["token"], discord_id, nick, name), daemon=True).start()
     return jsonify({"type": 5})  # deferred — the thread edits the message
