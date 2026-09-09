@@ -1420,7 +1420,7 @@ def finish_stats(token, discord_id, nick):
         patch_original(token, {"content": "Something went wrong — try again."})
 
 
-GROUP_MEMBERS = ["VahvaJaakko", "HanssGIM", "HenooGIM", "Rauta Deffi", "Rauta Kemsu"]
+GROUP_MEMBERS = ["VahvaJaakko", "HanssGIM", "Rauta Deffi", "Rauta Kemsu"]
 
 
 def finish_group(token, discord_id, nick):
