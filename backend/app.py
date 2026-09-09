@@ -867,6 +867,89 @@ def _finish_roll(token, discord_id, nick):
         con.close()
 
 
+# ---------- /rng item raffle: item names for autocomplete ----------
+
+ITEMS_URL = "https://prices.runescape.wiki/api/v1/osrs/mapping"
+ITEMS_FILE = os.path.join(os.path.dirname(DB_PATH), "items.json")
+_items_cache = {"ts": 0.0, "names": []}
+
+
+def get_item_names():
+    """All OSRS item names (wiki price mapping, ~4300), cached 24h + on disk."""
+    if _items_cache["names"] and time.time() - _items_cache["ts"] < 86400:
+        return _items_cache["names"]
+    try:
+        req = urllib.request.Request(ITEMS_URL, headers={"User-Agent": "osrs-afk-roulette"})
+        with urllib.request.urlopen(req, timeout=15) as r:
+            data = json.load(r)
+        names = sorted({it["name"] for it in data if it.get("name")})
+        if names:
+            _items_cache.update(ts=time.time(), names=names)
+            try:
+                with open(ITEMS_FILE, "w", encoding="utf-8") as f:
+                    json.dump(names, f)
+            except OSError:
+                pass
+    except Exception as e:
+        print(f"item mapping fetch failed: {e!r}", flush=True)
+        if not _items_cache["names"]:
+            try:
+                with open(ITEMS_FILE, encoding="utf-8") as f:
+                    _items_cache["names"] = json.load(f)
+                _items_cache["ts"] = time.time()
+            except OSError:
+                pass
+    return _items_cache["names"]
+
+
+def handle_autocomplete(data):
+    cmd = data.get("data", {})
+    q = ""
+    for o in cmd.get("options", []):
+        if o.get("focused"):
+            q = str(o.get("value", "")).strip().lower()
+    names = get_item_names()
+    if q:
+        starts = [n for n in names if n.lower().startswith(q)]
+        contains = [n for n in names if q in n.lower() and not n.lower().startswith(q)]
+        matches = (starts + contains)[:25]
+    else:
+        matches = names[:25]
+    return jsonify({"type": 8, "data": {"choices": [{"name": n, "value": n} for n in matches]}})
+
+
+def finish_rng(token, item, roller):
+    try:
+        winner_idx = random.randrange(len(GROUP_MEMBERS))
+        winner = GROUP_MEMBERS[winner_idx]
+        gif = None
+        try:
+            gif = make_spin_gif(GROUP_MEMBERS, winner_idx)
+        except Exception as e:
+            print(f"rng gif failed: {e!r}", flush=True)
+        thumb = ("https://oldschool.runescape.wiki/images/"
+                 + urllib.parse.quote(item.replace(" ", "_")) + "_detail.png")
+        embed = {
+            "title": f"🎲 RNG: {item}",
+            "description": f"The wheel has spoken — **{item}** goes to **{winner}**! 🎉",
+            "color": 0xF5C542,
+            "thumbnail": {"url": thumb},
+            "footer": {"text": f"Rolled by {roller} · OSRS AFK Roulette" if roller
+                       else "OSRS AFK Roulette"},
+        }
+        if gif:
+            embed["image"] = {"url": "attachment://spin.gif"}
+            patch_original_with_file(token, {
+                "embeds": [embed],
+                "attachments": [{"id": 0, "filename": "spin.gif"}],
+            }, "spin.gif", gif)
+        else:
+            patch_original(token, {"embeds": [embed]})
+    except Exception as e:
+        print(f"finish_rng crashed: {e!r}", flush=True)
+        patch_original(token, {"content": "Something went wrong — try again."})
+
+
 # ---------- Spinning wheel GIF for Discord rolls ----------
 
 WHEEL_COLORS_RGB = [(142, 68, 173), (192, 57, 43), (39, 174, 96), (41, 128, 185),
@@ -1486,6 +1569,15 @@ def handle_slash(data):
             return ephemeral("Pick a skill from the list.")
         threading.Thread(target=finish_skill, args=(data["token"], sk), daemon=True).start()
         return jsonify({"type": 5})
+    if name == "rng":  # raffle an item among the fixed roster — no nick needed
+        item = next((str(o.get("value", "")) for o in cmd.get("options", [])
+                     if o.get("name") == "item"), "").strip()[:100]
+        if not item:
+            return ephemeral("Give an item, e.g. `/rng item:Ring of the gods`.")
+        user = (data.get("member") or {}).get("user") or data.get("user") or {}
+        roller = user.get("global_name") or user.get("username") or ""
+        threading.Thread(target=finish_rng, args=(data["token"], item, roller), daemon=True).start()
+        return jsonify({"type": 5})
     if name == "group":  # fixed roster — no nick needed
         threading.Thread(target=finish_group, args=(data["token"], "", ""), daemon=True).start()
         return jsonify({"type": 5})
@@ -2019,6 +2111,8 @@ def discord_interactions():
         return handle_slash(data)
     if itype == 3:
         return handle_button(data)
+    if itype == 4:
+        return handle_autocomplete(data)
     return ephemeral("Unsupported interaction.")
 
 
