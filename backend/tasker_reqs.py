@@ -1,6 +1,6 @@
 """Requirement rules for the task generator.
 
-Maps task names (from tasker_tiers.json) to effective minimum skill levels,
+Maps task names (boss kills, collection log pages) to effective minimum skill levels,
 INCLUDING the skill requirements of prerequisite quests — hiscores can't tell
 us quest completion, so a quest gate is approximated by its skill gates.
 
@@ -429,6 +429,41 @@ _BOSS_KILLS_RAW = [
     ("Kill the Doom of Mokhaiotl {n} times", 3, 8, {"combat": 110, "defence": 75, "prayer": 45}),  # EST
 ]
 BOSS_KILLS = [(t, lo, hi, _cap(r)) for t, lo, hi, r in _BOSS_KILLS_RAW]
+
+# Icon for each boss task in the plugin's roll reel: the boss's pet, or an
+# iconic drop when there is no pet. (keyword in the task template, item name)
+BOSS_ICONS = [
+    ("Scurrius", "Scurry"), ("Obor", "Hill giant club"), ("Bryophyta", "Bryophyta's essence"),
+    ("Giant Mole", "Baby mole"), ("Barrows", "Dharok's helm"), ("Sarachnis", "Sraracha"),
+    ("King Black Dragon", "Prince black dragon"), ("Scorpia", "Scorpia's offspring"),
+    ("Chaos Fanatic", "Ancient staff"), ("Crazy Archaeologist", "Fedora"),
+    ("Chaos Elemental", "Pet chaos elemental"), ("Callisto", "Callisto cub"),
+    ("Vet'ion", "Vet'ion jr."), ("Venenatis", "Venenatis spiderling"),
+    ("Hespori", "Bottomless compost bucket"), ("Skotizo", "Skotos"), ("Zalcano", "Smolcano"),
+    ("Kalphite Queen", "Kalphite princess"), ("Dagannoth", "Pet dagannoth rex"),
+    ("Graardor", "Pet general graardor"), ("Kree'arra", "Pet kree'arra"),
+    ("K'ril", "Pet k'ril tsutsaroth"), ("Zilyana", "Pet zilyana"), ("Zulrah", "Pet snakeling"),
+    ("Vorkath", "Vorki"), ("Fight Caves", "Tzrek-jad"), ("Kraken", "Pet kraken"),
+    ("Cerberus", "Hellpuppy"), ("Thermonuclear", "Pet smoke devil"),
+    ("Abyssal Sire", "Abyssal orphan"), ("Grotesque Guardians", "Noon"),
+    ("Gauntlet", "Youngllef"), ("Corporeal Beast", "Pet dark core"), ("Phantom Muspah", "Muphin"),
+    ("Moons of Peril", "Blood moon helm"), ("Amoxliatl", "Moxi"), ("Hueycoatl", "Huberte"),
+    ("Royal Titans", "Bran"), ("Araxxor", "Nid"), ("Tormented Demons", "Tormented synapse"),
+    ("Vardorvis", "Butch"), ("Leviathan", "Lil'viathan"), ("Whisperer", "Wisp"),
+    ("Duke Sucellus", "Baron"), ("Nex", "Nexling"), ("Nightmare", "Little nightmare"),
+    ("Chambers of Xeric", "Olmlet"), ("Theatre of Blood", "Lil' zik"),
+    ("Tombs of Amascut", "Tumeken's guardian"), ("Colosseum", "Smol heredit"),
+    ("Yama", "Yami"), ("Mokhaiotl", "Dom"),
+]
+# Reel icons for tasks that aren't a boss or a collection log page.
+EXTRA_ICONS = ["Quest point cape", "Achievement diary cape"]
+
+
+def boss_icon(template):
+    for keyword, item in BOSS_ICONS:
+        if keyword.lower() in template.lower():
+            return item
+    return None
 
 
 # ---- Collection log pages (collection_tasks.json, built by build_collection_tasks.py)

@@ -1128,7 +1128,7 @@ def fetch_discord_avatar(discord_id):
 def draw_podium(players, title="AFK HIGHSCORES"):
     """players: rank-ordered [{nick, done, avatar(bytes|None)}], 1-3 entries. Returns PNG bytes."""
     import io
-    from PIL import Image, ImageDraw, ImageFont, ImageOps
+    from PIL import Image, ImageDraw, ImageFont
 
     W, H = 1200, 700
     img = Image.new("RGB", (W, H), "#1a1410")
@@ -1802,21 +1802,51 @@ import tasker_reqs  # noqa: E402
 
 TASKER_TIERS = {}
 
+# Item ids (by wiki item name) for the plugin's roll reel icons.
+with open(os.path.join(os.path.dirname(__file__), "item_ids.json"), encoding="utf-8") as _f:
+    ITEM_IDS = json.load(_f)
+
+
+def item_icon(name):
+    item_id = ITEM_IDS.get(name or "")
+    return {"item": item_id} if item_id else None
+
+
+def _clog_icon(task):
+    """A collection log page shows as its first item (usually the pet)."""
+    v = task.get("verify") or {}
+    for name in v.get("items", []) if v.get("type") == "clog" else []:
+        if name in ITEM_IDS:
+            return item_icon(name)
+    return item_icon("Achievement diary cape")
+
+
 # "collection" = our own collection log tasks, one per wiki collection log page
 # plus the achievement diaries (built by build_collection_tasks.py)
 with open(os.path.join(os.path.dirname(__file__), "collection_tasks.json"), encoding="utf-8") as _f:
     TASKER_TIERS["collection"] = [
-        {**_t, "reqs": tasker_reqs.clog_reqs(_t["short"], _t["name"])}
+        {**_t, "reqs": tasker_reqs.clog_reqs(_t["short"], _t["name"]), "icon": _clog_icon(_t)}
         for _t in json.load(_f)
         if _t["short"] not in tasker_reqs.CLOG_EXCLUDED
     ]
 
 # "boss" = pure kill-count tasks with recommended stats (tasker_reqs.BOSS_KILLS)
 TASKER_TIERS["boss"] = [
-    {"name": t, "lo": lo, "hi": hi, "weight": 1, "reqs": reqs}
+    {"name": t, "lo": lo, "hi": hi, "weight": 1, "reqs": reqs,
+     "icon": item_icon(tasker_reqs.boss_icon(t))}
     for t, lo, hi, reqs in tasker_reqs.BOSS_KILLS
 ]
 TIER_ALIASES = {"bosses": "boss", "log": "collection", "clog": "collection"}
+
+REEL_LENGTH = 40
+
+
+def make_reel(icons):
+    """Icons the plugin spins past before stopping on the rolled task."""
+    icons = [i for i in icons if i]
+    if not icons:
+        return []
+    return [random.choice(icons) for _ in range(REEL_LENGTH)]
 
 import skill_tasks  # noqa: E402
 import verify  # noqa: E402
@@ -1965,7 +1995,8 @@ def tasker_roll():
         stored = {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
                   "verify": task.get("verify"), "rolled": task["rolled"]}
         set_active(con, key, tier, stored)
-    return jsonify({"tier": tier, "combat": cb, "task": task, "active": False})
+    return jsonify({"tier": tier, "combat": cb, "task": task, "active": False,
+                    "reel": make_reel([t.get("icon") for t in eligible])})
 
 
 def skill_task_pool(levels, quests_excluded=None):
@@ -2044,7 +2075,12 @@ def skill_task_roll():
     if result is None:
         return jsonify({"ok": False, "error": "no eligible tasks"}), 404
     set_active(con, key, "task", result)
-    return jsonify({**result, "active": False})
+    _cb, pool = skill_task_pool(levels, excluded_quests(con, key))
+    return jsonify({**result, "active": False, "reel": make_reel([skill_icon(s) for s in pool])})
+
+
+def skill_icon(skill):
+    return item_icon("Quest point cape") if skill == "quests" else {"skill": skill}
 
 
 def roll_quest_task(levels, con, key):
@@ -2054,7 +2090,7 @@ def roll_quest_task(levels, con, key):
     if not q:
         return None
     m = random.choice(q["methods"])
-    return {"name": m["template"], "task": m["template"], "skill": "quests",
+    return {"name": m["template"], "task": m["template"], "skill": "quests", "icon": skill_icon("quests"),
             "level": q["level"], "req": 1, "near": True, "count": 1,
             "wiki": m.get("wiki"), "difficulty": m.get("difficulty"),
             "verify": verify.for_skill_task("quests", m["template"], 1, 1), "rolled": time.time()}
@@ -2094,7 +2130,7 @@ def roll_category(levels, category, con=None, key=None):
         if m["hi"] >= 20:
             count = max(m["lo"], round(count / 5) * 5)
         name = m["template"].replace("{n}", str(count))
-        result = {"name": name, "task": name, "skill": skill, "level": entry["level"],
+        result = {"name": name, "task": name, "skill": skill, "icon": skill_icon(skill), "level": entry["level"],
                   "req": m["req"], "near": m["near"], "count": count,
                   "verify": verify.for_skill_task(skill, m["template"], count, entry["level"]),
                   "rolled": time.time()}
@@ -2108,7 +2144,8 @@ def roll_category(levels, category, con=None, key=None):
         return None
     task = _roll_tier_task(eligible, category)
     return {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
-            "reqs": task.get("reqs", {}), "verify": task.get("verify"), "rolled": time.time()}
+            "reqs": task.get("reqs", {}), "verify": task.get("verify"), "icon": task.get("icon"),
+            "rolled": time.time()}
 
 
 @app.get("/api/tasker/current")
@@ -2147,8 +2184,8 @@ def tasker_complete():
                     (key, name[len(QUEST_PREFIX):]))
         con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
         con.commit()
-        lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
-        nxt = roll_quest_task(json.loads(lv["levels"]), con, key) if lv else None
+        levels = levels_for_request(con, nick)
+        nxt = roll_quest_task(levels, con, key) if levels else None
         if nxt:
             set_active(con, key, category, nxt)
         return jsonify({"ok": True, "next": nxt})
@@ -2400,20 +2437,28 @@ def afk_today():
     key = norm_key(nick)
     row = _afk_today_row(con, key)
     if row is not None:
-        task, status = json.loads(row["task"]), row["status"]
-    else:
-        levels = levels_for_request(con, nick)
-        if levels is None:
-            return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
-        elig = best_per_skill(eligible_for(con, levels))
-        if not elig:
-            return jsonify({"ok": False, "error": "no eligible tasks"}), 404
-        task, status = random.choice(elig), "pending"
-        task = {**task, "verify": verify.for_afk(task), "rolled": time.time()}
-        con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
-                    (key, today().isoformat(), json.dumps(task)))
-        con.commit()
-    return jsonify({"task": task, "status": status, "stats": player_stats(con, key)})
+        return jsonify({"task": json.loads(row["task"]), "status": row["status"],
+                        "stats": player_stats(con, key)})
+    levels = levels_for_request(con, nick)
+    if levels is None:
+        return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
+    elig = best_per_skill(eligible_for(con, levels))
+    if not elig:
+        return jsonify({"ok": False, "error": "no eligible tasks"}), 404
+    task = _new_afk_task(random.choice(elig))
+    con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
+                (key, today().isoformat(), json.dumps(task)))
+    con.commit()
+    return jsonify({"task": task, "status": "pending", "stats": player_stats(con, key),
+                    "reel": _afk_reel(elig)})
+
+
+def _new_afk_task(task):
+    return {**task, "verify": verify.for_afk(task), "icon": {"skill": task["skill"]}, "rolled": time.time()}
+
+
+def _afk_reel(elig):
+    return make_reel([{"skill": s} for s in sorted({t["skill"] for t in elig})])
 
 
 @app.post("/api/afk/complete")
@@ -2441,19 +2486,20 @@ def afk_complete():
         return jsonify({"task": task, "status": "done", "stats": player_stats(con, key)})
     if row["status"] == "done":
         return jsonify({"ok": False, "error": "already done today"}), 409
-    lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
-    if lv is None:
-        return jsonify({"ok": False, "error": "levels not cached"}), 409
+    # The plugin's own upload for plugin groups, otherwise the (cached) hiscores.
+    levels = levels_for_request(con, nick)
+    if levels is None:
+        return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
     insert_event(con, {"nick": nick, "nick_key": key, "d": d,
                        "task": task["name"], "skill": task["skill"], "status": "skipped"})
     # Skip moves to a different skill: within a skill the best task is fixed.
-    elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
+    elig = best_per_skill(eligible_for(con, levels))
     pool = [t for t in elig if t["skill"] != task["skill"]] or elig
-    new_task = random.choice(pool)
-    new_task = {**new_task, "verify": verify.for_afk(new_task), "rolled": time.time()}
+    new_task = _new_afk_task(random.choice(pool))
     con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?", (json.dumps(new_task), key, d))
     con.commit()
-    return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key)})
+    return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key),
+                    "reel": _afk_reel(pool)})
 
 
 def handle_plugin_command(data):

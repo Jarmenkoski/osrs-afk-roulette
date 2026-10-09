@@ -8,17 +8,69 @@ diary tier. Run again when new content is released:
     python build_collection_tasks.py
 
 The plugin completes clog tasks from the in-game "New item added to your
-collection log: <item>" chat message, so tasks carry item names, not ids.
+collection log: <item>" chat message, so tasks carry item names. Item ids
+(read from each item page's infobox) go to item_ids.json; the plugin draws
+them as icons in its roll reel.
 """
 import json
 import os
 import re
+import time
+import urllib.parse
 import urllib.request
 
+import tasker_reqs
+
 API = "https://oldschool.runescape.wiki/api.php?action=parse&page=Collection_log&format=json&prop=wikitext"
+QUERY = "https://oldschool.runescape.wiki/api.php"
 WIKI = "https://oldschool.runescape.wiki/w/"
 UA = {"User-Agent": "osrs-afk-roulette/1.0 (https://afk.rosu.fi)"}
-OUT = os.path.join(os.path.dirname(__file__), "collection_tasks.json")
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "collection_tasks.json")
+IDS_OUT = os.path.join(HERE, "item_ids.json")
+
+
+def _infobox_id(text):
+    """First item id from an item page's infobox (the base version)."""
+    for marker in ("{{Infobox Item", "{{Infobox Pet", "{{Infobox Bonuses"):
+        i = text.find(marker)
+        if i >= 0:
+            m = re.search(r"^\|\s*id1?\s*=\s*(\d+)", text[i:], re.M)
+            if m:
+                return int(m.group(1))
+    return None
+
+
+def resolve_item_ids(names):
+    """{item name: id} for the names the wiki has an item infobox for."""
+    names = sorted(set(names))
+    ids = {}
+    for start in range(0, len(names), 50):
+        batch = names[start:start + 50]
+        params = {"action": "query", "prop": "revisions", "rvprop": "content", "rvslots": "main",
+                  "titles": "|".join(batch), "redirects": 1, "format": "json", "formatversion": 2}
+        req = urllib.request.Request(QUERY + "?" + urllib.parse.urlencode(params), headers=UA)
+        with urllib.request.urlopen(req, timeout=60) as r:
+            q = json.load(r)["query"]
+        # Map the titles the wiki returns back to the names we asked for.
+        back = {n: n for n in batch}
+        for step in ("normalized", "redirects"):
+            for e in q.get(step, []):
+                for orig, cur in list(back.items()):
+                    if cur == e["from"]:
+                        back[orig] = e["to"]
+        by_title = {}
+        for p in q.get("pages", []):
+            revs = p.get("revisions")
+            if revs:
+                found = _infobox_id(revs[0]["slots"]["main"]["content"])
+                if found is not None:
+                    by_title[p["title"]] = found
+        for orig, title in back.items():
+            if title in by_title:
+                ids[orig] = by_title[title]
+        time.sleep(0.5)
+    return ids
 
 DIARY_REGIONS = [
     ("Ardougne", "ardougne"), ("Desert", "desert"), ("Falador", "falador"),
@@ -97,6 +149,14 @@ def main():
     with open(OUT, "w", encoding="utf-8") as f:
         json.dump(tasks, f, ensure_ascii=False, indent=1)
     print(f"{len(tasks)} tasks -> {OUT}")
+
+    names = [i for t in tasks if t["verify"]["type"] == "clog" for i in t["verify"]["items"]]
+    icons = [item for _kw, item in tasker_reqs.BOSS_ICONS] + tasker_reqs.EXTRA_ICONS
+    ids = resolve_item_ids(names + icons)
+    with open(IDS_OUT, "w", encoding="utf-8") as f:
+        json.dump(ids, f, ensure_ascii=False, indent=0, sort_keys=True)
+    missing = [n for n in icons if n not in ids]
+    print(f"{len(ids)}/{len(set(names + icons))} item ids -> {IDS_OUT}; missing icons: {missing}")
 
 
 if __name__ == "__main__":
