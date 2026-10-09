@@ -318,6 +318,7 @@ function eligibleTasks() {
   if (!playerLevels) return [];
   const f2p = els.f2pOnly.checked;
   return allTasks().filter((t) => {
+    if (t.ironman === false) return false; // the group plays ironman accounts
     if (f2p && !t.f2p) return false;
     return Object.entries(t.reqs).every(([skill, lvl]) => (playerLevels[skill] || 1) >= lvl);
   });

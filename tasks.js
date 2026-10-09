@@ -4,6 +4,7 @@
 // afk: how long one click/action lasts without further input.
 // xp: Exp/h from the wiki guide. For level-range methods (e.g. 1-92) the wiki
 //     figure is the top-end rate. The wheel offers each skill's best-xp task.
+// ironman: false = not doable on an ironman account; never offered (the group is GIM).
 // url: wiki page path for the method (relative to WIKI_BASE).
 // Skill icons in icons/ are from the OSRS Wiki (CC BY-NC-SA 3.0).
 
@@ -46,6 +47,7 @@ const TASKS = [
   { name: 'Camphor Trees', skill: 'woodcutting', reqs: { woodcutting: 66 }, afk: '2:00', xp: 70000, f2p: false, url: '/w/Camphor_tree' },
   { name: 'Yew Trees', skill: 'woodcutting', reqs: { woodcutting: 60 }, afk: '1:54', xp: 47000, f2p: true, url: '/w/Yew_tree' },
   { name: 'Mahogany Trees', skill: 'woodcutting', reqs: { woodcutting: 50 }, afk: '1:00', xp: 46500, f2p: false, url: '/w/Mahogany_tree' },
+  { name: 'Engorged Bloodwood Trees', skill: 'woodcutting', reqs: { woodcutting: 77 }, afk: '1:50', notes: 'Release letvek from the inventory now and then', xp: 70000, f2p: false, url: '/w/Engorged_bloodwood_tree' },
   { name: 'Maple Trees', skill: 'woodcutting', reqs: { woodcutting: 45 }, afk: '1:00', xp: 52800, f2p: true, url: '/w/Maple_tree' },
 
   // Mining
@@ -56,6 +58,8 @@ const TASKS = [
   { name: 'Daeyalt Essence', skill: 'mining', reqs: { mining: 60 }, afk: '1:00', xp: 8851, f2p: false, url: '/w/Daeyalt_essence_mine' },
   { name: 'Calcified Rocks', skill: 'mining', reqs: { mining: 41 }, afk: '0:35', notes: 'Gives blessed bone shards for Prayer', f2p: false, url: '/w/Calcified_rocks' },
   { name: 'Barronite Rocks', skill: 'mining', reqs: { mining: 14 }, afk: '0:20', xp: 20000, f2p: true, url: '/w/Barronite_rocks' },
+  { name: 'Infernal Shale', skill: 'mining', reqs: { mining: 78 }, afk: '4:45', notes: 'Crush the shale as you go', xp: 9860, f2p: false, url: '/w/Infernal_shale_deposit' },
+  { name: 'Sunstone Monolith', skill: 'mining', reqs: { mining: 50, sailing: 62 }, afk: '2:30', xp: 8000, f2p: false, url: '/w/Sunstone_monolith' },
 
   // Cooking
   { name: 'Churning (cheese)', skill: 'cooking', reqs: { cooking: 21 }, afk: '7:17', xp: 14720, f2p: false, url: '/w/Dairy_churn' },
@@ -92,6 +96,8 @@ const TASKS = [
   { name: 'Barbarian Fishing (Quidamortem)', skill: 'fishing', reqs: { fishing: 48 }, afk: '1:57', xp: 57000, f2p: false, url: '/w/Barbarian_Training' },
   { name: 'Sacred Eel', skill: 'fishing', reqs: { fishing: 87 }, afk: '1:00', notes: "Rada's blessing 4", xp: 27300, f2p: false, url: '/w/Sacred_eel' },
   { name: 'Infernal Eel', skill: 'fishing', reqs: { fishing: 80 }, afk: '1:00', notes: "Rada's blessing 4", xp: 36516, f2p: false, url: '/w/Infernal_eel' },
+  { name: 'Monkfish at Sea', skill: 'fishing', reqs: { fishing: 62 }, afk: '7:36', notes: 'Fish barrel; bank after every inventory', xp: 46740, f2p: false, url: '/w/Boat_fishing_spot_(Piscatoris_Fishing_Colony)' },
+  { name: 'Sharks at Sea', skill: 'fishing', reqs: { fishing: 76 }, afk: '14:22', notes: 'Fish barrel; bank after every inventory', xp: 22550, f2p: false, url: '/w/Boat_fishing_spot_(big_net,_harpoon)' },
 
   // Agility
   { name: 'POH Agility', skill: 'agility', reqs: { agility: 1, construction: 88 }, afk: '10:00', xp: 12000, f2p: false, url: '/w/Guide:POH_Agility' },
@@ -118,6 +124,14 @@ const TASKS = [
   { name: 'Firing Clay', skill: 'crafting', reqs: { crafting: 1 }, afk: '1:58', xp: 16000, f2p: true, url: '/w/Pottery_Oven' },
   { name: 'Glassblowing', skill: 'crafting', reqs: { crafting: 1 }, afk: '0:50', xp: 122500, f2p: false, url: '/w/Pay-to-play_Crafting_training' },
   { name: 'Spinning', skill: 'crafting', reqs: { crafting: 1 }, afk: '0:50', xp: 210000, f2p: true, url: '/w/Spinning_wheel' },
+  { name: "Building the Temple (Shades of Mort'ton)", skill: 'crafting', reqs: { crafting: 20 }, afk: '2:00', notes: 'AFK time varies between 1-15 min', xp: 22000, f2p: false, url: "/w/Shades_of_Mort'ton_(minigame)" },
+
+  // Construction
+  { name: 'Camphor Repair Kits', skill: 'construction', reqs: { construction: 1 }, afk: '1:02', notes: "Plank sack + Amy's saw or Imcando hammer", xp: 261375, f2p: false, url: '/w/Repair_kit' },
+  { name: 'Rosewood Repair Kits', skill: 'construction', reqs: { construction: 80 }, afk: '0:17', notes: "Plank sack + Amy's saw or Imcando hammer", xp: 473550, f2p: false, url: '/w/Repair_kit' },
+
+  // Farming
+  { name: 'Herb Runs', skill: 'farming', reqs: { farming: 9 }, afk: '86:00', notes: 'Recurring run — one round every ~86 min', xp: 17442, f2p: false, url: '/w/Farming_runs' },
 
   // Strength
   { name: 'Blast Furnace Pump', skill: 'strength', reqs: { strength: 30 }, afk: '30:00', xp: 12000, f2p: false, url: '/w/Pump_(Blast_Furnace)' },
@@ -137,9 +151,10 @@ const TASKS = [
   // Hunter
   { name: 'Stymphike', skill: 'hunter', reqs: { hunter: 82 }, afk: '0:39', xp: 140000, f2p: false, url: '/w/Stymphike' },
   { name: 'Maniacal Monkey Hunting', skill: 'hunter', reqs: { hunter: 60 }, afk: '0:25', xp: 120000, f2p: false, url: '/w/Maniacal_monkey_(Hunter)' },
+  { name: 'Bird House Runs', skill: 'hunter', reqs: { hunter: 5 }, afk: '50:00', notes: 'Recurring run — one round every ~50 min', xp: 5760, f2p: false, url: '/w/Bird_house_trapping' },
 
   // Prayer
-  { name: 'Gilded Altar (auto-offer)', skill: 'prayer', reqs: { prayer: 1 }, afk: '1:02', notes: 'Bones on a gilded altar in a POH', xp: 630000, f2p: false, url: '/w/Pay-to-play_Prayer_training' },
+  { name: 'Gilded Altar (auto-offer)', skill: 'prayer', reqs: { prayer: 1 }, afk: '1:02', notes: 'Bones on a gilded altar in a POH', xp: 630000, f2p: false, ironman: false, url: '/w/Pay-to-play_Prayer_training' },
 
   // Combat
   { name: 'Gemstone Crabs', skill: 'hitpoints', reqs: { hitpoints: 10 }, afk: '10:00', notes: 'Requires Children of the Sun', xp: 100000, f2p: false, url: '/w/Gemstone_Crab' },
@@ -149,5 +164,11 @@ const TASKS = [
   { name: 'NMZ Ranged', skill: 'ranged', reqs: { ranged: 70 }, afk: '20:00', notes: 'Requires Nightmare Zone quests', xp: 150000, f2p: false, url: '/w/Nightmare_Zone/Strategies' },
   { name: 'Vyrewatch Sentinels', skill: 'slayer', reqs: { attack: 70, strength: 70, defence: 70 }, afk: '17:00', notes: 'Requires Sins of the Father', xp: 54000, f2p: false, url: '/w/Vyrewatch_Sentinel' },
   { name: 'Maniacal Monkeys (Ice Barrage)', skill: 'magic', reqs: { magic: 94 }, afk: '10:00', notes: 'Requires Monkey Madness II', xp: 200000, f2p: false, url: '/w/Maniacal_monkey/Strategies' },
-  { name: 'Maniacal Monkeys (chinning)', skill: 'ranged', reqs: { ranged: 80 }, afk: '10:00', notes: 'MM II + red chinchompas', xp: 500000, f2p: false, url: '/w/Maniacal_monkey/Strategies' },
+  { name: 'Maniacal Monkeys (chinning)', skill: 'ranged', reqs: { ranged: 80 }, afk: '10:00', notes: 'MM II + black chinchompas', xp: 500000, f2p: false, url: '/w/Maniacal_monkey/Strategies' },
+  // Melee methods train any melee stat; each sits under one stat so Attack,
+  // Strength and Defence all get a wheel segment.
+  { name: 'Sulphur Nagua', skill: 'attack', reqs: { attack: 60, strength: 60, slayer: 48 }, afk: '10:00', notes: 'Partial Perilous Moons; pick up only sulphur blades', xp: 120000, f2p: false, url: '/w/Sulphur_Nagua' },
+  { name: 'Brutus (AFK)', skill: 'attack', reqs: { attack: 80, strength: 80 }, afk: '20:00', notes: 'Requires The Ides of Milk; set logout timer to 20 min', xp: 55500, f2p: false, url: '/w/Brutus' },
+  { name: 'Desert Bandits (Hallowfell)', skill: 'strength', reqs: { attack: 75, strength: 75 }, afk: '17:00', notes: 'Rates assume Hallowfell (Mad Angel drop)', xp: 130000, f2p: false, url: '/w/Bandit_(Bandit_Camp)' },
+  { name: 'Maniacal Monkeys (Hallowfell)', skill: 'defence', reqs: { attack: 80, strength: 80, defence: 80 }, afk: '10:00', notes: 'MM II + Hallowfell; prayer bonus to last 10 min', xp: 150000, f2p: false, url: '/w/Maniacal_monkey/Strategies' },
 ];

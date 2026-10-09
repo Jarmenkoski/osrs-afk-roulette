@@ -740,7 +740,8 @@ def eligible_for(con, levels):
     } for r in con.execute("SELECT * FROM suggestions WHERE status = 'approved'")]
     pool = BUILTIN_TASKS + approved
     return [t for t in pool
-            if all(levels.get(s, 1) >= lvl for s, lvl in t["reqs"].items())]
+            if t.get("ironman", True)  # the group plays ironman accounts
+            and all(levels.get(s, 1) >= lvl for s, lvl in t["reqs"].items())]
 
 
 def best_per_skill(tasks):

@@ -193,7 +193,7 @@ SKILL_TASKS = {
     ],
     "prayer": [
         (1, "Bury {n} big bones", 50, 150),
-        (1, "Offer {n} bones at a gilded or chaos altar", 50, 150),
+        (1, "Offer {n} bones at the Chaos Temple altar", 50, 150),
         (30, "Grind {n} bones at the Ectofuntus", 30, 80),
         (30, "Offer {n} blessed bone shards", 500, 1500, {"mining": 41}),
     ],

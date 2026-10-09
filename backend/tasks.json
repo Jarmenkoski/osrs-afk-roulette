@@ -89,6 +89,18 @@
   "url": "/w/Mahogany_tree"
  },
  {
+  "name": "Engorged Bloodwood Trees",
+  "skill": "woodcutting",
+  "reqs": {
+   "woodcutting": 77
+  },
+  "afk": "1:50",
+  "notes": "Release letvek from the inventory now and then",
+  "xp": 70000,
+  "f2p": false,
+  "url": "/w/Engorged_bloodwood_tree"
+ },
+ {
   "name": "Maple Trees",
   "skill": "woodcutting",
   "reqs": {
@@ -178,6 +190,30 @@
   "xp": 20000,
   "f2p": true,
   "url": "/w/Barronite_rocks"
+ },
+ {
+  "name": "Infernal Shale",
+  "skill": "mining",
+  "reqs": {
+   "mining": 78
+  },
+  "afk": "4:45",
+  "notes": "Crush the shale as you go",
+  "xp": 9860,
+  "f2p": false,
+  "url": "/w/Infernal_shale_deposit"
+ },
+ {
+  "name": "Sunstone Monolith",
+  "skill": "mining",
+  "reqs": {
+   "mining": 50,
+   "sailing": 62
+  },
+  "afk": "2:30",
+  "xp": 8000,
+  "f2p": false,
+  "url": "/w/Sunstone_monolith"
  },
  {
   "name": "Churning (cheese)",
@@ -448,6 +484,30 @@
   "url": "/w/Infernal_eel"
  },
  {
+  "name": "Monkfish at Sea",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 62
+  },
+  "afk": "7:36",
+  "notes": "Fish barrel; bank after every inventory",
+  "xp": 46740,
+  "f2p": false,
+  "url": "/w/Boat_fishing_spot_(Piscatoris_Fishing_Colony)"
+ },
+ {
+  "name": "Sharks at Sea",
+  "skill": "fishing",
+  "reqs": {
+   "fishing": 76
+  },
+  "afk": "14:22",
+  "notes": "Fish barrel; bank after every inventory",
+  "xp": 22550,
+  "f2p": false,
+  "url": "/w/Boat_fishing_spot_(big_net,_harpoon)"
+ },
+ {
   "name": "POH Agility",
   "skill": "agility",
   "reqs": {
@@ -626,6 +686,54 @@
   "url": "/w/Spinning_wheel"
  },
  {
+  "name": "Building the Temple (Shades of Mort'ton)",
+  "skill": "crafting",
+  "reqs": {
+   "crafting": 20
+  },
+  "afk": "2:00",
+  "notes": "AFK time varies between 1-15 min",
+  "xp": 22000,
+  "f2p": false,
+  "url": "/w/Shades_of_Mort'ton_(minigame)"
+ },
+ {
+  "name": "Camphor Repair Kits",
+  "skill": "construction",
+  "reqs": {
+   "construction": 1
+  },
+  "afk": "1:02",
+  "notes": "Plank sack + Amy's saw or Imcando hammer",
+  "xp": 261375,
+  "f2p": false,
+  "url": "/w/Repair_kit"
+ },
+ {
+  "name": "Rosewood Repair Kits",
+  "skill": "construction",
+  "reqs": {
+   "construction": 80
+  },
+  "afk": "0:17",
+  "notes": "Plank sack + Amy's saw or Imcando hammer",
+  "xp": 473550,
+  "f2p": false,
+  "url": "/w/Repair_kit"
+ },
+ {
+  "name": "Herb Runs",
+  "skill": "farming",
+  "reqs": {
+   "farming": 9
+  },
+  "afk": "86:00",
+  "notes": "Recurring run — one round every ~86 min",
+  "xp": 17442,
+  "f2p": false,
+  "url": "/w/Farming_runs"
+ },
+ {
   "name": "Blast Furnace Pump",
   "skill": "strength",
   "reqs": {
@@ -769,6 +877,18 @@
   "url": "/w/Maniacal_monkey_(Hunter)"
  },
  {
+  "name": "Bird House Runs",
+  "skill": "hunter",
+  "reqs": {
+   "hunter": 5
+  },
+  "afk": "50:00",
+  "notes": "Recurring run — one round every ~50 min",
+  "xp": 5760,
+  "f2p": false,
+  "url": "/w/Bird_house_trapping"
+ },
+ {
   "name": "Gilded Altar (auto-offer)",
   "skill": "prayer",
   "reqs": {
@@ -778,6 +898,7 @@
   "notes": "Bones on a gilded altar in a POH",
   "xp": 630000,
   "f2p": false,
+  "ironman": false,
   "url": "/w/Pay-to-play_Prayer_training"
  },
  {
@@ -873,8 +994,62 @@
    "ranged": 80
   },
   "afk": "10:00",
-  "notes": "MM II + red chinchompas",
+  "notes": "MM II + black chinchompas",
   "xp": 500000,
+  "f2p": false,
+  "url": "/w/Maniacal_monkey/Strategies"
+ },
+ {
+  "name": "Sulphur Nagua",
+  "skill": "attack",
+  "reqs": {
+   "attack": 60,
+   "strength": 60,
+   "slayer": 48
+  },
+  "afk": "10:00",
+  "notes": "Partial Perilous Moons; pick up only sulphur blades",
+  "xp": 120000,
+  "f2p": false,
+  "url": "/w/Sulphur_Nagua"
+ },
+ {
+  "name": "Brutus (AFK)",
+  "skill": "attack",
+  "reqs": {
+   "attack": 80,
+   "strength": 80
+  },
+  "afk": "20:00",
+  "notes": "Requires The Ides of Milk; set logout timer to 20 min",
+  "xp": 55500,
+  "f2p": false,
+  "url": "/w/Brutus"
+ },
+ {
+  "name": "Desert Bandits (Hallowfell)",
+  "skill": "strength",
+  "reqs": {
+   "attack": 75,
+   "strength": 75
+  },
+  "afk": "17:00",
+  "notes": "Rates assume Hallowfell (Mad Angel drop)",
+  "xp": 130000,
+  "f2p": false,
+  "url": "/w/Bandit_(Bandit_Camp)"
+ },
+ {
+  "name": "Maniacal Monkeys (Hallowfell)",
+  "skill": "defence",
+  "reqs": {
+   "attack": 80,
+   "strength": 80,
+   "defence": 80
+  },
+  "afk": "10:00",
+  "notes": "MM II + Hallowfell; prayer bonus to last 10 min",
+  "xp": 150000,
   "f2p": false,
   "url": "/w/Maniacal_monkey/Strategies"
  }
