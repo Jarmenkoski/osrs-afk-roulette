@@ -307,8 +307,31 @@ def add_events_bulk():
     return jsonify({"ok": True, "inserted": inserted})
 
 
+def home_roster(con):
+    """nick_keys on the website's and Discord's leaderboards: the group roster,
+    players who linked a nick through the Discord bot, and members of plugin
+    groups created through Discord. Public plugin groups are not included."""
+    keys = {norm_key(n) for n in GROUP_MEMBERS}
+    keys |= {norm_key(r["nick"]) for r in con.execute("SELECT nick FROM discord_links")}
+    keys |= {r["nick_key"] for r in con.execute(
+        "SELECT m.nick_key FROM plugin_members m JOIN plugin_groups g ON g.id = m.group_id "
+        "WHERE g.guild_id NOT LIKE ?", (PLUGIN_GUILD_PREFIX + "%",))}
+    return keys
+
+
+def roster_for_request(con):
+    """Leaderboard scope: the caller's own plugin group when the request carries
+    its token, otherwise the home roster."""
+    gid = plugin_group_id()
+    if gid is not None:
+        return {r["nick_key"] for r in con.execute(
+            "SELECT nick_key FROM plugin_members WHERE group_id = ?", (gid,))}
+    return home_roster(con)
+
+
 @app.get("/api/leaderboard")
 def leaderboard():
+    roster = roster_for_request(db())
     rows = db().execute(
         """SELECT nick_key, MAX(nick) AS nick,
                   SUM(status = 'done') AS done,
@@ -318,6 +341,8 @@ def leaderboard():
     ).fetchall()
     players = []
     for r in rows:
+        if r["nick_key"] not in roster:
+            continue
         days = [
             x["d"]
             for x in db().execute(
@@ -1220,16 +1245,18 @@ def _finish_highscores(token, category):
                 """SELECT nick_key, MAX(nick) AS nick,
                           SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
                    FROM events GROUP BY nick_key
-                   HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3"""
+                   HAVING done > 0 ORDER BY done DESC, skips ASC"""
             ).fetchall()
         else:
             rows = con.execute(
                 """SELECT nick_key, MAX(nick) AS nick,
                           SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
                    FROM tasker_events WHERE category = ? GROUP BY nick_key
-                   HAVING done > 0 ORDER BY done DESC, skips ASC LIMIT 3""",
+                   HAVING done > 0 ORDER BY done DESC, skips ASC""",
                 (category,),
             ).fetchall()
+        roster = home_roster(con)
+        rows = [r for r in rows if r["nick_key"] in roster][:3]
         if not rows:
             patch_original(token, {"content":
                 f"No completed {meta['label']} tasks yet — the podium is empty!"})
@@ -2143,6 +2170,7 @@ def tasker_complete():
 
 @app.get("/api/tasker/highscores")
 def tasker_highscores():
+    roster = roster_for_request(db())
     rows = db().execute(
         """SELECT nick_key, MAX(nick) AS nick, category,
                   SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips
@@ -2150,7 +2178,7 @@ def tasker_highscores():
     ).fetchall()
     boards = {"task": [], "boss": [], "collection": []}
     for r in rows:
-        if r["category"] in boards:
+        if r["category"] in boards and r["nick_key"] in roster:
             boards[r["category"]].append(
                 {"nick": r["nick"], "done": r["done"] or 0, "skips": r["skips"] or 0})
     for cat in boards:
