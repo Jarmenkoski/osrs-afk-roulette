@@ -2502,7 +2502,8 @@ def plugin_group_info():
 
 @app.post("/api/plugin/group/leave")
 def plugin_group_leave():
-    """Remove the player's shared data from the group (the plugin then forgets the token)."""
+    """Remove the player's shared data from the group. With keep_history (sharing turned
+    off, token switched) their tasks and streaks in the group stay."""
     gid = plugin_group_id()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
@@ -2512,8 +2513,8 @@ def plugin_group_leave():
         return jsonify({"ok": False, "error": "invalid name"}), 400
     con = db()
     con.execute("DELETE FROM plugin_members WHERE group_id = ? AND nick_key = ?", (gid, norm_key(nick)))
-    if not request_group()[1]:
-        # A public group's task history exists only inside the group: it goes too.
+    if not request_group()[1] and body.get("keep_history") is not True:
+        # Leaving a public group for good: its task history exists only inside the group.
         key = scoped_key(gid, norm_key(nick))
         for table in ("events", "daily_rolls", "tasker_active", "tasker_events", "quest_flags"):
             con.execute(f"DELETE FROM {table} WHERE nick_key = ?", (key,))
