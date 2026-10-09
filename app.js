@@ -105,9 +105,6 @@ async function syncLocalHistory() {
   } catch (_) { /* retry next visit */ }
 }
 
-function doneToday() {
-  return getHistory().some((e) => e.d === todayKey() && e.nick === playerName && e.status === 'done');
-}
 
 function computeStats(nick) {
   const entries = getHistory().filter((e) => e.nick === nick);
@@ -474,10 +471,15 @@ function spin() {
 
 // ---------- Result ----------
 
+// As many AFK tasks a day as you like; the streak counts days with at least one done.
 function onSpinEnd(task) {
-  currentTask = task;
-  localStorage.setItem('afk_daily', JSON.stringify({ date: todayKey(), nick: playerName, task }));
-  renderResult(task, false);
+  currentTask = { ...task, done: false };
+  saveCurrentTask();
+  renderResult(currentTask, false);
+}
+
+function saveCurrentTask() {
+  localStorage.setItem('afk_daily', JSON.stringify({ date: todayKey(), nick: playerName, task: currentTask }));
 }
 
 function renderResult(task, restored) {
@@ -497,7 +499,7 @@ function renderResult(task, restored) {
       ${task.xp ? `<div>📈 ~${task.xp.toLocaleString('en-US')} xp/h</div>` : ''}
       <div>📋 Requirements: ${reqStr}</div>
       ${task.notes ? `<div>💡 ${task.notes}</div>` : ''}
-      ${restored ? '<div><i>(today\'s previously rolled task)</i></div>' : ''}
+      ${restored ? '<div><i>(your previously rolled task)</i></div>' : ''}
     </div>`;
   updateDoneBtn();
   els.resultPanel.classList.remove('hidden');
@@ -505,25 +507,24 @@ function renderResult(task, restored) {
 }
 
 function updateDoneBtn() {
-  if (doneToday()) {
-    els.doneBtn.disabled = true;
-    els.doneBtn.textContent = '✅ Done today!';
-  } else {
-    els.doneBtn.disabled = false;
-    els.doneBtn.textContent = '✅ Mark as done';
-  }
+  const done = Boolean(currentTask && currentTask.done);
+  els.doneBtn.disabled = done;
+  els.doneBtn.textContent = done ? '✅ Done!' : '✅ Mark as done';
+  els.rerollBtn.textContent = done ? '🎰 Spin another task' : '⏭️ Skip & spin again';
 }
 
 function markDone() {
-  if (!currentTask || doneToday()) return;
+  if (!currentTask || currentTask.done) return;
   recordEvent('done', currentTask);
+  currentTask.done = true;
+  saveCurrentTask();
   updateDoneBtn();
 }
 
 function skipAndReroll() {
   if (spinning) return;
-  // A skip only counts if there's a task rolled today that hasn't been completed
-  if (currentTask && !doneToday()) {
+  // Only an unfinished task counts as skipped; after a done one this just spins again.
+  if (currentTask && !currentTask.done) {
     recordEvent('skipped', currentTask);
   }
   els.resultPanel.classList.add('hidden');

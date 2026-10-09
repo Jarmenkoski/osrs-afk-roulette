@@ -85,8 +85,9 @@ def init_db():
           status TEXT NOT NULL CHECK (status IN ('done', 'skipped')),
           created_at TEXT NOT NULL DEFAULT (datetime('now'))
         );
-        CREATE UNIQUE INDEX IF NOT EXISTS uniq_done_per_day
-          ON events(nick_key, d) WHERE status = 'done';
+        DROP INDEX IF EXISTS uniq_done_per_day;
+        CREATE UNIQUE INDEX IF NOT EXISTS uniq_done_task_per_day
+          ON events(nick_key, d, task) WHERE status = 'done';
         CREATE INDEX IF NOT EXISTS idx_nick ON events(nick_key);
         CREATE TABLE IF NOT EXISTS announce_times (
           nick_key TEXT PRIMARY KEY,
@@ -234,7 +235,7 @@ def validate_event(e):
 
 
 def insert_event(con, ev):
-    """Returns True if the row was inserted (done-per-day dupes are ignored)."""
+    """Returns True if the row was inserted (the same task done twice a day is ignored)."""
     cur = con.execute(
         """INSERT OR IGNORE INTO events (nick, nick_key, d, task, skill, status)
            VALUES (:nick, :nick_key, :d, :task, :skill, :status)""",
@@ -840,7 +841,7 @@ def task_embed(con, nick, task, done):
         {"name": "⏭️ Skips", "value": str(s["skips"]), "inline": True},
     ]
     return {
-        "title": (f"✅ Done: {task['name']}" if done else f"🎡 Today's AFK task: {task['name']}"),
+        "title": (f"✅ Done: {task['name']}" if done else f"🎡 AFK task: {task['name']}"),
         **({"url": url} if url else {}),
         "color": 0x4CAF50 if done else 0xF5C542,
         "thumbnail": {"url": f"{SITE_BASE}/icons/{task['skill']}.png"},
@@ -853,6 +854,12 @@ def task_buttons(discord_id):
     return [{"type": 1, "components": [
         {"type": 2, "style": 3, "label": "✅ Done", "custom_id": f"afk:done:{discord_id}"},
         {"type": 2, "style": 2, "label": "⏭️ Skip", "custom_id": f"afk:skip:{discord_id}"},
+    ]}]
+
+
+def new_task_button(discord_id):
+    return [{"type": 1, "components": [
+        {"type": 2, "style": 1, "label": "🎲 New AFK task", "custom_id": f"afk:new:{discord_id}"},
     ]}]
 
 
@@ -896,30 +903,21 @@ def _finish_roll(token, discord_id, nick):
         d = today().isoformat()
         row = con.execute("SELECT * FROM daily_rolls WHERE nick_key = ? AND d = ?", (key, d)).fetchone()
         gif = None
-        if row is not None:
+        if row is not None and row["status"] != "done":
             task = json.loads(row["task"])
-            done = row["status"] == "done"
         else:
-            elig = best_per_skill(eligible_for(con, levels))
-            if not elig:
+            task, pool = roll_afk_task(con, key, levels)
+            if task is None:
                 patch_original(token, {"content": f"No eligible tasks found for **{nick}**."})
                 return
-            task = random.choice(elig)
-            task = {**task, "verify": verify.for_afk(task), "rolled": time.time()}
-            done = False
-            con.execute(
-                "INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
-                (key, d, json.dumps(task)),
-            )
-            con.commit()
             try:
-                labels, widx = spin_labels([t["name"] for t in elig], task["name"])
+                labels, widx = spin_labels([t["name"] for t in pool], task["name"])
                 if len(labels) >= 2:
                     gif = make_spin_gif(labels, widx)
             except Exception as e:
                 print(f"spin gif failed: {e!r}", flush=True)
-        embed = task_embed(con, nick, task, done)
-        components = [] if done else task_buttons(discord_id)
+        embed = task_embed(con, nick, task, False)
+        components = task_buttons(discord_id)
         if gif:
             embed["image"] = {"url": "attachment://spin.gif"}
             patch_original_with_file(token, {
@@ -1771,28 +1769,29 @@ def handle_button(data):
             con.execute("UPDATE daily_rolls SET status = 'done' WHERE nick_key = ? AND d = ?", (key, d))
             con.commit()
         return jsonify({"type": 7, "data": {
-            "embeds": [task_embed(con, nick, task, True)], "components": [],
+            "embeds": [task_embed(con, nick, task, True)], "components": new_task_button(owner_id),
         }})
 
-    # skip
-    if row["status"] == "done":
-        return ephemeral("Already done today — no take-backs! 😄")
-    lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
-    if lv is None:
+    if action == "new" and row["status"] != "done":
+        # The current task isn't finished: show it instead of rolling past it.
+        return jsonify({"type": 7, "data": {
+            "embeds": [task_embed(con, nick, task, False)], "components": task_buttons(owner_id),
+        }})
+    if action == "skip" and row["status"] == "done":
+        return ephemeral("That task is already done — press 🎲 New AFK task for another one.")
+    if action not in ("skip", "new"):
+        return ephemeral("Unknown button.")
+    levels = get_levels(con, nick, stale_ok=True)
+    if levels is None:
         return ephemeral("Levels not cached — use `/afk` first.")
-    insert_event(con, {"nick": nick, "nick_key": key, "d": d,
-                       "task": task["name"], "skill": task["skill"], "status": "skipped"})
+    if action == "skip":
+        insert_event(con, {"nick": nick, "nick_key": key, "d": d,
+                           "task": task["name"], "skill": task["skill"], "status": "skipped"})
     # Skip moves to a different skill: within a skill the best task is fixed,
     # so the same skill would just hand the same task back.
-    elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
-    pool = [t for t in elig if t["skill"] != task["skill"]] or elig
-    if not pool:
-        return ephemeral("No other eligible tasks to skip to!")
-    new_task = random.choice(pool)
-    new_task = {**new_task, "verify": verify.for_afk(new_task), "rolled": time.time()}
-    con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?",
-                (json.dumps(new_task), key, d))
-    con.commit()
+    new_task, _pool = roll_afk_task(con, key, levels, avoid_skill=task["skill"] if action == "skip" else None)
+    if new_task is None:
+        return ephemeral("No eligible tasks found!")
     return jsonify({"type": 7, "data": {
         "embeds": [task_embed(con, nick, new_task, False)],
         "components": task_buttons(owner_id),
@@ -2433,32 +2432,52 @@ def _afk_today_row(con, key):
 
 @app.get("/api/afk/today")
 def afk_today():
-    """Today's AFK task for a player (same daily roll as Discord /afk)."""
+    """The player's current AFK task, or a new one when there is none yet today or
+    the current one is done (same task as Discord /afk)."""
     nick = (request.args.get("nick") or "").strip()
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid nick"}), 400
     con = db()
     key = norm_key(nick)
     row = _afk_today_row(con, key)
-    if row is not None:
+    if row is not None and row["status"] != "done":
         return jsonify({"task": json.loads(row["task"]), "status": row["status"],
                         "stats": player_stats(con, key)})
     levels = levels_for_request(con, nick)
     if levels is None:
         return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
-    elig = best_per_skill(eligible_for(con, levels))
-    if not elig:
+    task, pool = roll_afk_task(con, key, levels)
+    if task is None:
         return jsonify({"ok": False, "error": "no eligible tasks"}), 404
-    task = _new_afk_task(random.choice(elig))
-    con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
-                (key, today().isoformat(), json.dumps(task)))
-    con.commit()
     return jsonify({"task": task, "status": "pending", "stats": player_stats(con, key),
-                    "reel": _afk_reel(elig)})
+                    "reel": _afk_reel(pool)})
 
 
 def _new_afk_task(task):
     return {**task, "verify": verify.for_afk(task), "icon": {"skill": task["skill"]}, "rolled": time.time()}
+
+
+def roll_afk_task(con, key, levels, avoid_skill=None):
+    """Roll the player's next AFK task and make it their current one for today.
+
+    Players can do as many AFK tasks a day as they like. A new roll prefers
+    skills not already done today (and never the skipped one, when possible).
+    Returns (task, pool it was picked from) or (None, [])."""
+    elig = best_per_skill(eligible_for(con, levels))
+    if not elig:
+        return None, []
+    d = today().isoformat()
+    done_skills = {r["skill"] for r in con.execute(
+        "SELECT skill FROM events WHERE nick_key = ? AND d = ? AND status = 'done'", (key, d))}
+    pool = ([t for t in elig if t["skill"] not in done_skills and t["skill"] != avoid_skill]
+            or [t for t in elig if t["skill"] != avoid_skill] or elig)
+    task = _new_afk_task(random.choice(pool))
+    con.execute(
+        "INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending') "
+        "ON CONFLICT(nick_key, d) DO UPDATE SET task = excluded.task, status = 'pending'",
+        (key, d, json.dumps(task)))
+    con.commit()
+    return task, pool
 
 
 def _afk_reel(elig):
@@ -2489,7 +2508,7 @@ def afk_complete():
             con.commit()
         return jsonify({"task": task, "status": "done", "stats": player_stats(con, key)})
     if row["status"] == "done":
-        return jsonify({"ok": False, "error": "already done today"}), 409
+        return jsonify({"ok": False, "error": "task already done - roll a new one"}), 409
     # The plugin's own upload for plugin groups, otherwise the (cached) hiscores.
     levels = levels_for_request(con, nick, stale_ok=True)
     if levels is None:
@@ -2497,11 +2516,9 @@ def afk_complete():
     insert_event(con, {"nick": nick, "nick_key": key, "d": d,
                        "task": task["name"], "skill": task["skill"], "status": "skipped"})
     # Skip moves to a different skill: within a skill the best task is fixed.
-    elig = best_per_skill(eligible_for(con, levels))
-    pool = [t for t in elig if t["skill"] != task["skill"]] or elig
-    new_task = _new_afk_task(random.choice(pool))
-    con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?", (json.dumps(new_task), key, d))
-    con.commit()
+    new_task, pool = roll_afk_task(con, key, levels, avoid_skill=task["skill"])
+    if new_task is None:
+        return jsonify({"ok": False, "error": "no eligible tasks"}), 404
     return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key),
                     "reel": _afk_reel(pool)})
 
