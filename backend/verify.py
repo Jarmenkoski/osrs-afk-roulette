@@ -25,7 +25,9 @@ _MANUAL = re.compile(
     r"Forestry|Brimhaven|Hallowed Sepulchre|Pyramid Plunder|Mixology|Volcanic Mine|"
     r"Giants' Foundry|Mahogany Homes|farming contract|Tithe Farm|herb runs|^Plant|"
     r"Hunter Guild|Nightmare Zone|Konar|^Attach|blessed bone shards|courier|port tasks|"
-    r"^Chart|^Salvage|tickets|Fortis Colosseum",
+    r"^Chart|^Salvage|tickets|Fortis Colosseum|"
+    # xp arrives in batches, so neither xp drops nor same-tick item gains count them
+    r"Blast Furnace|jugs of wine",
     re.IGNORECASE,
 )
 
@@ -43,6 +45,8 @@ _ITEM_GAIN = [
     (re.compile(r"^Fletch \{n\} arrow shafts$"), lambda m: ["Arrow shaft"]),
     (re.compile(r"^Fletch \{n\} broad bolts$"), lambda m: ["Broad bolts"]),
     (re.compile(r"^Smith \{n\} cannonballs$"), lambda m: ["Cannonball"]),
+    # Cutting and stringing both give fletching xp; count only the cut (u) bows.
+    (re.compile(r"^Fletch \{n\} (\w+) longbows$"), lambda m: [m.group(1).capitalize() + " longbow (u)"]),
 ]
 
 # Boss templates that don't follow "Kill (the) X {n} times"
@@ -69,7 +73,9 @@ def for_skill_task(skill, template, count, level):
     if skill == "quests":
         return {"type": "quest", "quest": template.split(": ", 1)[1]}
     if template.startswith("Gain {n}"):
-        return {"type": "level", "skill": skill, "target": min(99, level + count)}
+        # "from" lets the plugin re-base on the real in-game level: the server's
+        # level can be stale (hiscores cache) or 1 for unranked skills.
+        return {"type": "level", "skill": skill, "from": level, "target": min(99, level + count)}
     if _MANUAL.search(template):
         return None
     m = re.search(r"laps of the (.+?) (?:rooftop )?course", template)

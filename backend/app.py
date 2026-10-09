@@ -877,7 +877,7 @@ def _finish_roll(token, discord_id, nick):
                 patch_original(token, {"content": f"No eligible tasks found for **{nick}**."})
                 return
             task = random.choice(elig)
-            task = {**task, "verify": verify.for_afk(task)}
+            task = {**task, "verify": verify.for_afk(task), "rolled": time.time()}
             done = False
             con.execute(
                 "INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
@@ -1759,7 +1759,7 @@ def handle_button(data):
     if not pool:
         return ephemeral("No other eligible tasks to skip to!")
     new_task = random.choice(pool)
-    new_task = {**new_task, "verify": verify.for_afk(new_task)}
+    new_task = {**new_task, "verify": verify.for_afk(new_task), "rolled": time.time()}
     con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?",
                 (json.dumps(new_task), key, d))
     con.commit()
@@ -1937,8 +1937,9 @@ def tasker_roll():
         return jsonify({"ok": False, "error": "no eligible tasks in this tier"}), 404
     task = _roll_tier_task(eligible, tier)
     if tier in ("boss", "collection"):
+        task["rolled"] = time.time()
         stored = {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
-                  "verify": task.get("verify")}
+                  "verify": task.get("verify"), "rolled": task["rolled"]}
         set_active(con, key, tier, stored)
     return jsonify({"tier": tier, "combat": cb, "task": task, "active": False})
 
@@ -2032,7 +2033,7 @@ def roll_quest_task(levels, con, key):
     return {"name": m["template"], "task": m["template"], "skill": "quests",
             "level": q["level"], "req": 1, "near": True, "count": 1,
             "wiki": m.get("wiki"), "difficulty": m.get("difficulty"),
-            "verify": verify.for_skill_task("quests", m["template"], 1, 1)}
+            "verify": verify.for_skill_task("quests", m["template"], 1, 1), "rolled": time.time()}
 
 
 def _roll_tier_task(eligible, tier):
@@ -2071,7 +2072,8 @@ def roll_category(levels, category, con=None, key=None):
         name = m["template"].replace("{n}", str(count))
         result = {"name": name, "task": name, "skill": skill, "level": entry["level"],
                   "req": m["req"], "near": m["near"], "count": count,
-                  "verify": verify.for_skill_task(skill, m["template"], count, entry["level"])}
+                  "verify": verify.for_skill_task(skill, m["template"], count, entry["level"]),
+                  "rolled": time.time()}
         if m.get("wiki"):
             result["wiki"] = m["wiki"]
         if m.get("difficulty"):
@@ -2082,7 +2084,7 @@ def roll_category(levels, category, con=None, key=None):
         return None
     task = _roll_tier_task(eligible, category)
     return {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
-            "reqs": task.get("reqs", {}), "verify": task.get("verify")}
+            "reqs": task.get("reqs", {}), "verify": task.get("verify"), "rolled": time.time()}
 
 
 @app.get("/api/tasker/current")
@@ -2110,6 +2112,8 @@ def tasker_complete():
     if active is None:
         return jsonify({"ok": False, "error": "no active task"}), 404
     name = active.get("name", "?")
+    if body.get("task") is not None and body.get("task") != name:
+        return jsonify({"ok": False, "error": "task changed"}), 409
     if status == "already":
         # "Already done" is only for quests: flag it so it's never offered again,
         # without counting as a done or a skip — and hand out ANOTHER quest.
@@ -2380,7 +2384,7 @@ def afk_today():
         if not elig:
             return jsonify({"ok": False, "error": "no eligible tasks"}), 404
         task, status = random.choice(elig), "pending"
-        task = {**task, "verify": verify.for_afk(task)}
+        task = {**task, "verify": verify.for_afk(task), "rolled": time.time()}
         con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
                     (key, today().isoformat(), json.dumps(task)))
         con.commit()
@@ -2401,6 +2405,8 @@ def afk_complete():
     if row is None:
         return jsonify({"ok": False, "error": "no task rolled today"}), 404
     task = json.loads(row["task"])
+    if body.get("task") is not None and body.get("task") != task.get("name"):
+        return jsonify({"ok": False, "error": "task changed"}), 409
     if status == "done":
         if row["status"] != "done":
             insert_event(con, {"nick": nick, "nick_key": key, "d": d,
@@ -2419,7 +2425,7 @@ def afk_complete():
     elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
     pool = [t for t in elig if t["skill"] != task["skill"]] or elig
     new_task = random.choice(pool)
-    new_task = {**new_task, "verify": verify.for_afk(new_task)}
+    new_task = {**new_task, "verify": verify.for_afk(new_task), "rolled": time.time()}
     con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?", (json.dumps(new_task), key, d))
     con.commit()
     return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key)})
