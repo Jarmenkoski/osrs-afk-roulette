@@ -8,4 +8,4 @@ COPY app.py tasks.json tasker_reqs.py collection_tasks.json item_ids.json skill_
 COPY icons ./icons
 ENV DB_PATH=/data/afk.db
 EXPOSE 8000
-CMD ["gunicorn", "-b", "0.0.0.0:8000", "-w", "2", "app:app"]
+CMD ["gunicorn", "-b", "0.0.0.0:8000", "-w", "2", "-k", "gthread", "--threads", "8", "--timeout", "60", "app:app"]

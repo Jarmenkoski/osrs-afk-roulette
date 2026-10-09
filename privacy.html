@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'">
+  <title>AFK Roulette Privacy</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Privacy</h1>
+      <p class="subtitle">AFK Roulette website, Discord bot and RuneLite plugin · updated 9 October 2026</p>
+    </header>
+
+    <section class="panel">
+      <h2>Who runs this</h2>
+      <p>AFK Roulette is a free, non-commercial fan project. Questions and data requests:
+        <a href="https://github.com/Jarmenkoski/osrs-afk-roulette/issues" target="_blank" rel="noopener">open an issue on GitHub</a>
+        or ask in the group's Discord. The server (afk-api.rosu.fi) is hosted in Finland, in the EU.</p>
+    </section>
+
+    <section class="panel">
+      <h2>What is stored, and why</h2>
+      <ul>
+        <li><b>Your RuneScape name and task history</b> — tasks rolled, done and skipped, streaks, quests you marked done.
+          Needed for tasks, streaks and highscores.</li>
+        <li><b>Your levels</b>, looked up from the official OSRS Hiscores (or Wise Old Man) by your name, cached for 30 minutes.</li>
+        <li><b>Task suggestions and votes</b> you make on the website, with your name.</li>
+        <li><b>Discord:</b> if you link a name with the bot, your Discord user id and that name.</li>
+        <li><b>RuneLite plugin</b>, only after you turn on <i>Connect to AFK Roulette server</i>: your IP address (as with any web request), your RuneScape name and your task results.
+          Only if you also turn on <i>Share my data with the group</i>: your levels, xp, quest states, inventory, equipment, bank, seed vault, current world and an online heartbeat, visible to people who have your group's token.</li>
+        <li><b>Server logs</b> keep IP addresses and requested addresses (which can include names) for 14 days, for security and troubleshooting.</li>
+      </ul>
+      <p>Nothing is sold, used for advertising or shared with anyone else. The website keeps your name, group token and history in your own browser (localStorage).</p>
+    </section>
+
+    <section class="panel">
+      <h2>How long, and how to remove it</h2>
+      <ul>
+        <li>Turning off <i>Share my data with the group</i>, or pressing <i>Leave group</i> in the plugin, removes your shared data from that group right away.
+          For groups made in the plugin, leaving also removes your task history in that group.</li>
+        <li>Everything else is kept while the service runs. Ask (see above) and we remove your name's data.</li>
+      </ul>
+      <p>Under the EU GDPR you can ask to see, correct or remove your data, and complain to your data protection authority (in Finland, the Data Protection Ombudsman).</p>
+    </section>
+
+    <section class="panel">
+      <h2>Services we talk to</h2>
+      <p>OSRS Hiscores (Jagex) and Wise Old Man for levels, Discord for the bot and channel posts, and the OSRS Wiki for links and images.
+        Their own privacy policies apply to them.</p>
+    </section>
+
+    <footer>
+      <p><a href="./">Back to AFK Roulette</a></p>
+      <p>Created using intellectual property belonging to Jagex Limited under the terms of Jagex's Fan Content Policy.
+        This content is not endorsed by or affiliated with Jagex.</p>
+    </footer>
+  </div>
+</body>
+</html>

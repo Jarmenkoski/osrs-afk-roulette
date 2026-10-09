@@ -27,19 +27,50 @@ function allTasks() { return TASKS.concat(approvedTasks); }
 const API_BASE = 'https://afk-api.rosu.fi';
 let serverStats = null; // own row from the leaderboard, when the API is reachable
 
+// The group token (Discord /plugin) lets the group's own players change their
+// tasks and streaks; without it the server refuses writes for group members.
+function groupToken() {
+  try { return (localStorage.getItem('afk_token') || '').trim(); } catch (_) { return ''; }
+}
+function authHeaders() {
+  const t = groupToken();
+  return t ? { Authorization: t } : {};
+}
+function apiError(path, status) {
+  const e = new Error(`${path} ${status}`);
+  e.status = status;
+  return e;
+}
+const TOKEN_HINT = 'This player belongs to a group — paste your group token (Discord /plugin) into the Group token field above.';
+function errorText(e, fallback) {
+  return e && e.status === 401 ? TOKEN_HINT : fallback;
+}
 async function apiGet(path) {
-  const r = await fetch(API_BASE + path);
-  if (!r.ok) throw new Error(`${path} ${r.status}`);
+  const r = await fetch(API_BASE + path, { headers: authHeaders() });
+  if (!r.ok) throw apiError(path, r.status);
   return r.json();
 }
 async function apiPost(path, body) {
   const r = await fetch(API_BASE + path, {
     method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
+    headers: { 'Content-Type': 'application/json', ...authHeaders() },
     body: JSON.stringify(body),
   });
-  if (!r.ok) throw new Error(`${path} ${r.status}`);
+  if (!r.ok) throw apiError(path, r.status);
   return r.json();
+}
+
+// Everything from the server or other players goes through esc() before innerHTML.
+function esc(v) {
+  return String(v ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+}
+// Links only ever point at the OSRS Wiki.
+function wikiHref(u) {
+  if (typeof u !== 'string' || !u) return null;
+  try {
+    const url = new URL(u, WIKI_BASE);
+    return url.protocol === 'https:' && url.hostname === 'oldschool.runescape.wiki' ? url.href : null;
+  } catch (_) { return null; }
 }
 function normKey(n) { return n.toLowerCase().replace(/[_-]/g, ' '); }
 
@@ -64,8 +95,7 @@ function todayKey() {
 }
 
 function taskUrl(task) {
-  if (!task.url) return null;
-  return task.url.startsWith('http') ? task.url : WIKI_BASE + task.url;
+  return wikiHref(task.url);
 }
 function iconUrl(skill) { return new URL(SKILL_META[skill].icon, location.href).href; }
 function iconImg(skill) { return `<img class="skill-icon" src="${SKILL_META[skill].icon}" alt="${SKILL_META[skill].name}">`; }
@@ -88,22 +118,10 @@ function logEntry(status, task) {
 function recordEvent(status, task) {
   logEntry(status, task);
   apiPost('/api/events', { nick: playerName, date: todayKey(), task: task.name, skill: task.skill, status })
-    .catch(() => {})
+    .catch((e) => { if (e.status === 401) setStatus(els.discordStatus, TOKEN_HINT, 'error'); })
     .finally(() => { renderStats(); renderLeaderboard(); });
 }
 
-// One-time upload of pre-backend localStorage history so streaks carry over.
-async function syncLocalHistory() {
-  if (localStorage.getItem('afk_synced')) return;
-  const h = getHistory();
-  if (!h.length) { localStorage.setItem('afk_synced', '1'); return; }
-  try {
-    await apiPost('/api/events/bulk', {
-      events: h.map((e) => ({ nick: e.nick, date: e.d, task: e.task, skill: e.skill, status: e.status })),
-    });
-    localStorage.setItem('afk_synced', '1');
-  } catch (_) { /* retry next visit */ }
-}
 
 
 function computeStats(nick) {
@@ -176,9 +194,9 @@ async function renderStats() {
   els.historyList.innerHTML = hist.length
     ? hist.map((e) => `
         <div class="history-row ${e.status}">
-          <span class="h-date">${e.d}</span>
-          ${iconImg(e.skill)}
-          <span class="h-task">${e.task}</span>
+          <span class="h-date">${esc(e.d)}</span>
+          ${SKILL_META[e.skill] ? iconImg(e.skill) : ''}
+          <span class="h-task">${esc(e.task)}</span>
           <span class="h-status">${e.status === 'done' ? '✅ done' : '⏭️ skipped'}</span>
         </div>`).join('')
     : '<span class="hint">No history yet.</span>';
@@ -200,11 +218,11 @@ async function renderLeaderboard() {
             ${lb.players.map((p, i) => `
               <tr class="${playerName && normKey(p.nick) === normKey(playerName) ? 'me' : ''}">
                 <td class="lb-rank">${medal(i)}</td>
-                <td>${p.nick}</td>
-                <td class="lb-num">${p.current}</td>
-                <td class="lb-num">${p.best}</td>
-                <td class="lb-num">${p.done}</td>
-                <td class="lb-num">${p.skips}</td>
+                <td>${esc(p.nick)}</td>
+                <td class="lb-num">${esc(p.current)}</td>
+                <td class="lb-num">${esc(p.best)}</td>
+                <td class="lb-num">${esc(p.done)}</td>
+                <td class="lb-num">${esc(p.skips)}</td>
               </tr>`).join('')}
           </tbody>
         </table>`;
@@ -286,7 +304,6 @@ async function fetchLevels() {
   renderSkills();
   updateEligible();
   checkExistingDaily();
-  await syncLocalHistory();
   renderStats();
   renderLeaderboard();
   loadSuggestions(); // re-render with own votes highlighted
@@ -304,7 +321,7 @@ function renderSkills() {
     if (!(key in playerLevels)) continue;
     const cell = document.createElement('div');
     cell.className = 'skill-cell';
-    cell.innerHTML = `${iconImg(key)}<span>${meta.name}</span><span class="lvl">${playerLevels[key]}</span>`;
+    cell.innerHTML = `${iconImg(key)}<span>${meta.name}</span><span class="lvl">${esc(playerLevels[key])}</span>`;
     els.skillsGrid.appendChild(cell);
   }
   els.skillsPanel.classList.remove('hidden');
@@ -483,22 +500,22 @@ function saveCurrentTask() {
 }
 
 function renderResult(task, restored) {
-  const meta = SKILL_META[task.skill];
+  const meta = SKILL_META[task.skill] || { name: esc(task.skill) };
   const reqStr = Object.entries(task.reqs)
-    .map(([s, l]) => `${SKILL_META[s].name} ${l}`)
+    .map(([s, l]) => `${SKILL_META[s] ? SKILL_META[s].name : esc(s)} ${esc(l)}`)
     .join(', ');
   const url = taskUrl(task);
   const nameHtml = url
-    ? `<a href="${url}" target="_blank" rel="noopener">${task.name}</a> 🔗`
-    : task.name;
+    ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(task.name)}</a> 🔗`
+    : esc(task.name);
   els.resultCard.innerHTML = `
     <div class="task-name">${iconImg(task.skill)} ${nameHtml}</div>
-    <div class="task-skill">Skill: <b>${meta.name}</b> (yours: ${playerLevels ? (playerLevels[task.skill] || '?') : '?'})</div>
+    <div class="task-skill">Skill: <b>${meta.name}</b> (yours: ${esc(playerLevels ? (playerLevels[task.skill] || '?') : '?')})</div>
     <div class="task-meta">
-      <div>⏱️ AFK time: ~${task.afk} per click</div>
+      <div>⏱️ AFK time: ~${esc(task.afk)} per click</div>
       ${task.xp ? `<div>📈 ~${task.xp.toLocaleString('en-US')} xp/h</div>` : ''}
       <div>📋 Requirements: ${reqStr}</div>
-      ${task.notes ? `<div>💡 ${task.notes}</div>` : ''}
+      ${task.notes ? `<div>💡 ${esc(task.notes)}</div>` : ''}
       ${restored ? '<div><i>(your previously rolled task)</i></div>' : ''}
     </div>`;
   updateDoneBtn();
@@ -588,19 +605,21 @@ async function loadSuggestions() {
       return;
     }
     els.suggestionsList.innerHTML = r.suggestions.map((s) => {
-      const reqStr = Object.entries(s.reqs).map(([k, v]) => `${SKILL_META[k].name} ${v}`).join(', ');
-      const nameHtml = s.url ? `<a href="${s.url}" target="_blank" rel="noopener">${s.name}</a>` : s.name;
+      const reqStr = Object.entries(s.reqs || {})
+        .map(([k, v]) => `${SKILL_META[k] ? SKILL_META[k].name : esc(k)} ${esc(v)}`).join(', ');
+      const href = wikiHref(s.url);
+      const nameHtml = href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(s.name)}</a>` : esc(s.name);
       return `
-        <div class="suggestion-card" data-id="${s.id}">
-          <div class="sug-title">${iconImg(s.skill)} ${nameHtml}</div>
+        <div class="suggestion-card" data-id="${Number(s.id) || 0}">
+          <div class="sug-title">${SKILL_META[s.skill] ? iconImg(s.skill) : ''} ${nameHtml}</div>
           <div class="sug-meta">
-            <div>Suggested by <b>${s.by}</b>${s.f2p ? ' · F2P' : ''}${s.afk ? ` · ~${s.afk} AFK` : ''}</div>
+            <div>Suggested by <b>${esc(s.by)}</b>${s.f2p ? ' · F2P' : ''}${s.afk ? ` · ~${esc(s.afk)} AFK` : ''}</div>
             <div>📋 ${reqStr}</div>
-            ${s.notes ? `<div>💡 ${s.notes}</div>` : ''}
+            ${s.notes ? `<div>💡 ${esc(s.notes)}</div>` : ''}
           </div>
           <div class="sug-votes">
-            <button class="vote-btn ${s.myVote === 1 ? 'my-vote' : ''}" data-vote="1">👍 ${s.up}/2</button>
-            <button class="vote-btn ${s.myVote === -1 ? 'my-vote' : ''}" data-vote="-1">👎 ${s.down}/2</button>
+            <button class="vote-btn ${s.myVote === 1 ? 'my-vote' : ''}" data-vote="1">👍 ${esc(s.up)}/2</button>
+            <button class="vote-btn ${s.myVote === -1 ? 'my-vote' : ''}" data-vote="-1">👎 ${esc(s.down)}/2</button>
           </div>
         </div>`;
     }).join('');
@@ -625,7 +644,7 @@ async function castVote(sid, vote) {
     }
     loadSuggestions();
   } catch (e) {
-    setStatus(els.voteStatus, String(e).includes('409') ? 'Voting on this one is already closed.' : 'Vote failed — try again.', 'error');
+    setStatus(els.voteStatus, e.status === 409 ? 'Voting on this one is already closed.' : errorText(e, 'Vote failed — try again.'), 'error');
     loadSuggestions();
   }
 }
@@ -776,17 +795,19 @@ async function tkCandidates() {
 }
 
 function tkRenderCard(name, metaLine, tip, wiki, isActive) {
+  name = String(name || '');
   const isQuest = name.startsWith('Complete the quest:');
+  const href = wikiHref(wiki);
   tk.result.innerHTML = `
     <div class="result-card">
-      <div class="task-name">${wiki ? `<a href="${wiki}" target="_blank" rel="noopener">${name}</a> 🔗` : name}</div>
-      ${metaLine ? `<div class="task-meta">${metaLine}</div>` : ''}
-      ${tip ? `<div class="task-meta">💡 ${tip}</div>` : ''}
+      <div class="task-name">${href ? `<a href="${esc(href)}" target="_blank" rel="noopener">${esc(name)}</a> 🔗` : esc(name)}</div>
+      ${metaLine ? `<div class="task-meta">${esc(metaLine)}</div>` : ''}
+      ${tip ? `<div class="task-meta">💡 ${esc(tip)}</div>` : ''}
       ${isActive ? '<div class="task-meta"><i>(your current task — finish or skip it)</i></div>' : ''}
       <div class="result-actions">
-        <button class="btn btn-done" onclick="tkComplete('done')">✅ Done</button>
-        <button class="btn btn-secondary" onclick="tkComplete('skipped')">⏭️ Skip &amp; reroll</button>
-        ${isQuest ? `<button class="btn btn-secondary" onclick="tkComplete('already')" title="Removes this quest from your pool without counting as done or skip">☑️ Already done</button>` : ''}
+        <button class="btn btn-done" data-tk="done">✅ Done</button>
+        <button class="btn btn-secondary" data-tk="skipped">⏭️ Skip &amp; reroll</button>
+        ${isQuest ? `<button class="btn btn-secondary" data-tk="already" title="Removes this quest from your pool without counting as done or skip">☑️ Already done</button>` : ''}
       </div>
     </div>`;
 }
@@ -800,7 +821,7 @@ function tkRenderFrom(d) {
   if (tcat === 'task') {
     tkRenderCard(d.task || d.name, tkTaskMeta(d), '', d.wiki || null, d.active);
   } else {
-    const reqStr = Object.entries(d.task.reqs || {}).map(([s, l]) => `${s} ${l}`).join(', ');
+    const reqStr = 'Recommended: ' + Object.entries(d.task.reqs || {}).map(([s, l]) => `${s} ${l}`).join(', ');
     tkRenderCard(d.task.name, reqStr, d.task.tip, d.task.wiki, d.active);
   }
 }
@@ -828,11 +849,11 @@ async function tkRoll() {
     spinTaskerWheel(segments, segments.indexOf(winnerLabel), () => tkRenderFrom(d));
   } catch (e) {
     console.error(e);
-    setStatus(tk.status, 'Roll failed — try again.', 'error');
+    setStatus(tk.status, errorText(e, 'Roll failed — try again.'), 'error');
   }
 }
 
-window.tkComplete = async function (status) {
+async function tkComplete(status) {
   try {
     const resp = await apiPost('/api/tasker/complete', { nick: playerName, category: tcat, status });
     tk.result.innerHTML = '';
@@ -851,9 +872,9 @@ window.tkComplete = async function (status) {
     }
   } catch (e) {
     console.error(e);
-    setStatus(tk.status, 'Failed — try again.', 'error');
+    setStatus(tk.status, errorText(e, 'Failed — try again.'), 'error');
   }
-};
+}
 
 async function tkLoadActive() {
   if (!playerName) return;
@@ -883,8 +904,8 @@ async function loadTaskerHS() {
           <thead><tr><th class="lb-rank">#</th><th>Player</th><th class="lb-num">✅ Done</th><th class="lb-num">⏭️ Skips</th></tr></thead>
           <tbody>${rows.map((p, i) => `
             <tr class="${playerName && normKey(p.nick) === normKey(playerName) ? 'me' : ''}">
-              <td class="lb-rank">${medal(i)}</td><td>${p.nick}</td>
-              <td class="lb-num"><b>${p.done}</b></td><td class="lb-num">${p.skips}</td></tr>`).join('')}
+              <td class="lb-rank">${medal(i)}</td><td>${esc(p.nick)}</td>
+              <td class="lb-num"><b>${esc(p.done)}</b></td><td class="lb-num">${esc(p.skips)}</td></tr>`).join('')}
           </tbody>
         </table>`;
     }).join('') || '<span class="hint">No completed tasks yet — roll one!</span>';
@@ -914,6 +935,10 @@ document.querySelectorAll('#main-tabs [data-tab]').forEach((b) => b.addEventList
   loadTaskerHS();
 }));
 tk.rollBtn.addEventListener('click', tkRoll);
+tk.result.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-tk]');
+  if (btn) tkComplete(btn.dataset.tk);
+});
 
 // ---------- Init ----------
 
@@ -934,6 +959,15 @@ els.suggestionsList.addEventListener('click', (e) => {
 
 const savedNick = localStorage.getItem('afk_nick');
 if (savedNick) els.nick.value = savedNick;
+const tokenInput = $('group-token');
+tokenInput.value = groupToken();
+tokenInput.addEventListener('change', () => {
+  try { localStorage.setItem('afk_token', tokenInput.value.trim()); } catch (_) { /* private mode */ }
+  tkResetCaches();
+  renderLeaderboard();
+  loadTaskerHS();
+  if (playerName) { renderStats(); tkLoadActive(); }
+});
 localStorage.removeItem('afk_webhook'); // webhook moved to the server
 
 initSuggestForm();

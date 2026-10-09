@@ -41,6 +41,9 @@ ALLOWED_ORIGINS = {
     "https://jarmenkoski.github.io",
 }
 TZ = ZoneInfo("Europe/Helsinki")
+# The group's own Discord server(s). The bot answers nowhere else, and only plugin
+# groups made there (/plugin) count as the home group.
+HOME_GUILD_IDS = {x.strip() for x in os.environ.get("DISCORD_GUILD_IDS", "").split(",") if x.strip()}
 
 NICK_RE = re.compile(r"^[A-Za-z0-9 _-]{1,12}$")
 DATE_RE = re.compile(r"^\d{4}-\d{2}-\d{2}$")
@@ -59,9 +62,15 @@ app = Flask(__name__)
 
 def db():
     if "db" not in g:
-        g.db = sqlite3.connect(DB_PATH)
+        g.db = sqlite3.connect(DB_PATH, timeout=10)
         g.db.row_factory = sqlite3.Row
     return g.db
+
+
+def json_body():
+    """The request's JSON object, or {} for anything else (lists, junk)."""
+    body = request.get_json(silent=True)
+    return body if isinstance(body, dict) else {}
 
 
 @app.teardown_appcontext
@@ -72,7 +81,9 @@ def close_db(_exc):
 
 
 def init_db():
-    con = sqlite3.connect(DB_PATH)
+    con = sqlite3.connect(DB_PATH, timeout=10)
+    con.execute("PRAGMA journal_mode=WAL")
+    con.execute("CREATE TABLE IF NOT EXISTS level_misses (nick_key TEXT PRIMARY KEY, ts REAL NOT NULL)")
     con.executescript(
         """
         CREATE TABLE IF NOT EXISTS events (
@@ -185,7 +196,7 @@ def cors(resp):
     if origin in ALLOWED_ORIGINS:
         resp.headers["Access-Control-Allow-Origin"] = origin
         resp.headers["Access-Control-Allow-Methods"] = "GET, POST, OPTIONS"
-        resp.headers["Access-Control-Allow-Headers"] = "Content-Type"
+        resp.headers["Access-Control-Allow-Headers"] = "Content-Type, Authorization"
         resp.headers["Access-Control-Max-Age"] = "86400"
     return resp
 
@@ -275,36 +286,29 @@ def health():
     return jsonify({"ok": True})
 
 
+def afk_task_by_name(con, name):
+    """A task from the AFK pool (built-in or community-approved), or None."""
+    for t in BUILTIN_TASKS:
+        if t["name"] == name:
+            return t
+    r = con.execute("SELECT * FROM suggestions WHERE status = 'approved' AND name = ?", (name,)).fetchone()
+    if r is None:
+        return None
+    return {"name": r["name"], "skill": r["skill"], "afk": r["afk"], "notes": r["notes"],
+            "url": r["url"], "reqs": json.loads(r["reqs"])}
+
+
 @app.post("/api/events")
 def add_event():
-    ev = validate_event(request.get_json(silent=True))
-    if ev is None:
+    ev = validate_event(json_body())
+    con = db()
+    if ev is None or afk_task_by_name(con, ev["task"]) is None:
         return jsonify({"ok": False, "error": "invalid event"}), 400
-    inserted = insert_event(db(), ev)
-    return jsonify({"ok": True, "inserted": inserted})
-
-
-@app.post("/api/events/bulk")
-def add_events_bulk():
-    body = request.get_json(silent=True)
-    events = body.get("events") if isinstance(body, dict) else None
-    if not isinstance(events, list) or len(events) > 1000:
-        return jsonify({"ok": False, "error": "invalid bulk payload"}), 400
-    inserted = 0
-    for raw in events:
-        e = dict(raw) if isinstance(raw, dict) else {}
-        # Bulk sync may contain old dates from localStorage — accept any sane past date.
-        d = e.get("date") or e.get("d") or ""
-        try:
-            parsed = datetime.date.fromisoformat(d) if isinstance(d, str) else None
-        except ValueError:
-            parsed = None
-        if parsed is not None and (parsed - today()).days <= 2:
-            ev = validate_event({**e, "date": today().isoformat()})
-            if ev is not None:
-                ev["d"] = parsed.isoformat()  # keep the original historical date
-                if insert_event(db(), ev):
-                    inserted += 1
+    denied = write_denied(con, ev["nick"])
+    if denied:
+        return denied
+    ev["nick_key"] = player_key(ev["nick"])
+    inserted = insert_event(con, ev)
     return jsonify({"ok": True, "inserted": inserted})
 
 
@@ -314,20 +318,66 @@ def home_roster(con):
     groups created through Discord. Public plugin groups are not included."""
     keys = {norm_key(n) for n in GROUP_MEMBERS}
     keys |= {norm_key(r["nick"]) for r in con.execute("SELECT nick FROM discord_links")}
-    keys |= {r["nick_key"] for r in con.execute(
-        "SELECT m.nick_key FROM plugin_members m JOIN plugin_groups g ON g.id = m.group_id "
-        "WHERE g.guild_id NOT LIKE ?", (PLUGIN_GUILD_PREFIX + "%",))}
+    if HOME_GUILD_IDS:
+        marks = ",".join("?" * len(HOME_GUILD_IDS))
+        keys |= {r["nick_key"] for r in con.execute(
+            "SELECT m.nick_key FROM plugin_members m JOIN plugin_groups g ON g.id = m.group_id "
+            f"WHERE g.guild_id IN ({marks})", tuple(HOME_GUILD_IDS))}
     return keys
 
 
 def roster_for_request(con):
-    """Leaderboard scope: the caller's own plugin group when the request carries
-    its token, otherwise the home roster."""
-    gid = plugin_group_id()
-    if gid is not None:
-        return {r["nick_key"] for r in con.execute(
+    """Leaderboard scope: a public group's own members (their own copies of the
+    names) when the request carries its token, otherwise the home roster."""
+    gid, home = request_group()
+    if gid is not None and not home:
+        return {scoped_key(gid, r["nick_key"]) for r in con.execute(
             "SELECT nick_key FROM plugin_members WHERE group_id = ?", (gid,))}
     return home_roster(con)
+
+
+def scoped_key(gid, key):
+    return f"g{gid}:{key}"
+
+
+def request_group():
+    """(group id, is the home group) for the request's token; (None, False) without one."""
+    if "req_group" not in g:
+        gid = plugin_group_id()
+        home = False
+        if gid is not None:
+            row = db().execute("SELECT guild_id FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
+            home = row is not None and row["guild_id"] in HOME_GUILD_IDS
+        g.req_group = (gid, home)
+    return g.req_group
+
+
+def player_key(nick):
+    """Where a player's tasks, streaks and quest flags live. A public plugin group
+    keeps its own copy of every name, so nobody outside it can touch its members'
+    data, and it can't touch anyone else's (e.g. by using the same name)."""
+    gid, home = request_group()
+    key = norm_key(nick)
+    return scoped_key(gid, key) if gid is not None and not home else key
+
+
+def write_denied(con, nick):
+    """An error response, or None. The home group's players are changed only with
+    the group's token (or through the group's Discord)."""
+    gid, _home = request_group()
+    if gid is None and norm_key(nick) in home_roster(con):
+        return jsonify({"ok": False, "error": "This player is in a group: add your group token "
+                                              "(Discord /plugin) to change their tasks."}), 401
+    return None
+
+
+def home_only():
+    """An error response unless the request carries the home group's token."""
+    _gid, home = request_group()
+    if not home:
+        return jsonify({"ok": False, "error": "Only the group can do this: add your group token "
+                                              "(Discord /plugin)."}), 401
+    return None
 
 
 @app.get("/api/leaderboard")
@@ -379,6 +429,7 @@ def discord_post(payload):
     """Post a payload to the channel webhook. Returns True on success."""
     if not DISCORD_WEBHOOK_URL:
         return False
+    payload = {**payload, "allowed_mentions": {"parse": []}}
     req = urllib.request.Request(
         DISCORD_WEBHOOK_URL,
         data=json.dumps(payload).encode(),
@@ -414,17 +465,23 @@ def announce():
     """Build the daily-task embed server-side and post it to the channel webhook."""
     if not DISCORD_WEBHOOK_URL:
         return jsonify({"ok": False, "error": "webhook not configured"}), 503
-    body = request.get_json(silent=True) or {}
-    nick = (body.get("nick") or "").strip()
+    denied = home_only()
+    if denied:
+        return denied
+    body = json_body()
+    nick = str(body.get("nick") or "").strip()
     t = body.get("task") if isinstance(body.get("task"), dict) else {}
-    name = (t.get("name") or "").strip()
-    skill = (t.get("skill") or "").strip().lower()
-    afk = (t.get("afk") or "").strip()[:20]
-    reqs = (t.get("reqs") or "").strip()[:200]
-    notes = (t.get("notes") or "").strip()[:200]
-    wiki = (t.get("url") or "").strip()
-    if not NICK_RE.match(nick) or not name or len(name) > 80 or skill not in SKILLS:
+    # Only tasks from the pool, with the pool's own texts (no free text to the channel).
+    pool_task = afk_task_by_name(db(), str(t.get("name") or "").strip())
+    if not NICK_RE.match(nick) or pool_task is None:
         return jsonify({"ok": False, "error": "invalid payload"}), 400
+    name, skill = pool_task["name"], pool_task["skill"]
+    afk = pool_task.get("afk") or ""
+    reqs = ", ".join(f"{k.capitalize()} {v}" for k, v in sorted(pool_task["reqs"].items()))
+    notes = pool_task.get("notes") or ""
+    wiki = pool_task.get("url") or ""
+    if wiki and not wiki.startswith("http"):
+        wiki = WIKI_PREFIX.rstrip("/") + wiki
     if not wiki.startswith("https://oldschool.runescape.wiki/"):
         wiki = ""
 
@@ -464,7 +521,7 @@ def announce():
     payload = {
         "username": "AFK Roulette",
         "embeds": [{
-            "title": f"🎡 Today's AFK task: {name}",
+            "title": f"🎡 AFK task: {name}",
             **({"url": wiki} if wiki else {}),
             "color": 0xF5C542,
             "thumbnail": {"url": f"{SITE_BASE}/icons/{skill}.png"},
@@ -476,6 +533,11 @@ def announce():
     if not discord_post(payload):
         return jsonify({"ok": False, "error": "discord post failed"}), 502
     return jsonify({"ok": True})
+
+
+UNSAFE_TEXT_RE = re.compile(r"[<>\"'`\[\]]")
+UNSAFE_URL_RE = re.compile(r"[\s<>\"'`]")
+MAX_PENDING_SUGGESTIONS = 20
 
 
 def validate_suggestion(body):
@@ -495,7 +557,10 @@ def validate_suggestion(body):
         return None, "invalid name"
     if skill not in SKILLS:
         return None, "invalid skill"
-    if url and not url.startswith(WIKI_PREFIX):
+    # Plain text only: these end up on the website and in Discord embeds.
+    if any(UNSAFE_TEXT_RE.search(v) for v in (name, afk, notes)):
+        return None, "please use plain text (no < > \" ' ` [ ] characters)"
+    if url and (not url.startswith(WIKI_PREFIX) or UNSAFE_URL_RE.search(url)):
         return None, "wiki link must point to oldschool.runescape.wiki"
     reqs = {}
     if isinstance(reqs_in, dict):
@@ -561,11 +626,17 @@ def suggestion_row_to_dict(r, my_key=None):
 
 @app.post("/api/suggestions")
 def add_suggestion():
-    data, err = validate_suggestion(request.get_json(silent=True))
+    denied = home_only()
+    if denied:
+        return denied
+    data, err = validate_suggestion(json_body())
     if err:
         return jsonify({"ok": False, "error": err}), 400
     key = data["nick"].lower().replace("_", " ").replace("-", " ")
     con = db()
+    pending = con.execute("SELECT COUNT(*) AS n FROM suggestions WHERE status = 'pending'").fetchone()["n"]
+    if pending >= MAX_PENDING_SUGGESTIONS:
+        return jsonify({"ok": False, "error": "too many open suggestions - vote on those first"}), 429
     dup = con.execute(
         "SELECT id FROM suggestions WHERE lower(name) = ? AND status IN ('pending', 'approved')",
         (data["name"].lower(),),
@@ -623,7 +694,10 @@ def list_suggestions():
 
 @app.post("/api/suggestions/<int:sid>/vote")
 def vote_suggestion(sid):
-    body = request.get_json(silent=True) or {}
+    denied = home_only()
+    if denied:
+        return denied
+    body = json_body()
     nick = (body.get("nick") or "").strip()
     vote = body.get("vote")
     if not NICK_RE.match(nick) or vote not in (1, -1):
@@ -694,7 +768,7 @@ def history():
         limit = min(max(int(request.args.get("limit", 15)), 1), 100)
     except ValueError:
         limit = 15
-    key = nick.lower().replace("_", " ").replace("-", " ")
+    key = player_key(nick)
     rows = db().execute(
         """SELECT d, task, skill, status FROM events
            WHERE nick_key = ? ORDER BY d DESC, id DESC LIMIT ?""",
@@ -707,7 +781,7 @@ def history():
 
 def open_db():
     """Standalone connection for background threads (flask.g is request-bound)."""
-    con = sqlite3.connect(DB_PATH)
+    con = sqlite3.connect(DB_PATH, timeout=10)
     con.row_factory = sqlite3.Row
     return con
 
@@ -722,7 +796,7 @@ def fetch_levels_official(nick):
            + urllib.parse.quote(nick))
     req = urllib.request.Request(url, headers={"User-Agent": "osrs-afk-roulette"})
     try:
-        with urllib.request.urlopen(req, timeout=15) as resp:
+        with urllib.request.urlopen(req, timeout=LEVEL_FETCH_TIMEOUT_S) as resp:
             data = json.load(resp)
         levels = {}
         for s in data.get("skills", []):
@@ -734,17 +808,18 @@ def fetch_levels_official(nick):
         return None
 
 
-def fetch_levels_wom(nick):
-    """Fetch skill levels from the Wise Old Man API. Returns dict or None."""
+def fetch_levels_wom(nick, allow_import=False):
+    """Fetch skill levels from the Wise Old Man API. Returns dict or None.
+    allow_import: ask WOM to start tracking an unknown player (POST)."""
     enc = urllib.parse.quote(nick)
-    for method in ("GET", "POST"):
+    for method in (("GET", "POST") if allow_import else ("GET",)):
         req = urllib.request.Request(
             f"https://api.wiseoldman.net/v2/players/{enc}",
             headers={"User-Agent": "osrs-afk-roulette"},
             method=method,
         )
         try:
-            with urllib.request.urlopen(req, timeout=15) as resp:
+            with urllib.request.urlopen(req, timeout=LEVEL_FETCH_TIMEOUT_S) as resp:
                 data = json.load(resp)
             skills = ((data.get("latestSnapshot") or {}).get("data") or {}).get("skills") or {}
             levels = {}
@@ -763,6 +838,10 @@ def fetch_levels_wom(nick):
     return None
 
 
+LEVEL_FETCH_TIMEOUT_S = 5
+LEVEL_MISS_CACHE_S = 600
+
+
 def get_levels(con, nick, force=False, stale_ok=False):
     """stale_ok: any cached levels will do (no hiscores round trip)."""
     key = norm_key(nick)
@@ -771,8 +850,17 @@ def get_levels(con, nick, force=False, stale_ok=False):
         return json.loads(row["levels"])
     if not force and row is not None and time.time() - row["updated_at"] < LEVELS_CACHE_S:
         return json.loads(row["levels"])
-    levels = fetch_levels_official(nick) or fetch_levels_wom(nick)
+    # Unknown names are remembered for a while, so made-up names can't keep the
+    # workers busy with outbound hiscores lookups.
+    miss = con.execute("SELECT ts FROM level_misses WHERE nick_key = ?", (key,)).fetchone()
+    if row is None and miss is not None and time.time() - miss["ts"] < LEVEL_MISS_CACHE_S:
+        return None
+    levels = fetch_levels_official(nick) or fetch_levels_wom(nick, allow_import=key in home_roster(con))
     if levels is None:
+        if row is None:
+            con.execute("INSERT INTO level_misses (nick_key, ts) VALUES (?, ?) "
+                        "ON CONFLICT(nick_key) DO UPDATE SET ts = excluded.ts", (key, time.time()))
+            con.commit()
         return json.loads(row["levels"]) if row is not None else None  # stale beats nothing
     con.execute(
         "INSERT INTO player_levels (nick_key, nick, levels, updated_at) VALUES (?, ?, ?, ?) "
@@ -1983,8 +2071,11 @@ def tasker_roll():
     if err:
         return err
     nick = request.args.get("nick", "").strip()
-    key = norm_key(nick)
     con = db()
+    denied = write_denied(con, nick)
+    if denied:
+        return denied
+    key = player_key(nick)
     if tier in ("boss", "collection"):
         active = get_active(con, key, tier)
         if active:
@@ -2058,7 +2149,7 @@ def skill_task_eligible():
     _tier, levels, err = tasker_prepare_nick_only()
     if err:
         return err
-    key = norm_key(request.args.get("nick", "").strip())
+    key = player_key(request.args.get("nick", "").strip())
     cb, pool = skill_task_pool(levels, excluded_quests(db(), key))
     return jsonify({"combat": cb, "skills": pool})
 
@@ -2069,8 +2160,11 @@ def skill_task_roll():
     if err:
         return err
     nick = request.args.get("nick", "").strip()
-    key = norm_key(nick)
     con = db()
+    denied = write_denied(con, nick)
+    if denied:
+        return denied
+    key = player_key(nick)
     active = get_active(con, key, "task")
     if active:
         return jsonify({**active, "active": True})
@@ -2157,21 +2251,24 @@ def tasker_current():
     category = (request.args.get("category") or "").strip().lower()
     if not NICK_RE.match(nick) or category not in ("task", "boss", "collection"):
         return jsonify({"ok": False, "error": "invalid params"}), 400
-    active = get_active(db(), norm_key(nick), category)
+    active = get_active(db(), player_key(nick), category)
     return jsonify({"active": active})
 
 
 @app.post("/api/tasker/complete")
 def tasker_complete():
-    body = request.get_json(silent=True) or {}
-    nick = (body.get("nick") or "").strip()
-    category = (body.get("category") or "").strip().lower()
-    status = (body.get("status") or "").strip().lower()
+    body = json_body()
+    nick = str(body.get("nick") or "").strip()
+    category = str(body.get("category") or "").strip().lower()
+    status = str(body.get("status") or "").strip().lower()
     if not NICK_RE.match(nick) or category not in ("task", "boss", "collection") \
             or status not in ("done", "skipped", "already"):
         return jsonify({"ok": False, "error": "invalid params"}), 400
-    key = norm_key(nick)
     con = db()
+    denied = write_denied(con, nick)
+    if denied:
+        return denied
+    key = player_key(nick)
     active = get_active(con, key, category)
     if active is None:
         return jsonify({"ok": False, "error": "no active task"}), 404
@@ -2243,6 +2340,9 @@ PLUGIN_GROUP_NAME_MAX = 32
 PLUGIN_CONTAINERS = ("inventory", "equipment", "bank", "seed_vault")
 QUEST_STATES = ("NOT_STARTED", "IN_PROGRESS", "FINISHED")
 _QUEST_NAMES = {q["name"].lower(): q["name"] for q in QUESTS}
+# RuneLite reports every quest and miniquest; more names than that is junk.
+_PLUGIN_QUEST_NAMES_MAX = 400
+PLUGIN_MAX_GROUPS = 5000
 
 
 def plugin_group_id():
@@ -2286,6 +2386,8 @@ def plugin_update():
     body = request.get_json(silent=True)
     if not isinstance(body, dict):
         return jsonify({"ok": False, "error": "invalid payload"}), 400
+    if isinstance(body.get("quests"), dict) and len(body["quests"]) > _PLUGIN_QUEST_NAMES_MAX:
+        return jsonify({"ok": False, "error": "invalid quests"}), 400
     nick = str(body.get("name") or "").replace(" ", " ").strip()
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid name"}), 400
@@ -2330,8 +2432,7 @@ def plugin_update():
     # Discord too — but only from groups created through our Discord. Anyone can
     # create a plugin group and post any player name, so public groups never write
     # to these shared tables (their requests use group-scoped data instead).
-    guild = con.execute("SELECT guild_id FROM plugin_groups WHERE id = ?", (gid,)).fetchone()["guild_id"]
-    if guild.startswith(PLUGIN_GUILD_PREFIX):
+    if not request_group()[1]:
         levels, finished = None, []
     if levels:
         con.execute(
@@ -2369,15 +2470,17 @@ def plugin_group():
 @app.post("/api/plugin/group/create")
 def plugin_group_create():
     """Create a new group from the plugin. Returns the token to share with the group."""
-    body = request.get_json(silent=True) or {}
+    body = json_body()
     name = str(body.get("name") or "").strip()
     if not name or len(name) > PLUGIN_GROUP_NAME_MAX:
         return jsonify({"ok": False, "error": f"Group name must be 1-{PLUGIN_GROUP_NAME_MAX} characters"}), 400
-    ip = request.headers.get("X-Real-IP") or request.remote_addr or "?"
-    if not check_cooldown("grp:" + ip, 300):
-        return jsonify({"ok": False, "error": "Please wait a few minutes before creating another group"}), 429
-    token = secrets.token_urlsafe(18)
     con = db()
+    if con.execute("SELECT COUNT(*) AS n FROM plugin_groups").fetchone()["n"] >= PLUGIN_MAX_GROUPS:
+        return jsonify({"ok": False, "error": "No new groups can be created right now"}), 503
+    ip = request.headers.get("X-Real-IP") or request.remote_addr or "?"
+    if not check_cooldown("grp:" + ip, 3600):
+        return jsonify({"ok": False, "error": "Please wait an hour before creating another group"}), 429
+    token = secrets.token_urlsafe(18)
     con.execute("INSERT INTO plugin_groups (guild_id, token, name) VALUES (?, ?, ?)",
                 (PLUGIN_GUILD_PREFIX + secrets.token_hex(8), token, name))
     con.commit()
@@ -2403,12 +2506,17 @@ def plugin_group_leave():
     gid = plugin_group_id()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
-    body = request.get_json(silent=True) or {}
+    body = json_body()
     nick = str(body.get("name") or "").replace(" ", " ").strip()
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid name"}), 400
     con = db()
     con.execute("DELETE FROM plugin_members WHERE group_id = ? AND nick_key = ?", (gid, norm_key(nick)))
+    if not request_group()[1]:
+        # A public group's task history exists only inside the group: it goes too.
+        key = scoped_key(gid, norm_key(nick))
+        for table in ("events", "daily_rolls", "tasker_active", "tasker_events", "quest_flags"):
+            con.execute(f"DELETE FROM {table} WHERE nick_key = ?", (key,))
     con.commit()
     return jsonify({"ok": True})
 
@@ -2419,7 +2527,7 @@ def afk_current():
     nick = (request.args.get("nick") or "").strip()
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid nick"}), 400
-    row = _afk_today_row(db(), norm_key(nick))
+    row = _afk_today_row(db(), player_key(nick))
     if row is None:
         return jsonify({"task": None, "status": None})
     return jsonify({"task": json.loads(row["task"]), "status": row["status"]})
@@ -2438,7 +2546,10 @@ def afk_today():
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid nick"}), 400
     con = db()
-    key = norm_key(nick)
+    denied = write_denied(con, nick)
+    if denied:
+        return denied
+    key = player_key(nick)
     row = _afk_today_row(con, key)
     if row is not None and row["status"] != "done":
         return jsonify({"task": json.loads(row["task"]), "status": row["status"],
@@ -2486,13 +2597,16 @@ def _afk_reel(elig):
 
 @app.post("/api/afk/complete")
 def afk_complete():
-    body = request.get_json(silent=True) or {}
+    body = json_body()
     nick = str(body.get("nick") or "").strip()
     status = str(body.get("status") or "").strip().lower()
     if not NICK_RE.match(nick) or status not in ("done", "skipped"):
         return jsonify({"ok": False, "error": "invalid params"}), 400
     con = db()
-    key = norm_key(nick)
+    denied = write_denied(con, nick)
+    if denied:
+        return denied
+    key = player_key(nick)
     d = today().isoformat()
     row = _afk_today_row(con, key)
     if row is None:
@@ -2523,6 +2637,9 @@ def afk_complete():
                     "reel": _afk_reel(pool)})
 
 
+MANAGE_GUILD = 0x20
+
+
 def handle_plugin_command(data):
     """/plugin: show (or rotate) the Discord server's group token for the plugin."""
     guild_id = data.get("guild_id")
@@ -2530,6 +2647,12 @@ def handle_plugin_command(data):
         return ephemeral("Use `/plugin` in your group's Discord server, not in DMs.")
     reset = any(o.get("name") == "reset" and o.get("value") is True
                 for o in data.get("data", {}).get("options", []))
+    try:
+        perms = int(((data.get("member") or {}).get("permissions")) or 0)
+    except (TypeError, ValueError):
+        perms = 0
+    if reset and not perms & MANAGE_GUILD:
+        return ephemeral("Only server managers can reset the group token.")
     con = db()
     row = con.execute("SELECT token FROM plugin_groups WHERE guild_id = ?", (guild_id,)).fetchone()
     if row is None or reset:
@@ -2564,10 +2687,18 @@ def discord_interactions():
         VerifyKey(bytes.fromhex(DISCORD_PUBLIC_KEY)).verify(ts.encode() + body, bytes.fromhex(sig))
     except (BadSignatureError, ValueError):
         return "invalid request signature", 401
-    data = json.loads(body)
+    try:
+        data = json.loads(body)
+    except ValueError:
+        return "bad request", 400
     itype = data.get("type")
     if itype == 1:
         return jsonify({"type": 1})  # PING -> PONG (endpoint validation)
+    # The bot belongs to one group: anywhere else (other servers, DMs) it does nothing.
+    if str(data.get("guild_id") or "") not in HOME_GUILD_IDS:
+        if itype == 4:
+            return jsonify({"type": 8, "data": {"choices": []}})
+        return ephemeral("This bot is private to its group's Discord server.")
     if itype == 2:
         return handle_slash(data)
     if itype == 3:

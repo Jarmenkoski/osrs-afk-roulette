@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https://oldschool.runescape.wiki; connect-src https://afk-api.rosu.fi https://api.wiseoldman.net https://api.allorigins.win; object-src 'none'; base-uri 'none'; form-action 'self'">
   <title>OSRS AFK Roulette</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎡</text></svg>">
   <link rel="stylesheet" href="style.css">
@@ -21,6 +22,12 @@
           <input type="text" id="nick" name="osrs-nick" placeholder="e.g. Zezima" autocomplete="nickname" autocapitalize="off" spellcheck="false">
         </div>
         <button id="fetch-btn" class="btn btn-secondary">Fetch levels</button>
+      </div>
+      <div class="input-row">
+        <div class="field">
+          <label for="group-token">Group token (optional — from <code>/plugin</code> in your group's Discord)</label>
+          <input type="password" id="group-token" name="group-token" placeholder="Needed to log tasks for group members" autocomplete="off" spellcheck="false">
+        </div>
       </div>
       <div class="options-row">
         <label class="checkbox-label">
@@ -127,7 +134,7 @@
       <p>Created using intellectual property belonging to Jagex Limited under the terms of
       <a href="https://legal.jagex.com/docs/policies/fan-content-policy" target="_blank" rel="noopener">Jagex's Fan Content Policy</a>.
       This content is not endorsed by or affiliated with Jagex. Game images and Old School RuneScape are © and ™ Jagex Ltd.
-      AFK Roulette is a free, non-commercial fan project.</p>
+      AFK Roulette is a free, non-commercial fan project. · <a href="privacy.html">Privacy</a></p>
     </footer>
   </div>
 
