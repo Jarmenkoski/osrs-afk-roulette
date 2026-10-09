@@ -17,7 +17,7 @@ import urllib.parse
 import urllib.request
 from zoneinfo import ZoneInfo
 
-from flask import Flask, g, jsonify, request
+from flask import Flask, g, has_request_context, jsonify, request
 from nacl.exceptions import BadSignatureError
 from nacl.signing import VerifyKey
 
@@ -167,6 +167,13 @@ def init_db():
         );
         """
     )
+    # Columns added after the table first shipped
+    cols = {r[1] for r in con.execute("PRAGMA table_info(plugin_groups)")}
+    if "name" not in cols:
+        try:
+            con.execute("ALTER TABLE plugin_groups ADD COLUMN name TEXT NOT NULL DEFAULT ''")
+        except sqlite3.OperationalError:
+            pass  # the other gunicorn worker added it first
     con.commit()
     con.close()
 
@@ -870,6 +877,7 @@ def _finish_roll(token, discord_id, nick):
                 patch_original(token, {"content": f"No eligible tasks found for **{nick}**."})
                 return
             task = random.choice(elig)
+            task = {**task, "verify": verify.for_afk(task)}
             done = False
             con.execute(
                 "INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
@@ -1751,6 +1759,7 @@ def handle_button(data):
     if not pool:
         return ephemeral("No other eligible tasks to skip to!")
     new_task = random.choice(pool)
+    new_task = {**new_task, "verify": verify.for_afk(new_task)}
     con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?",
                 (json.dumps(new_task), key, d))
     con.commit()
@@ -1786,6 +1795,7 @@ TASKER_TIERS["boss"] = [
 TIER_ALIASES = {"normal": "medium", "bosses": "boss", "log": "collection"}
 
 import skill_tasks  # noqa: E402
+import verify  # noqa: E402
 
 with open(os.path.join(os.path.dirname(__file__), "quests.json"), encoding="utf-8") as _f:
     QUESTS = json.load(_f)
@@ -1801,6 +1811,9 @@ def excluded_quests(con, key):
         (key, QUEST_PREFIX + "%"),
     ):
         ex.add(r["task"][len(QUEST_PREFIX):])
+    # Requests from the plugin also know the player's real quest log.
+    if has_request_context():
+        ex |= g.get("plugin_finished_quests", set())
     return ex
 
 
@@ -1833,6 +1846,25 @@ def tasker_split(levels, tier):
     return cb, eligible, blocked
 
 
+def levels_for_request(con, nick):
+    """Exact levels from the player's own plugin upload when the request carries a
+    group token they belong to; otherwise the hiscores. Also remembers the
+    plugin's finished quests for excluded_quests() during this request."""
+    gid = plugin_group_id()
+    if gid is not None:
+        row = con.execute("SELECT data FROM plugin_members WHERE group_id = ? AND nick_key = ?",
+                          (gid, norm_key(nick))).fetchone()
+        if row is not None:
+            data = json.loads(row["data"])
+            g.plugin_finished_quests = {
+                _QUEST_NAMES[n.lower()] for n, s in data.get("quests", {}).items()
+                if s == "FINISHED" and n.lower() in _QUEST_NAMES
+            }
+            if data.get("levels"):
+                return data["levels"]
+    return get_levels(con, nick)
+
+
 def tasker_prepare():
     nick = (request.args.get("nick") or "").strip()
     tier = (request.args.get("tier") or "easy").strip().lower()
@@ -1841,7 +1873,7 @@ def tasker_prepare():
         return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
     if tier not in TASKER_TIERS:
         return None, None, (jsonify({"ok": False, "error": "tier must be easy/normal/hard/elite/boss"}), 400)
-    levels = get_levels(db(), nick)
+    levels = levels_for_request(db(), nick)
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
     return tier, levels, None
@@ -1853,7 +1885,7 @@ def api_levels():
     nick = (request.args.get("nick") or "").strip()
     if not NICK_RE.match(nick):
         return jsonify({"ok": False, "error": "invalid nick"}), 400
-    levels = get_levels(db(), nick)
+    levels = levels_for_request(db(), nick)
     if levels is None:
         return jsonify({"ok": False, "error": "player not found"}), 404
     return jsonify({"levels": levels, "combat": combat_level(levels)})
@@ -1903,16 +1935,10 @@ def tasker_roll():
     cb, eligible, _ = tasker_split(levels, tier)
     if not eligible:
         return jsonify({"ok": False, "error": "no eligible tasks in this tier"}), 404
-    weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
-    task = dict(random.choice(weighted))
-    if "{n}" in task["name"] and "lo" in task:
-        count = random.randint(task["lo"], task["hi"])
-        if task["hi"] >= 20:
-            count = max(task["lo"], round(count / 5) * 5)
-        task["name"] = task["name"].replace("{n}", str(count))
-        task["count"] = count
+    task = _roll_tier_task(eligible, tier)
     if tier in ("boss", "collection"):
-        stored = {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", "")}
+        stored = {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
+                  "verify": task.get("verify")}
         set_active(con, key, tier, stored)
     return jsonify({"tier": tier, "combat": cb, "task": task, "active": False})
 
@@ -2005,7 +2031,25 @@ def roll_quest_task(levels, con, key):
     m = random.choice(q["methods"])
     return {"name": m["template"], "task": m["template"], "skill": "quests",
             "level": q["level"], "req": 1, "near": True, "count": 1,
-            "wiki": m.get("wiki"), "difficulty": m.get("difficulty")}
+            "wiki": m.get("wiki"), "difficulty": m.get("difficulty"),
+            "verify": verify.for_skill_task("quests", m["template"], 1, 1)}
+
+
+def _roll_tier_task(eligible, tier):
+    """Pick a weighted Boss/Collection task and fill in its count and verify spec."""
+    weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
+    task = dict(random.choice(weighted))
+    template = task["name"]
+    count = None
+    if "{n}" in template and "lo" in task:
+        count = random.randint(task["lo"], task["hi"])
+        if task["hi"] >= 20:
+            count = max(task["lo"], round(count / 5) * 5)
+        task["name"] = template.replace("{n}", str(count))
+        task["count"] = count
+    if tier == "boss" and count is not None:
+        task["verify"] = verify.for_boss(template, count)
+    return task
 
 
 def roll_category(levels, category, con=None, key=None):
@@ -2026,7 +2070,8 @@ def roll_category(levels, category, con=None, key=None):
             count = max(m["lo"], round(count / 5) * 5)
         name = m["template"].replace("{n}", str(count))
         result = {"name": name, "task": name, "skill": skill, "level": entry["level"],
-                  "req": m["req"], "near": m["near"], "count": count}
+                  "req": m["req"], "near": m["near"], "count": count,
+                  "verify": verify.for_skill_task(skill, m["template"], count, entry["level"])}
         if m.get("wiki"):
             result["wiki"] = m["wiki"]
         if m.get("difficulty"):
@@ -2035,15 +2080,9 @@ def roll_category(levels, category, con=None, key=None):
     cb, eligible, _ = tasker_split(levels, category)
     if not eligible:
         return None
-    weighted = [t for t in eligible for _ in range(max(1, t.get("weight", 1)))]
-    task = dict(random.choice(weighted))
-    if "{n}" in task["name"] and "lo" in task:
-        count = random.randint(task["lo"], task["hi"])
-        if task["hi"] >= 20:
-            count = max(task["lo"], round(count / 5) * 5)
-        task["name"] = task["name"].replace("{n}", str(count))
+    task = _roll_tier_task(eligible, category)
     return {"name": task["name"], "wiki": task.get("wiki", ""), "tip": task.get("tip", ""),
-            "reqs": task.get("reqs", {})}
+            "reqs": task.get("reqs", {}), "verify": task.get("verify")}
 
 
 @app.get("/api/tasker/current")
@@ -2119,7 +2158,7 @@ def tasker_prepare_nick_only():
     nick = (request.args.get("nick") or "").strip()
     if not NICK_RE.match(nick):
         return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
-    levels = get_levels(db(), nick)
+    levels = levels_for_request(db(), nick)
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
     return None, levels, None
@@ -2129,6 +2168,9 @@ def tasker_prepare_nick_only():
 
 PLUGIN_MAX_MEMBERS = 20
 PLUGIN_MAX_BODY = 256 * 1024
+# Groups created from the plugin (not via a Discord server) get this guild_id prefix.
+PLUGIN_GUILD_PREFIX = "plugin:"
+PLUGIN_GROUP_NAME_MAX = 32
 PLUGIN_CONTAINERS = ("inventory", "equipment", "bank", "seed_vault")
 QUEST_STATES = ("NOT_STARTED", "IN_PROGRESS", "FINISHED")
 _QUEST_NAMES = {q["name"].lower(): q["name"] for q in QUESTS}
@@ -2215,8 +2257,13 @@ def plugin_update():
         "updated_at = excluded.updated_at",
         (gid, key, nick, json.dumps(data), now),
     )
-    # Live client data is better than the hiscores: feed it to the rest of the
-    # system so tasks filter on exact levels and on the real quest log.
+    # Live client data is better than the hiscores: feed it to the website and
+    # Discord too — but only from groups created through our Discord. Anyone can
+    # create a plugin group and post any player name, so public groups never write
+    # to these shared tables (their requests use group-scoped data instead).
+    guild = con.execute("SELECT guild_id FROM plugin_groups WHERE id = ?", (gid,)).fetchone()["guild_id"]
+    if guild.startswith(PLUGIN_GUILD_PREFIX):
+        levels, finished = None, []
     if levels:
         con.execute(
             "INSERT INTO player_levels (nick_key, nick, levels, updated_at) VALUES (?, ?, ?, ?) "
@@ -2237,14 +2284,76 @@ def plugin_group():
     gid = plugin_group_id()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
-    rows = db().execute(
+    con = db()
+    name = con.execute("SELECT name FROM plugin_groups WHERE id = ?", (gid,)).fetchone()["name"]
+    rows = con.execute(
         "SELECT nick, data, updated_at FROM plugin_members WHERE group_id = ? ORDER BY nick_key", (gid,)
     ).fetchall()
     return jsonify({
         "now": time.time(),
+        "name": name,
         "members": [{"nick": r["nick"], "updated_at": r["updated_at"], "data": json.loads(r["data"])}
                     for r in rows],
     })
+
+
+@app.post("/api/plugin/group/create")
+def plugin_group_create():
+    """Create a new group from the plugin. Returns the token to share with the group."""
+    body = request.get_json(silent=True) or {}
+    name = str(body.get("name") or "").strip()
+    if not name or len(name) > PLUGIN_GROUP_NAME_MAX:
+        return jsonify({"ok": False, "error": f"Group name must be 1-{PLUGIN_GROUP_NAME_MAX} characters"}), 400
+    ip = request.headers.get("X-Real-IP") or request.remote_addr or "?"
+    if not check_cooldown("grp:" + ip, 300):
+        return jsonify({"ok": False, "error": "Please wait a few minutes before creating another group"}), 429
+    token = secrets.token_urlsafe(18)
+    con = db()
+    con.execute("INSERT INTO plugin_groups (guild_id, token, name) VALUES (?, ?, ?)",
+                (PLUGIN_GUILD_PREFIX + secrets.token_hex(8), token, name))
+    con.commit()
+    return jsonify({"ok": True, "name": name, "token": token})
+
+
+@app.get("/api/plugin/group/info")
+def plugin_group_info():
+    """Check a token: which group it belongs to and how many members it has."""
+    gid = plugin_group_id()
+    if gid is None:
+        return jsonify({"ok": False, "error": "invalid group token"}), 401
+    con = db()
+    row = con.execute("SELECT name, guild_id FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
+    members = con.execute("SELECT COUNT(*) AS n FROM plugin_members WHERE group_id = ?", (gid,)).fetchone()["n"]
+    return jsonify({"name": row["name"] or "Discord group", "members": members,
+                    "discord": not row["guild_id"].startswith(PLUGIN_GUILD_PREFIX)})
+
+
+@app.post("/api/plugin/group/leave")
+def plugin_group_leave():
+    """Remove the player's shared data from the group (the plugin then forgets the token)."""
+    gid = plugin_group_id()
+    if gid is None:
+        return jsonify({"ok": False, "error": "invalid group token"}), 401
+    body = request.get_json(silent=True) or {}
+    nick = str(body.get("name") or "").replace(" ", " ").strip()
+    if not NICK_RE.match(nick):
+        return jsonify({"ok": False, "error": "invalid name"}), 400
+    con = db()
+    con.execute("DELETE FROM plugin_members WHERE group_id = ? AND nick_key = ?", (gid, norm_key(nick)))
+    con.commit()
+    return jsonify({"ok": True})
+
+
+@app.get("/api/afk/current")
+def afk_current():
+    """Today's AFK task without rolling one (the plugin's auto-completion polls this)."""
+    nick = (request.args.get("nick") or "").strip()
+    if not NICK_RE.match(nick):
+        return jsonify({"ok": False, "error": "invalid nick"}), 400
+    row = _afk_today_row(db(), norm_key(nick))
+    if row is None:
+        return jsonify({"task": None, "status": None})
+    return jsonify({"task": json.loads(row["task"]), "status": row["status"]})
 
 
 def _afk_today_row(con, key):
@@ -2264,13 +2373,14 @@ def afk_today():
     if row is not None:
         task, status = json.loads(row["task"]), row["status"]
     else:
-        levels = get_levels(con, nick)
+        levels = levels_for_request(con, nick)
         if levels is None:
             return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
         elig = best_per_skill(eligible_for(con, levels))
         if not elig:
             return jsonify({"ok": False, "error": "no eligible tasks"}), 404
         task, status = random.choice(elig), "pending"
+        task = {**task, "verify": verify.for_afk(task)}
         con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
                     (key, today().isoformat(), json.dumps(task)))
         con.commit()
@@ -2309,6 +2419,7 @@ def afk_complete():
     elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
     pool = [t for t in elig if t["skill"] != task["skill"]] or elig
     new_task = random.choice(pool)
+    new_task = {**new_task, "verify": verify.for_afk(new_task)}
     con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?", (json.dumps(new_task), key, d))
     con.commit()
     return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key)})
