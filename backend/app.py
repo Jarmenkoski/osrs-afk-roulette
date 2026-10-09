@@ -8,6 +8,7 @@ import json
 import os
 import random
 import re
+import secrets
 import sqlite3
 import threading
 import time
@@ -150,6 +151,20 @@ def init_db():
           created_at TEXT NOT NULL DEFAULT (datetime('now'))
         );
         CREATE INDEX IF NOT EXISTS idx_tasker_events_nick ON tasker_events(nick_key);
+        CREATE TABLE IF NOT EXISTS plugin_groups (
+          id INTEGER PRIMARY KEY AUTOINCREMENT,
+          guild_id TEXT NOT NULL UNIQUE,
+          token TEXT NOT NULL UNIQUE,
+          created_at TEXT NOT NULL DEFAULT (datetime('now'))
+        );
+        CREATE TABLE IF NOT EXISTS plugin_members (
+          group_id INTEGER NOT NULL,
+          nick_key TEXT NOT NULL,
+          nick TEXT NOT NULL,
+          data TEXT NOT NULL DEFAULT '{}',
+          updated_at REAL NOT NULL,
+          PRIMARY KEY (group_id, nick_key)
+        );
         """
     )
     con.commit()
@@ -1583,6 +1598,8 @@ def handle_slash(data):
             return ephemeral("Pick a skill from the list.")
         threading.Thread(target=finish_skill, args=(data["token"], sk), daemon=True).start()
         return jsonify({"type": 5})
+    if name == "plugin":
+        return handle_plugin_command(data)
     if name == "rng":  # raffle an item among the fixed roster — no nick needed
         item = next((str(o.get("value", "")) for o in cmd.get("options", [])
                      if o.get("name") == "item"), "").strip()[:100]
@@ -2106,6 +2123,225 @@ def tasker_prepare_nick_only():
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
     return None, levels, None
+
+
+# ---------- RuneLite plugin: group sync + AFK daily over REST ----------
+
+PLUGIN_MAX_MEMBERS = 20
+PLUGIN_MAX_BODY = 256 * 1024
+PLUGIN_CONTAINERS = ("inventory", "equipment", "bank", "seed_vault")
+QUEST_STATES = ("NOT_STARTED", "IN_PROGRESS", "FINISHED")
+_QUEST_NAMES = {q["name"].lower(): q["name"] for q in QUESTS}
+
+
+def plugin_group_id():
+    """Group id for the request's Authorization token, or None."""
+    token = (request.headers.get("Authorization") or "").strip()
+    if not token or len(token) > 200:
+        return None
+    row = db().execute("SELECT id FROM plugin_groups WHERE token = ?", (token,)).fetchone()
+    return row["id"] if row else None
+
+
+def _is_int(v, lo, hi):
+    return isinstance(v, int) and not isinstance(v, bool) and lo <= v <= hi
+
+
+def _valid_flat_items(v, max_pairs=1500):
+    """[id, qty, id, qty, ...] as sent by the plugin."""
+    if not isinstance(v, list) or len(v) % 2 or len(v) > max_pairs * 2:
+        return False
+    return all(_is_int(x, 0, 2147483647) for x in v)
+
+
+def _clean_skill_map(raw, lo, hi):
+    out = {}
+    for k, v in raw.items():
+        k = str(k).lower().replace(" ", "")
+        if k in SKILLS and k != "combat" and _is_int(v, lo, hi):
+            out[k] = v
+    return out
+
+
+@app.post("/api/plugin/update")
+def plugin_update():
+    """Partial update of one member's live client data. Only fields that changed
+    since the last upload are sent; the rest is kept from earlier uploads."""
+    gid = plugin_group_id()
+    if gid is None:
+        return jsonify({"ok": False, "error": "invalid group token"}), 401
+    if (request.content_length or 0) > PLUGIN_MAX_BODY:
+        return jsonify({"ok": False, "error": "payload too large"}), 413
+    body = request.get_json(silent=True)
+    if not isinstance(body, dict):
+        return jsonify({"ok": False, "error": "invalid payload"}), 400
+    nick = str(body.get("name") or "").replace(" ", " ").strip()
+    if not NICK_RE.match(nick):
+        return jsonify({"ok": False, "error": "invalid name"}), 400
+    key = norm_key(nick)
+    con = db()
+    row = con.execute("SELECT data FROM plugin_members WHERE group_id = ? AND nick_key = ?",
+                      (gid, key)).fetchone()
+    if row is None:
+        n = con.execute("SELECT COUNT(*) AS n FROM plugin_members WHERE group_id = ?", (gid,)).fetchone()["n"]
+        if n >= PLUGIN_MAX_MEMBERS:
+            return jsonify({"ok": False, "error": "group is full"}), 409
+    data = json.loads(row["data"]) if row else {}
+
+    levels = None
+    if isinstance(body.get("levels"), dict):
+        levels = _clean_skill_map(body["levels"], 1, 99)
+        data["levels"] = levels
+    if isinstance(body.get("xp"), dict):
+        data["xp"] = _clean_skill_map(body["xp"], 0, 200_000_000)
+    for c in PLUGIN_CONTAINERS:
+        if c in body:
+            if not _valid_flat_items(body[c]):
+                return jsonify({"ok": False, "error": f"invalid {c}"}), 400
+            data[c] = body[c]
+    finished = []
+    if isinstance(body.get("quests"), dict):
+        quests = {n: s for n, s in body["quests"].items()
+                  if isinstance(n, str) and len(n) <= 80 and s in QUEST_STATES}
+        data["quests"] = quests
+        finished = [n for n, s in quests.items() if s == "FINISHED"]
+    if _is_int(body.get("world"), 0, 9999):
+        data["world"] = body["world"]
+
+    now = time.time()
+    con.execute(
+        "INSERT INTO plugin_members (group_id, nick_key, nick, data, updated_at) VALUES (?, ?, ?, ?, ?) "
+        "ON CONFLICT(group_id, nick_key) DO UPDATE SET nick = excluded.nick, data = excluded.data, "
+        "updated_at = excluded.updated_at",
+        (gid, key, nick, json.dumps(data), now),
+    )
+    # Live client data is better than the hiscores: feed it to the rest of the
+    # system so tasks filter on exact levels and on the real quest log.
+    if levels:
+        con.execute(
+            "INSERT INTO player_levels (nick_key, nick, levels, updated_at) VALUES (?, ?, ?, ?) "
+            "ON CONFLICT(nick_key) DO UPDATE SET nick = excluded.nick, levels = excluded.levels, "
+            "updated_at = excluded.updated_at",
+            (key, nick, json.dumps(levels), now),
+        )
+    for name in finished:
+        canonical = _QUEST_NAMES.get(name.lower())
+        if canonical:
+            con.execute("INSERT OR IGNORE INTO quest_flags (nick_key, quest) VALUES (?, ?)", (key, canonical))
+    con.commit()
+    return jsonify({"ok": True})
+
+
+@app.get("/api/plugin/group")
+def plugin_group():
+    gid = plugin_group_id()
+    if gid is None:
+        return jsonify({"ok": False, "error": "invalid group token"}), 401
+    rows = db().execute(
+        "SELECT nick, data, updated_at FROM plugin_members WHERE group_id = ? ORDER BY nick_key", (gid,)
+    ).fetchall()
+    return jsonify({
+        "now": time.time(),
+        "members": [{"nick": r["nick"], "updated_at": r["updated_at"], "data": json.loads(r["data"])}
+                    for r in rows],
+    })
+
+
+def _afk_today_row(con, key):
+    return con.execute("SELECT * FROM daily_rolls WHERE nick_key = ? AND d = ?",
+                       (key, today().isoformat())).fetchone()
+
+
+@app.get("/api/afk/today")
+def afk_today():
+    """Today's AFK task for a player (same daily roll as Discord /afk)."""
+    nick = (request.args.get("nick") or "").strip()
+    if not NICK_RE.match(nick):
+        return jsonify({"ok": False, "error": "invalid nick"}), 400
+    con = db()
+    key = norm_key(nick)
+    row = _afk_today_row(con, key)
+    if row is not None:
+        task, status = json.loads(row["task"]), row["status"]
+    else:
+        levels = get_levels(con, nick)
+        if levels is None:
+            return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
+        elig = best_per_skill(eligible_for(con, levels))
+        if not elig:
+            return jsonify({"ok": False, "error": "no eligible tasks"}), 404
+        task, status = random.choice(elig), "pending"
+        con.execute("INSERT INTO daily_rolls (nick_key, d, task, status) VALUES (?, ?, ?, 'pending')",
+                    (key, today().isoformat(), json.dumps(task)))
+        con.commit()
+    return jsonify({"task": task, "status": status, "stats": player_stats(con, key)})
+
+
+@app.post("/api/afk/complete")
+def afk_complete():
+    body = request.get_json(silent=True) or {}
+    nick = str(body.get("nick") or "").strip()
+    status = str(body.get("status") or "").strip().lower()
+    if not NICK_RE.match(nick) or status not in ("done", "skipped"):
+        return jsonify({"ok": False, "error": "invalid params"}), 400
+    con = db()
+    key = norm_key(nick)
+    d = today().isoformat()
+    row = _afk_today_row(con, key)
+    if row is None:
+        return jsonify({"ok": False, "error": "no task rolled today"}), 404
+    task = json.loads(row["task"])
+    if status == "done":
+        if row["status"] != "done":
+            insert_event(con, {"nick": nick, "nick_key": key, "d": d,
+                               "task": task["name"], "skill": task["skill"], "status": "done"})
+            con.execute("UPDATE daily_rolls SET status = 'done' WHERE nick_key = ? AND d = ?", (key, d))
+            con.commit()
+        return jsonify({"task": task, "status": "done", "stats": player_stats(con, key)})
+    if row["status"] == "done":
+        return jsonify({"ok": False, "error": "already done today"}), 409
+    lv = con.execute("SELECT levels FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
+    if lv is None:
+        return jsonify({"ok": False, "error": "levels not cached"}), 409
+    insert_event(con, {"nick": nick, "nick_key": key, "d": d,
+                       "task": task["name"], "skill": task["skill"], "status": "skipped"})
+    # Skip moves to a different skill: within a skill the best task is fixed.
+    elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
+    pool = [t for t in elig if t["skill"] != task["skill"]] or elig
+    new_task = random.choice(pool)
+    con.execute("UPDATE daily_rolls SET task = ? WHERE nick_key = ? AND d = ?", (json.dumps(new_task), key, d))
+    con.commit()
+    return jsonify({"task": new_task, "status": "pending", "stats": player_stats(con, key)})
+
+
+def handle_plugin_command(data):
+    """/plugin: show (or rotate) the Discord server's group token for the plugin."""
+    guild_id = data.get("guild_id")
+    if not guild_id:
+        return ephemeral("Use `/plugin` in your group's Discord server, not in DMs.")
+    reset = any(o.get("name") == "reset" and o.get("value") is True
+                for o in data.get("data", {}).get("options", []))
+    con = db()
+    row = con.execute("SELECT token FROM plugin_groups WHERE guild_id = ?", (guild_id,)).fetchone()
+    if row is None or reset:
+        token = secrets.token_urlsafe(18)
+        con.execute(
+            "INSERT INTO plugin_groups (guild_id, token) VALUES (?, ?) "
+            "ON CONFLICT(guild_id) DO UPDATE SET token = excluded.token",
+            (guild_id, token),
+        )
+        con.commit()
+    else:
+        token = row["token"]
+    note = "\n⚠️ New token issued — everyone in the group must paste it again." if reset and row else ""
+    return ephemeral(
+        "**AFK Roulette — RuneLite plugin**\n"
+        f"Group token: `{token}`\n"
+        "Paste it into RuneLite → Configuration → AFK Roulette → *Group token*, "
+        "then turn on the server options there.\n"
+        "Keep it inside the group: anyone with the token can see the group's shared data."
+        + note
+    )
 
 
 @app.post("/api/discord/interactions")
