@@ -743,6 +743,17 @@ def eligible_for(con, levels):
             if all(levels.get(s, 1) >= lvl for s, lvl in t["reqs"].items())]
 
 
+def best_per_skill(tasks):
+    """One task per skill: the highest exp/h one (same rule as the site's wheel).
+    Tasks without xp data count as 0; ties are broken randomly."""
+    best = {}
+    for t in random.sample(tasks, len(tasks)):
+        cur = best.get(t["skill"])
+        if cur is None or (t.get("xp") or 0) > (cur.get("xp") or 0):
+            best[t["skill"]] = t
+    return list(best.values())
+
+
 def player_stats(con, key):
     row = con.execute(
         "SELECT SUM(status = 'done') AS done, SUM(status = 'skipped') AS skips "
@@ -767,6 +778,8 @@ def task_embed(con, nick, task, done):
     ]
     if task.get("afk"):
         fields.append({"name": "AFK time", "value": f"~{task['afk']}", "inline": True})
+    if task.get("xp"):
+        fields.append({"name": "Exp/h", "value": f"~{task['xp']:,}", "inline": True})
     fields.append({"name": "Requirements", "value": req_str, "inline": False})
     if task.get("notes"):
         fields.append({"name": "Note", "value": task["notes"], "inline": False})
@@ -836,7 +849,7 @@ def _finish_roll(token, discord_id, nick):
             task = json.loads(row["task"])
             done = row["status"] == "done"
         else:
-            elig = eligible_for(con, levels)
+            elig = best_per_skill(eligible_for(con, levels))
             if not elig:
                 patch_original(token, {"content": f"No eligible tasks found for **{nick}**."})
                 return
@@ -1713,8 +1726,10 @@ def handle_button(data):
         return ephemeral("Levels not cached — use `/afk` first.")
     insert_event(con, {"nick": nick, "nick_key": key, "d": d,
                        "task": task["name"], "skill": task["skill"], "status": "skipped"})
-    elig = eligible_for(con, json.loads(lv["levels"]))
-    pool = [t for t in elig if t["name"] != task["name"]] or elig
+    # Skip moves to a different skill: within a skill the best task is fixed,
+    # so the same skill would just hand the same task back.
+    elig = best_per_skill(eligible_for(con, json.loads(lv["levels"])))
+    pool = [t for t in elig if t["skill"] != task["skill"]] or elig
     if not pool:
         return ephemeral("No other eligible tasks to skip to!")
     new_task = random.choice(pool)

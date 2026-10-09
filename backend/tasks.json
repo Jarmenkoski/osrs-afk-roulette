@@ -7,6 +7,7 @@
   },
   "afk": "30:00",
   "notes": "Log basket recommended",
+  "xp": 9100,
   "f2p": false,
   "url": "/w/Infected_root"
  },
@@ -17,6 +18,7 @@
    "woodcutting": 92
   },
   "afk": "4:35",
+  "xp": 85000,
   "f2p": false,
   "url": "/w/Rosewood_tree"
  },
@@ -27,6 +29,7 @@
    "woodcutting": 90
   },
   "afk": "4:24",
+  "xp": 85000,
   "f2p": false,
   "url": "/w/Redwood_tree"
  },
@@ -37,6 +40,7 @@
    "woodcutting": 80
   },
   "afk": "4:00",
+  "xp": 100000,
   "f2p": false,
   "url": "/w/Ironwood_tree"
  },
@@ -47,6 +51,7 @@
    "woodcutting": 75
   },
   "afk": "3:54",
+  "xp": 27500,
   "f2p": false,
   "url": "/w/Magic_tree"
  },
@@ -57,6 +62,7 @@
    "woodcutting": 66
   },
   "afk": "2:00",
+  "xp": 70000,
   "f2p": false,
   "url": "/w/Camphor_tree"
  },
@@ -67,6 +73,7 @@
    "woodcutting": 60
   },
   "afk": "1:54",
+  "xp": 47000,
   "f2p": true,
   "url": "/w/Yew_tree"
  },
@@ -77,6 +84,7 @@
    "woodcutting": 50
   },
   "afk": "1:00",
+  "xp": 46500,
   "f2p": false,
   "url": "/w/Mahogany_tree"
  },
@@ -87,6 +95,7 @@
    "woodcutting": 45
   },
   "afk": "1:00",
+  "xp": 52800,
   "f2p": true,
   "url": "/w/Maple_tree"
  },
@@ -99,6 +108,7 @@
   },
   "afk": "10:00",
   "notes": "XP capped at 1,250 per round",
+  "xp": 7500,
   "f2p": false,
   "url": "/w/Guardian_fragments"
  },
@@ -109,6 +119,7 @@
    "mining": 10
   },
   "afk": "7:00",
+  "xp": 31160,
   "f2p": true,
   "url": "/w/Shooting_stars"
  },
@@ -119,6 +130,7 @@
    "mining": 72
   },
   "afk": "5:00",
+  "xp": 10600,
   "f2p": false,
   "url": "/w/Salt_Deposit"
  },
@@ -130,6 +142,7 @@
   },
   "afk": "1:57",
   "notes": "Expert mining gloves",
+  "xp": 24000,
   "f2p": false,
   "url": "/w/Amethyst_crystals"
  },
@@ -140,6 +153,7 @@
    "mining": 60
   },
   "afk": "1:00",
+  "xp": 8851,
   "f2p": false,
   "url": "/w/Daeyalt_essence_mine"
  },
@@ -161,6 +175,7 @@
    "mining": 14
   },
   "afk": "0:20",
+  "xp": 20000,
   "f2p": true,
   "url": "/w/Barronite_rocks"
  },
@@ -171,6 +186,7 @@
    "cooking": 21
   },
   "afk": "7:17",
+  "xp": 14720,
   "f2p": false,
   "url": "/w/Dairy_churn"
  },
@@ -181,6 +197,7 @@
    "cooking": 1
   },
   "afk": "1:07",
+  "xp": 310000,
   "f2p": true,
   "url": "/w/Pay-to-play_Cooking_training"
  },
@@ -191,6 +208,7 @@
    "cooking": 35
   },
   "afk": "0:49",
+  "xp": 96579,
   "f2p": false,
   "url": "/w/Money_making_guide/Creating_forester's_rations"
  },
@@ -201,6 +219,7 @@
    "thieving": 50
   },
   "afk": "1:32",
+  "xp": 57600,
   "f2p": false,
   "url": "/w/Wealthy_citizen"
  },
@@ -212,6 +231,7 @@
   },
   "afk": "0:55",
   "notes": "Requires house keys",
+  "xp": 115444,
   "f2p": false,
   "url": "/w/Stealing_valuables"
  },
@@ -222,6 +242,7 @@
    "thieving": 65
   },
   "afk": "0:36",
+  "xp": 150000,
   "f2p": false,
   "url": "/w/Sorceress's_Garden/Summer"
  },
@@ -232,6 +253,7 @@
    "smithing": 1
   },
   "afk": "1:07",
+  "xp": 65000,
   "f2p": true,
   "url": "/w/Pay-to-play_Smithing_training"
  },
@@ -243,6 +265,7 @@
   },
   "afk": "1:02",
   "notes": "Double ammo mould",
+  "xp": 30720,
   "f2p": false,
   "url": "/w/Cannonball"
  },
@@ -253,6 +276,7 @@
    "fletching": 11
   },
   "afk": "1:21",
+  "xp": 8400,
   "f2p": false,
   "url": "/w/Bolt_tips"
  },
@@ -263,6 +287,7 @@
    "fletching": 40
   },
   "afk": "0:49",
+  "xp": 143000,
   "f2p": false,
   "url": "/w/Fletching_training"
  },
@@ -273,6 +298,7 @@
    "fletching": 92
   },
   "afk": "0:47",
+  "xp": 193000,
   "f2p": false,
   "url": "/w/Fletching_training"
  },
@@ -293,6 +319,7 @@
    "firemaking": 1
   },
   "afk": "2:31",
+  "xp": 238569,
   "f2p": true,
   "url": "/w/Forester's_campfire"
  },
@@ -303,6 +330,7 @@
    "fishing": 63
   },
   "afk": "30:00",
+  "xp": 750,
   "f2p": false,
   "url": "/w/Fishing_spot_(The_Stranglewood)"
  },
@@ -313,6 +341,7 @@
    "fishing": 5
   },
   "afk": "20:00",
+  "xp": 5100,
   "f2p": false,
   "url": "/w/Raw_karambwanji"
  },
@@ -324,6 +353,7 @@
   },
   "afk": "7:32",
   "notes": "Fish barrel + elite wilderness diary — in the Wilderness!",
+  "xp": 40040,
   "f2p": false,
   "url": "/w/Dark_crab"
  },
@@ -334,6 +364,7 @@
    "fishing": 1
   },
   "afk": "7:00",
+  "xp": 2000,
   "f2p": false,
   "url": "/w/Fishing_spot_(Civitas_illa_Fortis)"
  },
@@ -344,6 +375,7 @@
    "fishing": 38
   },
   "afk": "4:58",
+  "xp": 40000,
   "f2p": false,
   "url": "/w/Raw_cave_eel"
  },
@@ -354,6 +386,7 @@
    "fishing": 65
   },
   "afk": "4:13",
+  "xp": 40000,
   "f2p": false,
   "url": "/w/Raw_karambwan"
  },
@@ -364,6 +397,7 @@
    "fishing": 82
   },
   "afk": "2:37",
+  "xp": 18000,
   "f2p": false,
   "url": "/w/Raw_anglerfish"
  },
@@ -374,6 +408,7 @@
    "fishing": 1
   },
   "afk": "1:57",
+  "xp": 50000,
   "f2p": true,
   "url": "/w/Fishing"
  },
@@ -384,6 +419,7 @@
    "fishing": 48
   },
   "afk": "1:57",
+  "xp": 57000,
   "f2p": false,
   "url": "/w/Barbarian_Training"
  },
@@ -395,6 +431,7 @@
   },
   "afk": "1:00",
   "notes": "Rada's blessing 4",
+  "xp": 27300,
   "f2p": false,
   "url": "/w/Sacred_eel"
  },
@@ -406,6 +443,7 @@
   },
   "afk": "1:00",
   "notes": "Rada's blessing 4",
+  "xp": 36516,
   "f2p": false,
   "url": "/w/Infernal_eel"
  },
@@ -417,19 +455,21 @@
    "construction": 88
   },
   "afk": "10:00",
+  "xp": 12000,
   "f2p": false,
   "url": "/w/Guide:POH_Agility"
  },
  {
-  "name": "Vampyrium Rocks",
+  "name": "Vampyrium Rockslide",
   "skill": "agility",
   "reqs": {
-   "agility": 61
+   "agility": 78
   },
   "afk": "7:30",
   "notes": "Clicking early resets the cooldown",
+  "xp": 4400,
   "f2p": false,
-  "url": "/w/Rocks_(Vampyrium)"
+  "url": "/w/Rockslide_(Vampyrium)"
  },
  {
   "name": "Pedals",
@@ -438,6 +478,7 @@
    "agility": 30
   },
   "afk": "5:19",
+  "xp": 6000,
   "f2p": false,
   "url": "/w/Pedals"
  },
@@ -448,6 +489,7 @@
    "herblore": 11
   },
   "afk": "0:47",
+  "xp": 170000,
   "f2p": false,
   "url": "/w/Herblore_training"
  },
@@ -458,6 +500,7 @@
    "herblore": 3
   },
   "afk": "0:34",
+  "xp": 45000,
   "f2p": false,
   "url": "/w/Herblore_training"
  },
@@ -468,6 +511,7 @@
    "herblore": 77
   },
   "afk": "0:31",
+  "xp": 330000,
   "f2p": false,
   "url": "/w/Herblore_training"
  },
@@ -478,6 +522,7 @@
    "runecraft": 77
   },
   "afk": "0:55",
+  "xp": 36000,
   "f2p": false,
   "url": "/w/Pay-to-play_Runecraft_training"
  },
@@ -488,6 +533,7 @@
    "runecraft": 90
   },
   "afk": "0:55",
+  "xp": 44000,
   "f2p": false,
   "url": "/w/Pay-to-play_Runecraft_training"
  },
@@ -498,6 +544,7 @@
    "runecraft": 1
   },
   "afk": "0:25",
+  "xp": 77121,
   "f2p": false,
   "url": "/w/Ourania_altar"
  },
@@ -508,6 +555,7 @@
    "magic": 7
   },
   "afk": "1:53",
+  "xp": 63180,
   "f2p": true,
   "url": "/w/Enchantment_spells"
  },
@@ -518,6 +566,7 @@
    "magic": 86
   },
   "afk": "1:30",
+  "xp": 86400,
   "f2p": false,
   "url": "/w/Money_making_guide/Casting_plank_make"
  },
@@ -528,6 +577,7 @@
    "magic": 80
   },
   "afk": "0:49",
+  "xp": 149400,
   "f2p": false,
   "url": "/w/String_Jewellery"
  },
@@ -538,6 +588,7 @@
    "magic": 1
   },
   "afk": "20:00",
+  "xp": 60600,
   "f2p": true,
   "url": "/w/Splashing/Guide"
  },
@@ -548,6 +599,7 @@
    "crafting": 1
   },
   "afk": "1:58",
+  "xp": 16000,
   "f2p": true,
   "url": "/w/Pottery_Oven"
  },
@@ -558,6 +610,7 @@
    "crafting": 1
   },
   "afk": "0:50",
+  "xp": 122500,
   "f2p": false,
   "url": "/w/Pay-to-play_Crafting_training"
  },
@@ -568,6 +621,7 @@
    "crafting": 1
   },
   "afk": "0:50",
+  "xp": 210000,
   "f2p": true,
   "url": "/w/Spinning_wheel"
  },
@@ -578,6 +632,7 @@
    "strength": 30
   },
   "afk": "30:00",
+  "xp": 12000,
   "f2p": false,
   "url": "/w/Pump_(Blast_Furnace)"
  },
@@ -588,6 +643,7 @@
    "sailing": 40
   },
   "afk": "30:00",
+  "xp": 30000,
   "f2p": false,
   "url": "/w/Shipwreck_salvaging"
  },
@@ -598,6 +654,7 @@
    "sailing": 87
   },
   "afk": "4:00",
+  "xp": 85000,
   "f2p": false,
   "url": "/w/Merchant_shipwreck"
  },
@@ -608,6 +665,7 @@
    "sailing": 80
   },
   "afk": "3:38",
+  "xp": 80000,
   "f2p": false,
   "url": "/w/Fremennik_shipwreck"
  },
@@ -618,6 +676,7 @@
    "sailing": 73
   },
   "afk": "3:15",
+  "xp": 70000,
   "f2p": false,
   "url": "/w/Mercenary_shipwreck"
  },
@@ -628,6 +687,7 @@
    "sailing": 64
   },
   "afk": "2:38",
+  "xp": 47000,
   "f2p": false,
   "url": "/w/Pirate_shipwreck"
  },
@@ -638,6 +698,7 @@
    "sailing": 53
   },
   "afk": "2:31",
+  "xp": 30000,
   "f2p": false,
   "url": "/w/Large_shipwreck"
  },
@@ -648,6 +709,7 @@
    "sailing": 35
   },
   "afk": "2:21",
+  "xp": 18000,
   "f2p": false,
   "url": "/w/Barracuda_shipwreck"
  },
@@ -658,6 +720,7 @@
    "sailing": 26
   },
   "afk": "2:12",
+  "xp": 5800,
   "f2p": false,
   "url": "/w/Fisherman's_shipwreck"
  },
@@ -668,6 +731,7 @@
    "sailing": 15
   },
   "afk": "1:00",
+  "xp": 3200,
   "f2p": false,
   "url": "/w/Small_shipwreck"
  },
@@ -678,6 +742,7 @@
    "sailing": 73
   },
   "afk": "1:00",
+  "xp": 13553,
   "f2p": false,
   "url": "/w/Crystal_extractor"
  },
@@ -688,6 +753,7 @@
    "hunter": 82
   },
   "afk": "0:39",
+  "xp": 140000,
   "f2p": false,
   "url": "/w/Stymphike"
  },
@@ -698,6 +764,7 @@
    "hunter": 60
   },
   "afk": "0:25",
+  "xp": 120000,
   "f2p": false,
   "url": "/w/Maniacal_monkey_(Hunter)"
  },
@@ -709,6 +776,7 @@
   },
   "afk": "1:02",
   "notes": "Bones on a gilded altar in a POH",
+  "xp": 630000,
   "f2p": false,
   "url": "/w/Pay-to-play_Prayer_training"
  },
@@ -720,6 +788,7 @@
   },
   "afk": "10:00",
   "notes": "Requires Children of the Sun",
+  "xp": 100000,
   "f2p": false,
   "url": "/w/Gemstone_Crab"
  },
@@ -730,6 +799,7 @@
    "hitpoints": 10
   },
   "afk": "10:00",
+  "xp": 100000,
   "f2p": false,
   "url": "/w/Sand_Crab"
  },
@@ -741,6 +811,7 @@
   },
   "afk": "10:00",
   "notes": "Requires Bone Voyage",
+  "xp": 100000,
   "f2p": false,
   "url": "/w/Ammonite_Crab"
  },
@@ -753,6 +824,7 @@
   },
   "afk": "20:00",
   "notes": "Requires Nightmare Zone quests",
+  "xp": 105000,
   "f2p": false,
   "url": "/w/Nightmare_Zone/Strategies"
  },
@@ -764,6 +836,7 @@
   },
   "afk": "20:00",
   "notes": "Requires Nightmare Zone quests",
+  "xp": 150000,
   "f2p": false,
   "url": "/w/Nightmare_Zone/Strategies"
  },
@@ -777,6 +850,7 @@
   },
   "afk": "17:00",
   "notes": "Requires Sins of the Father",
+  "xp": 54000,
   "f2p": false,
   "url": "/w/Vyrewatch_Sentinel"
  },
@@ -788,6 +862,7 @@
   },
   "afk": "10:00",
   "notes": "Requires Monkey Madness II",
+  "xp": 200000,
   "f2p": false,
   "url": "/w/Maniacal_monkey/Strategies"
  },
@@ -799,6 +874,7 @@
   },
   "afk": "10:00",
   "notes": "MM II + red chinchompas",
+  "xp": 500000,
   "f2p": false,
   "url": "/w/Maniacal_monkey/Strategies"
  }

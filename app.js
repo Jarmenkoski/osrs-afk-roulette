@@ -348,8 +348,21 @@ const ICON_IMGS = {};
   }
 }
 
+// One wheel segment per skill: the eligible task with the highest exp/h.
+// Tasks without xp data (e.g. community suggestions) count as 0 and win only
+// when nothing else in that skill is available. Ties are broken randomly.
+function bestTaskPerSkill(tasks) {
+  const best = {};
+  for (const t of tasks) {
+    const cur = best[t.skill];
+    const xp = t.xp || 0, curXp = cur ? (cur.xp || 0) : -1;
+    if (!cur || xp > curXp || (xp === curXp && Math.random() < 0.5)) best[t.skill] = t;
+  }
+  return Object.values(best);
+}
+
 function pickWheelTasks() {
-  const pool = [...eligibleTasks()];
+  const pool = bestTaskPerSkill(eligibleTasks());
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
     [pool[i], pool[j]] = [pool[j], pool[i]];
@@ -480,6 +493,7 @@ function renderResult(task, restored) {
     <div class="task-skill">Skill: <b>${meta.name}</b> (yours: ${playerLevels ? (playerLevels[task.skill] || '?') : '?'})</div>
     <div class="task-meta">
       <div>⏱️ AFK time: ~${task.afk} per click</div>
+      ${task.xp ? `<div>📈 ~${task.xp.toLocaleString('en-US')} xp/h</div>` : ''}
       <div>📋 Requirements: ${reqStr}</div>
       ${task.notes ? `<div>💡 ${task.notes}</div>` : ''}
       ${restored ? '<div><i>(today\'s previously rolled task)</i></div>' : ''}
