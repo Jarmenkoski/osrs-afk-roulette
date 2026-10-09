@@ -762,9 +762,12 @@ def fetch_levels_wom(nick):
     return None
 
 
-def get_levels(con, nick, force=False):
+def get_levels(con, nick, force=False, stale_ok=False):
+    """stale_ok: any cached levels will do (no hiscores round trip)."""
     key = norm_key(nick)
     row = con.execute("SELECT levels, updated_at FROM player_levels WHERE nick_key = ?", (key,)).fetchone()
+    if row is not None and stale_ok:
+        return json.loads(row["levels"])
     if not force and row is not None and time.time() - row["updated_at"] < LEVELS_CACHE_S:
         return json.loads(row["levels"])
     levels = fetch_levels_official(nick) or fetch_levels_wom(nick)
@@ -1843,7 +1846,8 @@ REEL_LENGTH = 40
 
 def make_reel(icons):
     """Icons the plugin spins past before stopping on the rolled task."""
-    icons = [i for i in icons if i]
+    # Distinct icons, so e.g. 48 diaries sharing one cape don't fill the reel.
+    icons = list({json.dumps(i, sort_keys=True): i for i in icons if i}.values())
     if not icons:
         return []
     return [random.choice(icons) for _ in range(REEL_LENGTH)]
@@ -1900,7 +1904,7 @@ def tasker_split(levels, tier):
     return cb, eligible, blocked
 
 
-def levels_for_request(con, nick):
+def levels_for_request(con, nick, stale_ok=False):
     """Exact levels from the player's own plugin upload when the request carries a
     group token they belong to; otherwise the hiscores. Also remembers the
     plugin's finished quests for excluded_quests() during this request."""
@@ -1916,7 +1920,7 @@ def levels_for_request(con, nick):
             }
             if data.get("levels"):
                 return data["levels"]
-    return get_levels(con, nick)
+    return get_levels(con, nick, stale_ok=stale_ok)
 
 
 def tasker_prepare():
@@ -2184,7 +2188,7 @@ def tasker_complete():
                     (key, name[len(QUEST_PREFIX):]))
         con.execute("DELETE FROM tasker_active WHERE nick_key = ? AND category = ?", (key, category))
         con.commit()
-        levels = levels_for_request(con, nick)
+        levels = levels_for_request(con, nick, stale_ok=True)
         nxt = roll_quest_task(levels, con, key) if levels else None
         if nxt:
             set_active(con, key, category, nxt)
@@ -2487,7 +2491,7 @@ def afk_complete():
     if row["status"] == "done":
         return jsonify({"ok": False, "error": "already done today"}), 409
     # The plugin's own upload for plugin groups, otherwise the (cached) hiscores.
-    levels = levels_for_request(con, nick)
+    levels = levels_for_request(con, nick, stale_ok=True)
     if levels is None:
         return jsonify({"ok": False, "error": "player not found on hiscores"}), 404
     insert_event(con, {"nick": nick, "nick_key": key, "d": d,
