@@ -1,4 +1,4 @@
-"""Requirement rules for the Taskman-style task generator.
+"""Requirement rules for the task generator.
 
 Maps task names (from tasker_tiers.json) to effective minimum skill levels,
 INCLUDING the skill requirements of prerequisite quests — hiscores can't tell
@@ -429,6 +429,84 @@ _BOSS_KILLS_RAW = [
     ("Kill the Doom of Mokhaiotl {n} times", 3, 8, {"combat": 110, "defence": 75, "prayer": 45}),  # EST
 ]
 BOSS_KILLS = [(t, lo, hi, _cap(r)) for t, lo, hi, r in _BOSS_KILLS_RAW]
+
+
+# ---- Collection log pages (collection_tasks.json, built by build_collection_tasks.py)
+
+def _bk(keyword):
+    """Recommended stats of the boss kill task whose template mentions keyword."""
+    for template, _lo, _hi, reqs in BOSS_KILLS:
+        if keyword.lower() in template.lower():
+            return reqs
+    raise KeyError(keyword)
+
+
+# Pages that can't be worked towards (pets are pure luck, random events can't be started).
+CLOG_EXCLUDED = {"All Pets", "Skilling Pets", "Random Events"}
+
+_CLOG_REQS_RAW = {
+    # Bosses — same recommended stats as the Bosses category
+    "Abyssal Sire": _bk("Abyssal Sire"), "Amoxliatl": _bk("Amoxliatl"), "Araxxor": _bk("Araxxor"),
+    "Barrows Chests": _bk("Barrows"), "Bryophyta": _bk("Bryophyta"), "Callisto and Artio": _bk("Callisto"),
+    "Cerberus": _bk("Cerberus"), "Chaos Elemental": _bk("Chaos Elemental"), "Chaos Fanatic": _bk("Chaos Fanatic"),
+    "Commander Zilyana": _bk("Zilyana"), "Corporeal Beast": _bk("Corporeal"),
+    "Crazy archaeologist": _bk("Crazy Archaeologist"), "Dagannoth Kings": _bk("Dagannoth"),
+    "Doom of Mokhaiotl": _bk("Mokhaiotl"), "Duke Sucellus": _bk("Duke Sucellus"),
+    "The Fight Caves": _bk("Fight Caves"), "Fortis Colosseum": _bk("Colosseum"), "The Gauntlet": _bk("Gauntlet"),
+    "General Graardor": _bk("Graardor"), "Giant Mole": _bk("Giant Mole"), "Grotesque Guardians": _bk("Grotesque"),
+    "Hespori": _bk("Hespori"), "The Hueycoatl": _bk("Hueycoatl"), "Kalphite Queen": _bk("Kalphite"),
+    "King Black Dragon": _bk("King Black Dragon"), "Kraken": _bk("Kraken"), "Kree'arra": _bk("Kree'arra"),
+    "K'ril Tsutsaroth": _bk("K'ril"), "The Leviathan": _bk("Leviathan"), "Moons of Peril": _bk("Moons of Peril"),
+    "Nex": _bk("Nex"), "The Nightmare": _bk("Nightmare"), "Obor": _bk("Obor"), "Phantom Muspah": _bk("Muspah"),
+    "Royal Titans": _bk("Royal Titans"), "Sarachnis": _bk("Sarachnis"), "Scorpia": _bk("Scorpia"),
+    "Scurrius": _bk("Scurrius"), "Skotizo": _bk("Skotizo"), "Thermonuclear smoke devil": _bk("Thermonuclear"),
+    "Vardorvis": _bk("Vardorvis"), "Venenatis and Spindel": _bk("Venenatis"), "Vet'ion and Calvar'ion": _bk("Vet'ion"),
+    "Vorkath": _bk("Vorkath"), "The Whisperer": _bk("Whisperer"), "Yama": _bk("Yama"), "Zalcano": _bk("Zalcano"),
+    "Zulrah": _bk("Zulrah"), "Tormented Demons": _bk("Tormented"),
+    "Chambers of Xeric": _bk("Chambers of Xeric"), "Theatre of Blood": _bk("Theatre of Blood"),
+    "Tombs of Amascut": _bk("Tombs of Amascut"),
+    "Alchemical Hydra": {"slayer": 95, "combat": 100, "ranged": 80, "defence": 75, "prayer": 45},
+    "The Inferno": {"combat": 115, "ranged": 90, "defence": 80, "prayer": 45},
+    "Brutus": {"combat": 60}, "Deranged Archaeologist": {"combat": 70, "defence": 60},
+    "The Mad Angel": {"combat": 100, "attack": 75, "strength": 75, "defence": 75},  # EST
+    "Maggot King": {"combat": 100, "defence": 70},  # EST
+    "Shellbane Gryphon": {"combat": 90},  # EST
+    "Tempoross": {"fishing": 35}, "Wintertodt": {"firemaking": 50},
+    # Clues
+    "Medium Treasure Trails": {"combat": 40}, "Hard Treasure Trails": {"combat": 70},
+    "Elite Treasure Trails": {"combat": 90}, "Master Treasure Trails": {"combat": 100},
+    "Hard Treasure Trail Rewards (Rare)": {"combat": 70}, "Elite Treasure Trail Rewards (Rare)": {"combat": 90},
+    "Master Treasure Trail Rewards (Rare)": {"combat": 100},
+    # Minigames
+    "Barbarian Assault": {"combat": 60}, "Barracuda Trials": {"sailing": 30},  # EST
+    "Fishing Trawler": {"fishing": 15}, "Giants' Foundry": {"smithing": 15},
+    "Guardians of the Rift": {"runecraft": 27}, "Hallowed Sepulchre": {"agility": 52},
+    "Magic Training Arena": {"magic": 33}, "Mahogany Homes": {"construction": 20},
+    "Mastering Mixology": {"herblore": 60}, "Pest Control": {"combat": 40},
+    "Rogues' Den": {"thieving": 50, "agility": 50}, "Shades of Mort'ton": {"firemaking": 5},
+    "Soul Wars": {"combat": 40}, "Temple Trekking": {"combat": 30}, "Tithe Farm": {"farming": 34},
+    "Trouble Brewing": {**CABIN_FEVER, "cooking": 40}, "Vale Totems": {"fletching": 35},
+    "Volcanic Mine": {"mining": 50},
+    # Other
+    "Aerial Fishing": {"fishing": 43, "hunter": 35}, "Boat Paints": {"sailing": 40},
+    "Camdozaal": {"mining": 14}, "Champion's Challenge": {"combat": 60}, "Chompy Bird Hunting": {"ranged": 30},
+    "Colossal Wyrm Agility": {"agility": 50}, "Creature Creation": {"construction": 10},
+    "Cyclopes": {"attack": 60, "strength": 60}, "Elder Chaos Druids": {"combat": 70},
+    "Forestry": {"woodcutting": 15}, "Glough's Experiments": {**MM2, "combat": 100},
+    "Hunter Guild": {"hunter": 46}, "Lost Schematics": {"sailing": 45},
+    "Monkey Backpacks": {**MM2, "agility": 48}, "Motherlode Mine": {"mining": 30},
+    "Ocean Encounters": {"sailing": 40}, "Revenants": {"combat": 80}, "Rooftop Agility": {"agility": 10},
+    "Sailing Miscellaneous": {"sailing": 40}, "Sea Treasures": {"sailing": 40}, "Shayzien Armour": {"combat": 60},
+    "Shooting Stars": {"mining": 10}, "Slayer": {"slayer": 5}, "TzHaar": {"combat": 70},
+}
+CLOG_REQS = {k: _cap(v) for k, v in _CLOG_REQS_RAW.items()}
+
+
+def clog_reqs(activity, task_name):
+    """Requirements for a collection log page task (or a diary task by its name)."""
+    if activity in CLOG_REQS:
+        return dict(CLOG_REQS[activity])
+    return reqs_for(task_name)  # diaries; pages without a gate return {}
 
 
 def is_boss(task_name):

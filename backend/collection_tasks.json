@@ -1,0 +1,4249 @@
+[
+ {
+  "name": "Get 1 new item from the Abyssal Sire collection log",
+  "short": "Abyssal Sire",
+  "wiki": "https://oldschool.runescape.wiki/w/Abyssal_Sire",
+  "tip": "Any Abyssal Sire collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Abyssal orphan",
+    "Unsired",
+    "Abyssal head",
+    "Bludgeon spine",
+    "Bludgeon claw",
+    "Bludgeon axon",
+    "Jar of Miasma",
+    "Abyssal dagger",
+    "Abyssal whip"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Alchemical Hydra collection log",
+  "short": "Alchemical Hydra",
+  "wiki": "https://oldschool.runescape.wiki/w/Alchemical_Hydra",
+  "tip": "Any Alchemical Hydra collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Ikkle Hydra",
+    "Hydra's claw",
+    "Hydra tail",
+    "Hydra leather",
+    "Hydra's fang",
+    "Hydra's eye",
+    "Hydra's heart",
+    "Dragon knife",
+    "Dragon thrownaxe",
+    "Jar of Chemicals",
+    "Alchemical hydra heads"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Amoxliatl collection log",
+  "short": "Amoxliatl",
+  "wiki": "https://oldschool.runescape.wiki/w/Amoxliatl",
+  "tip": "Any Amoxliatl collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Moxi",
+    "Glacial temotli",
+    "Pendant of Ates (inert)",
+    "Frozen tear"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Araxxor collection log",
+  "short": "Araxxor",
+  "wiki": "https://oldschool.runescape.wiki/w/Araxxor",
+  "tip": "Any Araxxor collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Nid",
+    "Araxyte venom sac",
+    "Spider cave teleport",
+    "Araxyte fang",
+    "Noxious point",
+    "Noxious blade",
+    "Noxious pommel",
+    "Araxyte head",
+    "Jar of Venom",
+    "Coagulated venom"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Barrows Chests collection log",
+  "short": "Barrows Chests",
+  "wiki": "https://oldschool.runescape.wiki/w/Barrows_Chests",
+  "tip": "Any Barrows Chests collection log item you don't have yet counts (25 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Karil's coif",
+    "Karil's leathertop",
+    "Karil's leatherskirt",
+    "Karil's crossbow",
+    "Ahrim's hood",
+    "Ahrim's robetop",
+    "Ahrim's robeskirt",
+    "Ahrim's staff",
+    "Dharok's helm",
+    "Dharok's platebody",
+    "Dharok's platelegs",
+    "Dharok's greataxe",
+    "Guthan's helm",
+    "Guthan's platebody",
+    "Guthan's chainskirt",
+    "Guthan's warspear",
+    "Torag's helm",
+    "Torag's platebody",
+    "Torag's platelegs",
+    "Torag's hammers",
+    "Verac's helm",
+    "Verac's brassard",
+    "Verac's plateskirt",
+    "Verac's flail",
+    "Bolt rack"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Brutus collection log",
+  "short": "Brutus",
+  "wiki": "https://oldschool.runescape.wiki/w/Brutus",
+  "tip": "Any Brutus collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Beef",
+    "Mooleta",
+    "Bottomless milk bucket (empty)",
+    "Cow slippers"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Bryophyta collection log",
+  "short": "Bryophyta",
+  "wiki": "https://oldschool.runescape.wiki/w/Bryophyta",
+  "tip": "Any Bryophyta collection log item you don't have yet counts (1 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Bryophyta's essence"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Callisto and Artio collection log",
+  "short": "Callisto and Artio",
+  "wiki": "https://oldschool.runescape.wiki/w/Callisto_and_Artio",
+  "tip": "Any Callisto and Artio collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Callisto cub",
+    "Tyrannical ring",
+    "Dragon pickaxe",
+    "Dragon 2h sword",
+    "Claws of Callisto",
+    "Voidwaker hilt"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Cerberus collection log",
+  "short": "Cerberus",
+  "wiki": "https://oldschool.runescape.wiki/w/Cerberus",
+  "tip": "Any Cerberus collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Hellpuppy",
+    "Eternal crystal",
+    "Pegasian crystal",
+    "Primordial crystal",
+    "Jar of Souls",
+    "Smouldering stone",
+    "Key master teleport"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Chaos Elemental collection log",
+  "short": "Chaos Elemental",
+  "wiki": "https://oldschool.runescape.wiki/w/Chaos_Elemental",
+  "tip": "Any Chaos Elemental collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet chaos elemental",
+    "Dragon pickaxe",
+    "Dragon 2h sword"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Chaos Fanatic collection log",
+  "short": "Chaos Fanatic",
+  "wiki": "https://oldschool.runescape.wiki/w/Chaos_Fanatic",
+  "tip": "Any Chaos Fanatic collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet chaos elemental",
+    "Odium shard 1",
+    "Malediction shard 1"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Commander Zilyana collection log",
+  "short": "Commander Zilyana",
+  "wiki": "https://oldschool.runescape.wiki/w/Commander_Zilyana",
+  "tip": "Any Commander Zilyana collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Zilyana",
+    "Armadyl crossbow",
+    "Saradomin hilt",
+    "Saradomin sword",
+    "Saradomin's light",
+    "Godsword shard 1",
+    "Godsword shard 2",
+    "Godsword shard 3"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Corporeal Beast collection log",
+  "short": "Corporeal Beast",
+  "wiki": "https://oldschool.runescape.wiki/w/Corporeal_Beast",
+  "tip": "Any Corporeal Beast collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet dark core",
+    "Elysian sigil",
+    "Spectral sigil",
+    "Arcane sigil",
+    "Holy elixir",
+    "Spirit shield",
+    "Jar of Spirits"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Crazy archaeologist collection log",
+  "short": "Crazy archaeologist",
+  "wiki": "https://oldschool.runescape.wiki/w/Crazy_archaeologist",
+  "tip": "Any Crazy archaeologist collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Odium shard 2",
+    "Malediction shard 2",
+    "Fedora"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Dagannoth Kings collection log",
+  "short": "Dagannoth Kings",
+  "wiki": "https://oldschool.runescape.wiki/w/Dagannoth_Kings",
+  "tip": "Any Dagannoth Kings collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Dagannoth Prime",
+    "Pet Dagannoth Supreme",
+    "Pet Dagannoth Rex",
+    "Berserker ring",
+    "Archers ring",
+    "Seers ring",
+    "Warrior ring",
+    "Dragon axe",
+    "Seercull",
+    "Mud battlestaff"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Deranged Archaeologist collection log",
+  "short": "Deranged Archaeologist",
+  "wiki": "https://oldschool.runescape.wiki/w/Deranged_Archaeologist",
+  "tip": "Any Deranged Archaeologist collection log item you don't have yet counts (1 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Steel ring"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Doom of Mokhaiotl collection log",
+  "short": "Doom of Mokhaiotl",
+  "wiki": "https://oldschool.runescape.wiki/w/Doom_of_Mokhaiotl",
+  "tip": "Any Doom of Mokhaiotl collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Dom",
+    "Avernic treads",
+    "Eye of Ayak (uncharged)",
+    "Mokhaiotl cloth",
+    "Mokhaiotl waystone",
+    "Demon tear"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Duke Sucellus collection log",
+  "short": "Duke Sucellus",
+  "wiki": "https://oldschool.runescape.wiki/w/Duke_Sucellus",
+  "tip": "Any Duke Sucellus collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Baron",
+    "Eye of the Duke",
+    "Virtus mask",
+    "Virtus robe top",
+    "Virtus robe bottom",
+    "Magus vestige",
+    "Ice quartz",
+    "Frozen tablet",
+    "Chromium ingot",
+    "Awakener's orb"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Fight Caves collection log",
+  "short": "The Fight Caves",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Fight_Caves",
+  "tip": "Any The Fight Caves collection log item you don't have yet counts (2 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "TzRek-Jad",
+    "Fire cape"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Fortis Colosseum collection log",
+  "short": "Fortis Colosseum",
+  "wiki": "https://oldschool.runescape.wiki/w/Fortis_Colosseum",
+  "tip": "Any Fortis Colosseum collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Smol Heredit",
+    "Dizana's quiver (uncharged)",
+    "Sunfire fanatic cuirass",
+    "Sunfire fanatic chausses",
+    "Sunfire fanatic helm",
+    "Echo crystal",
+    "Tonalztics of Ralos (uncharged)",
+    "Sunfire splinters",
+    "Uncut onyx"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Gauntlet collection log",
+  "short": "The Gauntlet",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Gauntlet",
+  "tip": "Any The Gauntlet collection log item you don't have yet counts (5 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Youngllef",
+    "Crystal armour seed",
+    "Crystal weapon seed",
+    "Enhanced crystal weapon seed",
+    "Gauntlet cape"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the General Graardor collection log",
+  "short": "General Graardor",
+  "wiki": "https://oldschool.runescape.wiki/w/General_Graardor",
+  "tip": "Any General Graardor collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet General Graardor",
+    "Bandos chestplate",
+    "Bandos tassets",
+    "Bandos boots",
+    "Bandos hilt",
+    "Godsword shard 1",
+    "Godsword shard 2",
+    "Godsword shard 3"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Giant Mole collection log",
+  "short": "Giant Mole",
+  "wiki": "https://oldschool.runescape.wiki/w/Giant_Mole",
+  "tip": "Any Giant Mole collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Baby Mole",
+    "Mole skin",
+    "Mole claw",
+    "Immaculate mole skin"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Grotesque Guardians collection log",
+  "short": "Grotesque Guardians",
+  "wiki": "https://oldschool.runescape.wiki/w/Grotesque_Guardians",
+  "tip": "Any Grotesque Guardians collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Noon",
+    "Black tourmaline core",
+    "Granite gloves",
+    "Granite ring",
+    "Granite hammer",
+    "Jar of Stone",
+    "Granite dust"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Hespori collection log",
+  "short": "Hespori",
+  "wiki": "https://oldschool.runescape.wiki/w/Hespori",
+  "tip": "Any Hespori collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Bottomless compost bucket",
+    "Iasor seed",
+    "Kronos seed",
+    "Attas seed"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Hueycoatl collection log",
+  "short": "The Hueycoatl",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Hueycoatl",
+  "tip": "Any The Hueycoatl collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Huberte",
+    "Dragon hunter wand",
+    "Tome of Earth (empty)",
+    "Soiled page",
+    "Hueycoatl hide",
+    "Huasca seed"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Inferno collection log",
+  "short": "The Inferno",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Inferno",
+  "tip": "Any The Inferno collection log item you don't have yet counts (2 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Jal-Nib-Rek",
+    "Infernal cape"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Kalphite Queen collection log",
+  "short": "Kalphite Queen",
+  "wiki": "https://oldschool.runescape.wiki/w/Kalphite_Queen",
+  "tip": "Any Kalphite Queen collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Kalphite Princess",
+    "Kq head",
+    "Jar of Sand",
+    "Dragon 2h sword",
+    "Dragon chainbody",
+    "Dragon pickaxe"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the King Black Dragon collection log",
+  "short": "King Black Dragon",
+  "wiki": "https://oldschool.runescape.wiki/w/King_Black_Dragon",
+  "tip": "Any King Black Dragon collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Prince Black Dragon",
+    "Kbd heads",
+    "Dragon pickaxe",
+    "Draconic visage"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Kraken collection log",
+  "short": "Kraken",
+  "wiki": "https://oldschool.runescape.wiki/w/Kraken",
+  "tip": "Any Kraken collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Kraken",
+    "Kraken tentacle",
+    "Trident of the Seas",
+    "Jar of Dirt"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Kree'arra collection log",
+  "short": "Kree'arra",
+  "wiki": "https://oldschool.runescape.wiki/w/Kree'arra",
+  "tip": "Any Kree'arra collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Kree'arra",
+    "Armadyl helmet",
+    "Armadyl chestplate",
+    "Armadyl chainskirt",
+    "Armadyl hilt",
+    "Godsword shard 1",
+    "Godsword shard 2",
+    "Godsword shard 3"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the K'ril Tsutsaroth collection log",
+  "short": "K'ril Tsutsaroth",
+  "wiki": "https://oldschool.runescape.wiki/w/K'ril_Tsutsaroth",
+  "tip": "Any K'ril Tsutsaroth collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet K'ril Tsutsaroth",
+    "Staff of the Dead",
+    "Zamorakian spear",
+    "Steam battlestaff",
+    "Zamorak hilt",
+    "Godsword shard 1",
+    "Godsword shard 2",
+    "Godsword shard 3"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Leviathan collection log",
+  "short": "The Leviathan",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Leviathan",
+  "tip": "Any The Leviathan collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Lil'viathan",
+    "Leviathan's lure",
+    "Virtus mask",
+    "Virtus robe top",
+    "Virtus robe bottom",
+    "Venator vestige",
+    "Smoke quartz",
+    "Scarred tablet",
+    "Chromium ingot",
+    "Awakener's orb"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Mad Angel collection log",
+  "short": "The Mad Angel",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Mad_Angel",
+  "tip": "Any The Mad Angel collection log item you don't have yet counts (5 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Aggy",
+    "Hallowfell",
+    "Ardeaglais teleport",
+    "Granite dust",
+    "Jar of Light"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Maggot King collection log",
+  "short": "Maggot King",
+  "wiki": "https://oldschool.runescape.wiki/w/Maggot_King",
+  "tip": "Any Maggot King collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Maggot marquess",
+    "Crimson kisten",
+    "Elder venator fang"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Moons of Peril collection log",
+  "short": "Moons of Peril",
+  "wiki": "https://oldschool.runescape.wiki/w/Moons_of_Peril",
+  "tip": "Any Moons of Peril collection log item you don't have yet counts (13 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Eclipse Moon chestplate",
+    "Eclipse Moon tassets",
+    "Eclipse Moon helm",
+    "Eclipse atlatl",
+    "Blue Moon chestplate",
+    "Blue Moon tassets",
+    "Blue Moon helm",
+    "Blue Moon spear",
+    "Blood Moon chestplate",
+    "Blood Moon tassets",
+    "Blood Moon helm",
+    "Dual macuahuitl",
+    "Atlatl dart"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Nex collection log",
+  "short": "Nex",
+  "wiki": "https://oldschool.runescape.wiki/w/Nex",
+  "tip": "Any Nex collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Nexling",
+    "Ancient hilt",
+    "Nihil horn",
+    "Zaryte vambraces",
+    "Torva full helm (damaged)",
+    "Torva platebody (damaged)",
+    "Torva platelegs (damaged)",
+    "Nihil shard"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Nightmare collection log",
+  "short": "The Nightmare",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Nightmare",
+  "tip": "Any The Nightmare collection log item you don't have yet counts (12 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Little Nightmare",
+    "Inquisitor's mace",
+    "Inquisitor's great helm",
+    "Inquisitor's hauberk",
+    "Inquisitor's plateskirt",
+    "Nightmare staff",
+    "Volatile orb",
+    "Harmonised orb",
+    "Eldritch orb",
+    "Jar of Dreams",
+    "Slepey tablet",
+    "Parasitic egg"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Obor collection log",
+  "short": "Obor",
+  "wiki": "https://oldschool.runescape.wiki/w/Obor",
+  "tip": "Any Obor collection log item you don't have yet counts (1 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Hill giant club"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Phantom Muspah collection log",
+  "short": "Phantom Muspah",
+  "wiki": "https://oldschool.runescape.wiki/w/Phantom_Muspah",
+  "tip": "Any Phantom Muspah collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Muphin",
+    "Venator shard",
+    "Ancient icon",
+    "Charged ice",
+    "Frozen cache",
+    "Ancient essence"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Royal Titans collection log",
+  "short": "Royal Titans",
+  "wiki": "https://oldschool.runescape.wiki/w/Royal_Titans",
+  "tip": "Any Royal Titans collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Bran",
+    "Deadeye prayer scroll",
+    "Mystic vigour prayer scroll",
+    "Giantsoul amulet (uncharged)",
+    "Ice element staff crown",
+    "Fire element staff crown",
+    "Desiccated page"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Sarachnis collection log",
+  "short": "Sarachnis",
+  "wiki": "https://oldschool.runescape.wiki/w/Sarachnis",
+  "tip": "Any Sarachnis collection log item you don't have yet counts (5 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Sraracha",
+    "Jar of Eyes",
+    "Giant egg sac(full)",
+    "Sarachnis cudgel",
+    "Pristine spider silk"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Scorpia collection log",
+  "short": "Scorpia",
+  "wiki": "https://oldschool.runescape.wiki/w/Scorpia",
+  "tip": "Any Scorpia collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Scorpia's offspring",
+    "Odium shard 3",
+    "Malediction shard 3",
+    "Dragon 2h sword"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Scurrius collection log",
+  "short": "Scurrius",
+  "wiki": "https://oldschool.runescape.wiki/w/Scurrius",
+  "tip": "Any Scurrius collection log item you don't have yet counts (2 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Scurry",
+    "Scurrius' spine"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Shellbane Gryphon collection log",
+  "short": "Shellbane Gryphon",
+  "wiki": "https://oldschool.runescape.wiki/w/Shellbane_Gryphon",
+  "tip": "Any Shellbane Gryphon collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Gull (pet)",
+    "Jar of Feathers",
+    "Belle's folly (tarnished)",
+    "Gryphon feather"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Skotizo collection log",
+  "short": "Skotizo",
+  "wiki": "https://oldschool.runescape.wiki/w/Skotizo",
+  "tip": "Any Skotizo collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Skotos",
+    "Jar of Darkness",
+    "Dark claw",
+    "Dark totem",
+    "Uncut onyx",
+    "Ancient shard"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Tempoross collection log",
+  "short": "Tempoross",
+  "wiki": "https://oldschool.runescape.wiki/w/Tempoross",
+  "tip": "Any Tempoross collection log item you don't have yet counts (12 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Tiny tempor",
+    "Big harpoonfish",
+    "Spirit angler headband",
+    "Spirit angler top",
+    "Spirit angler waders",
+    "Spirit angler boots",
+    "Tome of Water (empty)",
+    "Soaked page",
+    "Tackle box",
+    "Fish barrel",
+    "Dragon harpoon",
+    "Spirit flakes"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Thermonuclear smoke devil collection log",
+  "short": "Thermonuclear smoke devil",
+  "wiki": "https://oldschool.runescape.wiki/w/Thermonuclear_smoke_devil",
+  "tip": "Any Thermonuclear smoke devil collection log item you don't have yet counts (5 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Smoke Devil",
+    "Occult necklace",
+    "Smoke battlestaff",
+    "Dragon chainbody",
+    "Jar of Smoke"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Vardorvis collection log",
+  "short": "Vardorvis",
+  "wiki": "https://oldschool.runescape.wiki/w/Vardorvis",
+  "tip": "Any Vardorvis collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Butch",
+    "Executioner's axe head",
+    "Virtus mask",
+    "Virtus robe top",
+    "Virtus robe bottom",
+    "Ultor vestige",
+    "Blood quartz",
+    "Strangled tablet",
+    "Chromium ingot",
+    "Awakener's orb"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Venenatis and Spindel collection log",
+  "short": "Venenatis and Spindel",
+  "wiki": "https://oldschool.runescape.wiki/w/Venenatis_and_Spindel",
+  "tip": "Any Venenatis and Spindel collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Venenatis spiderling",
+    "Treasonous ring",
+    "Dragon pickaxe",
+    "Dragon 2h sword",
+    "Fangs of Venenatis",
+    "Voidwaker gem"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Vet'ion and Calvar'ion collection log",
+  "short": "Vet'ion and Calvar'ion",
+  "wiki": "https://oldschool.runescape.wiki/w/Vet'ion_and_Calvar'ion",
+  "tip": "Any Vet'ion and Calvar'ion collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Vet'ion Jr.",
+    "Ring of the gods",
+    "Dragon pickaxe",
+    "Dragon 2h sword",
+    "Skull of Vet'ion",
+    "Voidwaker blade"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Vorkath collection log",
+  "short": "Vorkath",
+  "wiki": "https://oldschool.runescape.wiki/w/Vorkath",
+  "tip": "Any Vorkath collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Vorki",
+    "Vorkath's head",
+    "Draconic visage",
+    "Skeletal visage",
+    "Jar of Decay",
+    "Dragonbone necklace"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the The Whisperer collection log",
+  "short": "The Whisperer",
+  "wiki": "https://oldschool.runescape.wiki/w/The_Whisperer",
+  "tip": "Any The Whisperer collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Wisp",
+    "Siren's staff",
+    "Virtus mask",
+    "Virtus robe top",
+    "Virtus robe bottom",
+    "Bellator vestige",
+    "Shadow quartz",
+    "Sirenic tablet",
+    "Chromium ingot",
+    "Awakener's orb"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Wintertodt collection log",
+  "short": "Wintertodt",
+  "wiki": "https://oldschool.runescape.wiki/w/Wintertodt",
+  "tip": "Any Wintertodt collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Phoenix",
+    "Tome of Fire (empty)",
+    "Burnt page",
+    "Pyromancer garb",
+    "Pyromancer hood",
+    "Pyromancer robe",
+    "Pyromancer boots",
+    "Warm gloves",
+    "Bruma torch",
+    "Dragon axe"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Yama collection log",
+  "short": "Yama",
+  "wiki": "https://oldschool.runescape.wiki/w/Yama",
+  "tip": "Any Yama collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Yami",
+    "Chasm teleport scroll",
+    "Oathplate shards",
+    "Oathplate helm",
+    "Oathplate chest",
+    "Oathplate legs",
+    "Soulflame horn",
+    "Rite of vile transference",
+    "Forgotten lockbox",
+    "Dossier",
+    "Barrel of demonic tallow (full)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Zalcano collection log",
+  "short": "Zalcano",
+  "wiki": "https://oldschool.runescape.wiki/w/Zalcano",
+  "tip": "Any Zalcano collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Smolcano",
+    "Crystal tool seed",
+    "Zalcano shard",
+    "Uncut onyx"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Zulrah collection log",
+  "short": "Zulrah",
+  "wiki": "https://oldschool.runescape.wiki/w/Zulrah",
+  "tip": "Any Zulrah collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Bosses",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Snakeling",
+    "Tanzanite mutagen",
+    "Magma mutagen",
+    "Jar of Swamp",
+    "Magic fang",
+    "Serpentine visage",
+    "Tanzanite fang",
+    "Zul-andra teleport",
+    "Uncut onyx",
+    "Zulrah's scales"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Chambers of Xeric collection log",
+  "short": "Chambers of Xeric",
+  "wiki": "https://oldschool.runescape.wiki/w/Chambers_of_Xeric",
+  "tip": "Any Chambers of Xeric collection log item you don't have yet counts (23 items in total).",
+  "weight": 1,
+  "group": "Raids",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Olmlet",
+    "Metamorphic dust",
+    "Twisted bow",
+    "Elder maul",
+    "Kodai insignia",
+    "Dragon claws",
+    "Ancestral hat",
+    "Ancestral robe top",
+    "Ancestral robe bottom",
+    "Dinh's bulwark",
+    "Dexterous prayer scroll",
+    "Arcane prayer scroll",
+    "Dragon hunter crossbow",
+    "Twisted buckler",
+    "Torn prayer scroll",
+    "Dark relic",
+    "Onyx",
+    "Twisted ancestral colour kit",
+    "Xeric's guard",
+    "Xeric's warrior",
+    "Xeric's sentinel",
+    "Xeric's general",
+    "Xeric's champion"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Theatre of Blood collection log",
+  "short": "Theatre of Blood",
+  "wiki": "https://oldschool.runescape.wiki/w/Theatre_of_Blood",
+  "tip": "Any Theatre of Blood collection log item you don't have yet counts (17 items in total).",
+  "weight": 1,
+  "group": "Raids",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Lil' Zik",
+    "Scythe of Vitur (uncharged)",
+    "Ghrazi rapier",
+    "Sanguinesti staff (uncharged)",
+    "Justiciar faceguard",
+    "Justiciar chestguard",
+    "Justiciar legguards",
+    "Avernic defender hilt",
+    "Vial of blood",
+    "Sinhaza shroud tier 1",
+    "Sinhaza shroud tier 2",
+    "Sinhaza shroud tier 3",
+    "Sinhaza shroud tier 4",
+    "Sinhaza shroud tier 5",
+    "Sanguine dust",
+    "Holy ornament kit",
+    "Sanguine ornament kit"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Tombs of Amascut collection log",
+  "short": "Tombs of Amascut",
+  "wiki": "https://oldschool.runescape.wiki/w/Tombs_of_Amascut",
+  "tip": "Any Tombs of Amascut collection log item you don't have yet counts (27 items in total).",
+  "weight": 1,
+  "group": "Raids",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Tumeken's guardian",
+    "Tumeken's shadow (uncharged)",
+    "Elidinis' ward",
+    "Masori mask",
+    "Masori body",
+    "Masori chaps",
+    "Lightbearer",
+    "Osmumten's fang",
+    "Thread of Elidinis",
+    "Breach of the Scarab",
+    "Eye of the Corruptor",
+    "Jewel of the Sun",
+    "Jewel of Amascut",
+    "Menaphite ornament kit",
+    "Cursed phalanx",
+    "Masori crafting kit",
+    "Cache of runes",
+    "Icthlarin's shroud (tier 1)",
+    "Icthlarin's shroud (tier 2)",
+    "Icthlarin's shroud (tier 3)",
+    "Icthlarin's shroud (tier 4)",
+    "Icthlarin's shroud (tier 5)",
+    "Remnant of Akkha",
+    "Remnant of Ba-Ba",
+    "Remnant of Kephri",
+    "Remnant of Zebak",
+    "Ancient remnant"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Beginner Treasure Trails collection log",
+  "short": "Beginner Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Beginner_Treasure_Trails",
+  "tip": "Any Beginner Treasure Trails collection log item you don't have yet counts (16 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Mole slippers",
+    "Frog slippers",
+    "Bear feet",
+    "Demon feet",
+    "Jester cape",
+    "Shoulder parrot",
+    "Monk's robe top (t)",
+    "Monk's robe (t)",
+    "Amulet of defence (t)",
+    "Sandwich lady hat",
+    "Sandwich lady top",
+    "Sandwich lady bottom",
+    "Rune scimitar ornament kit (Guthix)",
+    "Rune scimitar ornament kit (Saradomin)",
+    "Rune scimitar ornament kit (Zamorak)",
+    "Black pickaxe"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 5 new items from the Easy Treasure Trails collection log",
+  "short": "Easy Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Easy_Treasure_Trails",
+  "tip": "Any Easy Treasure Trails collection log item you don't have yet counts (131 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Team cape zero",
+    "Team cape i",
+    "Team cape x",
+    "Cape of skulls",
+    "Golden chef's hat",
+    "Golden apron",
+    "Wooden shield (g)",
+    "Black full helm (t)",
+    "Black platebody (t)",
+    "Black platelegs (t)",
+    "Black plateskirt (t)",
+    "Black kiteshield (t)",
+    "Black full helm (g)",
+    "Black platebody (g)",
+    "Black platelegs (g)",
+    "Black plateskirt (g)",
+    "Black kiteshield (g)",
+    "Black shield (h1)",
+    "Black shield (h2)",
+    "Black shield (h3)",
+    "Black shield (h4)",
+    "Black shield (h5)",
+    "Black helm (h1)",
+    "Black helm (h2)",
+    "Black helm (h3)",
+    "Black helm (h4)",
+    "Black helm (h5)",
+    "Black platebody (h1)",
+    "Black platebody (h2)",
+    "Black platebody (h3)",
+    "Black platebody (h4)",
+    "Black platebody (h5)",
+    "Steel full helm (t)",
+    "Steel platebody (t)",
+    "Steel platelegs (t)",
+    "Steel plateskirt (t)",
+    "Steel kiteshield (t)",
+    "Steel full helm (g)",
+    "Steel platebody (g)",
+    "Steel platelegs (g)",
+    "Steel plateskirt (g)",
+    "Steel kiteshield (g)",
+    "Iron platebody (t)",
+    "Iron platelegs (t)",
+    "Iron plateskirt (t)",
+    "Iron kiteshield (t)",
+    "Iron full helm (t)",
+    "Iron platebody (g)",
+    "Iron platelegs (g)",
+    "Iron plateskirt (g)",
+    "Iron kiteshield (g)",
+    "Iron full helm (g)",
+    "Bronze platebody (t)",
+    "Bronze platelegs (t)",
+    "Bronze plateskirt (t)",
+    "Bronze kiteshield (t)",
+    "Bronze full helm (t)",
+    "Bronze platebody (g)",
+    "Bronze platelegs (g)",
+    "Bronze plateskirt (g)",
+    "Bronze kiteshield (g)",
+    "Bronze full helm (g)",
+    "Studded body (g)",
+    "Studded chaps (g)",
+    "Studded body (t)",
+    "Studded chaps (t)",
+    "Leather body (g)",
+    "Leather chaps (g)",
+    "Blue wizard hat (g)",
+    "Blue wizard robe (g)",
+    "Blue skirt (g)",
+    "Blue wizard hat (t)",
+    "Blue wizard robe (t)",
+    "Blue skirt (t)",
+    "Black wizard hat (g)",
+    "Black wizard robe (g)",
+    "Black skirt (g)",
+    "Black wizard hat (t)",
+    "Black wizard robe (t)",
+    "Black skirt (t)",
+    "Monk's robe top (g)",
+    "Monk's robe (g)",
+    "Saradomin robe top",
+    "Saradomin robe legs",
+    "Guthix robe top",
+    "Guthix robe legs",
+    "Zamorak robe top",
+    "Zamorak robe legs",
+    "Ancient robe top",
+    "Ancient robe legs",
+    "Armadyl robe top",
+    "Armadyl robe legs",
+    "Bandos robe top",
+    "Bandos robe legs",
+    "Bob's red shirt",
+    "Bob's green shirt",
+    "Bob's blue shirt",
+    "Bob's black shirt",
+    "Bob's purple shirt",
+    "Highwayman mask",
+    "Blue beret",
+    "Black beret",
+    "White beret",
+    "Red beret",
+    "A powdered wig",
+    "Beanie",
+    "Imp mask",
+    "Goblin mask",
+    "Sleeping cap",
+    "Flared trousers",
+    "Pantaloons",
+    "Black cane",
+    "Staff of Bob the Cat",
+    "Red elegant shirt",
+    "Red elegant blouse",
+    "Red elegant legs",
+    "Red elegant skirt",
+    "Green elegant shirt",
+    "Green elegant blouse",
+    "Green elegant legs",
+    "Green elegant skirt",
+    "Blue elegant shirt",
+    "Blue elegant blouse",
+    "Blue elegant legs",
+    "Blue elegant skirt",
+    "Amulet of magic (t)",
+    "Amulet of power (t)",
+    "Black pickaxe",
+    "Ham joint",
+    "Rain bow",
+    "Willow comp bow"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Get 5 new items from the Medium Treasure Trails collection log",
+  "short": "Medium Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Medium_Treasure_Trails",
+  "tip": "Any Medium Treasure Trails collection log item you don't have yet counts (115 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Ranger boots",
+    "Wizard boots",
+    "Holy sandals",
+    "Climbing boots (g)",
+    "Spiked manacles",
+    "Adamant full helm (t)",
+    "Adamant platebody (t)",
+    "Adamant platelegs (t)",
+    "Adamant plateskirt (t)",
+    "Adamant kiteshield (t)",
+    "Adamant full helm (g)",
+    "Adamant platebody (g)",
+    "Adamant platelegs (g)",
+    "Adamant plateskirt (g)",
+    "Adamant kiteshield (g)",
+    "Adamant shield (h1)",
+    "Adamant shield (h2)",
+    "Adamant shield (h3)",
+    "Adamant shield (h4)",
+    "Adamant shield (h5)",
+    "Adamant helm (h1)",
+    "Adamant helm (h2)",
+    "Adamant helm (h3)",
+    "Adamant helm (h4)",
+    "Adamant helm (h5)",
+    "Adamant platebody (h1)",
+    "Adamant platebody (h2)",
+    "Adamant platebody (h3)",
+    "Adamant platebody (h4)",
+    "Adamant platebody (h5)",
+    "Mithril full helm (g)",
+    "Mithril platebody (g)",
+    "Mithril platelegs (g)",
+    "Mithril plateskirt (g)",
+    "Mithril kiteshield (g)",
+    "Mithril full helm (t)",
+    "Mithril platebody (t)",
+    "Mithril platelegs (t)",
+    "Mithril plateskirt (t)",
+    "Mithril kiteshield (t)",
+    "Green d'hide body (g)",
+    "Green d'hide body (t)",
+    "Green d'hide chaps (g)",
+    "Green d'hide chaps (t)",
+    "Saradomin mitre",
+    "Saradomin cloak",
+    "Guthix mitre",
+    "Guthix cloak",
+    "Zamorak mitre",
+    "Zamorak cloak",
+    "Ancient mitre",
+    "Ancient cloak",
+    "Ancient stole",
+    "Ancient crozier",
+    "Armadyl mitre",
+    "Armadyl cloak",
+    "Armadyl stole",
+    "Armadyl crozier",
+    "Bandos mitre",
+    "Bandos cloak",
+    "Bandos stole",
+    "Bandos crozier",
+    "Red boater",
+    "Green boater",
+    "Orange boater",
+    "Black boater",
+    "Blue boater",
+    "Pink boater",
+    "Purple boater",
+    "White boater",
+    "Red headband",
+    "Black headband",
+    "Brown headband",
+    "White headband",
+    "Blue headband",
+    "Gold headband",
+    "Pink headband",
+    "Green headband",
+    "Crier hat",
+    "Crier coat",
+    "Crier bell",
+    "Adamant cane",
+    "Arceuus banner",
+    "Piscarilius banner",
+    "Hosidius banner",
+    "Shayzien banner",
+    "Lovakengj banner",
+    "Cabbage round shield",
+    "Black unicorn mask",
+    "White unicorn mask",
+    "Cat mask",
+    "Penguin mask",
+    "Leprechaun hat",
+    "Black leprechaun hat",
+    "Wolf mask",
+    "Wolf cloak",
+    "Purple elegant shirt",
+    "Purple elegant blouse",
+    "Purple elegant legs",
+    "Purple elegant skirt",
+    "Black elegant shirt",
+    "White elegant blouse",
+    "Black elegant legs",
+    "White elegant skirt",
+    "Pink elegant shirt",
+    "Pink elegant blouse",
+    "Pink elegant legs",
+    "Pink elegant skirt",
+    "Gold elegant shirt",
+    "Gold elegant blouse",
+    "Gold elegant legs",
+    "Gold elegant skirt",
+    "Gnomish firelighter",
+    "Strength amulet (t)",
+    "Yew comp bow"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Get 5 new items from the Hard Treasure Trails collection log",
+  "short": "Hard Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Hard_Treasure_Trails",
+  "tip": "Any Hard Treasure Trails collection log item you don't have yet counts (134 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Robin Hood hat",
+    "Dragon boots ornament kit",
+    "Rune defender ornament kit",
+    "Tzhaar-ket-om ornament kit",
+    "Berserker necklace ornament kit",
+    "Rune full helm (t)",
+    "Rune platebody (t)",
+    "Rune platelegs (t)",
+    "Rune plateskirt (t)",
+    "Rune kiteshield (t)",
+    "Rune full helm (g)",
+    "Rune platebody (g)",
+    "Rune platelegs (g)",
+    "Rune plateskirt (g)",
+    "Rune kiteshield (g)",
+    "Zamorak full helm",
+    "Zamorak platebody",
+    "Zamorak platelegs",
+    "Zamorak plateskirt",
+    "Zamorak kiteshield",
+    "Guthix full helm",
+    "Guthix platebody",
+    "Guthix platelegs",
+    "Guthix plateskirt",
+    "Guthix kiteshield",
+    "Saradomin full helm",
+    "Saradomin platebody",
+    "Saradomin platelegs",
+    "Saradomin plateskirt",
+    "Saradomin kiteshield",
+    "Ancient full helm",
+    "Ancient platebody",
+    "Ancient platelegs",
+    "Ancient plateskirt",
+    "Ancient kiteshield",
+    "Armadyl full helm",
+    "Armadyl platebody",
+    "Armadyl platelegs",
+    "Armadyl plateskirt",
+    "Armadyl kiteshield",
+    "Bandos full helm",
+    "Bandos platebody",
+    "Bandos platelegs",
+    "Bandos plateskirt",
+    "Bandos kiteshield",
+    "Rune shield (h1)",
+    "Rune shield (h2)",
+    "Rune shield (h3)",
+    "Rune shield (h4)",
+    "Rune shield (h5)",
+    "Rune helm (h1)",
+    "Rune helm (h2)",
+    "Rune helm (h3)",
+    "Rune helm (h4)",
+    "Rune helm (h5)",
+    "Rune platebody (h1)",
+    "Rune platebody (h2)",
+    "Rune platebody (h3)",
+    "Rune platebody (h4)",
+    "Rune platebody (h5)",
+    "Saradomin coif",
+    "Saradomin d'hide body",
+    "Saradomin chaps",
+    "Saradomin bracers",
+    "Saradomin d'hide boots",
+    "Saradomin d'hide shield",
+    "Guthix coif",
+    "Guthix d'hide body",
+    "Guthix chaps",
+    "Guthix bracers",
+    "Guthix d'hide boots",
+    "Guthix d'hide shield",
+    "Zamorak coif",
+    "Zamorak d'hide body",
+    "Zamorak chaps",
+    "Zamorak bracers",
+    "Zamorak d'hide boots",
+    "Zamorak d'hide shield",
+    "Bandos coif",
+    "Bandos d'hide body",
+    "Bandos chaps",
+    "Bandos bracers",
+    "Bandos d'hide boots",
+    "Bandos d'hide shield",
+    "Armadyl coif",
+    "Armadyl d'hide body",
+    "Armadyl chaps",
+    "Armadyl bracers",
+    "Armadyl d'hide boots",
+    "Armadyl d'hide shield",
+    "Ancient coif",
+    "Ancient d'hide body",
+    "Ancient chaps",
+    "Ancient bracers",
+    "Ancient d'hide boots",
+    "Ancient d'hide shield",
+    "Red d'hide body (t)",
+    "Red d'hide chaps (t)",
+    "Red d'hide body (g)",
+    "Red d'hide chaps (g)",
+    "Blue d'hide body (t)",
+    "Blue d'hide chaps (t)",
+    "Blue d'hide body (g)",
+    "Blue d'hide chaps (g)",
+    "Enchanted hat",
+    "Enchanted top",
+    "Enchanted robe",
+    "Saradomin stole",
+    "Saradomin crozier",
+    "Guthix stole",
+    "Guthix crozier",
+    "Zamorak stole",
+    "Zamorak crozier",
+    "Zombie head (Treasure Trails)",
+    "Cyclops head",
+    "Pirate's hat",
+    "Red cavalier",
+    "White cavalier",
+    "Navy cavalier",
+    "Tan cavalier",
+    "Dark cavalier",
+    "Black cavalier",
+    "Pith helmet",
+    "Explorer backpack",
+    "Thieving bag",
+    "Green dragon mask",
+    "Blue dragon mask",
+    "Red dragon mask",
+    "Black dragon mask",
+    "Nunchaku",
+    "Dual sai",
+    "Rune cane",
+    "Amulet of glory (t)",
+    "Magic comp bow"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Get 3 new items from the Elite Treasure Trails collection log",
+  "short": "Elite Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Elite_Treasure_Trails",
+  "tip": "Any Elite Treasure Trails collection log item you don't have yet counts (59 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Ring of 3rd Age",
+    "Fury ornament kit",
+    "Dragon chainbody ornament kit",
+    "Dragon legs/skirt ornament kit",
+    "Dragon sq shield ornament kit",
+    "Dragon full helm ornament kit",
+    "Dragon scimitar ornament kit",
+    "Light infinity colour kit",
+    "Dark infinity colour kit",
+    "Holy wraps",
+    "Ranger gloves",
+    "Rangers' tunic",
+    "Rangers' tights",
+    "Black d'hide body (g)",
+    "Black d'hide chaps (g)",
+    "Black d'hide body (t)",
+    "Black d'hide chaps (t)",
+    "Royal crown",
+    "Royal sceptre",
+    "Royal gown top",
+    "Royal gown bottom",
+    "Musketeer hat",
+    "Musketeer tabard",
+    "Musketeer pants",
+    "Dark tuxedo jacket",
+    "Dark trousers",
+    "Dark tuxedo shoes",
+    "Dark tuxedo cuffs",
+    "Dark bow tie",
+    "Light tuxedo jacket",
+    "Light trousers",
+    "Light tuxedo shoes",
+    "Light tuxedo cuffs",
+    "Light bow tie",
+    "Arceuus scarf",
+    "Hosidius scarf",
+    "Piscarilius scarf",
+    "Shayzien scarf",
+    "Lovakengj scarf",
+    "Bronze dragon mask",
+    "Iron dragon mask",
+    "Steel dragon mask",
+    "Mithril dragon mask",
+    "Adamant dragon mask",
+    "Rune dragon mask",
+    "Katana",
+    "Dragon cane",
+    "Briefcase",
+    "Bucket helm",
+    "Blacksmith's helm",
+    "Deerstalker",
+    "Afro",
+    "Big pirate hat",
+    "Top hat",
+    "Monocle",
+    "Sagacious spectacles",
+    "Fremennik kilt",
+    "Giant boot",
+    "Uri's hat"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Master Treasure Trails collection log",
+  "short": "Master Treasure Trails",
+  "wiki": "https://oldschool.runescape.wiki/w/Master_Treasure_Trails",
+  "tip": "Any Master Treasure Trails collection log item you don't have yet counts (49 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Bloodhound",
+    "Ring of 3rd Age",
+    "Armadyl godsword ornament kit",
+    "Bandos godsword ornament kit",
+    "Saradomin godsword ornament kit",
+    "Zamorak godsword ornament kit",
+    "Occult ornament kit",
+    "Torture ornament kit",
+    "Anguish ornament kit",
+    "Dragon defender ornament kit",
+    "Dragon kiteshield ornament kit",
+    "Dragon platebody ornament kit",
+    "Tormented ornament kit",
+    "Hood of darkness",
+    "Robe top of darkness",
+    "Robe bottom of darkness",
+    "Gloves of darkness",
+    "Boots of darkness",
+    "Samurai kasa",
+    "Samurai shirt",
+    "Samurai greaves",
+    "Samurai boots",
+    "Samurai gloves",
+    "Ankou mask",
+    "Ankou top",
+    "Ankou gloves",
+    "Ankou socks",
+    "Ankou's leggings",
+    "Mummy's head",
+    "Mummy's feet",
+    "Mummy's hands",
+    "Mummy's legs",
+    "Mummy's body",
+    "Shayzien hood",
+    "Hosidius hood",
+    "Arceuus hood",
+    "Piscarilius hood",
+    "Lovakengj hood",
+    "Lesser demon mask",
+    "Greater demon mask",
+    "Black demon mask",
+    "Jungle demon mask",
+    "Old demon mask",
+    "Left eye patch",
+    "Bowl wig",
+    "Ale of the gods",
+    "Obsidian cape (r)",
+    "Half moon spectacles",
+    "Fancy tiara"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Hard Treasure Trail Rewards (Rare) collection log",
+  "short": "Hard Treasure Trail Rewards (Rare)",
+  "wiki": "https://oldschool.runescape.wiki/w/Hard_Treasure_Trail_Rewards_(Rare)",
+  "tip": "Any Hard Treasure Trail Rewards (Rare) collection log item you don't have yet counts (24 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "3rd Age range coif",
+    "3rd Age range top",
+    "3rd Age range legs",
+    "3rd Age vambraces",
+    "3rd Age robe top",
+    "3rd Age robe",
+    "3rd Age mage hat",
+    "3rd Age amulet",
+    "3rd Age plateskirt",
+    "3rd Age platelegs",
+    "3rd Age platebody",
+    "3rd Age full helmet",
+    "3rd Age kiteshield",
+    "Gilded platebody",
+    "Gilded platelegs",
+    "Gilded plateskirt",
+    "Gilded full helm",
+    "Gilded kiteshield",
+    "Gilded med helm",
+    "Gilded chainbody",
+    "Gilded sq shield",
+    "Gilded 2h sword",
+    "Gilded spear",
+    "Gilded hasta"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Elite Treasure Trail Rewards (Rare) collection log",
+  "short": "Elite Treasure Trail Rewards (Rare)",
+  "wiki": "https://oldschool.runescape.wiki/w/Elite_Treasure_Trail_Rewards_(Rare)",
+  "tip": "Any Elite Treasure Trail Rewards (Rare) collection log item you don't have yet counts (39 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "3rd Age longsword",
+    "3rd Age wand",
+    "3rd Age cloak",
+    "3rd Age bow",
+    "3rd Age range coif",
+    "3rd Age range top",
+    "3rd Age range legs",
+    "3rd Age vambraces",
+    "3rd Age robe top",
+    "3rd Age robe",
+    "3rd Age mage hat",
+    "3rd Age amulet",
+    "3rd Age plateskirt",
+    "3rd Age platelegs",
+    "3rd Age platebody",
+    "3rd Age full helmet",
+    "3rd Age kiteshield",
+    "Gilded scimitar",
+    "Gilded boots",
+    "Gilded platebody",
+    "Gilded platelegs",
+    "Gilded plateskirt",
+    "Gilded full helm",
+    "Gilded kiteshield",
+    "Gilded med helm",
+    "Gilded chainbody",
+    "Gilded sq shield",
+    "Gilded 2h sword",
+    "Gilded spear",
+    "Gilded hasta",
+    "Gilded coif",
+    "Gilded d'hide vambraces",
+    "Gilded d'hide body",
+    "Gilded d'hide chaps",
+    "Gilded pickaxe",
+    "Gilded axe",
+    "Gilded spade",
+    "Ring of nature",
+    "Lava dragon mask"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Master Treasure Trail Rewards (Rare) collection log",
+  "short": "Master Treasure Trail Rewards (Rare)",
+  "wiki": "https://oldschool.runescape.wiki/w/Master_Treasure_Trail_Rewards_(Rare)",
+  "tip": "Any Master Treasure Trail Rewards (Rare) collection log item you don't have yet counts (45 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "3rd Age pickaxe",
+    "3rd Age axe",
+    "3rd Age longsword",
+    "3rd Age wand",
+    "3rd Age cloak",
+    "3rd Age bow",
+    "3rd Age range coif",
+    "3rd Age range top",
+    "3rd Age range legs",
+    "3rd Age vambraces",
+    "3rd Age robe top",
+    "3rd Age robe",
+    "3rd Age mage hat",
+    "3rd Age amulet",
+    "3rd Age plateskirt",
+    "3rd Age platelegs",
+    "3rd Age platebody",
+    "3rd Age full helmet",
+    "3rd Age kiteshield",
+    "3rd Age druidic robe bottoms",
+    "3rd Age druidic robe top",
+    "3rd Age druidic staff",
+    "3rd Age druidic cloak",
+    "Gilded scimitar",
+    "Gilded boots",
+    "Gilded platebody",
+    "Gilded platelegs",
+    "Gilded plateskirt",
+    "Gilded full helm",
+    "Gilded kiteshield",
+    "Gilded med helm",
+    "Gilded chainbody",
+    "Gilded sq shield",
+    "Gilded 2h sword",
+    "Gilded spear",
+    "Gilded hasta",
+    "Gilded coif",
+    "Gilded d'hide vambraces",
+    "Gilded d'hide body",
+    "Gilded d'hide chaps",
+    "Gilded pickaxe",
+    "Gilded axe",
+    "Gilded spade",
+    "Bucket helm (g)",
+    "Ring of coins"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 3 new items from the Shared Treasure Trail Rewards collection log",
+  "short": "Shared Treasure Trail Rewards",
+  "wiki": "https://oldschool.runescape.wiki/w/Shared_Treasure_Trail_Rewards",
+  "tip": "Any Shared Treasure Trail Rewards collection log item you don't have yet counts (49 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Saradomin page 1",
+    "Saradomin page 2",
+    "Saradomin page 3",
+    "Saradomin page 4",
+    "Zamorak page 1",
+    "Zamorak page 2",
+    "Zamorak page 3",
+    "Zamorak page 4",
+    "Guthix page 1",
+    "Guthix page 2",
+    "Guthix page 3",
+    "Guthix page 4",
+    "Bandos page 1",
+    "Bandos page 2",
+    "Bandos page 3",
+    "Bandos page 4",
+    "Armadyl page 1",
+    "Armadyl page 2",
+    "Armadyl page 3",
+    "Armadyl page 4",
+    "Ancient page 1",
+    "Ancient page 2",
+    "Ancient page 3",
+    "Ancient page 4",
+    "Holy blessing",
+    "Unholy blessing",
+    "Peaceful blessing",
+    "War blessing",
+    "Honourable blessing",
+    "Ancient blessing",
+    "Nardah teleport",
+    "Mos le'harmless teleport",
+    "Mort'ton teleport",
+    "Feldip hills teleport",
+    "Lunar isle teleport",
+    "Digsite teleport",
+    "Piscatoris teleport",
+    "Pest control teleport",
+    "Tai bwo wannai teleport",
+    "Lumberyard teleport",
+    "Iorwerth camp teleport",
+    "Master scroll book",
+    "Red firelighter",
+    "Green firelighter",
+    "Blue firelighter",
+    "Purple firelighter",
+    "White firelighter",
+    "Charge dragonstone jewellery scroll",
+    "Purple sweets"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Scroll Cases collection log",
+  "short": "Scroll Cases",
+  "wiki": "https://oldschool.runescape.wiki/w/Scroll_Cases",
+  "tip": "Any Scroll Cases collection log item you don't have yet counts (13 items in total).",
+  "weight": 1,
+  "group": "Clues",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Minor beginner scroll case",
+    "Major beginner scroll case",
+    "Minor easy scroll case",
+    "Major easy scroll case",
+    "Minor medium scroll case",
+    "Major medium scroll case",
+    "Minor hard scroll case",
+    "Major hard scroll case",
+    "Minor elite scroll case",
+    "Major elite scroll case",
+    "Minor master scroll case",
+    "Major master scroll case",
+    "Mimic scroll case"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Barbarian Assault collection log",
+  "short": "Barbarian Assault",
+  "wiki": "https://oldschool.runescape.wiki/w/Barbarian_Assault",
+  "tip": "Any Barbarian Assault collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Pet Penance Queen",
+    "Fighter hat",
+    "Ranger hat",
+    "Runner hat",
+    "Healer hat",
+    "Fighter torso",
+    "Penance skirt",
+    "Runner boots",
+    "Penance gloves",
+    "Granite helm",
+    "Granite body"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Barracuda Trials collection log",
+  "short": "Barracuda Trials",
+  "wiki": "https://oldschool.runescape.wiki/w/Barracuda_Trials",
+  "tip": "Any Barracuda Trials collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Stormy key",
+    "Barrel stand",
+    "Ralph's fabric roll",
+    "Fetid key",
+    "Captured wind mote",
+    "Gurtob's fabric roll",
+    "Serrated key",
+    "Heart of Ithell",
+    "Gwyna's fabric roll"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Brimhaven Agility Arena collection log",
+  "short": "Brimhaven Agility Arena",
+  "wiki": "https://oldschool.runescape.wiki/w/Brimhaven_Agility_Arena",
+  "tip": "Any Brimhaven Agility Arena collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Agility arena ticket",
+    "Brimhaven voucher",
+    "Pirate's hook",
+    "Graceful hood (Agility Arena)",
+    "Graceful top (Agility Arena)",
+    "Graceful legs (Agility Arena)",
+    "Graceful gloves (Agility Arena)",
+    "Graceful boots (Agility Arena)",
+    "Graceful cape (Agility Arena)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Castle Wars collection log",
+  "short": "Castle Wars",
+  "wiki": "https://oldschool.runescape.wiki/w/Castle_Wars",
+  "tip": "Any Castle Wars collection log item you don't have yet counts (39 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Decorative helm (red)",
+    "Decorative full helm (red)",
+    "Decorative armour (red platebody)",
+    "Decorative sword (red)",
+    "Decorative shield (red)",
+    "Decorative armour (red platelegs)",
+    "Decorative armour (red plateskirt)",
+    "Decorative boots (red)",
+    "Decorative helm (white)",
+    "Decorative full helm (white)",
+    "Decorative armour (white platebody)",
+    "Decorative sword (white)",
+    "Decorative shield (white)",
+    "Decorative armour (white platelegs)",
+    "Decorative armour (white plateskirt)",
+    "Decorative boots (white)",
+    "Decorative helm (gold)",
+    "Decorative full helm (gold)",
+    "Decorative armour (gold platebody)",
+    "Decorative sword (gold)",
+    "Decorative shield (gold)",
+    "Decorative armour (gold platelegs)",
+    "Decorative armour (gold plateskirt)",
+    "Decorative boots (gold)",
+    "Castlewars hood (Saradomin)",
+    "Castlewars cloak (Saradomin)",
+    "Castlewars hood (Zamorak)",
+    "Castlewars cloak (Zamorak)",
+    "Saradomin banner",
+    "Zamorak banner",
+    "Decorative armour (magic hat)",
+    "Decorative armour (magic top)",
+    "Decorative armour (magic legs)",
+    "Decorative armour (ranged top)",
+    "Decorative armour (ranged legs)",
+    "Decorative armour (quiver)",
+    "Saradomin halo",
+    "Zamorak halo",
+    "Guthix halo"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Fishing Trawler collection log",
+  "short": "Fishing Trawler",
+  "wiki": "https://oldschool.runescape.wiki/w/Fishing_Trawler",
+  "tip": "Any Fishing Trawler collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Angler hat",
+    "Angler top",
+    "Angler waders",
+    "Angler boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Giants' Foundry collection log",
+  "short": "Giants' Foundry",
+  "wiki": "https://oldschool.runescape.wiki/w/Giants'_Foundry",
+  "tip": "Any Giants' Foundry collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Smiths tunic",
+    "Smiths trousers",
+    "Smiths boots",
+    "Smiths gloves",
+    "Colossal blade",
+    "Double ammo mould",
+    "Kovac's grog",
+    "Smithing catalyst",
+    "Ore pack (Giants' Foundry)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Gnome Restaurant collection log",
+  "short": "Gnome Restaurant",
+  "wiki": "https://oldschool.runescape.wiki/w/Gnome_Restaurant",
+  "tip": "Any Gnome Restaurant collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Grand seed pod",
+    "Gnome scarf",
+    "Gnome goggles",
+    "Mint cake"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Guardians of the Rift collection log",
+  "short": "Guardians of the Rift",
+  "wiki": "https://oldschool.runescape.wiki/w/Guardians_of_the_Rift",
+  "tip": "Any Guardians of the Rift collection log item you don't have yet counts (17 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Abyssal protector",
+    "Abyssal pearls",
+    "Catalytic talisman",
+    "Abyssal needle",
+    "Abyssal green dye",
+    "Abyssal blue dye",
+    "Abyssal red dye",
+    "Hat of the Eye",
+    "Robe top of the Eye",
+    "Robe bottoms of the Eye",
+    "Boots of the Eye",
+    "Ring of the elements",
+    "Abyssal lantern",
+    "Guardian's eye",
+    "Intricate pouch",
+    "Lost bag",
+    "Tarnished locket"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Hallowed Sepulchre collection log",
+  "short": "Hallowed Sepulchre",
+  "wiki": "https://oldschool.runescape.wiki/w/Hallowed_Sepulchre",
+  "tip": "Any Hallowed Sepulchre collection log item you don't have yet counts (12 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Hallowed mark",
+    "Hallowed token",
+    "Hallowed grapple",
+    "Hallowed focus",
+    "Hallowed symbol",
+    "Hallowed hammer",
+    "Hallowed ring",
+    "Dark dye",
+    "Dark acorn",
+    "Strange old lockpick",
+    "Ring of endurance",
+    "Mysterious page"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Last Man Standing collection log",
+  "short": "Last Man Standing",
+  "wiki": "https://oldschool.runescape.wiki/w/Last_Man_Standing",
+  "tip": "Any Last Man Standing collection log item you don't have yet counts (29 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Deadman's chest#Cosmetic",
+    "Deadman's legs#Cosmetic",
+    "Deadman's cape#Cosmetic",
+    "Armadyl halo",
+    "Bandos halo",
+    "Seren halo",
+    "Ancient halo",
+    "Brassica halo",
+    "Animation overrides#Godswords",
+    "Victor's cape (1)",
+    "Victor's cape (10)",
+    "Victor's cape (50)",
+    "Victor's cape (100)",
+    "Victor's cape (500)",
+    "Victor's cape (1000)",
+    "Granite clamp",
+    "Ornate maul handle",
+    "Steam staff upgrade kit",
+    "Lava staff upgrade kit",
+    "Dragon pickaxe upgrade kit",
+    "Ward upgrade kit",
+    "Green dark bow paint",
+    "Yellow dark bow paint",
+    "White dark bow paint",
+    "Blue dark bow paint",
+    "Volcanic whip mix",
+    "Frozen whip mix",
+    "Guthixian icon",
+    "Swift blade"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Magic Training Arena collection log",
+  "short": "Magic Training Arena",
+  "wiki": "https://oldschool.runescape.wiki/w/Magic_Training_Arena",
+  "tip": "Any Magic Training Arena collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Beginner wand",
+    "Apprentice wand",
+    "Teacher wand",
+    "Master wand",
+    "Infinity hat",
+    "Infinity top",
+    "Infinity bottoms",
+    "Infinity boots",
+    "Infinity gloves",
+    "Mage's book",
+    "Bones to peaches"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Mahogany Homes collection log",
+  "short": "Mahogany Homes",
+  "wiki": "https://oldschool.runescape.wiki/w/Mahogany_Homes",
+  "tip": "Any Mahogany Homes collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Supply crate (Mahogany Homes)",
+    "Carpenter's helmet",
+    "Carpenter's shirt",
+    "Carpenter's trousers",
+    "Carpenter's boots",
+    "Amy's saw",
+    "Plank sack",
+    "Hosidius blueprints"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Mastering Mixology collection log",
+  "short": "Mastering Mixology",
+  "wiki": "https://oldschool.runescape.wiki/w/Mastering_Mixology",
+  "tip": "Any Mastering Mixology collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Prescription goggles",
+    "Alchemist labcoat",
+    "Alchemist pants",
+    "Alchemist gloves",
+    "Alchemist's amulet",
+    "Reagent pouch",
+    "Chugging barrel (disassembled)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Pest Control collection log",
+  "short": "Pest Control",
+  "wiki": "https://oldschool.runescape.wiki/w/Pest_Control",
+  "tip": "Any Pest Control collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Void knight mace",
+    "Void knight top",
+    "Void knight robe",
+    "Void knight gloves",
+    "Void mage helm",
+    "Void melee helm",
+    "Void ranger helm",
+    "Void seal(8)",
+    "Elite void top",
+    "Elite void robe"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Rogues' Den collection log",
+  "short": "Rogues' Den",
+  "wiki": "https://oldschool.runescape.wiki/w/Rogues'_Den",
+  "tip": "Any Rogues' Den collection log item you don't have yet counts (5 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Rogue mask",
+    "Rogue top",
+    "Rogue trousers",
+    "Rogue boots",
+    "Rogue gloves"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Shades of Mort'ton collection log",
+  "short": "Shades of Mort'ton",
+  "wiki": "https://oldschool.runescape.wiki/w/Shades_of_Mort'ton",
+  "tip": "Any Shades of Mort'ton collection log item you don't have yet counts (14 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Amulet of the Damned",
+    "Flamtaer bag",
+    "Fine cloth",
+    "Bronze locks",
+    "Steel locks",
+    "Black locks",
+    "Silver locks",
+    "Gold locks",
+    "Zealot's helm",
+    "Zealot's robe top",
+    "Zealot's robe bottom",
+    "Zealot's boots",
+    "Tree wizards' journal",
+    "Bloody notes"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Soul Wars collection log",
+  "short": "Soul Wars",
+  "wiki": "https://oldschool.runescape.wiki/w/Soul_Wars",
+  "tip": "Any Soul Wars collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Lil' Creator",
+    "Soul cape",
+    "Ectoplasmator"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Temple Trekking collection log",
+  "short": "Temple Trekking",
+  "wiki": "https://oldschool.runescape.wiki/w/Temple_Trekking",
+  "tip": "Any Temple Trekking collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Lumberjack hat",
+    "Lumberjack top",
+    "Lumberjack legs",
+    "Lumberjack boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Tithe Farm collection log",
+  "short": "Tithe Farm",
+  "wiki": "https://oldschool.runescape.wiki/w/Tithe_Farm",
+  "tip": "Any Tithe Farm collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Farmer's strawhat",
+    "Farmer's jacket",
+    "Farmer's boro trousers",
+    "Farmer's boots",
+    "Seed box",
+    "Gricoller's can",
+    "Herb sack"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Trouble Brewing collection log",
+  "short": "Trouble Brewing",
+  "wiki": "https://oldschool.runescape.wiki/w/Trouble_Brewing",
+  "tip": "Any Trouble Brewing collection log item you don't have yet counts (30 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Blue naval shirt",
+    "Blue tricorn hat",
+    "Blue navy slacks",
+    "Green naval shirt",
+    "Green tricorn hat",
+    "Green navy slacks",
+    "Red naval shirt",
+    "Red tricorn hat",
+    "Red navy slacks",
+    "Brown naval shirt",
+    "Brown tricorn hat",
+    "Brown navy slacks",
+    "Black naval shirt",
+    "Black tricorn hat",
+    "Black navy slacks",
+    "Purple naval shirt",
+    "Purple tricorn hat",
+    "Purple navy slacks",
+    "Grey naval shirt",
+    "Grey tricorn hat",
+    "Grey navy slacks",
+    "Cutthroat flag",
+    "Gilded smile flag",
+    "Bronze fist flag",
+    "Lucky shot flag",
+    "Treasure flag",
+    "Phasmatys flag",
+    "The stuff",
+    "Rum (red)",
+    "Rum (blue)"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Vale Totems collection log",
+  "short": "Vale Totems",
+  "wiki": "https://oldschool.runescape.wiki/w/Vale_Totems",
+  "tip": "Any Vale Totems collection log item you don't have yet counts (4 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Fletching knife",
+    "Bow string spool",
+    "Ent branch",
+    "Greenman mask"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Volcanic Mine collection log",
+  "short": "Volcanic Mine",
+  "wiki": "https://oldschool.runescape.wiki/w/Volcanic_Mine",
+  "tip": "Any Volcanic Mine collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Minigames",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Ash covered tome",
+    "Large water container",
+    "Volcanic mine teleport",
+    "Dragon pickaxe (broken)",
+    "Prospector helmet",
+    "Prospector jacket",
+    "Prospector legs",
+    "Prospector boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Aerial Fishing collection log",
+  "short": "Aerial Fishing",
+  "wiki": "https://oldschool.runescape.wiki/w/Aerial_Fishing",
+  "tip": "Any Aerial Fishing collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Golden tench",
+    "Pearl fishing rod",
+    "Pearl fly fishing rod",
+    "Pearl barbarian rod",
+    "Fish sack",
+    "Angler hat",
+    "Angler top",
+    "Angler waders",
+    "Angler boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 5 new items from the All Pets collection log",
+  "short": "All Pets",
+  "wiki": "https://oldschool.runescape.wiki/w/All_Pets",
+  "tip": "Any All Pets collection log item you don't have yet counts (71 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Abyssal orphan",
+    "Ikkle Hydra",
+    "Callisto cub",
+    "Hellpuppy",
+    "Pet chaos elemental",
+    "Pet Zilyana",
+    "Pet dark core",
+    "Pet Dagannoth Prime",
+    "Pet Dagannoth Supreme",
+    "Pet Dagannoth Rex",
+    "TzRek-Jad",
+    "Pet General Graardor",
+    "Baby Mole",
+    "Noon",
+    "Jal-Nib-Rek",
+    "Kalphite Princess",
+    "Prince Black Dragon",
+    "Pet Kraken",
+    "Pet Kree'arra",
+    "Pet K'ril Tsutsaroth",
+    "Scorpia's offspring",
+    "Skotos",
+    "Pet Smoke Devil",
+    "Venenatis spiderling",
+    "Vet'ion Jr.",
+    "Vorki",
+    "Phoenix",
+    "Pet Snakeling",
+    "Olmlet",
+    "Lil' Zik",
+    "Bloodhound",
+    "Pet Penance Queen",
+    "Heron",
+    "Rock golem",
+    "Beaver",
+    "Baby chinchompa",
+    "Giant Squirrel",
+    "Tangleroot",
+    "Rocky",
+    "Rift guardian",
+    "Herbi",
+    "Chompy chick",
+    "Sraracha",
+    "Smolcano",
+    "Youngllef",
+    "Little Nightmare",
+    "Lil' Creator",
+    "Tiny tempor",
+    "Nexling",
+    "Abyssal protector",
+    "Tumeken's guardian",
+    "Muphin",
+    "Wisp",
+    "Baron",
+    "Butch",
+    "Lil'viathan",
+    "Scurry",
+    "Smol Heredit",
+    "Quetzin",
+    "Nid",
+    "Huberte",
+    "Moxi",
+    "Bran",
+    "Yami",
+    "Dom",
+    "Soup",
+    "Gull (pet)",
+    "Beef",
+    "Maggot marquess",
+    "Mr McGroot",
+    "Aggy"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Get 1 new item from the Boat Paints collection log",
+  "short": "Boat Paints",
+  "wiki": "https://oldschool.runescape.wiki/w/Boat_Paints",
+  "tip": "Any Boat Paints collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Barracuda paint",
+    "Shark paint",
+    "Inky paint",
+    "Angler's paint",
+    "Salvor's paint",
+    "Armadylean paint",
+    "Zamorakian paint",
+    "Guthixian paint",
+    "Saradominist paint",
+    "Merchant's paint",
+    "Sandy paint"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Camdozaal collection log",
+  "short": "Camdozaal",
+  "wiki": "https://oldschool.runescape.wiki/w/Camdozaal",
+  "tip": "Any Camdozaal collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Barronite mace",
+    "Barronite head",
+    "Barronite handle",
+    "Barronite guard",
+    "Ancient globe",
+    "Ancient ledger",
+    "Ancient astroscope",
+    "Ancient treatise",
+    "Ancient carcanet",
+    "Imcando hammer"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Champion's Challenge collection log",
+  "short": "Champion's Challenge",
+  "wiki": "https://oldschool.runescape.wiki/w/Champion's_Challenge",
+  "tip": "Any Champion's Challenge collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Earth warrior champion scroll",
+    "Ghoul champion scroll",
+    "Giant champion scroll",
+    "Goblin champion scroll",
+    "Hobgoblin champion scroll",
+    "Imp champion scroll",
+    "Jogre champion scroll",
+    "Lesser demon champion scroll",
+    "Skeleton champion scroll",
+    "Zombie champion scroll",
+    "Champion's cape"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Chompy Bird Hunting collection log",
+  "short": "Chompy Bird Hunting",
+  "wiki": "https://oldschool.runescape.wiki/w/Chompy_Bird_Hunting",
+  "tip": "Any Chompy Bird Hunting collection log item you don't have yet counts (19 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Chompy chick",
+    "Chompy bird hat (ogre bowman)",
+    "Chompy bird hat (bowman)",
+    "Chompy bird hat (ogre yeoman)",
+    "Chompy bird hat (yeoman)",
+    "Chompy bird hat (ogre marksman)",
+    "Chompy bird hat (marksman)",
+    "Chompy bird hat (ogre woodsman)",
+    "Chompy bird hat (woodsman)",
+    "Chompy bird hat (ogre forester)",
+    "Chompy bird hat (forester)",
+    "Chompy bird hat (ogre bowmaster)",
+    "Chompy bird hat (bowmaster)",
+    "Chompy bird hat (ogre expert)",
+    "Chompy bird hat (expert)",
+    "Chompy bird hat (ogre dragon archer)",
+    "Chompy bird hat (dragon archer)",
+    "Chompy bird hat (expert ogre dragon archer)",
+    "Chompy bird hat (expert dragon archer)"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Colossal Wyrm Agility collection log",
+  "short": "Colossal Wyrm Agility",
+  "wiki": "https://oldschool.runescape.wiki/w/Colossal_Wyrm_Agility",
+  "tip": "Any Colossal Wyrm Agility collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Colossal wyrm teleport scroll",
+    "Calcified acorn",
+    "Graceful hood (Varlamore)",
+    "Graceful top (Varlamore)",
+    "Graceful legs (Varlamore)",
+    "Graceful gloves (Varlamore)",
+    "Graceful boots (Varlamore)",
+    "Graceful cape (Varlamore)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Creature Creation collection log",
+  "short": "Creature Creation",
+  "wiki": "https://oldschool.runescape.wiki/w/Creature_Creation",
+  "tip": "Any Creature Creation collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Tea flask",
+    "Plain satchel",
+    "Green satchel",
+    "Red satchel",
+    "Black satchel",
+    "Gold satchel",
+    "Rune satchel"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Cyclopes collection log",
+  "short": "Cyclopes",
+  "wiki": "https://oldschool.runescape.wiki/w/Cyclopes",
+  "tip": "Any Cyclopes collection log item you don't have yet counts (8 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Bronze defender",
+    "Iron defender",
+    "Steel defender",
+    "Black defender",
+    "Mithril defender",
+    "Adamant defender",
+    "Rune defender",
+    "Dragon defender"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Elder Chaos Druids collection log",
+  "short": "Elder Chaos Druids",
+  "wiki": "https://oldschool.runescape.wiki/w/Elder_Chaos_Druids",
+  "tip": "Any Elder Chaos Druids collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Elder chaos top",
+    "Elder chaos robe",
+    "Elder chaos hood"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Forestry collection log",
+  "short": "Forestry",
+  "wiki": "https://oldschool.runescape.wiki/w/Forestry",
+  "tip": "Any Forestry collection log item you don't have yet counts (23 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Fox whistle",
+    "Golden pheasant egg",
+    "Lumberjack hat",
+    "Lumberjack top",
+    "Lumberjack legs",
+    "Lumberjack boots",
+    "Forestry hat",
+    "Forestry top",
+    "Forestry legs",
+    "Forestry boots",
+    "Twitcher's gloves",
+    "Funky shaped log",
+    "Log basket",
+    "Log brace",
+    "Clothes pouch blueprint",
+    "Cape pouch",
+    "Felling axe handle",
+    "Pheasant hat",
+    "Pheasant legs",
+    "Pheasant boots",
+    "Pheasant cape",
+    "Petal garland",
+    "Sturdy beehive parts"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Fossil Island Notes collection log",
+  "short": "Fossil Island Notes",
+  "wiki": "https://oldschool.runescape.wiki/w/Fossil_Island_Notes",
+  "tip": "Any Fossil Island Notes collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Scribbled note",
+    "Partial note",
+    "Ancient note",
+    "Ancient writings",
+    "Experimental note",
+    "Paragraph of text",
+    "Musty smelling note",
+    "Hastily scrawled note",
+    "Old writing",
+    "Short note"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Glough's Experiments collection log",
+  "short": "Glough's Experiments",
+  "wiki": "https://oldschool.runescape.wiki/w/Glough's_Experiments",
+  "tip": "Any Glough's Experiments collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Zenyte shard",
+    "Light frame",
+    "Heavy frame",
+    "Ballista limbs",
+    "Monkey tail",
+    "Ballista spring"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Hunter Guild collection log",
+  "short": "Hunter Guild",
+  "wiki": "https://oldschool.runescape.wiki/w/Hunter_Guild",
+  "tip": "Any Hunter Guild collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Quetzin",
+    "Huntsman's kit",
+    "Guild hunter headwear",
+    "Guild hunter top",
+    "Guild hunter legs",
+    "Guild hunter boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Lost Schematics collection log",
+  "short": "Lost Schematics",
+  "wiki": "https://oldschool.runescape.wiki/w/Lost_Schematics",
+  "tip": "Any Lost Schematics collection log item you don't have yet counts (12 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Salvaging station schematic",
+    "Gale catcher schematic",
+    "Eternal brazier schematic",
+    "Rosewood cargo hold schematic",
+    "Rosewood hull schematic",
+    "Rosewood & cotton sails schematic",
+    "Dragon helm schematic",
+    "Dragon keel schematic",
+    "Dragon salvaging hook schematic",
+    "Dragon cannon schematic",
+    "Ballistic attractor schematic",
+    "Bosun's workbench schematic"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Monkey Backpacks collection log",
+  "short": "Monkey Backpacks",
+  "wiki": "https://oldschool.runescape.wiki/w/Monkey_Backpacks",
+  "tip": "Any Monkey Backpacks collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Karamjan monkey (item)",
+    "Kruk jr",
+    "Maniacal monkey (item)",
+    "Princely monkey",
+    "Skeleton monkey (item)",
+    "Zombie monkey (item)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Motherlode Mine collection log",
+  "short": "Motherlode Mine",
+  "wiki": "https://oldschool.runescape.wiki/w/Motherlode_Mine",
+  "tip": "Any Motherlode Mine collection log item you don't have yet counts (6 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Coal bag",
+    "Gem bag",
+    "Prospector helmet",
+    "Prospector jacket",
+    "Prospector legs",
+    "Prospector boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the My Notes collection log",
+  "short": "My Notes",
+  "wiki": "https://oldschool.runescape.wiki/w/My_Notes",
+  "tip": "Any My Notes collection log item you don't have yet counts (1 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Ancient page"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Ocean Encounters collection log",
+  "short": "Ocean Encounters",
+  "wiki": "https://oldschool.runescape.wiki/w/Ocean_Encounters",
+  "tip": "Any Ocean Encounters collection log item you don't have yet counts (11 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Tiny pearl",
+    "Small pearl",
+    "Shiny pearl",
+    "Bright pearl",
+    "Big pearl",
+    "Huge pearl",
+    "Enormous pearl",
+    "Shimmering pearl",
+    "Glistening pearl",
+    "Brilliant pearl",
+    "Radiant pearl"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Random Events collection log",
+  "short": "Random Events",
+  "wiki": "https://oldschool.runescape.wiki/w/Random_Events",
+  "tip": "Any Random Events collection log item you don't have yet counts (23 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Camo top",
+    "Camo bottoms",
+    "Camo helmet",
+    "Lederhosen top",
+    "Lederhosen shorts",
+    "Lederhosen hat",
+    "Zombie shirt",
+    "Zombie trousers",
+    "Zombie mask",
+    "Zombie gloves",
+    "Zombie boots",
+    "Mime mask",
+    "Mime top",
+    "Mime legs",
+    "Mime gloves",
+    "Mime boots",
+    "Frog token",
+    "Stale baguette",
+    "Beekeeper's hat",
+    "Beekeeper's top",
+    "Beekeeper's legs",
+    "Beekeeper's gloves",
+    "Beekeeper's boots"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Revenants collection log",
+  "short": "Revenants",
+  "wiki": "https://oldschool.runescape.wiki/w/Revenants",
+  "tip": "Any Revenants collection log item you don't have yet counts (14 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Viggora's chainmace (u)",
+    "Craw's bow (u)",
+    "Thammaron's sceptre (u)",
+    "Amulet of avarice",
+    "Bracelet of ethereum (uncharged)",
+    "Ancient crystal",
+    "Ancient relic",
+    "Ancient effigy",
+    "Ancient medallion",
+    "Ancient statuette",
+    "Ancient totem",
+    "Ancient emblem",
+    "Revenant cave teleport",
+    "Revenant ether"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Rooftop Agility collection log",
+  "short": "Rooftop Agility",
+  "wiki": "https://oldschool.runescape.wiki/w/Rooftop_Agility",
+  "tip": "Any Rooftop Agility collection log item you don't have yet counts (7 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Mark of Grace",
+    "Graceful hood",
+    "Graceful cape",
+    "Graceful top",
+    "Graceful legs",
+    "Graceful gloves",
+    "Graceful boots"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Sailing Miscellaneous collection log",
+  "short": "Sailing Miscellaneous",
+  "wiki": "https://oldschool.runescape.wiki/w/Sailing_Miscellaneous",
+  "tip": "Any Sailing Miscellaneous collection log item you don't have yet counts (12 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Dragon metal sheet",
+    "Dragon nails",
+    "Dragon cannonball",
+    "Echo pearl",
+    "Swift albatross feather",
+    "Narwhal horn",
+    "Ray barbs",
+    "Broken dragon hook",
+    "Bottled storm",
+    "Dragon cannon barrel",
+    "Boat bottle (empty)",
+    "Facility bottle (empty)"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Sea Treasures collection log",
+  "short": "Sea Treasures",
+  "wiki": "https://oldschool.runescape.wiki/w/Sea_Treasures",
+  "tip": "Any Sea Treasures collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Medallion fragment",
+    "Sailors' amulet",
+    "Rusty locket",
+    "Mouldy block",
+    "Dull knife",
+    "Broken compass",
+    "Rusty coin",
+    "Broken sextant",
+    "Mouldy doll",
+    "Smashed mirror"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 3 new items from the Shayzien Armour collection log",
+  "short": "Shayzien Armour",
+  "wiki": "https://oldschool.runescape.wiki/w/Shayzien_Armour",
+  "tip": "Any Shayzien Armour collection log item you don't have yet counts (25 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Shayzien gloves (1)",
+    "Shayzien boots (1)",
+    "Shayzien helm (1)",
+    "Shayzien greaves (1)",
+    "Shayzien platebody (1)",
+    "Shayzien gloves (2)",
+    "Shayzien boots (2)",
+    "Shayzien helm (2)",
+    "Shayzien greaves (2)",
+    "Shayzien platebody (2)",
+    "Shayzien gloves (3)",
+    "Shayzien boots (3)",
+    "Shayzien helm (3)",
+    "Shayzien greaves (3)",
+    "Shayzien platebody (3)",
+    "Shayzien gloves (4)",
+    "Shayzien boots (4)",
+    "Shayzien helm (4)",
+    "Shayzien greaves (4)",
+    "Shayzien platebody (4)",
+    "Shayzien gloves (5)",
+    "Shayzien boots (5)",
+    "Shayzien helm (5)",
+    "Shayzien greaves (5)",
+    "Shayzien body (5)"
+   ],
+   "count": 3
+  }
+ },
+ {
+  "name": "Get 1 new item from the Shooting Stars collection log",
+  "short": "Shooting Stars",
+  "wiki": "https://oldschool.runescape.wiki/w/Shooting_Stars",
+  "tip": "Any Shooting Stars collection log item you don't have yet counts (2 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Celestial ring (uncharged)",
+    "Star fragment"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the Skilling Pets collection log",
+  "short": "Skilling Pets",
+  "wiki": "https://oldschool.runescape.wiki/w/Skilling_Pets",
+  "tip": "Any Skilling Pets collection log item you don't have yet counts (9 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Heron",
+    "Rock golem",
+    "Beaver",
+    "Baby chinchompa",
+    "Giant Squirrel",
+    "Tangleroot",
+    "Rocky",
+    "Rift guardian",
+    "Soup"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 5 new items from the Slayer collection log",
+  "short": "Slayer",
+  "wiki": "https://oldschool.runescape.wiki/w/Slayer",
+  "tip": "Any Slayer collection log item you don't have yet counts (95 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Crawling hand (item)",
+    "Cockatrice head",
+    "Basilisk head",
+    "Kurask head",
+    "Abyssal head",
+    "Imbued heart",
+    "Eternal gem",
+    "Dust battlestaff",
+    "Mist battlestaff",
+    "Abyssal whip",
+    "Granite maul",
+    "Mudskipper hat",
+    "Flippers",
+    "Brine sabre",
+    "Leaf-bladed sword",
+    "Necklace of Fangs",
+    "Leaf-bladed battleaxe",
+    "Black mask (10)",
+    "Granite longsword",
+    "Granite boots",
+    "Wyvern visage",
+    "Granite legs",
+    "Granite helm",
+    "Draconic visage",
+    "Bronze boots",
+    "Iron boots",
+    "Steel boots",
+    "Black boots",
+    "Mithril boots",
+    "Adamant boots",
+    "Rune boots",
+    "Dragon boots",
+    "Abyssal dagger",
+    "Uncharged trident",
+    "Kraken tentacle",
+    "Dark bow",
+    "Occult necklace",
+    "Dragon chainbody",
+    "Dragon thrownaxe",
+    "Dragon harpoon",
+    "Dragon sword",
+    "Dragon knife",
+    "Broken dragon hasta",
+    "Drake's tooth",
+    "Drake's claw",
+    "Hydra tail",
+    "Hydra's fang",
+    "Hydra's eye",
+    "Hydra's heart",
+    "Mystic hat (light)",
+    "Mystic robe top (light)",
+    "Mystic robe bottom (light)",
+    "Mystic gloves (light)",
+    "Mystic boots (light)",
+    "Mystic hat (dark)",
+    "Mystic robe top (dark)",
+    "Mystic robe bottom (dark)",
+    "Mystic gloves (dark)",
+    "Mystic boots (dark)",
+    "Mystic hat (dusk)",
+    "Mystic robe top (dusk)",
+    "Mystic robe bottom (dusk)",
+    "Mystic gloves (dusk)",
+    "Mystic boots (dusk)",
+    "Basilisk jaw",
+    "Aquanite tendon",
+    "Dagon'hai hat",
+    "Dagon'hai robe top",
+    "Dagon'hai robe bottom",
+    "Blood shard",
+    "Ancient ceremonial mask",
+    "Ancient ceremonial top",
+    "Ancient ceremonial legs",
+    "Ancient ceremonial gloves",
+    "Ancient ceremonial boots",
+    "Warped sceptre (uncharged)",
+    "Sulphur blades",
+    "Teleport anchoring scroll",
+    "Aranea boots",
+    "Glacial temotli",
+    "Pendant of Ates (inert)",
+    "Frozen tear",
+    "Earthbound tecpatl",
+    "Antler guard",
+    "Alchemist's signet",
+    "Broken antler",
+    "Dragon metal sheet",
+    "Horn of Plenty (empty)",
+    "Gryphon feather",
+    "Venator tooth",
+    "Venator fang",
+    "Air diamond",
+    "Water sapphire",
+    "Earth emerald",
+    "Fire ruby"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Get 1 new item from the Tormented Demons collection log",
+  "short": "Tormented Demons",
+  "wiki": "https://oldschool.runescape.wiki/w/Tormented_Demons",
+  "tip": "Any Tormented Demons collection log item you don't have yet counts (3 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Tormented synapse",
+    "Burning claw",
+    "Guthixian temple teleport"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 1 new item from the TzHaar collection log",
+  "short": "TzHaar",
+  "wiki": "https://oldschool.runescape.wiki/w/TzHaar",
+  "tip": "Any TzHaar collection log item you don't have yet counts (10 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Obsidian cape",
+    "Toktz-ket-xil",
+    "Tzhaar-ket-om",
+    "Toktz-xil-ak",
+    "Toktz-xil-ek",
+    "Toktz-mej-tal",
+    "Toktz-xil-ul",
+    "Obsidian helmet",
+    "Obsidian platebody",
+    "Obsidian platelegs"
+   ],
+   "count": 1
+  }
+ },
+ {
+  "name": "Get 5 new items from the Miscellaneous collection log",
+  "short": "Miscellaneous",
+  "wiki": "https://oldschool.runescape.wiki/w/Miscellaneous",
+  "tip": "Any Miscellaneous collection log item you don't have yet counts (63 items in total).",
+  "weight": 1,
+  "group": "Other",
+  "verify": {
+   "type": "clog",
+   "items": [
+    "Herbi",
+    "Chompy chick",
+    "Dragon warhammer",
+    "Big swordfish",
+    "Big shark",
+    "Big bass",
+    "Giant blue krill",
+    "Golden haddock",
+    "Orangefin",
+    "Huge halibut",
+    "Purplefin",
+    "Swift marlin",
+    "Long bone",
+    "Curved bone",
+    "Ecumenical key",
+    "Pharaoh's sceptre (uncharged)",
+    "Dark totem base",
+    "Dark totem middle",
+    "Dark totem top",
+    "Chewed bones",
+    "Dragon full helm",
+    "Shield left half",
+    "Dragon metal slice",
+    "Dragon metal lump",
+    "Dragon limbs",
+    "Dragon spear",
+    "Amulet of eternal glory",
+    "Shaman mask",
+    "Evil chicken head",
+    "Evil chicken wings",
+    "Evil chicken legs",
+    "Evil chicken feet",
+    "Mining gloves",
+    "Superior mining gloves",
+    "Expert mining gloves",
+    "Right skull half",
+    "Left skull half",
+    "Top of sceptre",
+    "Bottom of sceptre",
+    "Mossy key",
+    "Giant key",
+    "Hespori seed",
+    "Fresh crab claw",
+    "Fresh crab shell",
+    "Xeric's talisman (inert)",
+    "Mask of Ranul",
+    "Elven signet",
+    "Crystal grail",
+    "Enhanced crystal teleport seed",
+    "Dragonstone full helm",
+    "Dragonstone platebody",
+    "Dragonstone platelegs",
+    "Dragonstone gauntlets",
+    "Dragonstone boots",
+    "Uncut onyx",
+    "Merfolk trident",
+    "Orange egg sac",
+    "Blue egg sac",
+    "Broken zombie axe",
+    "Broken zombie helmet",
+    "Helmet of the moon",
+    "Squid beak",
+    "Jeweller's chisel"
+   ],
+   "count": 5
+  }
+ },
+ {
+  "name": "Complete the Ardougne Easy Diary",
+  "short": "Ardougne Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "ardougne",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Ardougne Medium Diary",
+  "short": "Ardougne Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "ardougne",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Ardougne Hard Diary",
+  "short": "Ardougne Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "ardougne",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Ardougne Elite Diary",
+  "short": "Ardougne Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Ardougne_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "ardougne",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Desert Easy Diary",
+  "short": "Desert Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "desert",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Desert Medium Diary",
+  "short": "Desert Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "desert",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Desert Hard Diary",
+  "short": "Desert Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "desert",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Desert Elite Diary",
+  "short": "Desert Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Desert_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "desert",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Falador Easy Diary",
+  "short": "Falador Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "falador",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Falador Medium Diary",
+  "short": "Falador Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "falador",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Falador Hard Diary",
+  "short": "Falador Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "falador",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Falador Elite Diary",
+  "short": "Falador Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Falador_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "falador",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Fremennik Easy Diary",
+  "short": "Fremennik Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "fremennik",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Fremennik Medium Diary",
+  "short": "Fremennik Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "fremennik",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Fremennik Hard Diary",
+  "short": "Fremennik Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "fremennik",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Fremennik Elite Diary",
+  "short": "Fremennik Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Fremennik_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "fremennik",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Kandarin Easy Diary",
+  "short": "Kandarin Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kandarin",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Kandarin Medium Diary",
+  "short": "Kandarin Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kandarin",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Kandarin Hard Diary",
+  "short": "Kandarin Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kandarin",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Kandarin Elite Diary",
+  "short": "Kandarin Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Kandarin_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kandarin",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Karamja Easy Diary",
+  "short": "Karamja Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "karamja",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Karamja Medium Diary",
+  "short": "Karamja Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "karamja",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Karamja Hard Diary",
+  "short": "Karamja Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "karamja",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Karamja Elite Diary",
+  "short": "Karamja Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Karamja_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "karamja",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Kourend & Kebos Easy Diary",
+  "short": "Kourend & Kebos Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Kourend_%26_Kebos_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kourend-and-kebos",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Kourend & Kebos Medium Diary",
+  "short": "Kourend & Kebos Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Kourend_%26_Kebos_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kourend-and-kebos",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Kourend & Kebos Hard Diary",
+  "short": "Kourend & Kebos Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Kourend_%26_Kebos_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kourend-and-kebos",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Kourend & Kebos Elite Diary",
+  "short": "Kourend & Kebos Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Kourend_%26_Kebos_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "kourend-and-kebos",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Lumbridge & Draynor Easy Diary",
+  "short": "Lumbridge & Draynor Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_%26_Draynor_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "lumbridge-and-draynor",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Lumbridge & Draynor Medium Diary",
+  "short": "Lumbridge & Draynor Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_%26_Draynor_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "lumbridge-and-draynor",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Lumbridge & Draynor Hard Diary",
+  "short": "Lumbridge & Draynor Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_%26_Draynor_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "lumbridge-and-draynor",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Lumbridge & Draynor Elite Diary",
+  "short": "Lumbridge & Draynor Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Lumbridge_%26_Draynor_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "lumbridge-and-draynor",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Morytania Easy Diary",
+  "short": "Morytania Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "morytania",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Morytania Medium Diary",
+  "short": "Morytania Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "morytania",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Morytania Hard Diary",
+  "short": "Morytania Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "morytania",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Morytania Elite Diary",
+  "short": "Morytania Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Morytania_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "morytania",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Varrock Easy Diary",
+  "short": "Varrock Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "varrock",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Varrock Medium Diary",
+  "short": "Varrock Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "varrock",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Varrock Hard Diary",
+  "short": "Varrock Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "varrock",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Varrock Elite Diary",
+  "short": "Varrock Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Varrock_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "varrock",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Western Provinces Easy Diary",
+  "short": "Western Provinces Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "western-provinces",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Western Provinces Medium Diary",
+  "short": "Western Provinces Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "western-provinces",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Western Provinces Hard Diary",
+  "short": "Western Provinces Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "western-provinces",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Western Provinces Elite Diary",
+  "short": "Western Provinces Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Western_Provinces_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "western-provinces",
+   "tier": "elite"
+  }
+ },
+ {
+  "name": "Complete the Wilderness Easy Diary",
+  "short": "Wilderness Easy",
+  "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "wilderness",
+   "tier": "easy"
+  }
+ },
+ {
+  "name": "Complete the Wilderness Medium Diary",
+  "short": "Wilderness Medium",
+  "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "wilderness",
+   "tier": "medium"
+  }
+ },
+ {
+  "name": "Complete the Wilderness Hard Diary",
+  "short": "Wilderness Hard",
+  "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "wilderness",
+   "tier": "hard"
+  }
+ },
+ {
+  "name": "Complete the Wilderness Elite Diary",
+  "short": "Wilderness Elite",
+  "wiki": "https://oldschool.runescape.wiki/w/Wilderness_Diary",
+  "tip": "Completes when the game announces the whole tier finished.",
+  "weight": 1,
+  "group": "Achievement Diaries",
+  "verify": {
+   "type": "diary",
+   "region": "wilderness",
+   "tier": "elite"
+  }
+ }
+]

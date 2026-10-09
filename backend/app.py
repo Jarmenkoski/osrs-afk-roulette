@@ -1796,30 +1796,27 @@ def handle_button(data):
     }})
 
 
-# ---------- Taskman-style task generator (TEST MODE — not linked in UI yet) ----------
+# ---------- Task generator: Bosses and Collection log categories ----------
 
 import tasker_reqs  # noqa: E402
 
-with open(os.path.join(os.path.dirname(__file__), "tasker_tiers.json"), encoding="utf-8") as _f:
-    TASKER_TIERS = json.load(_f)
+TASKER_TIERS = {}
 
-# "collection" = ALL Taskman collection-log tasks (incl. boss uniques) behind
-# one button; the same task in several tiers -> weights summed.
-_coll = {}
-for _tier in ("easy", "medium", "hard", "elite"):
-    for _t in TASKER_TIERS[_tier]:
-        if _t["name"] in _coll:
-            _coll[_t["name"]]["weight"] += _t.get("weight", 1)
-        else:
-            _coll[_t["name"]] = {**_t, "origTier": _tier}
-TASKER_TIERS["collection"] = list(_coll.values())
+# "collection" = our own collection log tasks, one per wiki collection log page
+# plus the achievement diaries (built by build_collection_tasks.py)
+with open(os.path.join(os.path.dirname(__file__), "collection_tasks.json"), encoding="utf-8") as _f:
+    TASKER_TIERS["collection"] = [
+        {**_t, "reqs": tasker_reqs.clog_reqs(_t["short"], _t["name"])}
+        for _t in json.load(_f)
+        if _t["short"] not in tasker_reqs.CLOG_EXCLUDED
+    ]
 
 # "boss" = pure kill-count tasks with recommended stats (tasker_reqs.BOSS_KILLS)
 TASKER_TIERS["boss"] = [
     {"name": t, "lo": lo, "hi": hi, "weight": 1, "reqs": reqs}
     for t, lo, hi, reqs in tasker_reqs.BOSS_KILLS
 ]
-TIER_ALIASES = {"normal": "medium", "bosses": "boss", "log": "collection"}
+TIER_ALIASES = {"bosses": "boss", "log": "collection", "clog": "collection"}
 
 import skill_tasks  # noqa: E402
 import verify  # noqa: E402
@@ -1894,12 +1891,12 @@ def levels_for_request(con, nick):
 
 def tasker_prepare():
     nick = (request.args.get("nick") or "").strip()
-    tier = (request.args.get("tier") or "easy").strip().lower()
+    tier = (request.args.get("tier") or "collection").strip().lower()
     tier = TIER_ALIASES.get(tier, tier)
     if not NICK_RE.match(nick):
         return None, None, (jsonify({"ok": False, "error": "invalid nick"}), 400)
     if tier not in TASKER_TIERS:
-        return None, None, (jsonify({"ok": False, "error": "tier must be easy/normal/hard/elite/boss"}), 400)
+        return None, None, (jsonify({"ok": False, "error": "tier must be boss or collection"}), 400)
     levels = levels_for_request(db(), nick)
     if levels is None:
         return None, None, (jsonify({"ok": False, "error": "player not found on hiscores"}), 404)
