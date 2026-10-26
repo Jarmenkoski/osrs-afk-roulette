@@ -224,13 +224,19 @@
  },
  {
   "name": "plugin",
-  "description": "Get your group's token for the AFK Roulette RuneLite plugin",
+  "description": "Your group's token for the AFK Roulette RuneLite plugin (and how to set it up)",
   "options": [
    {
     "type": 5,
     "name": "reset",
     "description": "Issue a new token (everyone must update theirs)",
     "required": false
+   },
+   {
+    "type": 5,
+    "name": "guide",
+    "required": false,
+    "description": "Post the step-by-step setup guide for everyone"
    }
   ]
  }

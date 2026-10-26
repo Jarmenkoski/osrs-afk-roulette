@@ -189,7 +189,8 @@ def init_db():
             pass  # the other gunicorn worker added it first
     for col, ddl in (("webhook", "webhook TEXT"),
                      ("notify_clog", "notify_clog INTEGER NOT NULL DEFAULT 1"),
-                     ("notify_pets", "notify_pets INTEGER NOT NULL DEFAULT 1")):
+                     ("notify_pets", "notify_pets INTEGER NOT NULL DEFAULT 1"),
+                     ("guide_posted", "guide_posted INTEGER NOT NULL DEFAULT 0")):
         if col not in cols:
             try:
                 con.execute(f"ALTER TABLE plugin_groups ADD COLUMN {ddl}")
@@ -2914,13 +2915,55 @@ def afk_complete():
 MANAGE_GUILD = 0x20
 
 
+PLUGIN_GUIDE_STEPS = [
+    "**Install** — RuneLite: 🔧 Configuration → **Plugin Hub** (bottom of the list) → search "
+    "**AFK Roulette** → **Install**. RuneLite tells you the plugin uses a third-party server: press **Yes**.",
+    "**Allow the server** — Configuration → **AFK Roulette** → turn on **Connect to AFK Roulette server** "
+    "and accept the warning.",
+    "**Share with the group** (optional) — turn on **Share my data with the group** and accept, "
+    "so the group sees your levels, gear and items.",
+    "**Get the token** — type `/plugin` here. Only you see the reply; copy the token from it.",
+    "**Join** — open the AFK Roulette panel (🎡 in the RuneLite sidebar) → **Group** tab → paste the token → "
+    "**Join group**.",
+]
+
+
+def plugin_guide_embed():
+    steps = "\n".join(f"**{i}.** {step}" for i, step in enumerate(PLUGIN_GUIDE_STEPS, 1))
+    return {
+        "title": "🎡 AFK Roulette RuneLite plugin — how to join the group",
+        "description": steps + "\n\nThat's it: roll tasks in the **Tasks** tab, see everyone in **Group**, "
+                       f"search everyone's items in **Items**. Website: {SITE_BASE} (paste the same token into "
+                       "*Group token*).",
+        "color": 0xF5C542,
+        "footer": {"text": "Keep the token inside the group: anyone with it can see the group's shared data."},
+    }
+
+
+def post_followup(interaction_token, payload, delay=1.0):
+    """Background thread: a follow-up message to an interaction (after the first reply is out)."""
+    time.sleep(delay)
+    req = urllib.request.Request(
+        f"https://discord.com/api/v10/webhooks/{DISCORD_APP_ID}/{interaction_token}",
+        data=json.dumps({**payload, "allowed_mentions": {"parse": []}}).encode(),
+        headers={"Content-Type": "application/json", "User-Agent": "osrs-afk-roulette"},
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(req, timeout=10):
+            pass
+    except Exception as e:
+        print(f"post_followup failed: {e!r}", flush=True)
+
+
 def handle_plugin_command(data):
-    """/plugin: show (or rotate) the Discord server's group token for the plugin."""
+    """/plugin: the Discord server's group token for the plugin, privately. The first time (or
+    with guide:True) the setup steps are posted for everyone and the token follows privately."""
     guild_id = data.get("guild_id")
     if not guild_id:
         return ephemeral("Use `/plugin` in your group's Discord server, not in DMs.")
-    reset = any(o.get("name") == "reset" and o.get("value") is True
-                for o in data.get("data", {}).get("options", []))
+    options = {o.get("name"): o.get("value") for o in data.get("data", {}).get("options", [])}
+    reset = options.get("reset") is True
     try:
         perms = int(((data.get("member") or {}).get("permissions")) or 0)
     except (TypeError, ValueError):
@@ -2928,7 +2971,7 @@ def handle_plugin_command(data):
     if reset and not perms & MANAGE_GUILD:
         return ephemeral("Only server managers can reset the group token.")
     con = db()
-    row = con.execute("SELECT token FROM plugin_groups WHERE guild_id = ?", (guild_id,)).fetchone()
+    row = con.execute("SELECT token, guide_posted FROM plugin_groups WHERE guild_id = ?", (guild_id,)).fetchone()
     if row is None or reset:
         token = secrets.token_urlsafe(18)
         con.execute(
@@ -2940,14 +2983,22 @@ def handle_plugin_command(data):
     else:
         token = row["token"]
     note = "\n⚠️ New token issued — everyone in the group must paste it again." if reset and row else ""
-    return ephemeral(
-        "**AFK Roulette — RuneLite plugin**\n"
-        f"Group token: `{token}`\n"
-        "Paste it into RuneLite → Configuration → AFK Roulette → *Group token*, "
-        "then turn on the server options there.\n"
-        "Keep it inside the group: anyone with the token can see the group's shared data."
-        + note
+    token_text = (
+        "**AFK Roulette — your group token** (only you see this)\n"
+        f"`{token}`\n"
+        "RuneLite: AFK Roulette panel (🎡) → **Group** tab → paste → **Join group**. "
+        "Turn on *Connect to AFK Roulette server* in the plugin's settings first.\n"
+        "Keep it inside the group: anyone with the token can see the group's shared data." + note
     )
+    first_time = row is None or not row["guide_posted"]
+    if options.get("guide") is True or first_time:
+        con.execute("UPDATE plugin_groups SET guide_posted = 1 WHERE guild_id = ?", (guild_id,))
+        con.commit()
+        threading.Thread(target=post_followup, daemon=True,
+                         args=(data.get("token"), {"content": token_text, "flags": 64})).start()
+        return jsonify({"type": 4, "data": {"embeds": [plugin_guide_embed()],
+                                             "allowed_mentions": {"parse": []}}})
+    return ephemeral(token_text)
 
 
 @app.post("/api/discord/interactions")
