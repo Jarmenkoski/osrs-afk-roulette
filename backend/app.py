@@ -2537,9 +2537,45 @@ def plugin_group_leave():
 NOTIFY_TYPES = ("loot", "clog", "pet")
 NOTIFY_MAX_BODY = 4 * 1024 * 1024
 NOTIFY_MAX_PER_HOUR = 60
+NOTIFY_MAX_ITEMS = 10
 NOTIFY_COLORS = {"loot": 0xF5C542, "clog": 0x9B59B6, "pet": 0x4CAF50}
-WEBHOOK_RE = re.compile(r"^https://(?:canary\.|ptb\.)?discord(?:app)?\.com/api/webhooks/\d+/[A-Za-z0-9_-]+$")
+WEBHOOK_RE = re.compile(r"https://(?:canary\.|ptb\.)?discord(?:app)?\.com/api/webhooks/\d+/[A-Za-z0-9_-]+",
+                        re.ASCII)
 _DISCORD_MD_RE = re.compile(r"([\\*_~`|>\[\]()#@<:])")
+
+# How rare each NPC drop is (built by build_drop_rates.py from the wiki drop tables).
+with open(os.path.join(os.path.dirname(__file__), "drop_rates.json"), encoding="utf-8") as _f:
+    DROP_RATES = json.load(_f)
+# Collection log pages by name: an event's "uniques" are the items on its page.
+CLOG_PAGES = {t["short"].lower(): [i.lower() for i in t["verify"]["items"]]
+              for t in TASKER_TIERS["collection"] if (t.get("verify") or {}).get("type") == "clog"}
+# Loot tracker names that differ from the collection log page names.
+_LOOT_TO_CLOG = {"barrows": "barrows chests", "chambers of xeric challenge mode": "chambers of xeric",
+                 "theatre of blood hard mode": "theatre of blood", "theatre of blood entry mode": "theatre of blood",
+                 "tombs of amascut expert mode": "tombs of amascut", "tombs of amascut entry mode": "tombs of amascut",
+                 "the gauntlet": "the gauntlet", "corrupted gauntlet": "the gauntlet"}
+_CLUE_RE = re.compile(r"^clue scroll \((beginner|easy|medium|hard|elite|master)\)$")
+
+
+def clog_page_for(source):
+    s = re.sub(r"\s+", " ", str(source or "").strip().lower())
+    m = _CLUE_RE.match(s)
+    if m:
+        return f"{m.group(1)} treasure trails"
+    return _LOOT_TO_CLOG.get(s, s)
+
+
+@app.get("/api/drops/info")
+def drops_info():
+    """For the plugin's notification filters: how rare each drop of a source is (1/x)
+    and which of its items are collection log uniques."""
+    source = str(request.args.get("source") or "").strip()[:80]
+    if not source:
+        return jsonify({"ok": False, "error": "source required"}), 400
+    resp = jsonify({"rarity": DROP_RATES.get(source.lower(), {}),
+                    "uniques": CLOG_PAGES.get(clog_page_for(source), [])})
+    resp.headers["Cache-Control"] = "public, max-age=86400"
+    return resp
 
 
 def discord_text(value, limit):
@@ -2548,17 +2584,18 @@ def discord_text(value, limit):
 
 
 def group_webhook(con, gid):
-    """The group's own channel webhook; the home group falls back to the site's channel."""
+    """The group's own channel webhook; the home group posts to the site's channel."""
     row = con.execute("SELECT guild_id, webhook FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
     if row is None:
         return None
-    if row["webhook"]:
-        return row["webhook"]
-    return DISCORD_WEBHOOK_URL or None if row["guild_id"] in HOME_GUILD_IDS else None
+    if row["guild_id"] in HOME_GUILD_IDS:
+        return DISCORD_WEBHOOK_URL or None
+    return row["webhook"] or None
 
 
 def webhook_post(url, payload, image=None):
-    """Post an embed to a Discord webhook, optionally with one image attached. True on success."""
+    """Post an embed to a Discord webhook, optionally with one image attached.
+    Returns the HTTP status (0 when Discord could not be reached)."""
     payload = {**payload, "allowed_mentions": {"parse": []}}
     headers = {"User-Agent": "osrs-afk-roulette"}
     if image is None:
@@ -2578,25 +2615,42 @@ def webhook_post(url, payload, image=None):
         headers["Content-Type"] = f"multipart/form-data; boundary={boundary}"
     req = urllib.request.Request(url, data=data, headers=headers, method="POST")
     try:
-        with urllib.request.urlopen(req, timeout=15):
-            return True
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status
     except urllib.error.HTTPError as e:
         print(f"webhook_post HTTP {e.code}: {e.read()[:300]}", flush=True)
+        return e.code
     except Exception as e:
         print(f"webhook_post failed: {e!r}", flush=True)
-    return False
+        return 0
+
+
+def _deliver_notification(gid, url, payload, image):
+    """Background thread: post, and forget a webhook Discord says is gone."""
+    status = webhook_post(url, payload, image)
+    if status in (401, 404):
+        con = open_db()
+        try:
+            con.execute("UPDATE plugin_groups SET webhook = NULL WHERE id = ? AND webhook = ?", (gid, url))
+            con.commit()
+        finally:
+            con.close()
 
 
 @app.post("/api/plugin/group/webhook")
 def plugin_group_webhook():
-    """Set (or clear, with an empty url) the Discord channel webhook the group's notifications go to."""
-    gid = plugin_group_id()
+    """Set (or clear, with an empty url) the Discord channel webhook a group's notifications go to."""
+    gid, home = request_group()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
+    if home:
+        return jsonify({"ok": False, "error": "This group posts to its Discord server's channel"}), 403
     url = str(json_body().get("url") or "").strip()
+    if url and not WEBHOOK_RE.fullmatch(url):
+        return jsonify({"ok": False, "error": "That is not a Discord webhook URL"}), 400
     if url:
-        if not WEBHOOK_RE.match(url):
-            return jsonify({"ok": False, "error": "That is not a Discord webhook URL"}), 400
+        if not check_cooldown(f"wh:{gid}", 10):
+            return jsonify({"ok": False, "error": "Wait a few seconds and try again"}), 429
         try:
             with urllib.request.urlopen(urllib.request.Request(
                     url, headers={"User-Agent": "osrs-afk-roulette"}), timeout=5):
@@ -2609,24 +2663,96 @@ def plugin_group_webhook():
     return jsonify({"ok": True, "webhook": group_webhook(con, gid) is not None})
 
 
+def _notify_item(raw):
+    """One validated loot item, or None."""
+    if not isinstance(raw, dict):
+        return None
+    name = discord_text(raw.get("name"), 80)
+    if not name:
+        return None
+    rarity = raw.get("rarity")
+    return {
+        "name": name,
+        "plain": str(raw.get("name") or "").strip()[:80],
+        "id": raw.get("itemId") if _is_int(raw.get("itemId"), 1, 65535) else ITEM_IDS.get(str(raw.get("name") or "")),
+        "quantity": raw.get("quantity") if _is_int(raw.get("quantity"), 1, 2_147_483_647) else 1,
+        "value": raw.get("value") if _is_int(raw.get("value"), 0, 10**13) else 0,
+        "rarity": float(rarity) if isinstance(rarity, (int, float)) and 1 <= rarity <= 10**7 else None,
+    }
+
+
 @app.post("/api/plugin/notify")
 def plugin_notify():
-    """A rare drop, a new collection log item or a pet: posted to the group's Discord channel."""
+    """A rare drop, a new collection log item or a pet, posted to the group's Discord channel."""
     gid = plugin_group_id()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
     if (request.content_length or 0) > NOTIFY_MAX_BODY:
         return jsonify({"ok": False, "error": "payload too large"}), 413
     body = json_body()
-    name = str(body.get("name") or "").replace("\u00a0", " ").strip()
+    name = str(body.get("name") or "").replace(" ", " ").strip()
     kind = str(body.get("type") or "")
-    item = discord_text(body.get("item"), 80)
     source = discord_text(body.get("source"), 64)
-    if not NICK_RE.match(name) or kind not in NOTIFY_TYPES or (kind != "pet" and not item):
+    if kind == "loot":
+        raw_items = body.get("items") if isinstance(body.get("items"), list) else []
+        items = [i for i in map(_notify_item, raw_items[:NOTIFY_MAX_ITEMS]) if i]
+    else:
+        single = _notify_item({"name": body.get("item"), "itemId": body.get("itemId")})
+        items = [single] if single else []
+    if not NICK_RE.match(name) or kind not in NOTIFY_TYPES or (kind != "pet" and not items):
         return jsonify({"ok": False, "error": "invalid notification"}), 400
-    quantity = body.get("quantity") if _is_int(body.get("quantity"), 1, 2_147_483_647) else 1
-    value = body.get("value") if _is_int(body.get("value"), 0, 10**13) else 0
-    item_id = body.get("itemId") if _is_int(body.get("itemId"), 1, 65535) else ITEM_IDS.get(str(body.get("item") or ""))
+
+    con = db()
+    url = group_webhook(con, gid)
+    if url is None:
+        return jsonify({"ok": False, "error": "No Discord channel set for this group (Group tab)"}), 409
+    now = time.time()
+    if con.execute("SELECT COUNT(*) AS n FROM notify_log WHERE group_id = ? AND ts > ?",
+                   (gid, now - 3600)).fetchone()["n"] >= NOTIFY_MAX_PER_HOUR:
+        return jsonify({"ok": False, "error": "too many notifications this hour"}), 429
+    # The same item reported twice (two clients, or as a drop and as a new log slot) is posted once.
+    who_key = norm_key(name)
+    if kind == "pet":
+        if not check_cooldown(f"ntf:{gid}:{who_key}:pet", 30):
+            return jsonify({"ok": True, "duplicate": True})
+    else:
+        items = [i for i in items if check_cooldown(f"ntf:{gid}:{who_key}:item:{i['plain'].lower()}", 30)]
+        if not items:
+            return jsonify({"ok": True, "duplicate": True})
+    # Failed posts count too, so a broken webhook can't be hammered.
+    con.execute("INSERT INTO notify_log (group_id, ts) VALUES (?, ?)", (gid, now))
+    con.execute("DELETE FROM notify_log WHERE ts < ?", (now - 86400,))
+    con.execute("DELETE FROM announce_times WHERE nick_key LIKE 'ntf:%' AND ts < ?", (now - 86400,))
+    con.commit()
+
+    who = discord_text(name, 12)
+    if kind == "loot":
+        title = f"💰 {who} got a rare drop!"
+        lines = []
+        for i in items:
+            extra = [f"1/{i['rarity']:,.0f}" if i["rarity"] else "", f"{i['value']:,} gp" if i["value"] else ""]
+            extra = " · ".join(e for e in extra if e)
+            qty = f"{i['quantity']:,} x " if i["quantity"] > 1 else ""
+            lines.append(f"**{qty}{i['name']}**" + (f" — {extra}" if extra else ""))
+        if source:
+            lines.append(f"From: {source}")
+    elif kind == "clog":
+        title = f"📚 {who} got a new collection log item!"
+        lines = [f"**{items[0]['name']}**"] + ([f"From: {source}"] if source else [])
+    else:
+        title = f"🐾 {who} got a pet!"
+        lines = [f"**{items[0]['name']}**" if items else "You have a funny feeling like you're being followed..."]
+    embed = {
+        "title": title,
+        "description": "\n".join(lines),
+        "color": NOTIFY_COLORS[kind],
+        "footer": {"text": "AFK Roulette"},
+        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
+    }
+    icon = next((i["id"] for i in items if i["id"]), None)
+    if icon:
+        embed["thumbnail"] = {"url": f"https://static.runelite.net/cache/item/icon/{icon}.png"}
+
     image = None
     if isinstance(body.get("screenshot"), str) and body["screenshot"]:
         try:
@@ -2637,51 +2763,12 @@ def plugin_notify():
             image = ("screenshot.jpg", raw)
         elif raw.startswith(b"\x89PNG\r\n\x1a\n"):
             image = ("screenshot.png", raw)
-
-    con = db()
-    url = group_webhook(con, gid)
-    if url is None:
-        return jsonify({"ok": False, "error": "No Discord channel set for this group (Group tab)"}), 409
-    now = time.time()
-    sent = con.execute("SELECT COUNT(*) AS n FROM notify_log WHERE group_id = ? AND ts > ?",
-                       (gid, now - 3600)).fetchone()["n"]
-    if sent >= NOTIFY_MAX_PER_HOUR:
-        return jsonify({"ok": False, "error": "too many notifications this hour"}), 429
-    # The same thing reported twice (e.g. two clients) is posted once.
-    if not check_cooldown(f"ntf:{gid}:{norm_key(name)}:{kind}:{item.lower()}", 30):
-        return jsonify({"ok": True, "duplicate": True})
-
-    who = discord_text(name, 12)
-    if kind == "loot":
-        title = f"💰 {who} got a rare drop!"
-        lines = [f"**{f'{quantity:,} x ' if quantity > 1 else ''}{item}**"]
-        if value:
-            lines.append(f"Value: {value:,} gp")
-        if source:
-            lines.append(f"From: {source}")
-    elif kind == "clog":
-        title = f"📚 {who} got a new collection log item!"
-        lines = [f"**{item}**"] + ([f"From: {source}"] if source else [])
-    else:
-        title = f"🐾 {who} got a pet!"
-        lines = [f"**{item}**" if item else "You have a funny feeling like you're being followed..."]
-    embed = {
-        "title": title,
-        "description": "\n".join(lines),
-        "color": NOTIFY_COLORS[kind],
-        "footer": {"text": "AFK Roulette"},
-        "timestamp": datetime.datetime.now(datetime.timezone.utc).isoformat(),
-    }
-    if item_id:
-        embed["thumbnail"] = {"url": f"https://static.runelite.net/cache/item/icon/{item_id}.png"}
     if image:
         embed["image"] = {"url": f"attachment://{image[0]}"}
-    if not webhook_post(url, {"username": "AFK Roulette", "embeds": [embed]}, image):
-        return jsonify({"ok": False, "error": "Discord did not accept the post"}), 502
-    con.execute("INSERT INTO notify_log (group_id, ts) VALUES (?, ?)", (gid, now))
-    con.execute("DELETE FROM notify_log WHERE ts < ?", (now - 86400,))
-    con.commit()
-    return jsonify({"ok": True})
+    # Discord can be slow: post from a thread so the workers stay free.
+    threading.Thread(target=_deliver_notification, daemon=True,
+                     args=(gid, url, {"username": "AFK Roulette", "embeds": [embed]}, image)).start()
+    return jsonify({"ok": True}), 202
 
 
 @app.get("/api/afk/current")
