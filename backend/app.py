@@ -187,11 +187,14 @@ def init_db():
             con.execute("ALTER TABLE plugin_groups ADD COLUMN name TEXT NOT NULL DEFAULT ''")
         except sqlite3.OperationalError:
             pass  # the other gunicorn worker added it first
-    if "webhook" not in cols:
-        try:
-            con.execute("ALTER TABLE plugin_groups ADD COLUMN webhook TEXT")
-        except sqlite3.OperationalError:
-            pass
+    for col, ddl in (("webhook", "webhook TEXT"),
+                     ("notify_clog", "notify_clog INTEGER NOT NULL DEFAULT 1"),
+                     ("notify_pets", "notify_pets INTEGER NOT NULL DEFAULT 1")):
+        if col not in cols:
+            try:
+                con.execute(f"ALTER TABLE plugin_groups ADD COLUMN {ddl}")
+            except sqlite3.OperationalError:
+                pass  # the other gunicorn worker added it first
     con.execute("CREATE TABLE IF NOT EXISTS notify_log (group_id INTEGER NOT NULL, ts REAL NOT NULL)")
     con.execute("CREATE INDEX IF NOT EXISTS idx_notify_log ON notify_log(group_id, ts)")
     con.commit()
@@ -2502,12 +2505,14 @@ def plugin_group_info():
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
     con = db()
-    row = con.execute("SELECT name, guild_id FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
+    row = con.execute("SELECT name, guild_id, notify_clog, notify_pets FROM plugin_groups WHERE id = ?",
+                      (gid,)).fetchone()
     members = con.execute("SELECT COUNT(*) AS n FROM plugin_members WHERE group_id = ?", (gid,)).fetchone()["n"]
     return jsonify({"name": row["name"] or "Discord group", "members": members,
                     "discord": not row["guild_id"].startswith(PLUGIN_GUILD_PREFIX),
                     "home": row["guild_id"] in HOME_GUILD_IDS,
-                    "webhook": group_webhook(con, gid) is not None})
+                    "webhook": group_webhook(con, gid) is not None,
+                    "notifyClog": bool(row["notify_clog"]), "notifyPets": bool(row["notify_pets"])})
 
 
 @app.post("/api/plugin/group/leave")
@@ -2663,6 +2668,22 @@ def plugin_group_webhook():
     return jsonify({"ok": True, "webhook": group_webhook(con, gid) is not None})
 
 
+@app.post("/api/plugin/group/notify-settings")
+def plugin_group_notify_settings():
+    """Group-wide switches: post new collection log items / pets at all (rare drops always go)."""
+    gid = plugin_group_id()
+    if gid is None:
+        return jsonify({"ok": False, "error": "invalid group token"}), 401
+    body = json_body()
+    con = db()
+    for key, col in (("clog", "notify_clog"), ("pets", "notify_pets")):
+        if isinstance(body.get(key), bool):
+            con.execute(f"UPDATE plugin_groups SET {col} = ? WHERE id = ?", (int(body[key]), gid))
+    con.commit()
+    row = con.execute("SELECT notify_clog, notify_pets FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
+    return jsonify({"ok": True, "notifyClog": bool(row["notify_clog"]), "notifyPets": bool(row["notify_pets"])})
+
+
 def _notify_item(raw):
     """One validated loot item, or None."""
     if not isinstance(raw, dict):
@@ -2703,6 +2724,9 @@ def plugin_notify():
         return jsonify({"ok": False, "error": "invalid notification"}), 400
 
     con = db()
+    switches = con.execute("SELECT notify_clog, notify_pets FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
+    if (kind == "clog" and not switches["notify_clog"]) or (kind == "pet" and not switches["notify_pets"]):
+        return jsonify({"ok": True, "skipped": "turned off for the group"})
     url = group_webhook(con, gid)
     if url is None:
         return jsonify({"ok": False, "error": "No Discord channel set for this group (Group tab)"}), 409
