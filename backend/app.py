@@ -2513,6 +2513,8 @@ def plugin_group_info():
                     "discord": not row["guild_id"].startswith(PLUGIN_GUILD_PREFIX),
                     "home": row["guild_id"] in HOME_GUILD_IDS,
                     "webhook": group_webhook(con, gid) is not None,
+                    "customWebhook": bool(con.execute("SELECT webhook FROM plugin_groups WHERE id = ?",
+                                                      (gid,)).fetchone()["webhook"]),
                     "notifyClog": bool(row["notify_clog"]), "notifyPets": bool(row["notify_pets"])})
 
 
@@ -2590,13 +2592,14 @@ def discord_text(value, limit):
 
 
 def group_webhook(con, gid):
-    """The group's own channel webhook; the home group posts to the site's channel."""
+    """The channel webhook a group's notifications go to: its own one if set, otherwise
+    (for the home group) the site's channel."""
     row = con.execute("SELECT guild_id, webhook FROM plugin_groups WHERE id = ?", (gid,)).fetchone()
     if row is None:
         return None
-    if row["guild_id"] in HOME_GUILD_IDS:
-        return DISCORD_WEBHOOK_URL or None
-    return row["webhook"] or None
+    if row["webhook"]:
+        return row["webhook"]
+    return (DISCORD_WEBHOOK_URL or None) if row["guild_id"] in HOME_GUILD_IDS else None
 
 
 def webhook_post(url, payload, image=None):
@@ -2645,13 +2648,15 @@ def _deliver_notification(gid, url, payload, image):
 
 @app.post("/api/plugin/group/webhook")
 def plugin_group_webhook():
-    """Set (or clear, with an empty url) the Discord channel webhook a group's notifications go to."""
+    """Set (or clear, with an empty url) the Discord channel webhook a group's notifications go to.
+    Anyone in the group can move the channel, so the old channel is told where they went."""
     gid, home = request_group()
     if gid is None:
         return jsonify({"ok": False, "error": "invalid group token"}), 401
-    if home:
-        return jsonify({"ok": False, "error": "This group posts to its Discord server's channel"}), 403
-    url = str(json_body().get("url") or "").strip()
+    body = json_body()
+    url = str(body.get("url") or "").strip()
+    who = str(body.get("name") or "").replace("\u00a0", " ").strip()
+    who = discord_text(who, 12) if NICK_RE.match(who) else "someone in the group"
     if url and not WEBHOOK_RE.fullmatch(url):
         return jsonify({"ok": False, "error": "That is not a Discord webhook URL"}), 400
     if url:
@@ -2664,9 +2669,18 @@ def plugin_group_webhook():
         except Exception:
             return jsonify({"ok": False, "error": "Discord did not accept that webhook"}), 400
     con = db()
+    previous = group_webhook(con, gid)
     con.execute("UPDATE plugin_groups SET webhook = ? WHERE id = ?", (url or None, gid))
     con.commit()
-    return jsonify({"ok": True, "webhook": group_webhook(con, gid) is not None})
+    now = group_webhook(con, gid)
+    if previous and previous != now:
+        where = "another channel" if now else "nowhere (turned off)"
+        threading.Thread(target=webhook_post, daemon=True, args=(previous, {
+            "username": "AFK Roulette",
+            "embeds": [{"description": f"🔀 Drop notifications for this group now go to {where} "
+                                       f"(changed by {who} in RuneLite).", "color": 0x95A5A6}],
+        })).start()
+    return jsonify({"ok": True, "webhook": now is not None, "custom": bool(url)})
 
 
 @app.post("/api/plugin/group/notify-settings")
