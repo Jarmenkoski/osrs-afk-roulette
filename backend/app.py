@@ -2925,6 +2925,10 @@ PLUGIN_GUIDE_STEPS = [
     "**Get the token** — type `/plugin` here. Only you see the reply; copy the token from it.",
     "**Join** — open the AFK Roulette panel (🎡 in the RuneLite sidebar) → **Group** tab → paste the token → "
     "**Join group**.",
+    "**Drops to Discord** (optional) — Configuration → AFK Roulette → *Discord notifications* → turn on "
+    "**Post to the group's Discord** and accept. Rare drops then show up in this server's drops channel; set the "
+    "value or rarity limits there. For new collection log items, turn on the in-game setting "
+    "*Collection log - New addition notification*.",
 ]
 
 
